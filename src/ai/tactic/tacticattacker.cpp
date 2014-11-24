@@ -7,13 +7,6 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     numberOfInvalidRanges=0;
     numberOfValidRanges=0;
     canKick=false;
-
-    //--------------------------------
-    kicker_canKick = false;
-    kicker_firstKick = false;
-    kicker_kicked = false;
-    kicker_timer = new QTimer();
-    connect(kicker_timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -37,38 +30,7 @@ RobotCommand TacticAttacker::getCommand()
         rc.isKickObs = true;
 
     }
-    else if(wm->ourRobot[id].Status == AgentStatus::Passing)
-    {
-        rc.maxSpeed = 2;
-
-        if(!kicker_kicked)
-        {
-            if(!kicker_firstKick)
-            {
-                rc = goBehindBall();
-
-                if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
-                {
-                    kicker_timer->start(300);
-                    rc.kickspeedx = 2.5;//50;
-                    kicker_firstKick = true;
-                }
-            }
-            else
-            {
-                rc.fin_pos = wm->ourRobot[id].pos;
-            }
-        }
-        else
-        {
-            rc.fin_pos = wm->ourRobot[id].pos;
-        }
-
-        rc.useNav = true;
-        rc.isBallObs = true;
-        rc.isKickObs = true;
-    }
-    else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
+    else if(wm->ourRobot[id].Role == AgentRole::Receiver)
     {
         canKick=false;
         rc.maxSpeed = 2;
@@ -107,7 +69,7 @@ RobotCommand TacticAttacker::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
-    else if(wm->ourRobot[id].Status == AgentStatus::Idle)
+    else if(wm->ourRobot[id].Role == AgentRole::NoRole)
     {
         rc.fin_pos = wm->ourRobot[id].pos;
     }
@@ -279,70 +241,4 @@ double TacticAttacker::findBestPoint()
     }
 
     return (valid_angle[index][0]+valid_angle[index][1])/2;
-}
-
-int TacticAttacker::findBestPlayerForPass()
-{
-    int index = -1;
-    double min = 10000;
-
-    QList<int> ourAgents = wm->kn->ActiveAgents();
-    QList<int> freeAgents;
-
-    while( !ourAgents.isEmpty() )
-    {
-        int index = ourAgents.takeFirst();
-        if(isFree(index))
-            freeAgents.append(index);
-   }
-
-    while ( !freeAgents.isEmpty() )
-    {
-        int i = freeAgents.takeFirst();
-        if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
-        {
-            if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
-            {
-                min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
-                index = i;
-            }
-        }
-    }
-    //qDebug()<<"Pass Receiver is "<<index;
-    return index;
-}
-
-bool TacticAttacker::isFree(int index)
-{
-    QList<int> oppAgents = wm->kn->ActiveOppAgents();
-    bool isFree = true;
-
-    while( !oppAgents.isEmpty() )
-    {
-        int indexOPP = oppAgents.takeFirst();
-        if( (wm->ourRobot[index].pos.loc-wm->oppRobot[indexOPP].pos.loc).length() < DangerDist)
-        {
-            isFree = false;
-        }
-
-        if(!isFree)
-            break;
-    }
-    return isFree;
-}
-
-void TacticAttacker::timerEvent()
-{
-    kicker_timer->stop();
-    if(kicker_firstKick)
-    {
-        if( (wm->ball.pos.loc-wm->ourRobot[id].pos.loc).length() > 200 )
-        {
-            kicker_kicked = true;
-        }
-        else
-        {
-            kicker_firstKick = false;
-        }
-    }
 }

@@ -28,6 +28,7 @@ enum AgentRole
     AttackerLeft,
     AttackerRight,
     AttackerMid,
+    Receiver,
     Blocker,
     DefenderLeft,
     DefenderRight,

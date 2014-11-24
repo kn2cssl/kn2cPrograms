@@ -14,6 +14,7 @@ public:
     explicit Knowledge(WorldModel* wm, QObject *parent = 0);
     int CountActiveAgents();
     QList<int> ActiveAgents();
+    QList<int> ActiveOppAgents();
     QList<int> findNearestTo(Vector2D loc);
     int findOppAttacker();
 
@@ -32,6 +33,8 @@ public:
     Vector2D PredictDestination(Vector2D sourcePos, Vector2D targetPos, double sourceSpeed, Vector2D targetSpeed);
     bool ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold);
     bool ReachedToPos(Vector2D current, Vector2D desired, double distThreshold);
+
+    bool agentIsFree(int index);
 
 private:
     WorldModel* _wm;

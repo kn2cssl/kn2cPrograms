@@ -52,24 +52,24 @@ UI_DIR = ../tmp/.ui
 
 unix:  LIBS += -lprotobuf
 
-win32
-{
-    QMAKE_CXXFLAGS += -U__STRICT_ANSI__
-    LIBS += -L$$PWD/../ -lprotobuf
-    INCLUDEPATH += $$PWD/../
-    DEPENDPATH += $$PWD/../
+#win32
+#{
+#    QMAKE_CXXFLAGS += -U__STRICT_ANSI__
+#    LIBS += -L$$PWD/../ -lprotobuf
+#    INCLUDEPATH += $$PWD/../
+#    DEPENDPATH += $$PWD/../
 
 
-    INCLUDEPATH += C:/boost_1_55_0/
-    INCLUDEPATH += C:/boost_1_55_0/boost/
-#   INCLUDEPATH += C:/protobuf-2.5.0/src/
-    INCLUDEPATH += C:/protobuf-2.4.1/src/
+#    INCLUDEPATH += C:/boost_1_55_0/
+#    INCLUDEPATH += C:/boost_1_55_0/boost/
+##   INCLUDEPATH += C:/protobuf-2.5.0/src/
+#    INCLUDEPATH += C:/protobuf-2.4.1/src/
 
-    LIBS += -LC:/boost_1_55_0/lib
-#   LIBS += -lboost_serialization-mgw46-mt-d-1_55
-#   LIBS += -lboost_filesystem-mgw46-mt-d-1_55
-#   LIBS += -lboost_system-mgw46-mt-d-1_55
-}
+#    LIBS += -LC:/boost_1_55_0/lib
+##   LIBS += -lboost_serialization-mgw46-mt-d-1_55
+##   LIBS += -lboost_filesystem-mgw46-mt-d-1_55
+##   LIBS += -lboost_system-mgw46-mt-d-1_55
+#}
 
 INCLUDEPATH += ssl
 INCLUDEPATH += ssl/sslvision
@@ -160,7 +160,9 @@ SOURCES +=	main.cpp \
     ai/play/playtest2.cpp \
     ai/tactic/tacticfixedpos.cpp \
     ai/tactic/tactictechnical.cpp \
-    ai/tactic/tacticpenaltykicker.cpp
+    ai/tactic/tacticpenaltykicker.cpp \
+    ai/tactic/tactictest2.cpp \
+    ai/tactic/tactickicker.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -255,7 +257,9 @@ HEADERS  += \
     ai/play/playtest2.h \
     ai/tactic/tacticfixedpos.h \
     ai/tactic/tactictechnical.h \
-    ai/tactic/tacticpenaltykicker.h
+    ai/tactic/tacticpenaltykicker.h \
+    ai/tactic/tactictest2.h \
+    ai/tactic/tactickicker.h
 
 FORMS    +=	ui/mainwindow.ui
 
