@@ -22,6 +22,8 @@ private:
     QTimer timer;
     RenderArea *_render;
     Soccer* sc;
+    QString returnRole(AgentRole Role);
+    QString returnStatus(AgentStatus Status);
 
 private slots:
     void timer_timeout();
