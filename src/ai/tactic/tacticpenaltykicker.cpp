@@ -11,20 +11,25 @@ RobotCommand TacticPenaltyKicker::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    rc=goBehindBall();
+
 
     rc.maxSpeed=0.5;
     rc.useNav=true;
     rc.isBallObs=true;
     rc.isKickObs=true;
 
-    if(canKick)
+    if(wm->cmgs.canKickBall())
     {
-        rc.maxSpeed=0;
-        if(wm->cmgs.canKickBall())
+        rc=goBehindBall();
+        if(canKick)
         {
-            rc.kickspeedx=255;
+            rc.maxSpeed=0;
+            rc.kickspeedx=3;
         }
+    }
+    else
+    {
+        rc.fin_pos.loc = Field::oppGoalPenaltySpot;
     }
     return rc;
 }

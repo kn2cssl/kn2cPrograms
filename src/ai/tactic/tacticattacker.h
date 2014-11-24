@@ -16,8 +16,16 @@ public:
     void findValidRanges();
     RobotCommand goBehindBall();
     double findBestPoint();
+    int findBestPlayerForPass();
+
+    bool go;
+    int state;
 
 private:
+    bool kicker_canKick;
+    bool kicker_firstKick;
+    bool kicker_kicked;
+    QTimer *kicker_timer;
     QList<int> important_opp_agents;
     QList<int> important_our_agents;
     int numberOfInvalidRanges;
@@ -26,8 +34,13 @@ private:
     double valid_angle[12][2];
     double uGoal;
     double dGoal;
+
+    bool isFree(int index);
 protected:
     bool canKick;
+
+private slots:
+    void timerEvent();
 };
 
 #endif // TACTICATTACKER_H

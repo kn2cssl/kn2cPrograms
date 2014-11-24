@@ -52,7 +52,7 @@ void PlayStop::execute()
         switch (numberOfDef) {
         case 2:
             tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
+            tactics[activeAgents.takeFirst()]=tDefenderLeft;
             tactics[activeAgents.takeFirst()]=tStopMid;
             break;
         case 3:
@@ -66,7 +66,7 @@ void PlayStop::execute()
         switch (numberOfDef) {
         case 2:
             tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
+            tactics[activeAgents.takeFirst()]=tDefenderLeft;
             tactics[activeAgents.takeFirst()]=tStopLeft;
             tactics[activeAgents.takeFirst()]=tStopRight;
             break;
@@ -82,7 +82,7 @@ void PlayStop::execute()
         switch (numberOfDef) {
         case 2:
             tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
+            tactics[activeAgents.takeFirst()]=tDefenderLeft;
             tactics[activeAgents.takeFirst()]=tStopLeft;
             tactics[activeAgents.takeFirst()]=tStopRight;
             tactics[activeAgents.takeFirst()]=tStopMid;

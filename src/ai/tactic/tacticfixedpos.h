@@ -10,10 +10,10 @@ public:
     explicit TacticFixedPos(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
 
-    void SetPosition(Position p);
+    void SetFixedPosition(int p);
 
 private:
-    Position destination;
+    int position;
 };
 
 #endif // TACTICFIXEDPOS_H

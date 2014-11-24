@@ -7,6 +7,13 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     numberOfInvalidRanges=0;
     numberOfValidRanges=0;
     canKick=false;
+
+    //--------------------------------
+    kicker_canKick = false;
+    kicker_firstKick = false;
+    kicker_kicked = false;
+    kicker_timer = new QTimer();
+    connect(kicker_timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -14,19 +21,97 @@ RobotCommand TacticAttacker::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-//    canKick=false;
-    rc.maxSpeed = 1.5;
-
-    rc=goBehindBall();
-
-    if(canKick && wm->cmgs.canKickBall())
+    if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
     {
-        rc.kickspeedx=5;
+        rc.maxSpeed = 1.5;
+
+        rc=goBehindBall();
+
+        if(canKick && wm->cmgs.canKickBall())
+        {
+            rc.kickspeedx=5;
+        }
+
+        rc.useNav = true;
+        rc.isBallObs = false;
+        rc.isKickObs = true;
+
+    }
+    else if(wm->ourRobot[id].Status == AgentStatus::Passing)
+    {
+        rc.maxSpeed = 2;
+
+        if(!kicker_kicked)
+        {
+            if(!kicker_firstKick)
+            {
+                rc = goBehindBall();
+
+                if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
+                {
+                    kicker_timer->start(300);
+                    rc.kickspeedx = 2.5;//50;
+                    kicker_firstKick = true;
+                }
+            }
+            else
+            {
+                rc.fin_pos = wm->ourRobot[id].pos;
+            }
+        }
+        else
+        {
+            rc.fin_pos = wm->ourRobot[id].pos;
+        }
+
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
+    }
+    else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
+    {
+        canKick=false;
+        rc.maxSpeed = 2;
+
+        if(go)
+        {
+            if(state == 0)
+            {
+                Vector2D v;
+                v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
+                        wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
+                Position p = wm->kn->AdjustKickPoint(v, Field::oppGoalCenter);
+
+                rc.fin_pos = p;
+
+                if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
+                {
+                    rc.kickspeedx = 5;//150;
+                }
+            }
+            else if(state == 1)
+            {
+                rc = goBehindBall();
+                if(canKick)
+                {
+                    rc.kickspeedx = 5;
+                }
+            }
+        }
+        else
+        {
+            rc.fin_pos = wm->ourRobot[id].pos;
+        }
+
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
+    }
+    else if(wm->ourRobot[id].Status == AgentStatus::Idle)
+    {
+        rc.fin_pos = wm->ourRobot[id].pos;
     }
 
-    rc.useNav = true;
-    rc.isBallObs = false;
-    rc.isKickObs = true;
     return rc;
 }
 
@@ -161,11 +246,11 @@ RobotCommand TacticAttacker::goBehindBall()
     }
 
 
-   if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 20, 2))
-   {
-       double test=findBestPoint();
-       rc.fin_pos.dir=test;
-   }
+    if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 20, 2))
+    {
+        double test=findBestPoint();
+        rc.fin_pos.dir=test;
+    }
     rc.fin_pos.loc= {wm->ball.pos.loc.x-100*cos(deg),wm->ball.pos.loc.y-100*sin(deg)};
 
     if(wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 10, 4))
@@ -194,4 +279,70 @@ double TacticAttacker::findBestPoint()
     }
 
     return (valid_angle[index][0]+valid_angle[index][1])/2;
+}
+
+int TacticAttacker::findBestPlayerForPass()
+{
+    int index = -1;
+    double min = 10000;
+
+    QList<int> ourAgents = wm->kn->ActiveAgents();
+    QList<int> freeAgents;
+
+    while( !ourAgents.isEmpty() )
+    {
+        int index = ourAgents.takeFirst();
+        if(isFree(index))
+            freeAgents.append(index);
+   }
+
+    while ( !freeAgents.isEmpty() )
+    {
+        int i = freeAgents.takeFirst();
+        if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
+        {
+            if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
+            {
+                min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
+                index = i;
+            }
+        }
+    }
+    //qDebug()<<"Pass Receiver is "<<index;
+    return index;
+}
+
+bool TacticAttacker::isFree(int index)
+{
+    QList<int> oppAgents = wm->kn->ActiveOppAgents();
+    bool isFree = true;
+
+    while( !oppAgents.isEmpty() )
+    {
+        int indexOPP = oppAgents.takeFirst();
+        if( (wm->ourRobot[index].pos.loc-wm->oppRobot[indexOPP].pos.loc).length() < DangerDist)
+        {
+            isFree = false;
+        }
+
+        if(!isFree)
+            break;
+    }
+    return isFree;
+}
+
+void TacticAttacker::timerEvent()
+{
+    kicker_timer->stop();
+    if(kicker_firstKick)
+    {
+        if( (wm->ball.pos.loc-wm->ourRobot[id].pos.loc).length() > 200 )
+        {
+            kicker_kicked = true;
+        }
+        else
+        {
+            kicker_firstKick = false;
+        }
+    }
 }

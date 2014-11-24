@@ -10,7 +10,8 @@ RobotCommand TacticTestFriction::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    double speed = 1.5;
+//    qDebug() << " This Is The Friction Test Tactic !" ;
+    double speed = 1.2;
 
     if(wm->ball.isValid && wm->ball.pos.loc.x <-100 && wm->ball.pos.loc.x > -2000)
     {
@@ -28,7 +29,15 @@ RobotCommand TacticTestFriction::getCommand()
 
         rc.fin_pos = p;
 
-        if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
+        Vector2D R2B=wm->ball.pos.loc-wm->ourRobot[id].pos.loc;
+        double delta_ang=wm->ourRobot[id].pos.dir-R2B.dir().radian();
+        if (delta_ang > M_PI) delta_ang -= (M_PI * 2);
+        if (delta_ang < -M_PI) delta_ang += (M_PI * 2);
+
+        qDebug() << "Lenght To Ball : " << R2B.length();
+        qDebug() << "Delta Angle : " << AngleDeg::rad2deg(delta_ang);
+//        if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos,p,wm->ball.pos.loc))
+        if(fabs(delta_ang) < AngleDeg::deg2rad(20) && R2B.length() < 500)
         {
             qDebug() << "KIKKKIKIKIKIKIK " << wm->ball.pos.loc.x;
             rc.kickspeedx = 255;
@@ -40,7 +49,7 @@ RobotCommand TacticTestFriction::getCommand()
         rc.fin_pos.dir = AngleDeg::PI;
     }
 
-    rc.fin_pos.dir = (Field::ourGoalCenter - wm->ourRobot[id].pos.loc).dir().radian();
+    rc.fin_pos.dir = (Vector2D(-2500,0) - wm->ourRobot[id].pos.loc).dir().radian();
 
     rc.maxSpeed = speed;
 
