@@ -11,16 +11,23 @@ public:
     virtual void execute();
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
+private:
+    void initRole();
+    bool conditionChanged();
+    void setTactics(int index);
 
 private:
+    int numberOfDef;
+    int numberOfPlayer;
+    bool firstTimeInit;
+    bool freeKickStart;
     TacticGoalie*   tGolie;
-    TacticFixedPos* tFixedPosM;
-    TacticFixedPos* tFixedPosL;
-    TacticFixedPos* tFixedPosR;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
-    TacticAttacker* tAttacker;
+    TacticAttacker* tAttackerMid;
+    TacticAttacker* tAttackerLeft;
+    TacticAttacker* tAttackerRight;
 };
 
 #endif // PLAYFREEKICKOUR_H

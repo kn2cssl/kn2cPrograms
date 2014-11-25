@@ -20,3 +20,8 @@ void Tactic::setID(int id)
 {
     this->id = id;
 }
+
+int Tactic::getID()
+{
+    return this->id;
+}

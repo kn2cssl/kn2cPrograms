@@ -13,6 +13,7 @@ public:
     QString getName();
     virtual RobotCommand getCommand() = 0;
     void setID(int id);
+    int getID();
 
 protected:
     WorldModel *wm;

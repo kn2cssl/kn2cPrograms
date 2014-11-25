@@ -2,6 +2,7 @@
 #define PLAYSTOP_H
 
 #include "play.h"
+#include "QDebug"
 
 class PlayStop : public Play
 {

@@ -13,7 +13,8 @@ enum AgentStatus
     Kicking,
     FollowingBall,
     BlockingPass,
-    BlockingRobot
+    BlockingRobot,
+    RecievingPass
 };
 
 enum AgentRole
@@ -28,7 +29,6 @@ enum AgentRole
     AttackerLeft,
     AttackerRight,
     AttackerMid,
-    Receiver,
     Blocker,
     DefenderLeft,
     DefenderRight,
