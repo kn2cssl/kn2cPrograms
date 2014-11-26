@@ -24,23 +24,23 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
 }
 int PlayFreeKickOur::enterCondition()
 {
-    if(wm->cmgs.ourFreeKick() || wm->cmgs.ourIndirectKick())
-    {
-        if(wm->gs_last != wm->gs)
-        {
-            firstTimeInit = false;
-            freeKickStart = false;
-        }
-        else
-        {
-            firstTimeInit = conditionChanged();
-        }
-        return 100;
-    }
-    else
-        return 0;
-    return 0;
- //       return 2000000;
+//    if(wm->cmgs.ourFreeKick() || wm->cmgs.ourIndirectKick())
+//    {
+//        if(wm->gs_last != wm->gs)
+//        {
+//            firstTimeInit = false;
+//            freeKickStart = false;
+//        }
+//        else
+//        {
+//            firstTimeInit = conditionChanged();
+//        }
+//        return 100;
+//    }
+//    else
+//        return 0;
+//    return 0;
+        return 2000000;
 }
 
 void PlayFreeKickOur::initRole()

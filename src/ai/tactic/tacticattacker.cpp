@@ -22,13 +22,12 @@ RobotCommand TacticAttacker::getCommand()
 
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
-        canKick=false;
         rc.maxSpeed = 2;
 
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-        Position p = wm->kn->AdjustKickPoint(v, Field::oppGoalCenter);
+        Position p = wm->kn->AdjustKickPoint(v, findTarget());
 
         rc.fin_pos = p;
 
@@ -250,7 +249,6 @@ RobotCommand TacticAttacker::goBehindBall()
 RobotCommand TacticAttacker::goForKicking()
 {
     RobotCommand rc;
-    canKick=false;
 
     rc.maxSpeed = 1;
 

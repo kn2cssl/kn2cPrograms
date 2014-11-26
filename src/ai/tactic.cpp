@@ -25,3 +25,8 @@ int Tactic::getID()
 {
     return this->id;
 }
+
+Vector2D Tactic::findTarget()
+{
+    return Field::oppGoalCenter;
+}

@@ -14,6 +14,7 @@ public:
     virtual RobotCommand getCommand() = 0;
     void setID(int id);
     int getID();
+    Vector2D findTarget();
 
 protected:
     WorldModel *wm;
