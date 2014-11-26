@@ -15,6 +15,11 @@ int PlayFreeKickOpp::enterCondition()
     return 0;
 }
 
+void PlayFreeKickOpp::initRole()
+{
+
+}
+
 void PlayFreeKickOpp::execute()
 {
 }

@@ -21,6 +21,7 @@ private:
     TacticHalt* tHalt;
     TacticGoalie* tGoalie;
 
+    virtual void initRole();
 };
 
 #endif // PLAYTEST_H

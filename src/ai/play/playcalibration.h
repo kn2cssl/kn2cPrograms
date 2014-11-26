@@ -17,6 +17,9 @@ private:
     TacticTestFriction *t2;
     TacticTechnical     *tt;
 
+protected:
+    virtual void initRole();
+
 };
 
 #endif // PLAYCALIBRATION_H

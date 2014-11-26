@@ -12,7 +12,7 @@ public:
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
 private:
-    void initRole();
+    virtual void initRole();
     bool conditionChanged();
     void setTactics(int index);
 

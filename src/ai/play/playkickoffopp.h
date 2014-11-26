@@ -21,6 +21,8 @@ private:
     TacticDefender* tDefenderL;
     TacticDefender* tDefenderR;
     TacticDefender* tDefenderM;
+
+    virtual void initRole();
 };
 
 #endif // PLAYKICKOFFOPP_H

@@ -21,6 +21,9 @@ private:
     TacticFixedPos* tFixedPosM;
     TacticFixedPos* tFixedPosL;
     TacticFixedPos* tFixedPosR;
+
+protected:
+    virtual void initRole();
 };
 
 #endif // PLAYFREEKICKOPP_H

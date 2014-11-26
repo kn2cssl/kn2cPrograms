@@ -14,6 +14,11 @@ int PlayHalt::enterCondition()
         return 0;
 }
 
+void PlayHalt::initRole()
+{
+
+}
+
 void PlayHalt::execute()
 {
 

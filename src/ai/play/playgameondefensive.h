@@ -18,6 +18,8 @@ private:
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
     TacticAttacker* tAttackerMid;
+
+    virtual void initRole();
 };
 
 #endif // PLAYGAMEONDEFENSIVE_H

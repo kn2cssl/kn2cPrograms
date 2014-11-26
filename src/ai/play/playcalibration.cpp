@@ -20,6 +20,11 @@ int PlayCalibration::enterCondition()
     return 0;
 }
 
+void PlayCalibration::initRole()
+{
+
+}
+
 void PlayCalibration::execute()
 {
     tactics[4] = tt;

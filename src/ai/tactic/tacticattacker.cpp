@@ -78,7 +78,22 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
-        rc.fin_pos = wm->ourRobot[id].pos;
+        if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
+        {
+            if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
+            {
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalCC_L.y);
+            }
+            else if(wm->ourRobot[id].Role == AgentRole::AttackerRight)
+            {
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalCC_R.y);
+            }
+        }
+        else
+        {
+            qDebug()<<"Scream";
+            rc.fin_pos = wm->ourRobot[id].pos;
+        }
     }
 //  Just Added for Some Tests
 //    else

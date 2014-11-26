@@ -22,6 +22,9 @@ private:
     TacticStop* tStopMid;
     TacticStop* tStopLeft;
     TacticStop* tStopRight;
+
+    virtual void initRole();
+    void setTactics(int index);
 };
 
 #endif // PLAYSTOP_H

@@ -17,6 +17,11 @@ int PlayTest::enterCondition()
     return 0;
 }
 
+void PlayTest::initRole()
+{
+
+}
+
 void PlayTest::execute()
 {
 //    tPasser->setKickerID(1);

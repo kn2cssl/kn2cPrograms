@@ -15,6 +15,8 @@ public:
 private:
     TacticGoalie* tGolie;
     TacticCircle* tCircle;
+
+    virtual void initRole();
 };
 
 #endif // PLAYTEST2_H

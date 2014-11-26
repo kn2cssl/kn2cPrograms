@@ -14,6 +14,11 @@ int PlayTest2::enterCondition()
     return 0;
 }
 
+void PlayTest2::initRole()
+{
+
+}
+
 void PlayTest2::execute()
 {
     tactics[wm->ref_goalie_our] = tGolie;

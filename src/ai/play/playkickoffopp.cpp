@@ -30,6 +30,11 @@ int PlayKickoffOpp::enterCondition()
         return 0;
 }
 
+void PlayKickoffOpp::initRole()
+{
+
+}
+
 void PlayKickoffOpp::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();

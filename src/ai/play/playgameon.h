@@ -21,6 +21,8 @@ private:
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;
     TacticAttacker* tAttackerMid;
+
+    virtual void initRole();
 };
 
 #endif // PLAYGAMEON_H

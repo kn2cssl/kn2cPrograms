@@ -15,10 +15,12 @@ public:
     virtual Tactic* getTactic(int id);
     virtual int enterCondition() = 0;
 
+
 protected:
     WorldModel *wm;
     QString param;
     Tactic *tactics[PLAYERS_MAX_NUM];
+    virtual void initRole() = 0;
 
 private:
     QString name;

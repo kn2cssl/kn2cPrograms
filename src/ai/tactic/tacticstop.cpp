@@ -26,14 +26,14 @@ RobotCommand TacticStop::getCommand()
         alfa=-120.0*3.14/180;
     }
 
-    switch (position) {
-    case CENTER:
+    switch (wm->ourRobot[id].Role) {
+    case AgentRole::AttackerMid:
 
         break;
-    case RIGHT:
+    case AgentRole::AttackerRight:
         alfa-=DIFF;
         break;
-    case LEFT:
+    case AgentRole::AttackerLeft:
         alfa+=DIFF;
         break;
     }

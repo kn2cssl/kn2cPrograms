@@ -15,6 +15,11 @@ int PlayGameOnDefensive::enterCondition()
     return 0;
 }
 
+void PlayGameOnDefensive::initRole()
+{
+
+}
+
 void PlayGameOnDefensive::execute()
 {
 }

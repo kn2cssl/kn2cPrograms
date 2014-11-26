@@ -15,6 +15,11 @@ int PlayGameOn::enterCondition()
     return 0;
 }
 
+void PlayGameOn::initRole()
+{
+
+}
+
 void PlayGameOn::execute()
 {
 }

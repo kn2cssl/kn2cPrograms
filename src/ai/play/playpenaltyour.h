@@ -20,6 +20,8 @@ private:
     TacticGoalie* tGoalie;
     TacticHalt* tHalt;
 
+    virtual void initRole();
+
 };
 
 #endif // PLAYPENALTYOUR_H

@@ -25,6 +25,11 @@ int PlayPenaltyOur::enterCondition()
         return 0;
 }
 
+void PlayPenaltyOur::initRole()
+{
+
+}
+
 void PlayPenaltyOur::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
