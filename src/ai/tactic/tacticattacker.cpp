@@ -82,12 +82,15 @@ RobotCommand TacticAttacker::getCommand()
         {
             if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
             {
-                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalCC_L.y);
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_L.y+200);
             }
             else if(wm->ourRobot[id].Role == AgentRole::AttackerRight)
             {
-                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalCC_R.y);
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200);
             }
+            rc.useNav = true;
+            rc.isBallObs = true;
+            rc.isKickObs = true;
         }
         else
         {
