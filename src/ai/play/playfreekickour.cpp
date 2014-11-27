@@ -27,6 +27,7 @@ int PlayFreeKickOur::enterCondition()
         {
             firstTimeInit = false;
             freeKickStart = false;
+            tAttackerMid->kickedSucceccfully = false;
         }
         else
         {
@@ -37,7 +38,7 @@ int PlayFreeKickOur::enterCondition()
     else
         return 0;
     return 0;
-    //        return 2000000;
+           // return 2000000;
 }
 
 void PlayFreeKickOur::initRole()
@@ -144,23 +145,40 @@ void PlayFreeKickOur::execute()
         setTactics(activeAgents.at(i));
     }
 
-    if(!freeKickStart)
+//    if(!freeKickStart)
+//    {
+//        tAttackerMid->isKicker();
+//        activeAgents.removeOne(tAttackerMid->getID());
+//        int recieverID = tAttackerMid->findBestPlayerForPass();
+//        if(recieverID != -1)
+//        {
+//            if(tAttackerMid->kickedSucceccfully)
+//            {
+//                qDebug()<<"KICKER";
+//                wm->ourRobot[recieverID].Status = AgentStatus::FollowingBall;
+//                freeKickStart = true;
+//            }
+//            activeAgents.removeOne(recieverID);
+//        }
+//        while(activeAgents.size() > 0)
+//        {
+//            wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
+//        }
+//    }
+    tAttackerMid->isKicker();
+    activeAgents.removeOne(tAttackerMid->getID());
+    int recieverID = tAttackerMid->findBestPlayerForPass();
+    if(recieverID != -1)
     {
-        tAttackerMid->isKicker();
-        activeAgents.removeOne(tAttackerMid->getID());
-        int recieverID = tAttackerMid->findBestPlayerForPass();
-        if(recieverID != -1)
-        {
-            if(tAttackerMid->kickedSucceccfully)
-            {
-                wm->ourRobot[recieverID].Status = AgentStatus::FollowingBall;
-                freeKickStart = true;
-            }
-            activeAgents.removeOne(recieverID);
-        }
-        while(activeAgents.size() > 0)
-        {
-            wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
-        }
+//        if(tAttackerMid->kickedSucceccfully)
+//        {
+            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
+//            freeKickStart = true;
+//        }
+        activeAgents.removeOne(recieverID);
+    }
+    while(activeAgents.size() > 0)
+    {
+        wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
     }
 }

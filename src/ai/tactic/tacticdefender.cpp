@@ -32,6 +32,10 @@ RobotCommand TacticDefender::getCommand()
         rc.isKickObs = true;
 
     }
+    else if(wm->ourRobot[this->id].Status == AgentStatus::RecievingPass)
+    {
+        rc.fin_pos = wm->ourRobot[this->id].pos;
+    }
     else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingPass)
     {
 

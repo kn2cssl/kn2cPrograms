@@ -11,13 +11,13 @@ public:
     virtual void execute();
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
+    void setTactics(int index);
 
 private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
-    TacticBlocker*  tBlocker;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;
     TacticAttacker* tAttackerMid;

@@ -12,7 +12,7 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     kicker_firstKick = false;
     kickedSucceccfully = false;
     kicker_timer = new QTimer();
-    connect(kicker_timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
+    //connect(kicker_timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -39,7 +39,6 @@ RobotCommand TacticAttacker::getCommand()
         rc.useNav = false;
         rc.isBallObs = true;
         rc.isKickObs = true;
-
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Kicking)
     {
@@ -47,20 +46,12 @@ RobotCommand TacticAttacker::getCommand()
 
         if(!kickedSucceccfully)
         {
-            if(!kicker_firstKick)
-            {
-                rc = goForKicking();
+            rc = goForKicking();
 
-                if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
-                {
-                    kicker_timer->start(300);
-                    rc.kickspeedx = 2.5;//50;
-                    kicker_firstKick = true;
-                }
-            }
-            else
+            if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
             {
-                rc.fin_pos = wm->ourRobot[id].pos;
+                rc.kickspeedx = 2.5;//50;
+                kickedSucceccfully = true;
             }
         }
         else
@@ -68,15 +59,10 @@ RobotCommand TacticAttacker::getCommand()
             rc.fin_pos = wm->ourRobot[id].pos;
         }
 
-        //rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
-    {
-
-    }
-    else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
         if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
         {
@@ -92,28 +78,48 @@ RobotCommand TacticAttacker::getCommand()
             rc.isBallObs = true;
             rc.isKickObs = true;
         }
+    }
+    else if(wm->ourRobot[id].Status == AgentStatus::Idle)
+    {
+        if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
+        {
+            if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
+            {
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_L.y+200);
+            }
+            else if(wm->ourRobot[id].Role == AgentRole::AttackerRight)
+            {
+                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200);
+            }
+            else if(wm->ourRobot[id].Role == AgentRole::AttackerMid)
+            {
+                rc.fin_pos = wm->ourRobot[id].pos;
+            }
+            rc.useNav = true;
+            rc.isBallObs = true;
+            rc.isKickObs = true;
+        }
         else
         {
-            qDebug()<<"Scream";
             rc.fin_pos = wm->ourRobot[id].pos;
         }
     }
-//  Just Added for Some Tests
-//    else
-//    {
-//        rc.maxSpeed = 1.5;
+    //  Just Added for Some Tests
+    //    else
+    //    {
+    //        rc.maxSpeed = 1.5;
 
-//        rc=goBehindBall();
+    //        rc=goBehindBall();
 
-//        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && wm->cmgs.canKickBall())
-//        {
-//            rc.kickspeedx=5;
-//        }
+    //        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && wm->cmgs.canKickBall())
+    //        {
+    //            rc.kickspeedx=5;
+    //        }
 
-//        rc.useNav = true;
-//        rc.isBallObs = false;
-//        rc.isKickObs = true;
-//    }
+    //        rc.useNav = true;
+    //        rc.isBallObs = false;
+    //        rc.isKickObs = true;
+    //    }
 
     return rc;
 }
