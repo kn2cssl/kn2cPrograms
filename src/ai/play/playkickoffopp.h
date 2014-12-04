@@ -14,15 +14,17 @@ public:
 
 private:
     int numberOfDef;
+    int numberOfPlayer;
     TacticGoalie*   tGolie;
-    TacticFixedPos* tFixedPosM;
-    TacticFixedPos* tFixedPosL;
-    TacticFixedPos* tFixedPosR;
-    TacticDefender* tDefenderL;
-    TacticDefender* tDefenderR;
-    TacticDefender* tDefenderM;
+    TacticAttacker* tAttackerMid;
+    TacticAttacker* tAttackerLeft;
+    TacticAttacker* tAttackerRight;
+    TacticDefender* tDefenderLeft;
+    TacticDefender* tDefenderRight;
+    TacticDefender* tDefenderMid;
 
     virtual void initRole();
+    void setTactics(int index);
 };
 
 #endif // PLAYKICKOFFOPP_H

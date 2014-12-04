@@ -6,20 +6,14 @@ PlayKickoffOpp::PlayKickoffOpp(WorldModel *worldmodel, QObject *parent) :
     numberOfDef=NUMOFDEFENDERS;
 
     tGolie=new TacticGoalie(wm);
-    tDefenderM=new TacticDefender(wm);
-    tDefenderL=new TacticDefender(wm);
-    tDefenderR=new TacticDefender(wm);
-    tFixedPosM = new TacticFixedPos(wm);
-    tFixedPosL = new TacticFixedPos(wm);
-    tFixedPosR = new TacticFixedPos(wm);
 
-    tDefenderM->setDefenderPos(CENTER);
-    tDefenderL->setDefenderPos(LEFT);
-    tDefenderR->setDefenderPos(RIGHT);
+    tDefenderMid=new TacticDefender(wm);
+    tDefenderLeft=new TacticDefender(wm);
+    tDefenderRight=new TacticDefender(wm);
 
-    tFixedPosM->SetFixedPosition(CENTER);
-    tFixedPosL->SetFixedPosition(LEFT);
-    tFixedPosR->SetFixedPosition(RIGHT);
+    tAttackerLeft = new TacticAttacker(wm);
+    tAttackerMid = new TacticAttacker(wm);
+    tAttackerRight = new TacticAttacker(wm);
 }
 
 int PlayKickoffOpp::enterCondition()
@@ -32,72 +26,85 @@ int PlayKickoffOpp::enterCondition()
 
 void PlayKickoffOpp::initRole()
 {
+    QList<int> activeAgents=wm->kn->ActiveAgents();
+    numberOfPlayer = activeAgents.size();
+    activeAgents.removeOne(wm->ref_goalie_our);
+    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
+    switch (activeAgents.length()) {
+    case 1:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        break;
+    case 2:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+        break;
+    case 3:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        break;
+    case 4:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+        break;
+    case 5:
+        switch (numberOfDef) {
+        case 2:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        case 3:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+            break;
+        }
+        break;
+    }
+}
 
+void PlayKickoffOpp::setTactics(int index)
+{
+    switch (wm->ourRobot[index].Role) {
+    case AgentRole::Golie:
+        tactics[index] = tGolie;
+        break;
+    case AgentRole::DefenderMid:
+        tactics[index] = tDefenderMid;
+        break;
+    case AgentRole::DefenderLeft:
+        tactics[index] = tDefenderLeft;
+        break;
+    case AgentRole::DefenderRight:
+        tactics[index] = tDefenderRight;
+        break;
+    case AgentRole::AttackerMid:
+        tactics[index] = tAttackerMid;
+        break;
+    case AgentRole::AttackerRight:
+        tactics[index] = tAttackerRight;
+        break;
+    case AgentRole::AttackerLeft:
+        tactics[index] = tAttackerLeft;
+        break;
+    }
 }
 
 void PlayKickoffOpp::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    activeAgents.removeOne(wm->ref_goalie_our);
 
-    tactics[wm->ref_goalie_our]=tGolie;
+    initRole();
 
-    switch (activeAgents.length()) {
-
-    case 1:
-        tactics[activeAgents.takeFirst()]=tDefenderM;
-        break;
-    case 2:
-       tactics[activeAgents.takeFirst()]=tDefenderR;
-       tactics[activeAgents.takeFirst()]=tDefenderL;
-        break;
-    case 3:
-        switch (numberOfDef) {
-        case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tFixedPosM;
-            break;
-        case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tDefenderM;
-            break;
-        }
-        break;
-    case 4:
-        switch (numberOfDef) {
-        case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tFixedPosM;
-            tactics[activeAgents.takeFirst()]=tFixedPosR;
-            break;
-        case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderM;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tFixedPosM;
-            break;
-        }
-        break;
-    case 5:
-        switch (numberOfDef) {
-        case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tFixedPosR;
-            tactics[activeAgents.takeFirst()]=tFixedPosL;
-            tactics[activeAgents.takeFirst()]=tFixedPosM;
-            break;
-        case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderR;
-            tactics[activeAgents.takeFirst()]=tDefenderM;
-            tactics[activeAgents.takeFirst()]=tDefenderL;
-            tactics[activeAgents.takeFirst()]=tFixedPosR;
-            tactics[activeAgents.takeFirst()]=tFixedPosM;
-            break;
-        }
-        break;
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        setTactics(activeAgents.at(i));
     }
 }
