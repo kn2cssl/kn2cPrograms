@@ -82,7 +82,7 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
     for(int i=0; i<obs.size(); i++)
     {
         int    p_count = 6;
-        double p_dist  = ROBOT_RADIUS * 2 + BALL_RADIUS;
+        double p_dist  = ROBOT_RADIUS * 2 ;+ BALL_RADIUS;
 
         for(int j=0; j<p_count; j++)
         {
@@ -90,7 +90,20 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
             v.rotate(360/p_count * j);
             MapSearchNode node = obs[i].center() + v;
 
-            if(node.vec != parent) astarsearch->AddSuccessor(node);
+            bool checkNodeInterference = true;
+
+            for(int g=0;g<obs.size();g++)
+            {
+                if(obs[g].contains(node.vec))
+                {
+                    checkNodeInterference = false;
+                }
+            }
+
+            if(checkNodeInterference == true)
+            {
+                if(node.vec != parent) astarsearch->AddSuccessor(node);
+            }
         }
     }
 
@@ -129,13 +142,14 @@ QList<Circle2D> MapSearchNode::getObsCircle()
     QList<Circle2D> result;
 
     double b_rad = ROBOT_RADIUS + BALL_RADIUS;
-    double r_rad = ROBOT_RADIUS * 2;
+    double r_rad = ROBOT_RADIUS * 2 ;
 
     if(isBallObs && wm->ball.isValid)
     {
         Circle2D c(wm->ball.pos.loc, b_rad);
         result.append(c);
     }
+
 
     if(!isBallObs && isKickObs && wm->ball.isValid)
     {
@@ -167,6 +181,10 @@ QList<Circle2D> MapSearchNode::getObsCircle()
         Circle2D c(wm->oppRobot[i].pos.loc, r_rad);
         result.append(c);
     }
+
+    //    Circle2D c(Vector2D(0,0), 500);
+    //    result.append(c);
+    //    qDebug() << "Size Of Results :" << result.size();
 
     return result;
 }
