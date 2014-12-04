@@ -45,7 +45,7 @@ RobotCommand TacticAttacker::getCommand()
         {
             if(wm->gs == STATE_Indirect_Free_kick_Our)
             {
-                rc = goForKicking();
+               rc = goForKicking();
             }
             else if(wm->gs == STATE_Free_kick_Our)
             {
