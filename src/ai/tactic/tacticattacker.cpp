@@ -9,10 +9,7 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     canKick=false;
 
     //--------------------------------
-    kicker_firstKick = false;
     kickedSucceccfully = false;
-    kicker_timer = new QTimer();
-    //connect(kicker_timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -46,11 +43,24 @@ RobotCommand TacticAttacker::getCommand()
 
         if(!kickedSucceccfully)
         {
-            rc = goForKicking();
+            if(wm->gs == STATE_Indirect_Free_kick_Our)
+            {
+                rc = goForKicking();
+            }
+            else if(wm->gs == STATE_Free_kick_Our)
+            {
+                //Check For direct Goal
+               rc = goForKicking();
+            }
+            else if(wm->gs == STATE_Start)
+            {
+                rc = goForStarting();
+            }
 
             if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
             {
-                rc.kickspeedx = 2.5;//50;
+                //rc.kickspeedz = 2.5;//50;
+                rc.kickspeedx = detectKickSpeed();//2.5;//50;
                 kickedSucceccfully = true;
             }
         }
@@ -61,6 +71,7 @@ RobotCommand TacticAttacker::getCommand()
 
         rc.isBallObs = true;
         rc.isKickObs = true;
+
     }
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
     {
@@ -95,6 +106,26 @@ RobotCommand TacticAttacker::getCommand()
             {
                 rc.fin_pos = wm->ourRobot[id].pos;
             }
+            rc.useNav = true;
+            rc.isBallObs = true;
+            rc.isKickObs = true;
+        }
+        else if(wm->gs == GameStateType::STATE_Kick_off_Our || wm->gs == GameStateType::STATE_Kick_off_Opp)
+        {
+            rc.maxSpeed = 1;
+            switch(wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::AttackerMid:
+                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 0);
+                break;
+            case AgentRole::AttackerRight:
+                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 1550);
+                break;
+            case AgentRole::AttackerLeft:
+                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , -1550);
+                break;
+            }
+
             rc.useNav = true;
             rc.isBallObs = true;
             rc.isKickObs = true;
@@ -244,7 +275,7 @@ RobotCommand TacticAttacker::goBehindBall()
     RobotCommand rc;
     canKick=false;
 
-    rc.maxSpeed = 2;
+    rc.maxSpeed = 1;
 
     float deg=atan((0-wm->ball.pos.loc.y)/(3025-wm->ball.pos.loc.x));
 
@@ -293,6 +324,28 @@ RobotCommand TacticAttacker::goForKicking()
             rc.useNav = true;
         }
     }
+
+    return rc;
+}
+
+RobotCommand TacticAttacker::goForStarting()
+{
+    RobotCommand rc;
+
+    rc.maxSpeed = 0.5;
+
+    Vector2D target(Field::oppGoalCenter.x,Field::oppGoalCenter.y);
+    //Vector2D goal(target.x+500*cos(target.dir().DEG2RAD),target.y+500*sin(target.dir().DEG2RAD));
+    rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
+
+//    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 100)
+//    {
+//        rc.useNav = false;
+//    }
+//    else
+//    {
+        rc.useNav = true;
+//    }
 
     return rc;
 }
@@ -353,6 +406,46 @@ void TacticAttacker::isKicker()
     wm->ourRobot[this->id].Status = AgentStatus::Kicking;
 }
 
+float TacticAttacker::detectKickSpeed(Vector2D dest )
+{
+    float kickSpeed;
+
+    if(wm->isSim)
+    {
+        switch (wm->gs ) {
+        case STATE_Free_kick_Our:
+            kickSpeed = 2.5; //Should Changed
+            break;
+        case STATE_Indirect_Free_kick_Our:
+            kickSpeed = 2.5; //Should Changed
+            break;
+        case STATE_Start:
+            kickSpeed = 5; //Should Changed
+            break;
+        default:
+            break;
+        }
+    }
+    else
+    {
+        switch (wm->gs ) {
+        case STATE_Free_kick_Our:
+            kickSpeed = 50; //Should Changed
+            break;
+        case STATE_Indirect_Free_kick_Our:
+            kickSpeed = 50; //Should Changed
+            break;
+        case STATE_Start:
+            kickSpeed = 150; //Should Changed
+            break;
+        default:
+            break;
+        }
+    }
+
+    return kickSpeed;
+}
+
 bool TacticAttacker::isFree(int index)
 {
     QList<int> oppAgents = wm->kn->ActiveOppAgents();
@@ -370,20 +463,4 @@ bool TacticAttacker::isFree(int index)
             break;
     }
     return isFree;
-}
-
-void TacticAttacker::timerEvent()
-{
-    kicker_timer->stop();
-    if(kicker_firstKick)
-    {
-        if( (wm->ball.pos.loc-wm->ourRobot[id].pos.loc).length() > 200 )
-        {
-            kickedSucceccfully = true;
-        }
-        else
-        {
-            kicker_firstKick = false;
-        }
-    }
 }

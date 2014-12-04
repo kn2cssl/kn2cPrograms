@@ -16,15 +16,15 @@ public:
     void findValidRanges();
     RobotCommand goBehindBall();
     RobotCommand goForKicking();
+    RobotCommand goForStarting();
     double findBestPoint();
     int findBestPlayerForPass();
     void isKicker();
+    float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
 
     bool kickedSucceccfully;
 
 private:
-    bool kicker_firstKick;
-    QTimer *kicker_timer;
     QList<int> important_opp_agents;
     QList<int> important_our_agents;
     int numberOfInvalidRanges;
@@ -37,9 +37,6 @@ private:
     bool isFree(int index);
 protected:
     bool canKick;
-
-private slots:
-    void timerEvent();
 };
 
 #endif // TACTICATTACKER_H

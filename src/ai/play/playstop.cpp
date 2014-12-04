@@ -6,20 +6,14 @@ PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
     numberOfDef=NUMOFDEFENDERS;
 
     tGolie=new TacticGoalie(wm);
+
     tDefenderMid=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
+
     tStopMid=new TacticStop(wm);
     tStopLeft=new TacticStop(wm);
     tStopRight=new TacticStop(wm);
-
-    tDefenderMid->setDefenderPos(CENTER);
-    tDefenderLeft->setDefenderPos(LEFT);
-    tDefenderRight->setDefenderPos(RIGHT);
-
-    tStopMid->setStopPosition(CENTER);
-    tStopLeft->setStopPosition(LEFT);
-    tStopRight->setStopPosition(RIGHT);
 }
 
 int PlayStop::enterCondition()
@@ -81,9 +75,9 @@ void PlayStop::initRole()
         case 2:
             wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
             wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
             wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
             wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
             break;
         case 3:
             wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
