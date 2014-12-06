@@ -24,6 +24,8 @@ public:
 
     bool kickedSucceccfully;
 
+    void setPlayerToKeep(int index);
+
 private:
     QList<int> important_opp_agents;
     QList<int> important_our_agents;
@@ -33,6 +35,8 @@ private:
     double valid_angle[12][2];
     double uGoal;
     double dGoal;
+
+    int playerToKeep;
 
     bool isFree(int index);
 protected:

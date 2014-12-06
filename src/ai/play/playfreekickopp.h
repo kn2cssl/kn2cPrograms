@@ -13,17 +13,20 @@ public:
     virtual int enterCondition();
 
 private:
+    int numberOfDef;
+    int numberOfPlayer;
+
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
-    TacticBlocker*  tBlocker;
-    TacticFixedPos* tFixedPosM;
-    TacticFixedPos* tFixedPosL;
-    TacticFixedPos* tFixedPosR;
+    TacticAttacker* tAttackerMid;
+    TacticAttacker* tAttackerLeft;
+    TacticAttacker* tAttackerRight;
 
 protected:
     virtual void initRole();
+    void setTactics(int index);
 };
 
 #endif // PLAYFREEKICKOPP_H

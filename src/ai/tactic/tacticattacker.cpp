@@ -90,6 +90,21 @@ RobotCommand TacticAttacker::getCommand()
             rc.isKickObs = true;
         }
     }
+    else if(wm->ourRobot[id].Status == AgentStatus::BlockingRobot)
+    {
+        qDebug()<<"playerToKeep for index "<<this->id<<" is "<<playerToKeep;
+        AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
+        Position final;
+        final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
+        final.loc.y = wm->oppRobot[playerToKeep].pos.loc.y - (300*sin(desiredDeg.radian()));
+        final.dir = desiredDeg.radian();
+        rc.fin_pos = final;
+
+        rc.maxSpeed = 1.5;
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
+    }
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
         if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
@@ -444,6 +459,11 @@ float TacticAttacker::detectKickSpeed(Vector2D dest )
     }
 
     return kickSpeed;
+}
+
+void TacticAttacker::setPlayerToKeep(int index)
+{
+    this->playerToKeep = index;
 }
 
 bool TacticAttacker::isFree(int index)
