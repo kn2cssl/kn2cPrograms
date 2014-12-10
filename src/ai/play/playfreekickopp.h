@@ -13,8 +13,7 @@ public:
     virtual int enterCondition();
 
 private:
-    int numberOfDef;
-    int numberOfPlayer;
+    bool pressingIsInit;
 
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
@@ -26,6 +25,7 @@ private:
 
 protected:
     virtual void initRole();
+    void initPressing();
     void setTactics(int index);
 };
 

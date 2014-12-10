@@ -2,7 +2,6 @@
 #define TACTICTEST_H
 
 #include "tactic.h"
-#define DangerDist 300
 
 class TacticTest : public Tactic
 {

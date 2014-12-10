@@ -3,8 +3,6 @@
 PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
     Play("PlayStop", worldmodel, parent)
 {
-    numberOfDef=NUMOFDEFENDERS;
-
     tGolie=new TacticGoalie(wm);
 
     tDefenderMid=new TacticDefender(wm);

@@ -13,8 +13,6 @@ public:
     virtual int enterCondition();
 
 private:
-    int numberOfDef;
-    int numberOfPlayer;
     TacticGoalie*   tGolie;
     TacticAttacker* tAttackerMid;
     TacticAttacker* tAttackerLeft;

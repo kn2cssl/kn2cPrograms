@@ -3,8 +3,6 @@
 PlayPenaltyOur::PlayPenaltyOur(WorldModel *worldmodel, QObject *parent) :
     Play("PlayPenaltyOur", worldmodel, parent)
 {
-    numberOfDef=NUMOFDEFENDERS;
-
     tGoalie=new TacticGoalie(wm);
     tDefenderMid=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);

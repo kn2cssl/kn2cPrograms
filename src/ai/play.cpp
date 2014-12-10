@@ -7,6 +7,10 @@ Play::Play(QString name, WorldModel *worldmodel, QObject *parent) :
     wm = worldmodel;
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
         tactics[i] = NULL;
+
+    numberOfDef = NUMOFDEFENDERS;
+
+    rolesIsInit = false;
 }
 
 QString Play::getName()
@@ -21,4 +25,16 @@ Tactic* Play::getTactic(int id)
 {
     if(id >= PLAYERS_MAX_NUM || id < 0) return NULL;
     return tactics[id];
+}
+
+bool Play::conditionChanged()
+{
+    bool out;
+    QList<int> activeAgents=wm->kn->ActiveAgents();
+    if(activeAgents.size() != numberOfPlayer)
+    {
+        numberOfPlayer = activeAgents.size();
+        out = false;
+    }
+    return out;
 }

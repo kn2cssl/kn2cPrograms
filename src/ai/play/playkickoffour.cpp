@@ -3,8 +3,6 @@
 PlayKickoffOur::PlayKickoffOur(WorldModel *worldmodel, QObject *parent) :
     Play("PlayKickoffOur", worldmodel, parent)
 {
-    numberOfDef=NUMOFDEFENDERS;
-
     tGolie=new TacticGoalie(wm);
 
     tDefenderMid=new TacticDefender(wm);

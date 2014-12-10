@@ -3,8 +3,6 @@
 PlayKickoffOpp::PlayKickoffOpp(WorldModel *worldmodel, QObject *parent) :
     Play("PlayKickoffOpp", worldmodel, parent)
 {
-    numberOfDef=NUMOFDEFENDERS;
-
     tGolie=new TacticGoalie(wm);
 
     tDefenderMid=new TacticDefender(wm);
@@ -93,6 +91,8 @@ void PlayKickoffOpp::setTactics(int index)
         break;
     case AgentRole::AttackerLeft:
         tactics[index] = tAttackerLeft;
+        break;
+    default:
         break;
     }
 }

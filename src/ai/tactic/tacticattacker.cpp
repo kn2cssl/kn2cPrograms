@@ -100,7 +100,7 @@ RobotCommand TacticAttacker::getCommand()
         final.dir = desiredDeg.radian();
         rc.fin_pos = final;
 
-        rc.maxSpeed = 1.5;
+        rc.maxSpeed = 2;
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -138,6 +138,8 @@ RobotCommand TacticAttacker::getCommand()
                 break;
             case AgentRole::AttackerLeft:
                 rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , -1550);
+                break;
+            default:
                 break;
             }
 

@@ -13,12 +13,9 @@ public:
     virtual int enterCondition();
 private:
     virtual void initRole();
-    bool conditionChanged();
     void setTactics(int index);
 
 private:
-    int numberOfDef;
-    int numberOfPlayer;
     bool firstTimeInit;
     bool freeKickStart;
     TacticGoalie*   tGolie;

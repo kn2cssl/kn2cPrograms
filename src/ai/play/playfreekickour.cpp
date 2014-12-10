@@ -2,15 +2,13 @@
 PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     Play("PlayFreeKickOur", worldmodel, parent)
 {
-    firstTimeInit = false;
-
     freeKickStart = false;
 
     numberOfPlayer = 0;
 
     tGolie = new TacticGoalie(wm);
 
-    numberOfDef = NUMOFDEFENDERS;
+    //numberOfDef = NUMOFDEFENDERS;
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
     tDefenderMid = new TacticDefender(wm);
@@ -25,13 +23,13 @@ int PlayFreeKickOur::enterCondition()
     {
         if(wm->gs_last != wm->gs)
         {
-            firstTimeInit = false;
+            rolesIsInit = false;
             freeKickStart = false;
             tAttackerMid->kickedSucceccfully = false;
         }
         else
         {
-            firstTimeInit = conditionChanged();
+            rolesIsInit = conditionChanged();
         }
         return 100;
     }
@@ -89,19 +87,7 @@ void PlayFreeKickOur::initRole()
         }
         break;
     }
-    firstTimeInit = true;
-}
-
-bool PlayFreeKickOur::conditionChanged()
-{
-    bool out;
-    QList<int> activeAgents=wm->kn->ActiveAgents();
-    if(activeAgents.size() != numberOfPlayer)
-    {
-        numberOfPlayer = activeAgents.size();
-        out = false;
-    }
-    return out;
+    rolesIsInit = true;
 }
 
 void PlayFreeKickOur::setTactics(int index)
@@ -135,7 +121,7 @@ void PlayFreeKickOur::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!firstTimeInit)
+    if(!rolesIsInit)
     {
         initRole();
     }
