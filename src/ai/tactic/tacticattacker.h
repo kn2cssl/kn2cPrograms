@@ -15,16 +15,20 @@ public:
     void sortInvalidRanges();
     void findValidRanges();
     RobotCommand goBehindBall();
-    RobotCommand goForKicking();
-    RobotCommand goForStarting();
+    RobotCommand KickTheBall();
+    RobotCommand StartTheGame();
     double findBestPoint();
     int findBestPlayerForPass();
     void isKicker();
     float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
 
+    void waitTimerStart();
+
     bool kickedSucceccfully;
 
     void setPlayerToKeep(int index);
+
+    bool everyOneInTheirPos;
 
 private:
     QList<int> important_opp_agents;
@@ -37,8 +41,12 @@ private:
     double dGoal;
 
     int playerToKeep;
+    QTimer *waitTimer;
 
     bool isFree(int index);
+
+private slots:
+    void dontWait();
 protected:
     bool canKick;
 };

@@ -55,7 +55,7 @@ const Line2D bottomLine(Vector2D(MinX, MinY), Vector2D(MaxX, MinY));
 
 const double centerCircle_R = 500;
 const double goalCircle_R = 800;
-const double goalCircleEX_R = 800 + 3*ROBOT_RADIUS + 20;
+const double goalCircleEX_R = 400 + 3*ROBOT_RADIUS + 20;
 const double goalCircleDEF_R = goalCircleEX_R + 400;
 
 // Ours.

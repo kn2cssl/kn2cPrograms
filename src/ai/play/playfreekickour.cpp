@@ -8,7 +8,6 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
 
     tGolie = new TacticGoalie(wm);
 
-    //numberOfDef = NUMOFDEFENDERS;
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
     tDefenderMid = new TacticDefender(wm);
@@ -152,6 +151,13 @@ void PlayFreeKickOur::execute()
 //        }
 //    }
     tAttackerMid->isKicker();
+
+    if(!freeKickStart)
+    {
+        tAttackerMid->waitTimerStart();
+        freeKickStart = true;
+    }
+
     activeAgents.removeOne(tAttackerMid->getID());
     int recieverID = tAttackerMid->findBestPlayerForPass();
     if(recieverID != -1)

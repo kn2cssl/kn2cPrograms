@@ -21,21 +21,21 @@ PlayFreeKickOpp::PlayFreeKickOpp(WorldModel *worldmodel, QObject *parent) :
 
 int PlayFreeKickOpp::enterCondition()
 {
-//    if(wm->cmgs.theiFreeKick() || wm->cmgs.theirDirectKick())
-//    {
-//        if(wm->gs_last != wm->gs)
-//        {
-//            rolesIsInit = false;
-//        }
-//        else
-//        {
-//            rolesIsInit = conditionChanged();
-//        }
-//        return 100;
-//    }
-//    else
-//        return 0;
-    return 200000;
+    if(wm->cmgs.theiFreeKick() || wm->cmgs.theirDirectKick())
+    {
+        if(wm->gs_last != wm->gs)
+        {
+            rolesIsInit = false;
+        }
+        else
+        {
+            rolesIsInit = conditionChanged();
+        }
+        return 100;
+    }
+    else
+        return 0;
+//    return 200000;
 }
 
 void PlayFreeKickOpp::initRole()

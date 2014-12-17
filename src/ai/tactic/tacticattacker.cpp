@@ -8,8 +8,11 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     numberOfValidRanges=0;
     canKick=false;
 
-    //--------------------------------
     kickedSucceccfully = false;
+    everyOneInTheirPos = false;
+
+    waitTimer = new QTimer();
+    connect(waitTimer,SIGNAL(timeout()),this,SLOT(dontWait()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -45,23 +48,16 @@ RobotCommand TacticAttacker::getCommand()
         {
             if(wm->gs == STATE_Indirect_Free_kick_Our)
             {
-               rc = goForKicking();
+                rc = KickTheBall();
             }
             else if(wm->gs == STATE_Free_kick_Our)
             {
                 //Check For direct Goal
-               rc = goForKicking();
+                rc = KickTheBall();
             }
             else if(wm->gs == STATE_Start)
             {
-                rc = goForStarting();
-            }
-
-            if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
-            {
-                //rc.kickspeedz = 2.5;//50;
-                rc.kickspeedx = detectKickSpeed();//2.5;//50;
-                kickedSucceccfully = true;
+                rc = StartTheGame();
             }
         }
         else
@@ -318,7 +314,7 @@ RobotCommand TacticAttacker::goBehindBall()
     return rc;
 }
 
-RobotCommand TacticAttacker::goForKicking()
+RobotCommand TacticAttacker::KickTheBall()
 {
     RobotCommand rc;
 
@@ -329,23 +325,39 @@ RobotCommand TacticAttacker::goForKicking()
     if(index != -1)
     {
         Vector2D target(wm->ourRobot[index].pos.loc.x,wm->ourRobot[index].pos.loc.y);
-        Vector2D goal(target.x+500*cos(target.dir().DEG2RAD),target.y+500*sin(target.dir().DEG2RAD));
+        Vector2D goal(target.x+300*cos(target.dir().DEG2RAD),target.y+300*sin(target.dir().DEG2RAD));
         rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,goal);
+
+        if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
+        {
+            if(!everyOneInTheirPos)
+            {
+                rc.maxSpeed = 0;
+            }
+        }
 
         if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 100)
         {
+            //qDebug()<<"useNav:"<<false;
             rc.useNav = false;
         }
         else
         {
+            //qDebug()<<"useNav:"<<true;
             rc.useNav = true;
         }
+    }
+
+    if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
+    {
+        rc.kickspeedx = detectKickSpeed();//2.5;//50;
+        kickedSucceccfully = true;
     }
 
     return rc;
 }
 
-RobotCommand TacticAttacker::goForStarting()
+RobotCommand TacticAttacker::StartTheGame()
 {
     RobotCommand rc;
 
@@ -355,14 +367,21 @@ RobotCommand TacticAttacker::goForStarting()
     //Vector2D goal(target.x+500*cos(target.dir().DEG2RAD),target.y+500*sin(target.dir().DEG2RAD));
     rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
 
-//    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 100)
-//    {
-//        rc.useNav = false;
-//    }
-//    else
-//    {
-        rc.useNav = true;
-//    }
+    //    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 100)
+    //    {
+    //        rc.useNav = false;
+    //    }
+    //    else
+    //    {
+    rc.useNav = true;
+    //    }
+
+    if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
+    {
+        //rc.kickspeedz = 2.5;//50;
+        rc.kickspeedx = detectKickSpeed();//2.5;//50;
+        kickedSucceccfully = true;
+    }
 
     return rc;
 }
@@ -463,6 +482,12 @@ float TacticAttacker::detectKickSpeed(Vector2D dest )
     return kickSpeed;
 }
 
+void TacticAttacker::waitTimerStart()
+{
+    everyOneInTheirPos = false;
+    waitTimer->start(4000);
+}
+
 void TacticAttacker::setPlayerToKeep(int index)
 {
     this->playerToKeep = index;
@@ -485,4 +510,10 @@ bool TacticAttacker::isFree(int index)
             break;
     }
     return isFree;
+}
+
+void TacticAttacker::dontWait()
+{
+    everyOneInTheirPos = true;
+    waitTimer->stop();
 }
