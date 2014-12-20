@@ -30,12 +30,37 @@ RobotCommand TacticGoalie::getCommand()
         }
         //qDebug()<<ballDeg*180.0/3.14<<beta<<alpha<<dtgc;
 
-
-        rc.maxSpeed=7;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
+
+        if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc))
+        {
+            Vector2D target;
+            if(wm->ball.pos.loc.y >= 0)
+            {
+                target = target.assign(wm->ball.pos.loc.x,Field::MaxY);
+            }
+            else
+            {
+                target = target.assign(wm->ball.pos.loc.x,Field::MinY);
+            }
+            rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
+
+            if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
+            {
+                //Maybe Sometimes we have chip...
+                //rc.kickspeedz = 2.5;//50;
+                rc.kickspeedx = 2.5;//50;
+            }
+            rc.useNav = false;
+        }
+
+
+        if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
+            rc.maxSpeed = 2;
+        else
+            rc.maxSpeed = 7;
 
         return rc;
 }
