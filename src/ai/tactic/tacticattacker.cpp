@@ -94,7 +94,37 @@ RobotCommand TacticAttacker::getCommand()
         final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
         final.loc.y = wm->oppRobot[playerToKeep].pos.loc.y - (300*sin(desiredDeg.radian()));
         final.dir = desiredDeg.radian();
-        rc.fin_pos = final;
+
+        if( wm->gs == GameStateType::STATE_Free_kick_Opp || wm->gs == GameStateType::STATE_Indirect_Free_kick_Opp)
+        {
+            if( wm->kn->IsInsideSecureArea(final.loc,wm->ball.pos.loc) )
+            {
+                Vector2D fstInt,secInt;
+                Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+                Line2D connectedLine(wm->ball.pos.loc,final.loc);
+                int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
+
+                if( numberOfIntersections == 2 )
+                {
+                    if( (fstInt-final.loc).length() > (secInt-final.loc).length() )
+                        rc.fin_pos.loc = secInt;
+                    else
+                        rc.fin_pos.loc = fstInt;
+                }
+                else if( numberOfIntersections == 1 )
+                {
+                    rc.fin_pos.loc = fstInt;
+                }
+                else
+                    rc.fin_pos = wm->ourRobot[this->id].pos;
+            }
+            else
+            {
+                rc.fin_pos = final;
+            }
+        }
+
+        //qDebug()<<"index"<<this->id<<".fin_pos:"<<rc.fin_pos.loc.x<<","<<rc.fin_pos.loc.y;
 
         rc.maxSpeed = 2;
         rc.useNav = true;
@@ -120,6 +150,41 @@ RobotCommand TacticAttacker::getCommand()
             rc.useNav = true;
             rc.isBallObs = true;
             rc.isKickObs = true;
+        }
+        else if(wm->gs == GameStateType::STATE_Free_kick_Opp || wm->gs == GameStateType::STATE_Indirect_Free_kick_Opp)
+        {
+            Vector2D finalPos;
+            double m;
+            double alfa;
+            m=-(Field::ourGoalCenter.y-wm->ball.pos.loc.y)/(Field::ourGoalCenter.x-wm->ball.pos.loc.x);
+            alfa=atan(m);
+
+            if(alfa>75.0*3.14/180)
+            {
+                alfa=120.0*3.14/180;
+            }
+
+            if(alfa<-75.0*3.14/180)
+            {
+                alfa=-120.0*3.14/180;
+            }
+
+            switch (wm->ourRobot[id].Role) {
+            case AgentRole::AttackerMid:
+
+                break;
+            case AgentRole::AttackerRight:
+                alfa-=AngleDeg::PI/10;
+                break;
+            case AgentRole::AttackerLeft:
+                alfa+=AngleDeg::PI/10;
+                break;
+            }
+            finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
+            finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+
+            rc.fin_pos.loc=finalPos;
+            rc.maxSpeed=1;
         }
         else if(wm->gs == GameStateType::STATE_Kick_off_Our || wm->gs == GameStateType::STATE_Kick_off_Opp)
         {

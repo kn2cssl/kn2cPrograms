@@ -12,6 +12,7 @@ public:
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
     void setTactics(int index);
+    void initPressing();
 
 private:
     TacticGoalie*   tGolie;

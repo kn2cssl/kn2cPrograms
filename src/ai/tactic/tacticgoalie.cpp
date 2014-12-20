@@ -13,7 +13,6 @@ RobotCommand TacticGoalie::getCommand()
         double ballDir;
         double yInGoal;
 
-
         //Geometric calculations
         ballDeg=atan((wm->ball.pos.loc.y-0.0)/(wm->ball.pos.loc.x+(float)(FIELD_MAX_X)));
         ballDir=(float)(wm->ball.vel.loc.y)/(float)(wm->ball.vel.loc.x);

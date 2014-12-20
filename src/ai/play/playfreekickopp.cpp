@@ -23,19 +23,21 @@ int PlayFreeKickOpp::enterCondition()
 {
     if(wm->cmgs.theiFreeKick() || wm->cmgs.theirDirectKick())
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-        }
-        else
-        {
-            rolesIsInit = conditionChanged();
-        }
+        //        if(wm->gs_last != wm->gs)
+        //        {
+        //            rolesIsInit = false;
+        //        }
+        //        else
+        //        {
+        //            rolesIsInit = conditionChanged();
+        //        }
         return 100;
     }
     else
+    {
         return 0;
-//    return 200000;
+    }
+//        return 200000;
 }
 
 void PlayFreeKickOpp::initRole()
@@ -87,9 +89,17 @@ void PlayFreeKickOpp::initRole()
 
 void PlayFreeKickOpp::initPressing()
 {
-    qDebug() << "initPressing()";
     QList<int> oppAgents = wm->kn->ActiveOppAgents();
     oppAgents.removeOne(wm->ref_goalie_opp);
+
+    for(int i=0;i<oppAgents.size();i++)
+    {
+        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppAgents.at(i)].pos.loc,wm->ball.pos.loc) )
+        {
+            oppAgents.removeAt(i);
+        }
+    }
+
     for(int i=0;i<oppAgents.size();i++)
     {
         for(int j=0;j<oppAgents.size();j++)
@@ -101,15 +111,37 @@ void PlayFreeKickOpp::initPressing()
         }
     }
 
-    tAttackerMid->setPlayerToKeep(oppAgents.takeLast());
-    wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::BlockingRobot;
-    tAttackerLeft->setPlayerToKeep(oppAgents.takeLast());
-    wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::BlockingRobot;
-    tAttackerRight->setPlayerToKeep(oppAgents.takeLast());
-    wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::BlockingRobot;
+    if(!oppAgents.isEmpty())
+    {
+        tAttackerMid->setPlayerToKeep(oppAgents.takeLast());
+        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::BlockingRobot;
+    }
+    else
+    {
+        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::Idle;
+    }
+
+    if(!oppAgents.isEmpty())
+    {
+        tAttackerLeft->setPlayerToKeep(oppAgents.takeLast());
+        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::BlockingRobot;
+    }
+    else
+    {
+        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::Idle;
+    }
+
+    if(!oppAgents.isEmpty())
+    {
+        tAttackerRight->setPlayerToKeep(oppAgents.takeLast());
+        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::BlockingRobot;
+    }
+    else
+    {
+        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::Idle;
+    }
 
     pressingIsInit = true;
-    qDebug()<<"end of pressingInit";
 }
 
 void PlayFreeKickOpp::setTactics(int index)
@@ -152,4 +184,5 @@ void PlayFreeKickOpp::execute()
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
+
 }

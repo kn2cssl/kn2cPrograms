@@ -71,6 +71,14 @@ bool Knowledge::IsInsideRect(Vector2D pos, Vector2D topLeft, Vector2D bottomRigh
             pos.y > bottomRight.y && pos.y < topLeft.y);
 }
 
+bool Knowledge::IsInsideCircle(Vector2D pos, Vector2D center, double radios)
+{
+    if( (pos-center).length() < radios )
+        return true;
+    else
+        return false;
+}
+
 void Knowledge::ClampToRect(Vector2D *pos, Vector2D topLeft, Vector2D bottomRight)
 {
     if(pos->x > bottomRight.x)
@@ -110,6 +118,11 @@ bool Knowledge::IsInsideGolieArea(Vector2D pos)
 {
     return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R,
                              (Field::ourGoalCC_L-Field::ourGoalCC_R).length());
+}
+
+bool Knowledge::IsInsideSecureArea(Vector2D pos, Vector2D ball)
+{
+    return IsInsideCircle(pos,ball,ALLOW_NEAR_BALL_RANGE);
 }
 
 Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, double sourceSpeed, Vector2D targetSpeed)

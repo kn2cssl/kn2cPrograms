@@ -120,6 +120,11 @@ void PlayStop::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        wm->ourRobot[activeAgents.at(i)].Status = AgentStatus::Idle;
+    }
+
     initRole();
     while (activeAgents.size() >0)
     {
