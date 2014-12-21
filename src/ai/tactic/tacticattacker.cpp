@@ -8,7 +8,6 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     numberOfValidRanges=0;
     canKick=false;
 
-    kickedSucceccfully = false;
     everyOneInTheirPos = false;
 
     waitTimer = new QTimer();
@@ -44,25 +43,18 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.maxSpeed = 2;
 
-        if(!kickedSucceccfully)
+        if(wm->gs == STATE_Indirect_Free_kick_Our)
         {
-            if(wm->gs == STATE_Indirect_Free_kick_Our)
-            {
-                rc = KickTheBall();
-            }
-            else if(wm->gs == STATE_Free_kick_Our)
-            {
-                //Check For direct Goal
-                rc = KickTheBall();
-            }
-            else if(wm->gs == STATE_Start)
-            {
-                rc = StartTheGame();
-            }
+            rc = KickTheBall();
         }
-        else
+        else if(wm->gs == STATE_Free_kick_Our)
         {
-            rc.fin_pos = wm->ourRobot[id].pos;
+            //Check For direct Goal
+            rc = KickTheBall();
+        }
+        else if(wm->gs == STATE_Start)
+        {
+            rc = StartTheGame();
         }
 
         rc.isBallObs = true;
@@ -88,7 +80,7 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::BlockingRobot)
     {
-        qDebug()<<"playerToKeep for index "<<this->id<<" is "<<playerToKeep;
+        //qDebug()<<"playerToKeep for index "<<this->id<<" is "<<playerToKeep;
         AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
         Position final;
         final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
@@ -416,7 +408,6 @@ RobotCommand TacticAttacker::KickTheBall()
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
     {
         rc.kickspeedx = detectKickSpeed();//2.5;//50;
-        kickedSucceccfully = true;
     }
 
     return rc;
@@ -445,7 +436,6 @@ RobotCommand TacticAttacker::StartTheGame()
     {
         //rc.kickspeedz = 2.5;//50;
         rc.kickspeedx = detectKickSpeed();//2.5;//50;
-        kickedSucceccfully = true;
     }
 
     return rc;

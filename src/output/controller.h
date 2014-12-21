@@ -13,6 +13,7 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
     ControllerResult calc(ControllerInput &ci);
+    int slider;
 
 private:
     QTime timer;
@@ -37,6 +38,8 @@ private:
     int stateCTRL;
 
     ofstream out;
+
+    RobotSpeed ans;
 };
 
 #endif // CONTROLLER_H

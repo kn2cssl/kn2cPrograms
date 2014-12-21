@@ -3,13 +3,10 @@
 PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
     Play("PlayTest", worldmodel, parent)
 {
-    tAttacker = new TacticAttacker(wm);
-//    tDefenderMid=new TacticDefender(wm);
-//    tDefenderLeft=new TacticDefender(wm);
-//    tDefenderRight=new TacticDefender(wm);
-//    tHalt=new TacticHalt(wm);
-    tPasser = new TacticTest(wm);
-    tTT = new TacticTestFriction(wm);
+    for(int i=0;i<PLAYERS_MAX_NUM;i++)
+        training[i] = new TacticTest(wm);
+
+    firstInit = false;
 }
 
 int PlayTest::enterCondition()
@@ -24,15 +21,30 @@ void PlayTest::initRole()
 
 void PlayTest::execute()
 {
-//    tPasser->setKickerID(1);
-//    tactics[1] = tPasser;
-//    int recieverID = tPasser->findBestPlayerForPass();
-//    if(tPasser->kicked)
-//        tAttacker->go = true;
-//    wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-//    tactics[recieverID] = tAttacker;
-    tactics[3] = tAttacker;
+    if(!firstInit)
+    {
+        readyRobots = wm->kn->ActiveAgents();
+        index = readyRobots.takeFirst();
+        for(int i=0;i<PLAYERS_MAX_NUM;i++)
+        {
+            training[i]->queuePos = wm->ourRobot[i].pos;
+        }
+        firstInit = true;
+    }
 
+    if(training[index]->kickIt)
+    {
+        training[index]->kickIt = false;
+        training[index]->kickPermision = false;
+        readyRobots.append(index);
+        index = readyRobots.takeFirst();
+    }
+    else
+    {
+        training[index]->kickPermision = true;
+        tactics[index] = training[index];
+    }
+    qDebug()<<"kickIt["<<index<<"] : "<<training[index]->kickIt;
     return ;
 
 }

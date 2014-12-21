@@ -184,11 +184,10 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     //    {
     //        RotationSpeed = 0;
     //    }
-    RobotSpeed ans;
 
-    ans.VX = RotLinearSpeed.x;
-    ans.VY = RotLinearSpeed.y;
-    ans.VW = RotationSpeed;
+    ans.VX = ans.VX +(RotLinearSpeed.x - ans.VX)*((float)slider/1000.0);
+    ans.VY = ans.VY +(RotLinearSpeed.y - ans.VY)*((float)slider/1000.0);
+    ans.VW = ans.VW +(RotationSpeed - ans.VW)*((float)slider/1000.0);
 
     return ans;
 }

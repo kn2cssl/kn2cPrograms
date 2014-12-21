@@ -201,7 +201,7 @@ void MainWindow::timer_timeout()
 
     ui->txtcmgs_19->setText(QString("freeKick : ") + (sc->wm->cmgs.freeKick()?"1":"0"));
     ui->txtcmgs_20->setText(QString("ourFreeKick : ") + (sc->wm->cmgs.ourFreeKick()?"1":"0"));
-    ui->txtcmgs_21->setText(QString("theiFreeKick : ") + (sc->wm->cmgs.theiFreeKick()?"1":"0"));
+    ui->txtcmgs_21->setText(QString("theiFreeKick : ") + (sc->wm->cmgs.theirFreeKick()?"1":"0"));
 
     ui->txtcmgs_22->setText(QString("canMove : ") + (sc->wm->cmgs.canMove()?"1":"0"));
 

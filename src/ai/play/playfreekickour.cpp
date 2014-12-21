@@ -24,7 +24,6 @@ int PlayFreeKickOur::enterCondition()
         {
             rolesIsInit = false;
             freeKickStart = false;
-            tAttackerMid->kickedSucceccfully = false;
         }
         else
         {

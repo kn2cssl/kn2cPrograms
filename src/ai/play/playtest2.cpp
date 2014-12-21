@@ -5,8 +5,7 @@ PlayTest2::PlayTest2(WorldModel *worldmodel, QObject *parent) :
 {
     // Goaler.
     tGolie = new TacticGoalie(wm);
-    tCircle = new TacticCircle(wm);
-    tCircle->setCircle({0, 0}, 1000, {0, 0});
+    tTF = new TacticTestFriction(wm);
 }
 
 int PlayTest2::enterCondition()
@@ -22,6 +21,6 @@ void PlayTest2::initRole()
 void PlayTest2::execute()
 {
     tactics[wm->ref_goalie_our] = tGolie;
-    tactics[3] = tCircle;
+    tactics[3] = tTF;
 }
 

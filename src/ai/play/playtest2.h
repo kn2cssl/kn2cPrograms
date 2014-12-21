@@ -14,7 +14,7 @@ public:
 
 private:
     TacticGoalie* tGolie;
-    TacticCircle* tCircle;
+    TacticTestFriction* tTF;
 
     virtual void initRole();
 };

@@ -21,12 +21,16 @@ PlayFreeKickOpp::PlayFreeKickOpp(WorldModel *worldmodel, QObject *parent) :
 
 int PlayFreeKickOpp::enterCondition()
 {
-    if(wm->cmgs.theiFreeKick() || wm->cmgs.theirDirectKick())
+    if(wm->cmgs.theirFreeKick() || wm->cmgs.theirDirectKick())
     {
-        //        if(wm->gs_last != wm->gs)
-        //        {
-        //            rolesIsInit = false;
-        //        }
+        qDebug()<<"-------------------";
+        qDebug()<<"gs:"<<wm->gs;
+        qDebug()<<"gs_last:"<<wm->gs_last;
+        qDebug()<<"-------------------";
+        if(wm->gs_last != wm->gs)
+        {
+            rolesIsInit = false;
+        }
         //        else
         //        {
         //            rolesIsInit = conditionChanged();
@@ -174,6 +178,7 @@ void PlayFreeKickOpp::setTactics(int index)
 }
 void PlayFreeKickOpp::execute()
 {
+    qDebug()<<"pressingIsInit:"<<pressingIsInit;
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
     if( rolesIsInit && !pressingIsInit )

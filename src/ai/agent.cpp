@@ -30,6 +30,7 @@ void Agent::SendCommand(RobotCommand rc)
     if(!wm->ourRobot[id].isValid) return;
 
     ControllerInput ci = nav.calc(rc);
+    ctrl.slider = wm->var[5];
     ControllerResult co = ctrl.calc(ci);
 
     // Real Game Packet

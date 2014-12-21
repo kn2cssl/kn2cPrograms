@@ -24,8 +24,6 @@ public:
 
     void waitTimerStart();
 
-    bool kickedSucceccfully;
-
     void setPlayerToKeep(int index);
 
     bool everyOneInTheirPos;
