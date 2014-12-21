@@ -18,7 +18,7 @@ RobotCommand TacticGoalie::getCommand()
         ballDir=(float)(wm->ball.vel.loc.y)/(float)(wm->ball.vel.loc.x);
         yInGoal=wm->ball.pos.loc.y-ballDir*(float)((float)(FIELD_MAX_X)+wm->ball.pos.loc.x);
 
-        if(((wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y<0) || (wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y>0)) && (abs(yInGoal)<350))
+        if(((wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y<0) || (wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y>0)) && (abs(yInGoal)<400))
         {
          rc.fin_pos.loc={-(float)(FIELD_MAX_X)+ROBOT_RADIUS,yInGoal};
          rc.fin_pos.dir=ballDeg;
