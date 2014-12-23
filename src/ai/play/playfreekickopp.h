@@ -14,6 +14,7 @@ public:
 
 private:
     bool pressingIsInit;
+    bool go2ThePositions;
 
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
@@ -22,6 +23,11 @@ private:
     TacticAttacker* tAttackerMid;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;
+
+    QTimer *waitTimer;
+
+private slots:
+    void waitTimer_timout();
 
 protected:
     virtual void initRole();

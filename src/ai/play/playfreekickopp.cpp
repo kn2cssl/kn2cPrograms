@@ -7,6 +7,10 @@ PlayFreeKickOpp::PlayFreeKickOpp(WorldModel *worldmodel, QObject *parent) :
 
     pressingIsInit = false;
     rolesIsInit = false;
+    go2ThePositions = false;
+
+    waitTimer = new QTimer();
+    connect(waitTimer,SIGNAL(timeout()),this,SLOT(waitTimer_timout()));
 
     tGolie = new TacticGoalie(wm);
 
@@ -23,13 +27,12 @@ int PlayFreeKickOpp::enterCondition()
 {
     if(wm->cmgs.theirFreeKick() || wm->cmgs.theirDirectKick())
     {
-        qDebug()<<"-------------------";
-        qDebug()<<"gs:"<<wm->gs;
-        qDebug()<<"gs_last:"<<wm->gs_last;
-        qDebug()<<"-------------------";
         if(wm->gs_last != wm->gs)
         {
             rolesIsInit = false;
+            go2ThePositions = false;
+
+            waitTimer->start(2000);
         }
         //        else
         //        {
@@ -41,7 +44,13 @@ int PlayFreeKickOpp::enterCondition()
     {
         return 0;
     }
-//        return 200000;
+    //        return 200000;
+}
+
+void PlayFreeKickOpp::waitTimer_timout()
+{
+    waitTimer->stop();
+    go2ThePositions = true;
 }
 
 void PlayFreeKickOpp::initRole()
@@ -178,16 +187,19 @@ void PlayFreeKickOpp::setTactics(int index)
 }
 void PlayFreeKickOpp::execute()
 {
-    qDebug()<<"pressingIsInit:"<<pressingIsInit;
-    QList<int> activeAgents=wm->kn->ActiveAgents();
+    if(go2ThePositions)
+    {
+        qDebug()<<"pressingIsInit:"<<pressingIsInit;
+        QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if( rolesIsInit && !pressingIsInit )
-        initPressing();
+        if( rolesIsInit && !pressingIsInit )
+            initPressing();
 
-    if( !rolesIsInit )
-        initRole();
+        if( !rolesIsInit )
+            initRole();
 
-    for(int i=0;i<activeAgents.size();i++)
-        setTactics(activeAgents.at(i));
+        for(int i=0;i<activeAgents.size();i++)
+            setTactics(activeAgents.at(i));
+    }
 
 }
