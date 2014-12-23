@@ -40,8 +40,8 @@ void PlayPenaltyOpp::execute()
         tactics[activeAgents.takeFirst()]=tDefenderMid;
         break;
     case 2:
-       tactics[activeAgents.takeFirst()]=tDefenderRight;
-       tactics[activeAgents.takeFirst()]=tDefenderLeft;
+        tactics[activeAgents.takeFirst()]=tDefenderRight;
+        tactics[activeAgents.takeFirst()]=tDefenderLeft;
         break;
     case 3:
         tactics[activeAgents.takeFirst()]=tDefenderRight;

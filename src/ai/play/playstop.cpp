@@ -22,7 +22,7 @@ int PlayStop::enterCondition()
         return 10;
     else
         return 0;
-//        return 20000;
+    //        return 20000;
 }
 
 void PlayStop::initRole()

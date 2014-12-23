@@ -41,9 +41,9 @@ void PlayPenaltyOur::execute()
         tactics[activeAgents.takeFirst()]=penaltyKicker;
         break;
     case 2:
-       tactics[activeAgents.takeFirst()]=tDefenderMid;
-       tactics[activeAgents.takeFirst()]=penaltyKicker;
-       break;
+        tactics[activeAgents.takeFirst()]=tDefenderMid;
+        tactics[activeAgents.takeFirst()]=penaltyKicker;
+        break;
     case 3:
         tactics[activeAgents.takeFirst()]=tDefenderLeft;
         tactics[activeAgents.takeFirst()]=tDefenderRight;
