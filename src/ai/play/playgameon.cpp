@@ -23,13 +23,12 @@ PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
 
 int PlayGameOn::enterCondition()
 {
-        if(wm->cmgs.gameOn() && wm->kn->ActiveAgents().size() > 3)
-            return 100;
-        else
-            return 0;
-
+    if( wm->cmgs.gameOn() )
+        return 100;
+    else
         return 0;
-//    return 20000;
+    return 0;
+    //    return 20000;
 }
 
 void PlayGameOn::setTactics(int index)
@@ -197,17 +196,17 @@ void PlayGameOn::execute()
     QList<int> activeAgents = wm->kn->ActiveAgents();
 
     //just for some tests-----------------------------------
-//    QList<int> activeAgents2 = wm->kn->ActiveAgents();
+    //    QList<int> activeAgents2 = wm->kn->ActiveAgents();
 
-//    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
-//    activeAgents2.removeOne(wm->ref_goalie_our);
+    //    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
+    //    activeAgents2.removeOne(wm->ref_goalie_our);
 
-//    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::DefenderLeft;
-//    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::DefenderRight;
+    //    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::DefenderLeft;
+    //    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::DefenderRight;
 
-//    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerLeft;
-//    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerMid;
-//    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerRight;
+    //    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerLeft;
+    //    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerMid;
+    //    wm->ourRobot[activeAgents2.takeFirst()].Role = AgentRole::AttackerRight;
     //-------------------------------------------------
 
     initRole();
