@@ -79,6 +79,10 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
     auto obs = getObsCircle();
 
+    //Kamin
+    wm->navigation_pos.clear();
+    //Kamout
+
     for(int i=0; i<obs.size(); i++)
     {
         int    p_count = 6;
@@ -102,6 +106,9 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
             if(checkNodeInterference == true)
             {
+                //Kamin
+                wm->navigation_pos.append(node.vec);
+                //Kamout
                 if(node.vec != parent) astarsearch->AddSuccessor(node);
             }
         }

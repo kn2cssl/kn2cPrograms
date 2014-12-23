@@ -143,11 +143,22 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
         int steps = 0;
         if(points) points->append(node->vec); //nodeStart
         Vector2D lastNode = node->vec;
+        //Kamin
+        if( id == 3 )
+        {
+            wm->navigation_result.clear();
+        }
+        //Kamout
+
         for(;;)
         {
             node = astarsearch.GetSolutionNext();
             if(!node) break;
             //qDebug() << "SolutionNext" << node->vec.x << node->vec.y;
+            //Kamin
+            if(id == 3)
+                wm->navigation_result.append(node->vec);
+            //Kamout
             if(points) points->append(node->vec);
             steps++;
             pathL += (lastNode - node->vec).length();

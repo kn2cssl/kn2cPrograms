@@ -29,6 +29,9 @@ public:
     bool isSim;
     Knowledge *kn;
 
+    QList<Vector2D> navigation_pos;
+    QList<Vector2D> navigation_result;
+
     static double var[10];
     // 0: kick activation dist
     // 1: kick activation angle
