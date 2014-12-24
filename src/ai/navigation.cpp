@@ -144,7 +144,7 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
         if(points) points->append(node->vec); //nodeStart
         Vector2D lastNode = node->vec;
         //Kamin
-        if( id == 3 )
+        if( id == wm->indexOfAstarRobot )
         {
             wm->navigation_result.clear();
         }
@@ -156,7 +156,7 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
             if(!node) break;
             //qDebug() << "SolutionNext" << node->vec.x << node->vec.y;
             //Kamin
-            if(id == 3)
+            if(id == wm->indexOfAstarRobot )
                 wm->navigation_result.append(node->vec);
             //Kamout
             if(points) points->append(node->vec);

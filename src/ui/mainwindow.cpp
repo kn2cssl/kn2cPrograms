@@ -11,6 +11,9 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     //ui->txtLog->append(QSerialPort::);
     _render = new RenderArea(soccer);
     ui->gridRender->addWidget(_render);
+    QStringList indexses;
+    indexses<<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"<<"8"<<"9"<<"10"<<"11";
+    ui->astarIndex_comboBox->addItems(indexses);
     this->on_btnLoadVars_clicked();
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
@@ -319,6 +322,9 @@ void MainWindow::timer_timeout()
     ui->txtvar8->setText(QString::number(sc->wm->var[8]));
     sc->wm->var[9] = ui->spnvar9->value();
     ui->txtvar9->setText(QString::number(sc->wm->var[9]));
+
+    sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
+    sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

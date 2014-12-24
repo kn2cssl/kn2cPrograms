@@ -32,6 +32,10 @@ public:
     QList<Vector2D> navigation_pos;
     QList<Vector2D> navigation_result;
 
+    //----Graphical Debug-----
+    bool showAstarOut;
+    int indexOfAstarRobot;
+
     static double var[10];
     // 0: kick activation dist
     // 1: kick activation angle
