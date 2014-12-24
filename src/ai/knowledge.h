@@ -30,12 +30,14 @@ public:
     bool CanKick(Position robotPos, Vector2D ballPos);
     bool IsReadyForKick(Position current, Position desired, Vector2D ballPos);
     Position AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickSpeed = 5);
+    Position AdjustKickPoint2(Vector2D ballPos, Vector2D target, Vector2D robotloc);
 
     Vector2D PredictDestination(Vector2D sourcePos, Vector2D targetPos, double sourceSpeed, Vector2D targetSpeed);
     bool ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold);
     bool ReachedToPos(Vector2D current, Vector2D desired, double distThreshold);
 
     bool agentIsFree(int index);
+    bool isOccupied(Vector2D input);
 
 private:
     WorldModel* _wm;

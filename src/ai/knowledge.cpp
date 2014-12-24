@@ -111,7 +111,7 @@ bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRad
     Vector2D ccl(goalLeftX, goalCcOffset / 2), ccr(goalLeftX, -goalCcOffset / 2);
 
     return ( (pos-ccl).length() <= goalRadius || (pos-ccr).length() <= goalRadius ||
-            (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
+             (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
@@ -184,8 +184,10 @@ bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
     if(!_wm->ball.isValid) return false;
 
     double distThreshold = _wm->var[0], degThreshold = _wm->var[1] / 10;
-
-    AngleDeg d1((ballPos - robotPos.loc).dir());
+    //@kamin
+    AngleDeg d1((ballPos + _wm->ball.vel.loc * .015 - robotPos.loc ).dir());
+    //AngleDeg d1((ballPos  - robotPos.loc).dir());
+    //@kmout
     AngleDeg d2(robotPos.dir * AngleDeg::RAD2DEG);
     if(fabs((d1 - d2).degree()) < degThreshold || (360.0 - fabs((d1 - d2).degree())) < degThreshold)
     {
@@ -250,6 +252,33 @@ bool Knowledge::agentIsFree(int index)
     return isFree;
 }
 
+bool Knowledge::isOccupied(Vector2D input)
+{
+    for(int i = 0;i<PLAYERS_MAX_NUM;i++)
+    {
+        if(_wm->ourRobot[i].isValid)
+        {
+            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            {
+                return true;
+            }
+        }
+    }
+
+    for(int i = 0;i<PLAYERS_MAX_NUM;i++)
+    {
+        if(_wm->oppRobot[i].isValid)
+        {
+            if( (_wm->oppRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
 {
     if( (current.loc-desired.loc).length() < distThreshold)
@@ -278,6 +307,19 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 
     p.loc = ballPos + dir;
     p.dir = (-dir).dir().radian();
+
+    return p;
+}
+Position Knowledge::AdjustKickPoint2(Vector2D ballPos, Vector2D target, Vector2D robotloc)
+{
+    Position p;
+    Vector2D dir = (ballPos - target);//.normalizedVector();
+    Vector2D ooshkool = ballPos - robotloc;
+    dir.setLength(/*scale(*/ROBOT_RADIUS - (35 /*- kickSpeed*/));
+
+    p.loc = ballPos + dir;
+
+    p.dir = ooshkool.th().radian();
 
     return p;
 }

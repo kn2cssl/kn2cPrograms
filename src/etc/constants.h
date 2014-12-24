@@ -65,6 +65,7 @@ const Vector2D ourGoalPost_R(MinX, -350);
 const Vector2D ourGoalCC_L(MinX, 175);
 const Vector2D ourGoalCC_R(MinX, -175);
 
+
 const Vector2D ourDefPost_L(MinX, 975);
 const Vector2D ourDefPost_R(MinX, -975);
 
@@ -74,8 +75,12 @@ const Vector2D oppGoalPost_L(MaxX, 350);
 const Vector2D oppGoalPost_R(MaxX, -350);
 const Vector2D oppGoalCC_L(MaxX, 175);
 const Vector2D oppGoalCC_R(MaxX, -175);
-const Vector2D oppGoalPenaltySpot(MaxX-850,0);
+const Vector2D oppGoalPenaltySpot(MaxX-750,0);
 
+
+
+const Vector2D ourPenaltyParallelLineCenter(oppGoalPenaltySpot.x-500,0);
+const Vector2D oppPenaltyParallelLineCenter(ourGoalCenter.x+750+500,0);
 //const Vector2D oppPenalty_Shoot = new Vector2D(3010, 500);
 
 //const Vector2D MidField_R = new Vector2D((-ConstVars.ROBOT_RADIUS)*2.5, -1800);

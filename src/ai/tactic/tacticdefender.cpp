@@ -48,6 +48,28 @@ RobotCommand TacticDefender::getCommand()
     {
 
     }
+    else if(wm->ourRobot[this->id].Status == AgentStatus::PenaltyWaiting)
+    {
+        if(wm->gs == STATE_Penalty_Opp)
+        {
+            switch (wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::DefenderMid :
+                rc.fin_pos.loc = Field::oppPenaltyParallelLineCenter;
+            break;
+            case AgentRole::DefenderRight :
+                rc.fin_pos.loc.x = Field::oppPenaltyParallelLineCenter.x;
+                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.5);
+            break;
+            case AgentRole::DefenderLeft :
+                rc.fin_pos.loc = Field::oppPenaltyParallelLineCenter;
+                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
+            break;
+            default:
+                break;
+            }
+        }
+    }
     else if(wm->ourRobot[this->id].Status == AgentStatus::Idle)
     {
         double ballDeg,beta,teta,alpha=356,gama;
@@ -90,7 +112,7 @@ RobotCommand TacticDefender::getCommand()
                 rc.fin_pos.dir=ballDeg;
                 rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg)*dtgc,0.0+sin(ballDeg)*dtgc};
             }
-        break;
+            break;
 
         case AgentRole::DefenderLeft:
             rc.fin_pos.dir=ballDeg;
@@ -113,8 +135,8 @@ RobotCommand TacticDefender::getCommand()
                     rc.fin_pos.loc= {wm->ball.pos.loc.x-100*cos(ballDeg),wm->ball.pos.loc.y-100*sin(ballDeg)};
                 }
 
-           }
-        break;
+            }
+            break;
 
         case AgentRole::DefenderRight:
             rc.fin_pos.dir=ballDeg;
@@ -137,7 +159,7 @@ RobotCommand TacticDefender::getCommand()
                     rc.fin_pos.loc= {wm->ball.pos.loc.x-100*cos(ballDeg),wm->ball.pos.loc.y-100*sin(ballDeg)};
                 }
             }
-        break;
+            break;
         }
 
         rc.maxSpeed=0.5;
