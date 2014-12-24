@@ -41,6 +41,8 @@ private:
     int playerToKeep;
     QTimer *waitTimer;
 
+    bool pastMidPoint; // FreeKick
+
     bool isFree(int index);
 
 private slots:
