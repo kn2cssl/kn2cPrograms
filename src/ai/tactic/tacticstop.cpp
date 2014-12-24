@@ -40,8 +40,25 @@ RobotCommand TacticStop::getCommand()
     finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
     finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
 
-    rc.fin_pos.loc=finalPos;
-    rc.maxSpeed=1;
+    if(wm->kn->IsInsideGolieArea(finalPos) )
+    {
+        if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
+        {
+            rc.fin_pos.loc = Vector2D(Field::MinX/2,Field::ourGoalPost_L.y+200);
+        }
+        else if(wm->ourRobot[id].Role == AgentRole::AttackerRight)
+        {
+            rc.fin_pos.loc = Vector2D(Field::MinX/2,Field::ourGoalPost_R.y-200);
+        }
+        else if(wm->ourRobot[id].Role == AgentRole::AttackerMid)
+        {
+            rc.fin_pos.loc = Vector2D(Field::MinX/2,Field::ourGoalCenter.y);
+        }
+    }
+    else
+        rc.fin_pos.loc=finalPos;
+
+    rc.maxSpeed=0.75;
 
     rc.useNav=true;
     rc.isBallObs=true;
