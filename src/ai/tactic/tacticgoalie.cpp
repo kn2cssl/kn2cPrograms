@@ -34,7 +34,7 @@ RobotCommand TacticGoalie::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
 
-        if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && !wm->cmgs.theirPenaltyKick() )
+        if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && wm->cmgs.canKickBall())
         {
             Vector2D target;
             if(wm->ball.pos.loc.y >= 0)
@@ -51,7 +51,7 @@ RobotCommand TacticGoalie::getCommand()
             {
                 //Maybe Sometimes we have chip...
                 //rc.kickspeedz = 2.5;//50;
-                rc.kickspeedx = 2.5;//50;
+                rc.kickspeedx = 250;
             }
             rc.useNav = false;
         }

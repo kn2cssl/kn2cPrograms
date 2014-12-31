@@ -48,7 +48,7 @@ RobotCommand TacticDefender::getCommand()
     {
 
     }
-    else if(wm->ourRobot[this->id].Status == AgentStatus::PenaltyWaiting)
+    else if(wm->ourRobot[this->id].Status == AgentStatus::PenaltyWaiting || wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
         if(wm->gs == STATE_Penalty_Opp)
         {
@@ -64,6 +64,22 @@ RobotCommand TacticDefender::getCommand()
             case AgentRole::DefenderLeft :
                 rc.fin_pos.loc = Field::oppPenaltyParallelLineCenter;
                 rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
+            break;
+            default:
+                break;
+            }
+        }
+        else
+        {
+            switch (wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::DefenderRight :
+                rc.fin_pos.loc.x = Field::ourGoalCenter.x + 800;
+                rc.fin_pos.loc.y = Field::ourGoalCenter.y + 350;
+            break;
+            case AgentRole::DefenderLeft :
+                rc.fin_pos.loc.x = Field::ourGoalCenter.x + 800;
+                rc.fin_pos.loc.y = Field::ourGoalCenter.y - 350;
             break;
             default:
                 break;
