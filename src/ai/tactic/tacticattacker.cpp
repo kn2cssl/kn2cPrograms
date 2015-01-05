@@ -234,13 +234,13 @@ RobotCommand TacticAttacker::getCommand()
             switch(wm->ourRobot[this->id].Role)
             {
             case AgentRole::AttackerMid:
-                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 0);
+                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y),Field::oppGoalCenter);
                 break;
             case AgentRole::AttackerRight:
-                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 1550);
+                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 500 , 1550),Field::oppGoalCenter);
                 break;
             case AgentRole::AttackerLeft:
-                rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , -1550);
+                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 500 , -1550),Field::oppGoalCenter);
                 break;
             default:
                 break;
@@ -492,7 +492,7 @@ RobotCommand TacticAttacker::StartTheGame()
     //    }
     //    else
     //    {
-    rc.useNav = true;
+    rc.useNav = false;
     //    }
 
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
