@@ -228,27 +228,91 @@ RobotCommand TacticAttacker::getCommand()
             rc.fin_pos.loc=finalPos;
             rc.maxSpeed=1;
         }
-        else if(wm->gs == GameStateType::STATE_Kick_off_Our || wm->gs == GameStateType::STATE_Kick_off_Opp)
+        else if(wm->gs == GameStateType::STATE_Kick_off_Our)
         {
-            rc.maxSpeed = 1;
             switch(wm->ourRobot[this->id].Role)
             {
             case AgentRole::AttackerMid:
                 rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y),Field::oppGoalCenter);
                 break;
             case AgentRole::AttackerRight:
-                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 500 , 1550),Field::oppGoalCenter);
+                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , 1550),Field::oppGoalCenter);
                 break;
             case AgentRole::AttackerLeft:
-                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 500 , -1550),Field::oppGoalCenter);
+                rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , -1550),Field::oppGoalCenter);
                 break;
             default:
                 break;
             }
 
+            rc.maxSpeed = 1;
             rc.useNav = true;
             rc.isBallObs = true;
             rc.isKickObs = true;
+        }
+        else if(wm->gs == GameStateType::STATE_Kick_off_Opp)
+        {
+            QList<int> opps = wm->kn->ActiveOppAgents();
+            opps.removeOne(wm->ref_goalie_opp);
+
+            QList<int> nearest;
+            int i = 0;
+            switch(wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::AttackerMid:
+                rc.fin_pos = wm->ourRobot[this->id].pos;
+                break;
+            case AgentRole::AttackerRight:
+                nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MaxY/2));
+
+                while( i<nearest.size() )
+                {
+                    if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                            /*||  (wm->oppRobot[id].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
+                        nearest.removeAt(i);
+                    else
+                        i++;
+                }
+                if( !nearest.isEmpty() )
+                {
+                    Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
+                    Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+                    Vector2D interSection = tmp.intersection(fixedLine);
+                    rc.fin_pos.loc = interSection;
+                    rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                }
+                else
+                {
+                    rc.fin_pos = wm->ourRobot[this->id].pos;
+                }
+                break;
+            case AgentRole::AttackerLeft:
+                //rc.fin_pos = wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , -1550),Field::oppGoalCenter);
+                nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MinY/2));
+                while( i<nearest.size() )
+                {
+                    if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                            /*||  (wm->oppRobot[id].pos.loc -Vector2D(0,Field::MinY/2)).length()>1000*/)
+                        nearest.removeAt(i);
+                    else
+                        i++;
+                }
+                if( !nearest.isEmpty() )
+                {
+                    Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
+                    Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+                    Vector2D interSection = tmp.intersection(fixedLine);
+                    rc.fin_pos.loc = interSection;
+                    rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                }
+                else
+                {
+                    rc.fin_pos = wm->ourRobot[this->id].pos;
+                }
+                break;
+            default:
+                break;
+            }
         }
         else
         {

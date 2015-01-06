@@ -48,6 +48,21 @@ QList<int> Knowledge::findNearestTo(Vector2D loc)
     return ans;
 }
 
+QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< PLAYERS_MAX_NUM; i++)
+    {
+        if(_wm->oppRobot[i].isValid==false) continue;
+        double dist=(_wm->oppRobot[i].pos.loc-loc).length();
+        smap.insert(dist, i);
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
 int Knowledge::findOppAttacker()
 {
     int ans=0;
@@ -103,6 +118,11 @@ void Knowledge::ClampToRect(Vector2D *pos, Vector2D topLeft, Vector2D bottomRigh
 bool Knowledge::IsInsideField(Vector2D pos)
 {
     return IsInsideRect(pos, Field::upperLeftCorner, Field::bottomRightCorner);
+}
+
+bool Knowledge::IsInsideOurField(Vector2D pos)
+{
+    return IsInsideRect(pos, Field::upperLeftCorner, Vector2D(0,Field::MinY));
 }
 
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
