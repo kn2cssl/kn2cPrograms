@@ -10,37 +10,44 @@ RobotCommand TacticStop::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    Vector2D finalPos,leftPos,rightPos;
-    double m;
-    double alfa;
-    m=-(Field::ourGoalCenter.y-wm->ball.pos.loc.y)/(Field::ourGoalCenter.x-wm->ball.pos.loc.x);
-    alfa=atan(m);
+    Vector2D finalPos,notImportant,leftPos,rightPos;
 
-    if(alfa>75.0*3.14/180)
-    {
-        alfa=120.0*3.14/180;
-    }
+    bool correctPos = false;
+    Circle2D robotCircle(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+    Segment2D line2Goal(wm->ball.pos.loc,Field::ourGoalCenter);
+    robotCircle.intersection(line2Goal,&finalPos,&notImportant);
 
-    if(alfa<-75.0*3.14/180)
+    do
     {
-        alfa=-120.0*3.14/180;
+        Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+        robotCircle.intersection(secondCircle,&leftPos,&rightPos);
+
+        if( !wm->kn->IsInsideField(leftPos) )
+        {
+            finalPos = rightPos;
+        }
+        else if( !wm->kn->IsInsideField(rightPos) )
+        {
+            finalPos = leftPos;
+        }
+        else
+            correctPos = true;
     }
+    while(!correctPos);
 
     switch (wm->ourRobot[id].Role) {
     case AgentRole::AttackerMid:
 
         break;
     case AgentRole::AttackerRight:
-        alfa-=DIFF;
+        finalPos = rightPos;
         break;
     case AgentRole::AttackerLeft:
-        alfa+=DIFF;
+        finalPos = leftPos;
         break;
     }
-    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
-    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
 
-    if(wm->kn->IsInsideGolieArea(finalPos) )
+    if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
         if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
         {
@@ -59,7 +66,6 @@ RobotCommand TacticStop::getCommand()
         rc.fin_pos.loc=finalPos;
 
     rc.maxSpeed=0.75;
-
     rc.useNav=true;
     rc.isBallObs=true;
     rc.isKickObs=true;
