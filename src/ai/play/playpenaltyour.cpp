@@ -115,12 +115,13 @@ void PlayPenaltyOur::execute()
 
     for(int i=0;i<activeAgents.size();i++)
     {
+        wm->ourRobot[activeAgents.at(i)].Status = AgentStatus::Idle;
+    }
+
+    for(int i=0;i<activeAgents.size();i++)
+    {
         setTactics(activeAgents.at(i));
     }
 
     wm->ourRobot[penaltyKicker->getID()].Status = AgentStatus::Kicking;
-    wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::Idle;
-    wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::Idle;
-    wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::PenaltyWaiting;
-    wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::PenaltyWaiting;
 }

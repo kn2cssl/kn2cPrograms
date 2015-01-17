@@ -6,7 +6,6 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
 {
     numberOfInvalidRanges=0;
     numberOfValidRanges=0;
-    canKick=false;
 
     everyOneInTheirPos = false;
 
@@ -21,8 +20,6 @@ RobotCommand TacticAttacker::getCommand()
 
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
-        rc.maxSpeed = 2;
-
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
@@ -32,25 +29,24 @@ RobotCommand TacticAttacker::getCommand()
 
         if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
         {
-            rc.kickspeedx = 5;//150;
+            rc.kickspeedx = detectKickSpeed();
         }
 
+        rc.maxSpeed = 2;
         rc.useNav = false;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Kicking)
     {
-        rc.maxSpeed = 0.5;
-
         if(wm->gs == STATE_Indirect_Free_kick_Our)
         {
-            rc = KickTheBall();
+            rc = KickTheBallIndirect();
         }
         else if(wm->gs == STATE_Free_kick_Our)
         {
             //Check For direct Goal
-            rc = KickTheBall();
+            rc = KickTheBallDirect();
         }
         else if(wm->gs == STATE_Start)
         {
@@ -59,7 +55,6 @@ RobotCommand TacticAttacker::getCommand()
 
         rc.isBallObs = true;
         rc.isKickObs = true;
-
     }
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
     {
@@ -73,6 +68,7 @@ RobotCommand TacticAttacker::getCommand()
             {
                 rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200);
             }
+            rc.maxSpeed = 1;
             rc.useNav = true;
             rc.isBallObs = true;
             rc.isKickObs = true;
@@ -80,7 +76,6 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::BlockingRobot)
     {
-        //qDebug()<<"playerToKeep for index "<<this->id<<" is "<<playerToKeep;
         AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
         Position final;
         final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
@@ -116,59 +111,7 @@ RobotCommand TacticAttacker::getCommand()
             }
         }
 
-        //qDebug()<<"index"<<this->id<<".fin_pos:"<<rc.fin_pos.loc.x<<","<<rc.fin_pos.loc.y;
-
         rc.maxSpeed = 2;
-        rc.useNav = true;
-        rc.isBallObs = true;
-        rc.isKickObs = true;
-    }
-    else if(wm->ourRobot[id].Status == AgentStatus::PenaltyWaiting )
-    {
-        if( wm->gs == GameStateType::STATE_Penalty_Our )
-        {
-            switch (wm->ourRobot[this->id].Role)
-            {
-            case AgentRole::AttackerMid :
-                rc.fin_pos.loc = Field::ourPenaltyParallelLineCenter;
-                break;
-            case AgentRole::AttackerRight :
-                rc.fin_pos.loc.x = Field::ourPenaltyParallelLineCenter.x;
-                rc.fin_pos.loc.y = Field::ourPenaltyParallelLineCenter.y + (Field::MaxY*0.75);
-                break;
-            case AgentRole::AttackerLeft :
-                rc.fin_pos.loc.x = Field::ourPenaltyParallelLineCenter.x;
-                rc.fin_pos.loc.y = Field::ourPenaltyParallelLineCenter.y - (Field::MaxY*0.75);
-                break;
-            default:
-                break;
-            }
-        }
-        else if( wm->gs == GameStateType::STATE_Penalty_Opp )
-        {
-            switch (wm->ourRobot[this->id].Role)
-            {
-            case AgentRole::AttackerMid :
-                rc.fin_pos.loc = Field::oppPenaltyParallelLineCenter;
-                break;
-            case AgentRole::AttackerRight :
-                rc.fin_pos.loc.x = Field::oppPenaltyParallelLineCenter.x;
-                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75);
-                break;
-            case AgentRole::AttackerLeft :
-                rc.fin_pos.loc.x = Field::oppPenaltyParallelLineCenter.x;
-                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75);
-                break;
-            default:
-                break;
-            }
-        }
-
-        //-------I should Check THis!!!----
-        if(wm->kn->isOccupied(rc.fin_pos.loc))
-            rc.fin_pos.loc = rc.fin_pos.loc - Vector2D(100,100);
-
-        rc.maxSpeed = 1;
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -314,9 +257,54 @@ RobotCommand TacticAttacker::getCommand()
                 break;
             }
         }
+        else if( wm->gs == GameStateType::STATE_Penalty_Our )
+        {
+            Vector2D pos;
+            switch (wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::AttackerMid :
+                rc.fin_pos.loc = Field::ourPenaltyParallelLineCenter;
+                break;
+            case AgentRole::AttackerRight :
+                pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y + (Field::MaxY*0.75));
+                rc.fin_pos = wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter);
+                break;
+            case AgentRole::AttackerLeft :
+                pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y - (Field::MaxY*0.75));
+                rc.fin_pos = wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter);
+                break;
+            default:
+                break;
+            }
+            //-------I should Check THis!!!----
+            if(wm->kn->isOccupied(rc.fin_pos.loc))
+                rc.fin_pos.loc = rc.fin_pos.loc - Vector2D(100,100);
+        }
+        else if( wm->gs == GameStateType::STATE_Penalty_Opp )
+        {
+            switch (wm->ourRobot[this->id].Role)
+            {
+            case AgentRole::AttackerMid :
+                rc.fin_pos.loc = Field::oppPenaltyParallelLineCenter;
+                break;
+            case AgentRole::AttackerRight :
+                rc.fin_pos.loc.x = Field::oppPenaltyParallelLineCenter.x;
+                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75);
+                break;
+            case AgentRole::AttackerLeft :
+                rc.fin_pos.loc.x = Field::oppPenaltyParallelLineCenter.x;
+                rc.fin_pos.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75);
+                break;
+            default:
+                break;
+            }
+            //-------I should Check THis!!!----
+            if(wm->kn->isOccupied(rc.fin_pos.loc))
+                rc.fin_pos.loc = rc.fin_pos.loc - Vector2D(100,100);
+        }
         else
         {
-            rc.fin_pos = wm->ourRobot[id].pos;
+            rc.fin_pos = wm->ourRobot[this->id].pos;
         }
     }
     //  Just Added for Some Tests
@@ -485,7 +473,7 @@ RobotCommand TacticAttacker::goBehindBall()
     return rc;
 }
 
-RobotCommand TacticAttacker::KickTheBall()
+RobotCommand TacticAttacker::KickTheBallIndirect()
 {
     RobotCommand rc;
 
@@ -540,6 +528,36 @@ RobotCommand TacticAttacker::KickTheBall()
     return rc;
 }
 
+RobotCommand TacticAttacker::KickTheBallDirect()
+{
+    RobotCommand rc;
+
+    rc.maxSpeed = 0.5;
+
+    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,findTarget());
+
+    rc.fin_pos = kickPoint;
+    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
+    {
+        if(!everyOneInTheirPos)
+        {
+            rc.maxSpeed = 0;
+        }
+        else
+        {
+            rc.useNav = false;
+            rc.maxSpeed = 0.25;
+        }
+    }
+
+    if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
+    {
+        rc.kickspeedx = detectKickSpeed();
+    }
+
+    return rc;
+}
+
 RobotCommand TacticAttacker::StartTheGame()
 {
     RobotCommand rc;
@@ -547,17 +565,9 @@ RobotCommand TacticAttacker::StartTheGame()
     rc.maxSpeed = 0.5;
 
     Vector2D target(Field::oppGoalCenter.x,Field::oppGoalCenter.y);
-    //Vector2D goal(target.x+500*cos(target.dir().DEG2RAD),target.y+500*sin(target.dir().DEG2RAD));
     rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
 
-    //    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 100)
-    //    {
-    //        rc.useNav = false;
-    //    }
-    //    else
-    //    {
     rc.useNav = false;
-    //    }
 
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
     {
@@ -632,7 +642,7 @@ float TacticAttacker::detectKickSpeed(Vector2D dest )
     {
         switch (wm->gs ) {
         case STATE_Free_kick_Our:
-            kickSpeed = 2.5; //Should Changed
+            kickSpeed = 5; //Should Changed
             break;
         case STATE_Indirect_Free_kick_Our:
             kickSpeed = 2.5; //Should Changed
@@ -648,15 +658,16 @@ float TacticAttacker::detectKickSpeed(Vector2D dest )
     {
         switch (wm->gs ) {
         case STATE_Free_kick_Our:
-            kickSpeed = 150; //Should Changed
+            kickSpeed = 200; //Should Changed
             break;
         case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 150; //Should Changed
+            kickSpeed = 25;//50; //Should Changed
             break;
         case STATE_Start:
             kickSpeed = 150; //Should Changed
             break;
         default:
+            kickSpeed = 100;//Should Changed
             break;
         }
     }

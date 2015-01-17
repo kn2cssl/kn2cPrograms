@@ -135,9 +135,14 @@ void PlayGameOn::initRole()
     {
         initPressing();
     }
-    else if( wm->gs == STATE_Start)
+    else if(wm->gs_last == STATE_Penalty_Opp || wm->gs_last == STATE_Penalty_Our)
     {
-
+        QList<int> activeAgents= wm->kn->ActiveAgents();
+        wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
+    }
+//    else
+//    {
+//        qDebug()<<"HELL!!!";
         QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
         QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
@@ -188,7 +193,7 @@ void PlayGameOn::initRole()
             while( !ourRobots.isEmpty() )
                 wm->ourRobot[ourRobots.takeFirst()].Status = AgentStatus::Idle;
         }
-    }
+//    }
 }
 
 void PlayGameOn::execute()

@@ -15,7 +15,8 @@ public:
     void sortInvalidRanges();
     void findValidRanges();
     RobotCommand goBehindBall();
-    RobotCommand KickTheBall();
+    RobotCommand KickTheBallIndirect();
+    RobotCommand KickTheBallDirect();
     RobotCommand StartTheGame();
     double findBestPoint();
     int findBestPlayerForPass();

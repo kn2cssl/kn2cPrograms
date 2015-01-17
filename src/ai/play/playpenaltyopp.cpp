@@ -22,8 +22,6 @@ int PlayPenaltyOpp::enterCondition()
 
 void PlayPenaltyOpp::setTactics(int index)
 {
-    wm->ourRobot[index].Status = AgentStatus::PenaltyWaiting;
-
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGoalie;
@@ -54,6 +52,8 @@ void PlayPenaltyOpp::setTactics(int index)
 void PlayPenaltyOpp::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
+
+
     activeAgents.removeOne(wm->ref_goalie_our);
 
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
@@ -92,14 +92,16 @@ void PlayPenaltyOpp::initRole()
 void PlayPenaltyOpp::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    activeAgents.removeOne(wm->ref_goalie_our);
 
     initRole();
+
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        wm->ourRobot[activeAgents.at(i)].Status = AgentStatus::Idle;
+    }
 
     while( !activeAgents.isEmpty() )
     {
         setTactics(activeAgents.takeFirst());
     }
-
-    wm->ourRobot[tGoalie->getID()].Status = AgentStatus::Idle;
 }
