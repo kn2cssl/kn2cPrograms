@@ -36,6 +36,13 @@ enum AgentRole
     Golie
 };
 
+enum AgentRegion
+{
+    Left,
+    Center,
+    Right
+};
+
 class WorldModel;
 
 class Agent : public Robot
@@ -52,6 +59,7 @@ public:
 
     AgentRole   Role;
     AgentStatus Status;
+    AgentRegion Region;
 
     RobotData rd;   //received data from robot
     Position  vel2; //speed from motors speed received from robot

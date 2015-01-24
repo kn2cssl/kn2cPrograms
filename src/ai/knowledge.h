@@ -41,6 +41,8 @@ public:
     bool agentIsFree(int index);
     bool isOccupied(Vector2D input);
 
+    QString gameStatus();
+
 private:
     WorldModel* _wm;
 

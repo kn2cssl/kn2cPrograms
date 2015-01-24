@@ -24,8 +24,8 @@ public:
     float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
 
     void waitTimerStart();
-
-    void setPlayerToKeep(int index);
+    void setGameOnPositions(Position input);
+    void setGameOnPositions(Vector2D input);
 
     bool everyOneInTheirPos;
 
@@ -38,9 +38,8 @@ private:
     double valid_angle[12][2];
     double uGoal;
     double dGoal;
-
-    int playerToKeep;
     QTimer *waitTimer;
+    Position gameOnPosition;
 
     bool pastMidPoint; // FreeKick
 

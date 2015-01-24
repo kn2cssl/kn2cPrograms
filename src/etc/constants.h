@@ -65,6 +65,9 @@ const Vector2D ourGoalPost_R(MinX, -350);
 const Vector2D ourGoalCC_L(MinX, 175);
 const Vector2D ourGoalCC_R(MinX, -175);
 
+const Line2D attackerMidLine(Vector2D(MinX,0),Vector2D(MaxX,0));
+const Line2D attackerLeftLine(Vector2D(MinX,(0.667*MaxY)),Vector2D(MaxX,(0.667*MaxY)));
+const Line2D attackerRightLine(Vector2D(MinX,(0.667*MinY)),Vector2D(MaxX,(0.667*MinY)));
 
 const Vector2D ourDefPost_L(MinX, 975);
 const Vector2D ourDefPost_R(MinX, -975);

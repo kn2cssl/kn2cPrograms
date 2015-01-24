@@ -15,10 +15,12 @@ public:
     void setID(int id);
     int getID();
     Vector2D findTarget();
+    void setPlayerToKeep(int index);
 
 protected:
     WorldModel *wm;
     QString param;
+    int playerToKeep;
     int id;
 
 private:

@@ -26,6 +26,11 @@ int Tactic::getID()
     return this->id;
 }
 
+void Tactic::setPlayerToKeep(int index)
+{
+    this->playerToKeep = index;
+}
+
 Vector2D Tactic::findTarget()
 {
     return Field::oppGoalCenter;

@@ -206,7 +206,7 @@ bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
     double distThreshold = _wm->var[0], degThreshold = _wm->var[1] / 10;
     //@kamin
     AngleDeg d1((ballPos + _wm->ball.vel.loc * .015 - robotPos.loc ).dir());
-    //AngleDeg d1((ballPos  - robotPos.loc).dir());
+//    AngleDeg d1((ballPos  - robotPos.loc).dir());
     //@kmout
     AngleDeg d2(robotPos.dir * AngleDeg::RAD2DEG);
     if(fabs((d1 - d2).degree()) < degThreshold || (360.0 - fabs((d1 - d2).degree())) < degThreshold)
@@ -299,7 +299,34 @@ bool Knowledge::isOccupied(Vector2D input)
     return false;
 }
 
-bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
+QString Knowledge::gameStatus()
+{
+    QString out;
+
+    QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
+    QList<int> oppNearestPlayerToBall = _wm->kn->findNearestOppositeTo(_wm->ball.pos.loc);
+
+    double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+    double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+
+    if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
+    {
+        out = "Suspended";
+    }
+    else
+    {
+        if( ourDistance2Ball-oppDistance2Ball > 0 )
+            out = "Defending";
+        else if( ourDistance2Ball-oppDistance2Ball < 0 )
+            out = "Attacking";
+        else
+            out = "Suspended";
+    }
+
+    return out;
+}
+
+ bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
 {
     if( (current.loc-desired.loc).length() < distThreshold)
     {
@@ -343,3 +370,4 @@ Position Knowledge::AdjustKickPoint2(Vector2D ballPos, Vector2D target, Vector2D
 
     return p;
 }
+

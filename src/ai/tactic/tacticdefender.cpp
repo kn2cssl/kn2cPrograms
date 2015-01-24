@@ -42,11 +42,49 @@ RobotCommand TacticDefender::getCommand()
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingRobot)
     {
+        AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
+        Position final;
+        final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
+        final.loc.y = wm->oppRobot[playerToKeep].pos.loc.y - (300*sin(desiredDeg.radian()));
+        final.dir = desiredDeg.radian();
 
-    }
-    else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingRobot)
-    {
+        if( wm->gs == GameStateType::STATE_Free_kick_Opp || wm->gs == GameStateType::STATE_Indirect_Free_kick_Opp)
+        {
+            if( wm->kn->IsInsideSecureArea(final.loc,wm->ball.pos.loc) )
+            {
+                Vector2D fstInt,secInt;
+                Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+                Line2D connectedLine(wm->ball.pos.loc,final.loc);
+                int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
 
+                if( numberOfIntersections == 2 )
+                {
+                    if( (fstInt-final.loc).length() > (secInt-final.loc).length() )
+                        rc.fin_pos.loc = secInt;
+                    else
+                        rc.fin_pos.loc = fstInt;
+                }
+                else if( numberOfIntersections == 1 )
+                {
+                    rc.fin_pos.loc = fstInt;
+                }
+                else
+                    rc.fin_pos = wm->ourRobot[this->id].pos;
+            }
+            else
+            {
+                rc.fin_pos = final;
+            }
+        }
+        else
+        {
+            rc.fin_pos = final;
+        }
+
+        rc.maxSpeed = 2;
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::Idle)
     {

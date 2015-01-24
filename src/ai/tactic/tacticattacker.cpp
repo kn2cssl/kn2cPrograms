@@ -27,6 +27,7 @@ RobotCommand TacticAttacker::getCommand()
 
         rc.fin_pos = p;
 
+//        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
         if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
         {
             rc.kickspeedx = detectKickSpeed();
@@ -110,7 +111,27 @@ RobotCommand TacticAttacker::getCommand()
                 rc.fin_pos = final;
             }
         }
+        else
+        {
+            rc.fin_pos = final;
+        }
 
+        if( wm->kn->IsInsideGolieArea(final.loc) )
+        {
+            Circle2D attackerCircles(Field::ourGoalCenter , Field::goalCircle_R+200);
+            Line2D robotRay(wm->oppRobot[playerToKeep].pos.loc,wm->ourRobot[this->id].pos.loc);
+            Vector2D firstPoint,secondPoint;
+            attackerCircles.intersection(robotRay,&firstPoint,&secondPoint);
+
+            if( (wm->oppRobot[this->id].pos.loc-firstPoint).length() < (wm->oppRobot[this->id].pos.loc-secondPoint).length() )
+                rc.fin_pos.loc = firstPoint;
+            else
+                rc.fin_pos.loc = secondPoint;
+        }
+        else
+        {
+            rc.fin_pos = final;
+        }
         rc.maxSpeed = 2;
         rc.useNav = true;
         rc.isBallObs = true;
@@ -118,7 +139,7 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
-        if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
+             if(wm->gs == GameStateType::STATE_Free_kick_Our || wm->gs == GameStateType::STATE_Indirect_Free_kick_Our)
         {
             if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
             {
@@ -257,7 +278,7 @@ RobotCommand TacticAttacker::getCommand()
                 break;
             }
         }
-        else if( wm->gs == GameStateType::STATE_Penalty_Our )
+        else if(wm->gs == GameStateType::STATE_Penalty_Our )
         {
             Vector2D pos;
             switch (wm->ourRobot[this->id].Role)
@@ -280,7 +301,7 @@ RobotCommand TacticAttacker::getCommand()
             if(wm->kn->isOccupied(rc.fin_pos.loc))
                 rc.fin_pos.loc = rc.fin_pos.loc - Vector2D(100,100);
         }
-        else if( wm->gs == GameStateType::STATE_Penalty_Opp )
+        else if(wm->gs == GameStateType::STATE_Penalty_Opp )
         {
             switch (wm->ourRobot[this->id].Role)
             {
@@ -301,6 +322,16 @@ RobotCommand TacticAttacker::getCommand()
             //-------I should Check THis!!!----
             if(wm->kn->isOccupied(rc.fin_pos.loc))
                 rc.fin_pos.loc = rc.fin_pos.loc - Vector2D(100,100);
+        }
+        else if( wm->cmgs.gameOn() || (wm->kn->gameStatus()=="Attacking") )
+        {
+//            qDebug()<<"attacker "<<this->id<<" is in gameOn Mode";
+            rc.fin_pos = gameOnPosition;
+            rc.maxSpeed = 1;
+            rc.useNav = true;
+            rc.isBallObs = true;
+            rc.isKickObs = true;
+
         }
         else
         {
@@ -681,9 +712,14 @@ void TacticAttacker::waitTimerStart()
     waitTimer->start(4000);
 }
 
-void TacticAttacker::setPlayerToKeep(int index)
+void TacticAttacker::setGameOnPositions(Position input)
 {
-    this->playerToKeep = index;
+    this->gameOnPosition = input;
+}
+
+void TacticAttacker::setGameOnPositions(Vector2D input)
+{
+    this->gameOnPosition.loc = input;
 }
 
 bool TacticAttacker::isFree(int index)
