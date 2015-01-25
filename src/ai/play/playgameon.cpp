@@ -261,6 +261,8 @@ QList<AgentRegion> PlayGameOn::freeRegions()
 
 void PlayGameOn::initRole()
 {
+    int ballOwner = findBallOwner();
+
     if( wm->gs_last == STATE_Free_kick_Our || wm->gs_last == STATE_Indirect_Free_kick_Our )
     {
         //return ;
@@ -274,139 +276,139 @@ void PlayGameOn::initRole()
         QList<int> activeAgents= wm->kn->ActiveAgents();
         wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
     }
-
-    QString game_status = wm->kn->gameStatus();
-    int ballOwner = findBallOwner();
-
-    if( game_status == "Defending" )
+    else
     {
-        QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
-        QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-        oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
-        oppPlayers.removeOne(wm->ref_goalie_opp);
-
-        QList<int> ourPlayers = findAttackers();
-
-        ourPlayers.removeOne(ballOwner);
-        ourPlayers.removeOne(wm->ref_goalie_our);
-
-        while( oppPlayers.size() > 0 )
+        QString game_status = wm->kn->gameStatus();
+        if( game_status == "Defending" )
         {
-            int min_j;
-            double min_d = 10000;
-            for(int j=0;j<ourPlayers.size();j++)
+            QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
+            QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
+            oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
+            oppPlayers.removeOne(wm->ref_goalie_opp);
+
+            QList<int> ourPlayers = findAttackers();
+
+            ourPlayers.removeOne(ballOwner);
+            ourPlayers.removeOne(wm->ref_goalie_our);
+
+            while( oppPlayers.size() > 0 )
             {
-                double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
-
-                if( distance < min_d )
+                int min_j;
+                double min_d = 10000;
+                for(int j=0;j<ourPlayers.size();j++)
                 {
-                    min_d = distance;
-                    min_j = ourPlayers.at(j);
-                }
-            }
-            ourPlayers.removeOne(min_j);
-            setPlayer2Keep(min_j,oppPlayers.at(0));
-            oppPlayers.removeFirst();
-        }
-    }
-    else if( game_status == "Attacking" )
-    {
-        if( wm->ball.isValid )
-        {
-            QList<int> attackers = findAttackers();
+                    double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
 
-            for(int i=0;i<attackers.size();i++)
-            {
-                switch (wm->ourRobot[attackers.at(i)].Role)
-                {
-                case AgentRole::AttackerMid:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Center;
-                    break;
-                case AgentRole::AttackerLeft:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Left;
-                    break;
-                case AgentRole::AttackerRight:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Right;
-                    break;
-                default:
-                    break;
-                }
-            }
-
-            attackers.removeOne(ballOwner);
-
-            Segment2D toRightCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MinY));
-            Segment2D toLeftCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MaxY));
-
-            Vector2D centerPos , leftPos , rightPos;
-
-            leftPos = toLeftCorner.intersection(Field::attackerLeftLine);
-            if( leftPos == Vector2D::INVALIDATED )
-                leftPos = Vector2D(0,0);
-            rightPos = toRightCorner.intersection(Field::attackerRightLine);
-            if( rightPos == Vector2D::INVALIDATED )
-                rightPos = Vector2D(0,0);
-
-            //            if( toLeftCorner.existIntersection(Field::attackerMidLine) )
-            //                centerPos = toLeftCorner.intersection(Field::attackerMidLine);
-            //            else if( toRightCorner.existIntersection(Field::attackerMidLine) )
-            //                centerPos = toRightCorner.intersection(Field::attackerMidLine);
-
-            QList<AgentRegion> free_regions = freeRegions();
-
-            int attackerIndex = 0 , regionIndex = 0;
-            while( attackerIndex < attackers.size() )
-            {
-                int attacker = attackers.at(attackerIndex);
-
-                while( regionIndex < free_regions.size() )
-                {
-                    if(wm->ourRobot[attackers.at(attackerIndex)].Region == free_regions.at(regionIndex) )
+                    if( distance < min_d )
                     {
-                        switch (wm->ourRobot[attackers.at(attackerIndex)].Region) {
+                        min_d = distance;
+                        min_j = ourPlayers.at(j);
+                    }
+                }
+                ourPlayers.removeOne(min_j);
+                setPlayer2Keep(min_j,oppPlayers.at(0));
+                oppPlayers.removeFirst();
+            }
+        }
+        else if( game_status == "Attacking" )
+        {
+            if( wm->ball.isValid )
+            {
+                QList<int> attackers = findAttackers();
+
+                for(int i=0;i<attackers.size();i++)
+                {
+                    switch (wm->ourRobot[attackers.at(i)].Role)
+                    {
+                    case AgentRole::AttackerMid:
+                        wm->ourRobot[attackers.at(i)].Region = AgentRegion::Center;
+                        break;
+                    case AgentRole::AttackerLeft:
+                        wm->ourRobot[attackers.at(i)].Region = AgentRegion::Left;
+                        break;
+                    case AgentRole::AttackerRight:
+                        wm->ourRobot[attackers.at(i)].Region = AgentRegion::Right;
+                        break;
+                    default:
+                        break;
+                    }
+                }
+
+                attackers.removeOne(ballOwner);
+
+                Segment2D toRightCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MinY));
+                Segment2D toLeftCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MaxY));
+
+                Vector2D centerPos , leftPos , rightPos;
+
+                leftPos = toLeftCorner.intersection(Field::attackerLeftLine);
+                if( leftPos == Vector2D::INVALIDATED )
+                    leftPos = Vector2D(0,0);
+                rightPos = toRightCorner.intersection(Field::attackerRightLine);
+                if( rightPos == Vector2D::INVALIDATED )
+                    rightPos = Vector2D(0,0);
+
+                //            if( toLeftCorner.existIntersection(Field::attackerMidLine) )
+                //                centerPos = toLeftCorner.intersection(Field::attackerMidLine);
+                //            else if( toRightCorner.existIntersection(Field::attackerMidLine) )
+                //                centerPos = toRightCorner.intersection(Field::attackerMidLine);
+
+                QList<AgentRegion> free_regions = freeRegions();
+
+                int attackerIndex = 0 , regionIndex = 0;
+                while( attackerIndex < attackers.size() )
+                {
+                    int attacker = attackers.at(attackerIndex);
+
+                    while( regionIndex < free_regions.size() )
+                    {
+                        if(wm->ourRobot[attackers.at(attackerIndex)].Region == free_regions.at(regionIndex) )
+                        {
+                            switch (wm->ourRobot[attackers.at(attackerIndex)].Region) {
+                            case AgentRegion::Center:
+                                tAttackerMid->setGameOnPositions(centerPos);
+                                break;
+                            case AgentRegion::Left:
+                                tAttackerLeft->setGameOnPositions(leftPos);
+                                break;
+                            case AgentRegion::Right:
+                                tAttackerRight->setGameOnPositions(rightPos);
+                                break;
+                            default:
+                                break;
+                            }
+                            attackers.removeAt(attackerIndex);
+                            free_regions.removeAt(regionIndex);
+                            break;
+                        }
+                        else
+                        {
+                            regionIndex++;
+                        }
+                    }
+                    regionIndex = 0;
+                    if( attackers.contains(attacker))
+                        attackerIndex++;
+                }
+
+                while ( !attackers.isEmpty() )
+                {
+                    if( !free_regions.isEmpty() )
+                    {
+                        switch ( free_regions.takeFirst() )
+                        {
                         case AgentRegion::Center:
-                            tAttackerMid->setGameOnPositions(centerPos);
+                            setGameOnPos(attackers.takeFirst(),centerPos);
                             break;
                         case AgentRegion::Left:
-                            tAttackerLeft->setGameOnPositions(leftPos);
+                            setGameOnPos(attackers.takeFirst(),leftPos);
                             break;
                         case AgentRegion::Right:
-                            tAttackerRight->setGameOnPositions(rightPos);
+                            setGameOnPos(attackers.takeFirst(),rightPos);
                             break;
                         default:
                             break;
                         }
-                        attackers.removeAt(attackerIndex);
-                        free_regions.removeAt(regionIndex);
-                        break;
-                    }
-                    else
-                    {
-                        regionIndex++;
-                    }
-                }
-                regionIndex = 0;
-                if( attackers.contains(attacker))
-                    attackerIndex++;
-            }
-
-            while ( !attackers.isEmpty() )
-            {
-                if( !free_regions.isEmpty() )
-                {
-                    switch ( free_regions.takeFirst() )
-                    {
-                    case AgentRegion::Center:
-                        setGameOnPos(attackers.takeFirst(),centerPos);
-                        break;
-                    case AgentRegion::Left:
-                        setGameOnPos(attackers.takeFirst(),leftPos);
-                        break;
-                    case AgentRegion::Right:
-                        setGameOnPos(attackers.takeFirst(),rightPos);
-                        break;
-                    default:
-                        break;
                     }
                 }
             }

@@ -508,7 +508,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 {
     RobotCommand rc;
 
-    rc.maxSpeed = 0.5;
+    rc.maxSpeed = 1;
 
     int index = findBestPlayerForPass();
 
@@ -635,13 +635,15 @@ int TacticAttacker::findBestPlayerForPass()
     double min = 10000;
 
     QList<int> ourAgents = wm->kn->ActiveAgents();
-    QList<int> freeAgents;
+    QList<int> freeAgents , busyAgents;
 
     while( !ourAgents.isEmpty() )
     {
         int index = ourAgents.takeFirst();
         if(isFree(index))
             freeAgents.append(index);
+        else
+            busyAgents.append(index);
     }
 
     while ( !freeAgents.isEmpty() )
@@ -656,8 +658,25 @@ int TacticAttacker::findBestPlayerForPass()
             }
         }
     }
-    //qDebug()<<"Pass Receiver is "<<index;
-    return index;
+    if( index == -1 )
+    {
+        while ( !busyAgents.isEmpty() )
+        {
+            int i = busyAgents.takeFirst();
+            if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
+            {
+                if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
+                {
+                    min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
+                    index = i;
+                }
+            }
+        }
+
+        return index;
+    }
+    else
+        return index;
 }
 
 void TacticAttacker::isKicker()
@@ -676,7 +695,7 @@ float TacticAttacker::detectKickSpeed(Vector2D dest )
             kickSpeed = 5; //Should Changed
             break;
         case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 2.5; //Should Changed
+            kickSpeed = 3.5; //Should Changed
             break;
         case STATE_Start:
             kickSpeed = 5; //Should Changed
@@ -730,7 +749,8 @@ bool TacticAttacker::isFree(int index)
     while( !oppAgents.isEmpty() )
     {
         int indexOPP = oppAgents.takeFirst();
-        if( (wm->ourRobot[index].pos.loc-wm->oppRobot[indexOPP].pos.loc).length() < DangerDist)
+        if( (wm->ourRobot[index].pos.loc-wm->oppRobot[indexOPP].pos.loc).length() < DangerDist &&
+                fabs((wm->ourRobot[index].vel.loc - wm->oppRobot[indexOPP].vel.loc).length())<0.3 )
         {
             isFree = false;
         }
