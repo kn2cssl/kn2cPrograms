@@ -16,7 +16,7 @@
 
 #define NUMOFDEFENDERS 2
 
-#define DangerDist 500
+#define DangerDist 350
 
 
 // rules constants
