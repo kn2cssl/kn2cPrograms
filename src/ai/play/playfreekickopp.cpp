@@ -32,7 +32,7 @@ int PlayFreeKickOpp::enterCondition()
             rolesIsInit = false;
             go2ThePositions = false;
 
-            waitTimer->start(2000);
+            waitTimer->start(1000);
         }
         //        else
         //        {
@@ -189,7 +189,6 @@ void PlayFreeKickOpp::execute()
 {
     if(go2ThePositions)
     {
-        qDebug()<<"pressingIsInit:"<<pressingIsInit;
         QList<int> activeAgents=wm->kn->ActiveAgents();
 
         if( rolesIsInit && !pressingIsInit )
