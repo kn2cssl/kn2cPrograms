@@ -98,6 +98,7 @@ void PlayFreeKickOpp::initRole()
         break;
     }
     rolesIsInit = true;
+    pressingIsInit = false;
 }
 
 void PlayFreeKickOpp::initPressing()
