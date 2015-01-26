@@ -129,26 +129,6 @@ void PlayFreeKickOur::execute()
         setTactics(activeAgents.at(i));
     }
 
-//    if(!freeKickStart)
-//    {
-//        tAttackerMid->isKicker();
-//        activeAgents.removeOne(tAttackerMid->getID());
-//        int recieverID = tAttackerMid->findBestPlayerForPass();
-//        if(recieverID != -1)
-//        {
-//            if(tAttackerMid->kickedSucceccfully)
-//            {
-//                qDebug()<<"KICKER";
-//                wm->ourRobot[recieverID].Status = AgentStatus::FollowingBall;
-//                freeKickStart = true;
-//            }
-//            activeAgents.removeOne(recieverID);
-//        }
-//        while(activeAgents.size() > 0)
-//        {
-//            wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
-//        }
-//    }
     tAttackerMid->isKicker();
 
     if(!freeKickStart)
@@ -158,15 +138,18 @@ void PlayFreeKickOur::execute()
     }
 
     activeAgents.removeOne(tAttackerMid->getID());
-    int recieverID = tAttackerMid->findBestPlayerForPass();
-    if(recieverID != -1)
+    if(wm->cmgs.ourIndirectKick())
     {
-//        if(tAttackerMid->kickedSucceccfully)
-//        {
-            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-//            freeKickStart = true;
-//        }
-        activeAgents.removeOne(recieverID);
+        int recieverID = tAttackerMid->findBestPlayerForPass();
+        if(recieverID != -1)
+        {
+        //        if(tAttackerMid->kickedSucceccfully)
+        //        {
+                wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
+        //            freeKickStart = true;
+        //        }
+            activeAgents.removeOne(recieverID);
+        }
     }
     while(activeAgents.size() > 0)
     {
