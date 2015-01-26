@@ -20,12 +20,13 @@ RobotCommand TacticTest::getCommand()
 
         if(wm->ball.pos.loc.x > 0 && wm->ball.pos.loc.x < Field::MaxX/2)
         {
-            rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,Field::oppGoalCenter);
+            rc.fin_pos = wm->kn->AdjustKickPoint2(wm->ball.pos.loc,Field::oppGoalCenter,wm->ball.pos.loc);
             rc.useNav = true;
 
             if( (wm->ourRobot[this->id].pos.loc-wm->ball.pos.loc).length() < 175 )
                 rc.useNav = false;
-
+            Position Temp;
+            Temp.loc = wm->ourRobot[this->id].pos.loc + wm->ourRobot[this->id].vel.loc * 0.015 ;
             if( wm->kn->CanKick(wm->ourRobot[this->id].pos,wm->ball.pos.loc) )
             {
                 rc.kickspeedx = 250;
@@ -39,7 +40,6 @@ RobotCommand TacticTest::getCommand()
     }
 
     rc.maxSpeed = 0.5;
-
     rc.isBallObs = true;
     rc.isKickObs = true;
 
