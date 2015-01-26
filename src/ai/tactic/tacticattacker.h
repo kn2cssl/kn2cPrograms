@@ -21,7 +21,7 @@ public:
     double findBestPoint();
     int findBestPlayerForPass();
     void isKicker();
-    float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
+
 
     void waitTimerStart();
     void setGameOnPositions(Position input);

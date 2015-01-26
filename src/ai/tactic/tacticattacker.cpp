@@ -232,7 +232,7 @@ RobotCommand TacticAttacker::getCommand()
                 while( i<nearest.size() )
                 {
                     if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                            /*||  (wm->oppRobot[id].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
+                            ||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000)
                         nearest.removeAt(i);
                     else
                         i++;
@@ -242,8 +242,15 @@ RobotCommand TacticAttacker::getCommand()
                     Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
                     Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
                     Vector2D interSection = tmp.intersection(fixedLine);
-                    rc.fin_pos.loc = interSection;
-                    rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                    if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+                    {
+                        rc.fin_pos.loc = interSection;
+                        rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                    }
+                    else
+                    {
+                        rc.fin_pos = wm->ourRobot[this->id].pos;
+                    }
                 }
                 else
                 {
@@ -256,7 +263,7 @@ RobotCommand TacticAttacker::getCommand()
                 while( i<nearest.size() )
                 {
                     if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                            /*||  (wm->oppRobot[id].pos.loc -Vector2D(0,Field::MinY/2)).length()>1000*/)
+                            ||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000)
                         nearest.removeAt(i);
                     else
                         i++;
@@ -266,8 +273,15 @@ RobotCommand TacticAttacker::getCommand()
                     Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
                     Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
                     Vector2D interSection = tmp.intersection(fixedLine);
-                    rc.fin_pos.loc = interSection;
-                    rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                    if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+                    {
+                        rc.fin_pos.loc = interSection;
+                        rc.fin_pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                    }
+                    else
+                    {
+                        rc.fin_pos = wm->ourRobot[this->id].pos;
+                    }
                 }
                 else
                 {
@@ -682,47 +696,6 @@ int TacticAttacker::findBestPlayerForPass()
 void TacticAttacker::isKicker()
 {
     wm->ourRobot[this->id].Status = AgentStatus::Kicking;
-}
-
-float TacticAttacker::detectKickSpeed(Vector2D dest )
-{
-    float kickSpeed;
-
-    if(wm->isSim)
-    {
-        switch (wm->gs ) {
-        case STATE_Free_kick_Our:
-            kickSpeed = 5; //Should Changed
-            break;
-        case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 3.5; //Should Changed
-            break;
-        case STATE_Start:
-            kickSpeed = 5; //Should Changed
-            break;
-        default:
-            break;
-        }
-    }
-    else
-    {
-        switch (wm->gs ) {
-        case STATE_Free_kick_Our:
-            kickSpeed = 200; //Should Changed
-            break;
-        case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 25;//50; //Should Changed
-            break;
-        case STATE_Start:
-            kickSpeed = 150; //Should Changed
-            break;
-        default:
-            kickSpeed = 100;//Should Changed
-            break;
-        }
-    }
-
-    return kickSpeed;
 }
 
 void TacticAttacker::waitTimerStart()

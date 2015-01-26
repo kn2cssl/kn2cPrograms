@@ -132,17 +132,7 @@ int PlayGameOn::findBallOwner()
     QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
     QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
-    if( (wm->ourRobot[nearestPlayers2Ball.at(0)].pos.loc-wm->ball.pos.loc).length() < 500)
-    {
-        wm->ourRobot[nearestPlayers2Ball.at(0)].Status = AgentStatus::FollowingBall;
-        ownerIndex = nearestPlayers2Ball.at(0);
-        ourRobots_temp.removeOne(nearestPlayers2Ball.takeFirst());
-        while( !ourRobots_temp.isEmpty() )
-        {
-            wm->ourRobot[ourRobots_temp.takeFirst()].Status = AgentStatus::Idle;
-        }
-    }
-    else
+    if( (wm->ball.vel.loc).length() > 1)
     {
         Ray2D ballRay(wm->ball.pos.loc,wm->ball.vel.loc.dir());
 
@@ -180,6 +170,16 @@ int PlayGameOn::findBallOwner()
 
         while( !ourRobots.isEmpty() )
             wm->ourRobot[ourRobots.takeFirst()].Status = AgentStatus::Idle;
+    }
+    else
+    {
+        wm->ourRobot[nearestPlayers2Ball.at(0)].Status = AgentStatus::FollowingBall;
+        ownerIndex = nearestPlayers2Ball.at(0);
+        ourRobots_temp.removeOne(nearestPlayers2Ball.takeFirst());
+        while( !ourRobots_temp.isEmpty() )
+        {
+            wm->ourRobot[ourRobots_temp.takeFirst()].Status = AgentStatus::Idle;
+        }
     }
 
     return ownerIndex;
@@ -279,6 +279,7 @@ void PlayGameOn::initRole()
     else
     {
         QString game_status = wm->kn->gameStatus();
+        qDebug()<<"Status : "<<game_status;
         if( game_status == "Defending" )
         {
             QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
@@ -348,10 +349,13 @@ void PlayGameOn::initRole()
                 if( rightPos == Vector2D::INVALIDATED )
                     rightPos = Vector2D(0,0);
 
-                //            if( toLeftCorner.existIntersection(Field::attackerMidLine) )
-                //                centerPos = toLeftCorner.intersection(Field::attackerMidLine);
-                //            else if( toRightCorner.existIntersection(Field::attackerMidLine) )
-                //                centerPos = toRightCorner.intersection(Field::attackerMidLine);
+                if( toLeftCorner.existIntersection(Field::attackerMidLine) )
+                    centerPos = toLeftCorner.intersection(Field::attackerMidLine);
+                else if( toRightCorner.existIntersection(Field::attackerMidLine) )
+                    centerPos = toRightCorner.intersection(Field::attackerMidLine);
+
+                if( centerPos == Vector2D::INVALIDATED)
+                    centerPos = Vector2D(0,0);
 
                 QList<AgentRegion> free_regions = freeRegions();
 
@@ -393,23 +397,26 @@ void PlayGameOn::initRole()
 
                 while ( !attackers.isEmpty() )
                 {
+                    int i = attackers.takeFirst();
                     if( !free_regions.isEmpty() )
                     {
                         switch ( free_regions.takeFirst() )
                         {
                         case AgentRegion::Center:
-                            setGameOnPos(attackers.takeFirst(),centerPos);
+                            setGameOnPos(i,centerPos);
                             break;
                         case AgentRegion::Left:
-                            setGameOnPos(attackers.takeFirst(),leftPos);
+                            setGameOnPos(i,leftPos);
                             break;
                         case AgentRegion::Right:
-                            setGameOnPos(attackers.takeFirst(),rightPos);
+                            setGameOnPos(i,rightPos);
                             break;
                         default:
                             break;
                         }
                     }
+                    else
+                        setGameOnPos(i,wm->ourRobot[i].pos.loc);
                 }
             }
         }
