@@ -10,10 +10,6 @@
 #define BALL_RADIUS     22
 #define ROBOT_RADIUS    90
 
-#define RIGHT 0
-#define CENTER 1
-#define LEFT 2
-
 #define NUMOFDEFENDERS 2
 
 #define DangerDist 350
@@ -62,8 +58,9 @@ const double goalCircleDEF_R = goalCircleEX_R + 400;
 const Vector2D ourGoalCenter(MinX, 0);
 const Vector2D ourGoalPost_L(MinX, 350);
 const Vector2D ourGoalPost_R(MinX, -350);
-const Vector2D ourGoalCC_L(MinX, 175);
-const Vector2D ourGoalCC_R(MinX, -175);
+const double defenceLineLinear = 350;
+const Vector2D defenceLineLinear_L(MinX, 175);
+const Vector2D defenceLineLinear_R(MinX, -175);
 
 const Line2D attackerMidLine(Vector2D(MinX,0),Vector2D(MaxX,0));
 const Line2D attackerLeftLine(Vector2D(MinX,(0.667*MaxY)),Vector2D(MaxX,(0.667*MaxY)));
@@ -71,6 +68,8 @@ const Line2D attackerRightLine(Vector2D(MinX,(0.667*MinY)),Vector2D(MaxX,(0.667*
 
 const Vector2D ourDefPost_L(MinX, 975);
 const Vector2D ourDefPost_R(MinX, -975);
+
+const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
 
 // Opps.
 const Vector2D oppGoalCenter(MaxX, 0);

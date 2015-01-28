@@ -5,27 +5,24 @@ TacticFixedPos::TacticFixedPos(WorldModel *worldmodel, QObject *parent) :
 {
 }
 
-void TacticFixedPos::SetFixedPosition(int p)
-{
-    this->position = p;
-}
-
 RobotCommand TacticFixedPos::getCommand()
 {
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
     rc.maxSpeed = 1;
-    switch(position)
+    switch(wm->ourRobot[this->id].Role)
     {
-    case CENTER:
+    case AgentRole::AttackerMid:
         rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 0);
         break;
-    case RIGHT:
+    case AgentRole::AttackerRight:
         rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , 1550);
         break;
-    case LEFT:
+    case AgentRole::AttackerLeft:
         rc.fin_pos.loc = Vector2D(wm->ball.pos.loc.x - 500 , -1550);
+        break;
+    default:
         break;
     }
 
