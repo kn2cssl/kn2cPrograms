@@ -25,7 +25,7 @@ int PlayKickoffOpp::enterCondition()
 void PlayKickoffOpp::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    numberOfPlayer = activeAgents.size();
+    numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {

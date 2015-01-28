@@ -24,7 +24,7 @@ protected:
     virtual void initRole() = 0;
 
     int numberOfDef;
-    int numberOfPlayer;
+    int numberOfPlayers;
     bool rolesIsInit;
 
 private:

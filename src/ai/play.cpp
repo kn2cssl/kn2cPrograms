@@ -31,9 +31,9 @@ bool Play::conditionChanged()
 {
     bool out;
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    if(activeAgents.size() != numberOfPlayer)
+    if(activeAgents.size() != numberOfPlayers)
     {
-        numberOfPlayer = activeAgents.size();
+        numberOfPlayers = activeAgents.size();
         out = false;
     }
     return out;

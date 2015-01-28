@@ -4,7 +4,7 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
 {
     freeKickStart = false;
 
-    numberOfPlayer = 0;
+    numberOfPlayers = 0;
 
     tGolie = new TacticGoalie(wm);
 
@@ -40,7 +40,7 @@ int PlayFreeKickOur::enterCondition()
 void PlayFreeKickOur::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    numberOfPlayer = activeAgents.size();
+    numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {
