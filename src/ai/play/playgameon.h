@@ -2,7 +2,6 @@
 #define PLAYGAMEON_H
 
 #include "play.h"
-#include "QDebug"
 
 class PlayGameOn : public Play
 {

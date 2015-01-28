@@ -3,15 +3,8 @@
 PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
     Play("PlayGameOn", worldmodel, parent)
 {
-    //    firstTimeInit = false; // Should Checked!!!!!
-
-    //    freeKickStart = false;// Should Checked!!!!!
-
-    //    numberOfPlayer = 0;// Should Checked!!!!!
-
     tGolie = new TacticGoalie(wm);
 
-    //    numberOfDef = NUMOFDEFENDERS; // Should Checked!!!!!
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
     tDefenderMid = new TacticDefender(wm);
@@ -55,6 +48,8 @@ void PlayGameOn::setTactics(int index)
     case AgentRole::AttackerLeft:
         tactics[index] = tAttackerLeft;
         break;
+    default:
+        break;
     }
 
     if(wm->ourRobot[index].Status == AgentStatus::RecievingPass)
@@ -65,9 +60,10 @@ void PlayGameOn::setTactics(int index)
     {
         wm->ourRobot[index].Status = AgentStatus::Idle;
     }
-    //    {
-    //        wm->ourRobot[index].Status = AgentStatus::Idle;
-    //    }
+    else if(wm->ourRobot[index].Status == AgentStatus::BlockingBall)
+    {
+        wm->ourRobot[index].Status = AgentStatus::BlockingBall;
+    }
 }
 
 void PlayGameOn::initPressing()
@@ -279,7 +275,7 @@ void PlayGameOn::initRole()
     else
     {
         QString game_status = wm->kn->gameStatus();
-        qDebug()<<"Status : "<<game_status;
+
         if( game_status == "Defending" )
         {
             QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);

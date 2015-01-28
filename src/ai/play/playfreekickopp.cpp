@@ -3,7 +3,7 @@
 PlayFreeKickOpp::PlayFreeKickOpp(WorldModel *worldmodel, QObject *parent) :
     Play("PlayFreeKickOpp", worldmodel, parent)
 {
-    numberOfPlayer = 0;
+    numberOfPlayers = 0;
 
     pressingIsInit = false;
     rolesIsInit = false;
@@ -56,7 +56,7 @@ void PlayFreeKickOpp::waitTimer_timout()
 void PlayFreeKickOpp::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
-    numberOfPlayer = activeAgents.size();
+    numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {
@@ -153,6 +153,15 @@ void PlayFreeKickOpp::initPressing()
     else
     {
         wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::Idle;
+    }
+
+    if( wm->cmgs.theirDirectKick() && numberOfDef==2 )
+    {
+        if( wm->ourRobot[tDefenderRight->getID()].isValid )
+            wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
+
+        if( wm->ourRobot[tDefenderLeft->getID()].isValid )
+            wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
     }
 
     pressingIsInit = true;

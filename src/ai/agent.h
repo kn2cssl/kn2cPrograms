@@ -12,7 +12,7 @@ enum AgentStatus
     Passing,
     Kicking,
     FollowingBall,
-    BlockingPass,
+    BlockingBall,
     BlockingRobot,
     RecievingPass
 };

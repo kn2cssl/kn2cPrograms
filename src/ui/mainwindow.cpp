@@ -92,8 +92,8 @@ QString MainWindow::returnStatus(AgentStatus Status)
     case AgentStatus::FollowingBall :
         out = "FollowingBall";
         break;
-    case AgentStatus::BlockingPass :
-        out = "BlockingPass";
+    case AgentStatus::BlockingBall :
+        out = "BlockingBall";
         break;
     case AgentStatus::RecievingPass :
         out = "RecievingPass";
