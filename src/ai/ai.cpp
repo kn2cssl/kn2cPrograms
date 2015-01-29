@@ -1,9 +1,7 @@
 #include "ai.h"
-#include "play/playcalibration.h"
 #include "play/playfreekickopp.h"
 #include "play/playfreekickour.h"
 #include "play/playgameon.h"
-#include "play/playgameondefensive.h"
 #include "play/playhalt.h"
 #include "play/playkickoffopp.h"
 #include "play/playkickoffour.h"
@@ -26,11 +24,9 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
         current_tactic[i] = 0;
 
-    plays.append(new PlayCalibration(wm));
     plays.append(new PlayFreeKickOpp(wm));
     plays.append(new PlayFreeKickOur(wm));
     plays.append(new PlayGameOn(wm));
-    plays.append(new PlayGameOnDefensive(wm));
     plays.append(new PlayHalt(wm));
     plays.append(new PlayKickoffOpp(wm));
     plays.append(new PlayKickoffOur(wm));
