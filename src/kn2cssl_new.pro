@@ -139,7 +139,6 @@ SOURCES +=	main.cpp \
     ai/knowledge.cpp \
     ai/tactic/tacticballtracker.cpp \
     ai/tactic/tacticcircle.cpp \
-    ai/tactic/tacticformation.cpp \
     ai/play/playstop.cpp \
     ai/play/playhalt.cpp \
     ai/play/playfreekickopp.cpp \
@@ -160,7 +159,6 @@ SOURCES +=	main.cpp \
     ai/tactic/tactictechnical.cpp \
     ai/tactic/tacticpenaltykicker.cpp \
     ai/tactic/tactictest2.cpp \
-    ai/tactic/tactickicker.cpp \
     ai/tactic/tacticpreparing.cpp \
     ai/play/playpreparing.cpp
 
@@ -235,7 +233,6 @@ HEADERS  += \
     ai/knowledge.h \
     ai/tactic/tacticballtracker.h \
     ai/tactic/tacticcircle.h \
-    ai/tactic/tacticformation.h \
     ai/tactics.h \
     ai/play/playstop.h \
     ai/play/playhalt.h \
@@ -257,7 +254,6 @@ HEADERS  += \
     ai/tactic/tactictechnical.h \
     ai/tactic/tacticpenaltykicker.h \
     ai/tactic/tactictest2.h \
-    ai/tactic/tactickicker.h \
     ai/tactic/tacticpreparing.h \
     ai/play/playpreparing.h
 

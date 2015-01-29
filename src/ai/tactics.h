@@ -7,7 +7,6 @@
 #include "tactic/tacticblocker.h"
 #include "tactic/tacticcircle.h"
 #include "tactic/tacticdefender.h"
-#include "tactic/tacticformation.h"
 #include "tactic/tacticgoalie.h"
 #include "tactic/tactichalt.h"
 #include "tactic/tacticstop.h"
@@ -18,7 +17,6 @@
 #include "tactic/tacticfixedpos.h"
 #include "tactic/tactictechnical.h"
 #include "tactic/tacticpenaltykicker.h"
-#include "tactic/tactickicker.h"
 #include "tactic/tacticpreparing.h"
 
 #endif // TACTICS_H
