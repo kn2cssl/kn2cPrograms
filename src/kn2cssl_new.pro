@@ -150,9 +150,7 @@ SOURCES +=	main.cpp \
     ai/play/playpenaltyopp.cpp \
     ai/play/playpenaltyour.cpp \
     ai/tactic/tactictestkickprecision.cpp \
-    ai/play/playcalibration.cpp \
     ai/tactic/tactictestfriction.cpp \
-    ai/play/playgameondefensive.cpp \
     ssl/sslrefbox/messages/referee.pb.cc \
     ssl/sslrefboxnew.cpp \
     geom2/shape2d.cpp \
@@ -248,10 +246,8 @@ HEADERS  += \
     ai/play/playkickoffour.h \
     ai/play/playpenaltyopp.h \
     ai/play/playpenaltyour.h \
-    ai/play/playcalibration.h \
     ai/tactic/tactictestkickprecision.h \
     ai/tactic/tactictestfriction.h \
-    ai/play/playgameondefensive.h \
     ssl/sslrefbox/messages/referee.pb.h \
     ssl/sslrefboxnew.h \
     geom2/shape2d.h \
