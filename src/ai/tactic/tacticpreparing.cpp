@@ -20,7 +20,7 @@ RobotCommand TacticPreparing::getCommand()
 
         if(wm->ball.pos.loc.x > 0 && wm->ball.pos.loc.x < Field::MaxX/2)
         {
-            rc.fin_pos = wm->kn->AdjustKickPoint2(wm->ball.pos.loc,Field::oppGoalCenter,wm->ball.pos.loc);
+            rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,Field::oppGoalCenter);
             rc.useNav = true;
 
             if( (wm->ourRobot[this->id].pos.loc-wm->ball.pos.loc).length() < 175 )

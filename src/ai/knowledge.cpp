@@ -137,7 +137,7 @@ bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRad
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
 {
     return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R,
-                             (Field::ourGoalCC_L-Field::ourGoalCC_R).length());
+                             (Field::defenceLineLinear_L-Field::defenceLineLinear_R).length());
 }
 
 bool Knowledge::IsInsideSecureArea(Vector2D pos, Vector2D ball)
@@ -357,17 +357,3 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 
     return p;
 }
-Position Knowledge::AdjustKickPoint2(Vector2D ballPos, Vector2D target, Vector2D robotloc)
-{
-    Position p;
-    Vector2D dir = (ballPos - target);//.normalizedVector();
-    Vector2D ooshkool = ballPos - robotloc;
-    dir.setLength(/*scale(*/ROBOT_RADIUS - (35 /*- kickSpeed*/));
-
-    p.loc = ballPos + dir;
-
-    p.dir = ooshkool.th().radian();
-
-    return p;
-}
-
