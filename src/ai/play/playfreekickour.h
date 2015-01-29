@@ -9,14 +9,12 @@ class PlayFreeKickOur : public Play
 public:
     explicit PlayFreeKickOur(WorldModel *worldmodel, QObject *parent = 0);
     virtual void execute();
-    //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
 private:
     virtual void initRole();
     void setTactics(int index);
 
 private:
-    bool firstTimeInit;
     bool freeKickStart;
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;

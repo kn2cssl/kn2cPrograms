@@ -4,8 +4,6 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
 {
     freeKickStart = false;
 
-    numberOfPlayers = 0;
-
     tGolie = new TacticGoalie(wm);
 
     tDefenderLeft = new TacticDefender(wm);
@@ -143,11 +141,7 @@ void PlayFreeKickOur::execute()
         int recieverID = tAttackerMid->findBestPlayerForPass();
         if(recieverID != -1)
         {
-        //        if(tAttackerMid->kickedSucceccfully)
-        //        {
-                wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-        //            freeKickStart = true;
-        //        }
+            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
             activeAgents.removeOne(recieverID);
         }
     }
