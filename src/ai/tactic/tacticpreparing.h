@@ -1,10 +1,18 @@
-#ifndef TACTICPREPARING_H
-#define TACTICPREPARING_H
+#ifndef TacticPreparing_H
+#define TacticPreparing_H
 
-class TacticPreparing
+#include "tactic.h"
+
+class TacticPreparing : public Tactic
 {
+    Q_OBJECT
 public:
-    TacticPreparing();
+    explicit TacticPreparing(WorldModel *worldmodel, QObject *parent = 0);
+    virtual RobotCommand getCommand();
+
+    Position queuePos;
+    bool kickPermision;
+    bool kickIt;
 };
 
-#endif // TACTICPREPARING_H
+#endif // TacticPreparing_H

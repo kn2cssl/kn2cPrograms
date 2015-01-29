@@ -162,7 +162,9 @@ SOURCES +=	main.cpp \
     ai/tactic/tactictechnical.cpp \
     ai/tactic/tacticpenaltykicker.cpp \
     ai/tactic/tactictest2.cpp \
-    ai/tactic/tactickicker.cpp
+    ai/tactic/tactickicker.cpp \
+    ai/tactic/tacticpreparing.cpp \
+    ai/play/playpreparing.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -259,7 +261,9 @@ HEADERS  += \
     ai/tactic/tactictechnical.h \
     ai/tactic/tacticpenaltykicker.h \
     ai/tactic/tactictest2.h \
-    ai/tactic/tactickicker.h
+    ai/tactic/tactickicker.h \
+    ai/tactic/tacticpreparing.h \
+    ai/play/playpreparing.h
 
 FORMS    +=	ui/mainwindow.ui
 

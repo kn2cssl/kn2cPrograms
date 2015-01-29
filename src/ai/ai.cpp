@@ -9,6 +9,7 @@
 #include "play/playkickoffour.h"
 #include "play/playpenaltyopp.h"
 #include "play/playpenaltyour.h"
+#include "play/playpreparing.h"
 #include "play/playstop.h"
 #include "play/playtest.h"
 #include "play/playtest2.h"
@@ -36,6 +37,7 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
     plays.append(new PlayPenaltyOpp(wm));
     plays.append(new PlayPenaltyOur(wm));
     plays.append(new PlayStop(wm));
+    plays.append(new PlayPreparing(wm));
     plays.append(new PlayTest(wm));
     plays.append(new PlayTest2(wm));
 }
