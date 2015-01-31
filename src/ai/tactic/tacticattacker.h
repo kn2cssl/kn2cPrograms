@@ -10,15 +10,10 @@ class TacticAttacker : public Tactic
 public:
     explicit TacticAttacker(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
-    void findCriticalPlayer();
-    void findInvalidRanges();
-    void sortInvalidRanges();
-    void findValidRanges();
     RobotCommand goBehindBall();
     RobotCommand KickTheBallIndirect();
     RobotCommand KickTheBallDirect();
     RobotCommand StartTheGame();
-    double findBestPoint();
     int findBestPlayerForPass();
     void isKicker();
 
@@ -30,14 +25,6 @@ public:
     bool everyOneInTheirPos;
 
 private:
-    QList<int> important_opp_agents;
-    QList<int> important_our_agents;
-    int numberOfInvalidRanges;
-    int numberOfValidRanges;
-    double angle[12][2];
-    double valid_angle[12][2];
-    double uGoal;
-    double dGoal;
     QTimer *waitTimer;
     Position gameOnPosition;
 
