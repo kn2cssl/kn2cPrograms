@@ -228,6 +228,8 @@ void PlayFreeKickOpp::setPositions(int index)
         atck = tAttackerLeft;
         alfa-=AngleDeg::PI/10;
         break;
+    default:
+        break;
     }
     finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
     finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);

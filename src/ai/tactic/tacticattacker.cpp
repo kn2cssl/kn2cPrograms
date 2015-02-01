@@ -152,22 +152,6 @@ RobotCommand TacticAttacker::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
-    //  Just Added for Some Tests
-    //    else
-    //    {
-    //        rc.maxSpeed = 1.5;
-
-    //        rc=goBehindBall();
-
-    //        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && wm->cmgs.canKickBall())
-    //        {
-    //            rc.kickspeedx=5;
-    //        }
-
-    //        rc.useNav = true;
-    //        rc.isBallObs = false;
-    //        rc.isKickObs = true;
-    //    }
 
     return rc;
 }

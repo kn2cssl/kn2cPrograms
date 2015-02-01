@@ -45,6 +45,8 @@ RobotCommand TacticStop::getCommand()
     case AgentRole::AttackerLeft:
         finalPos = leftPos;
         break;
+    default:
+        break;
     }
 
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )

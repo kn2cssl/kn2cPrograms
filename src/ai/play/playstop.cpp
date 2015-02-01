@@ -113,6 +113,8 @@ void PlayStop::setTactics(int index)
     case AgentRole::AttackerLeft:
         tactics[index] = tStopLeft;
         break;
+    default:
+        break;
     }
 }
 

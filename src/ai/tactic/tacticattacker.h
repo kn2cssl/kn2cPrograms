@@ -16,8 +16,6 @@ public:
     RobotCommand StartTheGame();
     int findBestPlayerForPass();
     void isKicker();
-
-
     void waitTimerStart();
     void setGameOnPositions(Position pos);
     void setGameOnPositions(Vector2D pos);
@@ -27,15 +25,15 @@ public:
     bool everyOneInTheirPos;
 
 private:
+    bool isFree(int index);
+
     QTimer *waitTimer;
     Position idlePosition;
-
     bool pastMidPoint; // FreeKick
-
-    bool isFree(int index);
 
 private slots:
     void dontWait();
+
 protected:
     bool canKick;
 };

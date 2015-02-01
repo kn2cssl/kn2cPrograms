@@ -1,7 +1,7 @@
 #include "tacticpenaltykicker.h"
 
 TacticPenaltyKicker::TacticPenaltyKicker(WorldModel *worldmodel, QObject *parent) :
-    TacticAttacker(worldmodel)
+    TacticAttacker(worldmodel,parent)
 {
     this->setObjectName("TacticPenaltyKicker");
 }
