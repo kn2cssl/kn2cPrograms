@@ -49,6 +49,24 @@ void PlayPenaltyOur::setTactics(int index)
     }
 }
 
+void PlayPenaltyOur::setPositions(int index)
+{
+    Vector2D pos;
+    switch (wm->ourRobot[index].Role)
+    {
+    case AgentRole::AttackerRight :
+        pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y + (Field::MaxY*0.75));
+        tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
+        break;
+    case AgentRole::AttackerLeft :
+        pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y - (Field::MaxY*0.75));
+        tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
+        break;
+    default:
+        break;
+    }
+}
+
 void PlayPenaltyOur::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -121,6 +139,7 @@ void PlayPenaltyOur::execute()
     for(int i=0;i<activeAgents.size();i++)
     {
         setTactics(activeAgents.at(i));
+        setPositions(activeAgents.at(i));
     }
 
     wm->ourRobot[penaltyKicker->getID()].Status = AgentStatus::Kicking;

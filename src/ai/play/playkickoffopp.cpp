@@ -97,6 +97,88 @@ void PlayKickoffOpp::setTactics(int index)
     }
 }
 
+void PlayKickoffOpp::setPositions(int index)
+{
+    QList<int> opps = wm->kn->ActiveOppAgents();
+    opps.removeOne(wm->ref_goalie_opp);
+
+    QList<int> nearest;
+    int i = 0;
+    switch(wm->ourRobot[index].Role)
+    {
+    case AgentRole::AttackerMid:
+        tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);
+        break;
+    case AgentRole::AttackerRight:
+        nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MaxY/2));
+
+        while( i<nearest.size() )
+        {
+            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                    ||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000)
+                nearest.removeAt(i);
+            else
+                i++;
+        }
+        if( !nearest.isEmpty() )
+        {
+            Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
+            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+            Vector2D interSection = tmp.intersection(fixedLine);
+            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+            {
+                Position pos;
+                pos.loc = interSection;
+                pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                tAttackerRight->setIdlePosition(pos);
+            }
+            else
+            {
+                tAttackerRight->setIdlePosition(wm->ourRobot[index].pos);
+            }
+        }
+        else
+        {
+            tAttackerRight->setIdlePosition(wm->ourRobot[index].pos);
+        }
+        break;
+    case AgentRole::AttackerLeft:
+        nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MinY/2));
+        while( i<nearest.size() )
+        {
+            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                    ||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000)
+                nearest.removeAt(i);
+            else
+                i++;
+        }
+        if( !nearest.isEmpty() )
+        {
+            Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
+            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+            Vector2D interSection = tmp.intersection(fixedLine);
+            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+            {
+                Position pos;
+                pos.loc = interSection;
+                pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                tAttackerLeft->setIdlePosition(pos);
+            }
+            else
+            {
+                tAttackerLeft->setIdlePosition(wm->ourRobot[index].pos);
+            }
+        }
+        else
+        {
+            tAttackerLeft->setIdlePosition(wm->ourRobot[index].pos);
+        }
+        break;
+    default:
+        break;
+    }
+}
+
 void PlayKickoffOpp::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -106,5 +188,6 @@ void PlayKickoffOpp::execute()
     for(int i=0;i<activeAgents.size();i++)
     {
         setTactics(activeAgents.at(i));
+        setPositions(activeAgents.at(i));
     }
 }

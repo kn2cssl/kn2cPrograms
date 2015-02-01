@@ -19,14 +19,16 @@ public:
 
 
     void waitTimerStart();
-    void setGameOnPositions(Position input);
-    void setGameOnPositions(Vector2D input);
+    void setGameOnPositions(Position pos);
+    void setGameOnPositions(Vector2D pos);
+    void setIdlePosition(Position pos);
+    void setIdlePosition(Vector2D pos);
 
     bool everyOneInTheirPos;
 
 private:
     QTimer *waitTimer;
-    Position gameOnPosition;
+    Position idlePosition;
 
     bool pastMidPoint; // FreeKick
 

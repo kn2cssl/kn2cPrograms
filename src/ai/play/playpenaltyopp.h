@@ -14,6 +14,7 @@ public:
 
 private:
     void setTactics(int index);
+    void setPositions(int index);
 
 private:
     TacticDefender* tDefenderMid;

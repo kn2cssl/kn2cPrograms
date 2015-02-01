@@ -13,8 +13,11 @@ public:
 private:
     virtual void initRole();
     void setTactics(int index);
+    void setPositions(int index);
 
 private:
+
+
     bool freeKickStart;
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;

@@ -92,6 +92,26 @@ void PlayKickoffOur::setTactics(int index)
     case AgentRole::AttackerLeft:
         tactics[index] = tAttackerLeft;
         break;
+    default:
+        break;
+    }
+}
+
+void PlayKickoffOur::setPositions(int index)
+{
+    switch(wm->ourRobot[index].Role)
+    {
+    case AgentRole::AttackerMid:
+        tAttackerMid->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y),Field::oppGoalCenter));
+        break;
+    case AgentRole::AttackerRight:
+        tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , 1550),Field::oppGoalCenter));
+        break;
+    case AgentRole::AttackerLeft:
+        tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , -1550),Field::oppGoalCenter));
+        break;
+    default:
+        break;
     }
 }
 
@@ -104,6 +124,7 @@ void PlayKickoffOur::execute()
     for(int i=0;i<activeAgents.size();i++)
     {
         setTactics(activeAgents.at(i));
+        setPositions(activeAgents.at(i));
     }
 
     if( wm->cmgs.canKickBall() )

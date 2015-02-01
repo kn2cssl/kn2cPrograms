@@ -49,6 +49,26 @@ void PlayPenaltyOpp::setTactics(int index)
     }
 }
 
+void PlayPenaltyOpp::setPositions(int index)
+{
+    switch (wm->ourRobot[index].Role)
+    {
+    case AgentRole::AttackerMid :
+        tAttackerMid->setIdlePosition(Field::oppPenaltyParallelLineCenter);
+        break;
+    case AgentRole::AttackerRight :
+        tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                                 Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
+        break;
+    case AgentRole::AttackerLeft :
+        tAttackerLeft->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                                Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
+        break;
+    default:
+        break;
+    }
+}
+
 void PlayPenaltyOpp::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -102,6 +122,8 @@ void PlayPenaltyOpp::execute()
 
     while( !activeAgents.isEmpty() )
     {
-        setTactics(activeAgents.takeFirst());
+        int index = activeAgents.takeFirst();
+        setTactics(index);
+        setPositions(index);
     }
 }

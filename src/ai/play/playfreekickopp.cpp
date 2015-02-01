@@ -195,6 +195,45 @@ void PlayFreeKickOpp::setTactics(int index)
         break;
     }
 }
+
+void PlayFreeKickOpp::setPositions(int index)
+{
+    Vector2D finalPos;
+    double m;
+    double alfa;
+    m=-(Field::ourGoalCenter.y-wm->ball.pos.loc.y)/(Field::ourGoalCenter.x-wm->ball.pos.loc.x);
+    alfa=atan(m);
+
+    if(alfa>75.0*3.14/180)
+    {
+        alfa=120.0*3.14/180;
+    }
+
+    if(alfa<-75.0*3.14/180)
+    {
+        alfa=-120.0*3.14/180;
+    }
+
+    TacticAttacker *atck;
+
+    switch (wm->ourRobot[index].Role) {
+    case AgentRole::AttackerMid:
+        atck = tAttackerMid;
+        break;
+    case AgentRole::AttackerRight:
+        atck = tAttackerRight;
+        alfa+=AngleDeg::PI/10;
+        break;
+    case AgentRole::AttackerLeft:
+        atck = tAttackerLeft;
+        alfa-=AngleDeg::PI/10;
+        break;
+    }
+    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
+    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+
+    atck->setIdlePosition(finalPos);
+}
 void PlayFreeKickOpp::execute()
 {
     if(go2ThePositions)
@@ -208,7 +247,10 @@ void PlayFreeKickOpp::execute()
             initRole();
 
         for(int i=0;i<activeAgents.size();i++)
+        {
             setTactics(activeAgents.at(i));
+            setPositions(activeAgents.at(i));
+        }
     }
 
 }

@@ -32,7 +32,9 @@ private slots:
 protected:
     virtual void initRole();
     void initPressing();
+private:
     void setTactics(int index);
+    void setPositions(int index);
 };
 
 #endif // PLAYFREEKICKOPP_H

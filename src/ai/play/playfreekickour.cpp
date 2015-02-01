@@ -110,6 +110,25 @@ void PlayFreeKickOur::setTactics(int index)
     case AgentRole::AttackerLeft:
         tactics[index] = tAttackerLeft;
         break;
+    default:
+        break;
+    }
+}
+
+void PlayFreeKickOur::setPositions(int index)
+{
+    switch (wm->ourRobot[index].Role) {
+    case AgentRole::AttackerLeft:
+        tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/2,Field::oppGoalPost_L.y+200));
+        break;
+    case AgentRole::AttackerRight:
+        tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200));
+        break;
+    case AgentRole::AttackerMid:
+        tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);
+        break;
+    default:
+        break;
     }
 }
 
@@ -125,6 +144,7 @@ void PlayFreeKickOur::execute()
     for(int i=0;i<activeAgents.size();i++)
     {
         setTactics(activeAgents.at(i));
+        setPositions(activeAgents.at(i));
     }
 
     tAttackerMid->isKicker();
