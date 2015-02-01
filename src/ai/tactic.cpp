@@ -22,37 +22,25 @@ float Tactic::detectKickSpeed(Vector2D dest )
 
     if(wm->isSim)
     {
-        switch (wm->gs ) {
-        case STATE_Free_kick_Our:
+        if( wm->cmgs.ourDirectKick())
             kickSpeed = 5; //Should Changed
-            break;
-        case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 3.5; //Should Changed
-            break;
-        case STATE_Start:
+        else if( wm->cmgs.ourIndirectKick() )
+            kickSpeed = 3.5;//50; //Should Changed
+        else if( wm->cmgs.gameOn() )
             kickSpeed = 5; //Should Changed
-            break;
-        default:
-            kickSpeed = 7;
-            break;
-        }
+        else
+            kickSpeed = 7;//Should Changed
     }
     else
     {
-        switch (wm->gs ) {
-        case STATE_Free_kick_Our:
+        if( wm->cmgs.ourDirectKick())
             kickSpeed = 200; //Should Changed
-            break;
-        case STATE_Indirect_Free_kick_Our:
-            kickSpeed = 25;//50; //Should Changed
-            break;
-        case STATE_Start:
-            kickSpeed = 150; //Should Changed
-            break;
-        default:
+        else if( wm->cmgs.ourIndirectKick() )
+            kickSpeed = 50;//50; //Should Changed
+        else if( wm->cmgs.gameOn() )
+            kickSpeed = 255; //Should Changed
+        else
             kickSpeed = 255;//Should Changed
-            break;
-        }
     }
 
     return kickSpeed;
