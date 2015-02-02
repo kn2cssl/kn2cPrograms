@@ -19,6 +19,8 @@ public:
     QList<int> findNearestOppositeTo(Vector2D loc);
     int findOppAttacker();
 
+    void sortOurPlayers(QList<int> &players,Vector2D point,bool ascending);
+
     void ClampToRect(Vector2D *pos, Vector2D topLeft, Vector2D bottomRight);
     bool IsInsideRect(Vector2D pos, Vector2D topLeft, Vector2D bottomRight);
     bool IsInsideCircle(Vector2D pos,Vector2D center,double radios);

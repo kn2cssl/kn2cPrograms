@@ -80,6 +80,42 @@ int Knowledge::findOppAttacker()
     return ans;
 }
 
+void Knowledge::sortOurPlayers(QList<int> &players, Vector2D point, bool ascending)
+{
+    if( ascending )
+    {
+        for(int i=0;i<players.size();i++)
+        {
+            for(int j=i;j<players.size();j++)
+            {
+                if( (_wm->ourRobot[players.at(j)].pos.loc - point).length()
+                        < (_wm->ourRobot[players.at(i)].pos.loc - point).length() )
+                {
+                    int tmp = players.at(i);
+                    players.replace(i,players.at(j));
+                    players.replace(j,tmp);
+                }
+            }
+        }
+    }
+    else
+    {
+        for(int i=0;i<players.size();i++)
+        {
+            for(int j=i;j<players.size();j++)
+            {
+                if( (_wm->ourRobot[players.at(j)].pos.loc - point).length()
+                        > (_wm->ourRobot[players.at(i)].pos.loc - point).length() )
+                {
+                    int tmp = players.at(i);
+                    players.replace(i,players.at(j));
+                    players.replace(j,tmp);
+                }
+            }
+        }
+    }
+}
+
 bool Knowledge::IsInsideRect(Vector2D pos, Vector2D topLeft, Vector2D bottomRight)
 {
     return (pos.x > topLeft.x && pos.x < bottomRight.x &&
@@ -206,7 +242,7 @@ bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
     double distThreshold = _wm->var[0], degThreshold = _wm->var[1] / 10;
     //@kamin
     AngleDeg d1((ballPos + _wm->ball.vel.loc * .015 - robotPos.loc ).dir());
-//    AngleDeg d1((ballPos  - robotPos.loc).dir());
+    //  AngleDeg d1((ballPos  - robotPos.loc).dir());
     //@kmout
     AngleDeg d2(robotPos.dir * AngleDeg::RAD2DEG);
     if(fabs((d1 - d2).degree()) < degThreshold || (360.0 - fabs((d1 - d2).degree())) < degThreshold)
@@ -306,27 +342,32 @@ QString Knowledge::gameStatus()
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
     QList<int> oppNearestPlayerToBall = _wm->kn->findNearestOppositeTo(_wm->ball.pos.loc);
 
-    double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-    double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-
-    if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
+    if( !oppNearestPlayerToBall.isEmpty() )
     {
-        out = "Suspended";
+        double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+        double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+
+        if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
+        {
+            out = "Suspended";
+        }
+        else
+        {
+            if( ourDistance2Ball-oppDistance2Ball > 0 )
+                out = "Defending";
+            else if( ourDistance2Ball-oppDistance2Ball < 0 )
+                out = "Attacking";
+            else
+                out = "Suspended";
+        }
     }
     else
-    {
-        if( ourDistance2Ball-oppDistance2Ball > 0 )
-            out = "Defending";
-        else if( ourDistance2Ball-oppDistance2Ball < 0 )
-            out = "Attacking";
-        else
-            out = "Suspended";
-    }
+        out = "Attacking";
 
     return out;
 }
 
- bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
+bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
 {
     if( (current.loc-desired.loc).length() < distThreshold)
     {
