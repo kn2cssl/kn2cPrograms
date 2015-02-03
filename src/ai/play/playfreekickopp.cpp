@@ -5,7 +5,6 @@ PlayFreeKickOpp::PlayFreeKickOpp(WorldModel *worldmodel, QObject *parent) :
 {
     numberOfPlayers = 0;
 
-    pressingIsInit = false;
     rolesIsInit = false;
     go2ThePositions = false;
 
@@ -98,73 +97,39 @@ void PlayFreeKickOpp::initRole()
         break;
     }
     rolesIsInit = true;
-    pressingIsInit = false;
 }
 
-void PlayFreeKickOpp::initPressing()
+void PlayFreeKickOpp::pressing()
 {
-    QList<int> oppAgents = wm->kn->ActiveOppAgents();
-    oppAgents.removeOne(wm->ref_goalie_opp);
+    QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
+    oppPlayers.removeOne(wm->ref_goalie_opp);
 
-    for(int i=0;i<oppAgents.size();i++)
+    QList<int> ourPlayers = wm->kn->findAttackers();
+
+    for(int i=0;i<oppPlayers.size();i++)
     {
-        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppAgents.at(i)].pos.loc,wm->ball.pos.loc) )
+        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppPlayers.at(i)].pos.loc,wm->ball.pos.loc) )
+            oppPlayers.removeAt(i);
+    }
+
+    while( ourPlayers.size() > 0 )
+    {
+        int min_j;
+        double min_d = 10000;
+        for(int j=0;j<ourPlayers.size();j++)
         {
-            oppAgents.removeAt(i);
+            double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
+
+            if( distance < min_d )
+            {
+                min_d = distance;
+                min_j = ourPlayers.at(j);
+            }
         }
+        ourPlayers.removeOne(min_j);
+        setPlayer2Keep(min_j,oppPlayers.at(0));
+        oppPlayers.removeFirst();
     }
-
-    for(int i=0;i<oppAgents.size();i++)
-    {
-        for(int j=0;j<oppAgents.size();j++)
-        {
-            double distanceI = (wm->oppRobot[oppAgents.at(i)].pos.loc - Field::ourGoalCenter).length();
-            double distanceJ = (wm->oppRobot[oppAgents.at(j)].pos.loc - Field::ourGoalCenter).length();
-            if(distanceI > distanceJ)
-                oppAgents.swap(i,j);
-        }
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerMid->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::Idle;
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerLeft->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::Idle;
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerRight->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::Idle;
-    }
-
-    if( wm->cmgs.theirDirectKick() && numberOfDef==2 )
-    {
-        if( wm->ourRobot[tDefenderRight->getID()].isValid )
-            wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
-
-        if( wm->ourRobot[tDefenderLeft->getID()].isValid )
-            wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
-    }
-
-    pressingIsInit = true;
 }
 
 void PlayFreeKickOpp::setTactics(int index)
@@ -236,17 +201,36 @@ void PlayFreeKickOpp::setPositions(int index)
 
     atck->setIdlePosition(finalPos);
 }
+
+void PlayFreeKickOpp::setPlayer2Keep(int ourR, int oppR)
+{
+    wm->ourRobot[ourR].Status = AgentStatus::BlockingRobot;
+
+    switch (wm->ourRobot[ourR].Role)
+    {
+    case AgentRole::AttackerMid:
+        tAttackerMid->setPlayerToKeep(oppR);
+        break;
+    case AgentRole::AttackerRight:
+        tAttackerRight->setPlayerToKeep(oppR);
+        break;
+    case AgentRole::AttackerLeft:
+        tAttackerLeft->setPlayerToKeep(oppR);
+        break;
+    default:
+        break;
+    }
+}
 void PlayFreeKickOpp::execute()
 {
     if(go2ThePositions)
     {
         QList<int> activeAgents=wm->kn->ActiveAgents();
 
-        if( rolesIsInit && !pressingIsInit )
-            initPressing();
-
         if( !rolesIsInit )
             initRole();
+        else
+            pressing();
 
         for(int i=0;i<activeAgents.size();i++)
         {

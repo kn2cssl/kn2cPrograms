@@ -13,7 +13,6 @@ public:
     virtual int enterCondition();
 
 private:
-    bool pressingIsInit;
     bool go2ThePositions;
 
     TacticGoalie*   tGolie;
@@ -31,10 +30,12 @@ private slots:
 
 protected:
     virtual void initRole();
-    void initPressing();
+
 private:
+    void pressing();
     void setTactics(int index);
     void setPositions(int index);
+    void setPlayer2Keep(int ourR,int oppR);
 };
 
 #endif // PLAYFREEKICKOPP_H
