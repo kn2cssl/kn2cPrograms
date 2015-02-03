@@ -24,14 +24,15 @@ RobotCommand TacticAttacker::getCommand()
         else
             v = wm->ball.pos.loc;
 
-        Position p = wm->kn->AdjustKickPoint(v, findTarget());
+        Vector2D target = findTarget();
+        Position p = wm->kn->AdjustKickPoint(v, target);
 
         rc.fin_pos = p;
 
         //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
         if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
         {
-            rc.kickspeedx = detectKickSpeed();
+            rc.kickspeedx = detectKickSpeed(target);
         }
 
         rc.maxSpeed = 2;
@@ -146,7 +147,7 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.fin_pos = idlePosition;
 
-        rc.maxSpeed = 2;
+        rc.maxSpeed = 1;
 
         rc.useNav = true;
         rc.isBallObs = true;
@@ -191,7 +192,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 {
     RobotCommand rc;
 
-    rc.maxSpeed = 0.25;
+    rc.maxSpeed = 1.5;
 
     int index = findBestPlayerForPass();
 
@@ -236,7 +237,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
         if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
         {
-            rc.kickspeedx = detectKickSpeed();
+            rc.kickspeedx = detectKickSpeed(goal);
             pastMidPoint = false;
         }
     }
@@ -249,7 +250,8 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
     rc.maxSpeed = 0.5;
 
-    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,findTarget());
+    Vector2D target = findTarget();
+    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
 
     rc.fin_pos = kickPoint;
     if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
@@ -267,7 +269,7 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
     {
-        rc.kickspeedx = detectKickSpeed();
+        rc.kickspeedx = detectKickSpeed(target);
     }
 
     return rc;
@@ -287,7 +289,7 @@ RobotCommand TacticAttacker::StartTheGame()
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
     {
         //rc.kickspeedz = 2.5;//50;
-        rc.kickspeedx = detectKickSpeed();
+        rc.kickspeedx = detectKickSpeed(target);
     }
 
     return rc;

@@ -16,31 +16,25 @@ QString Tactic::getName()
         return name;
 }
 
-float Tactic::detectKickSpeed(Vector2D dest )
+float Tactic::detectKickSpeed( Vector2D dest )
 {
     float kickSpeed;
 
+    Segment2D goalLine(Field::oppGoalPost_L,Field::oppGoalPost_R);
+
     if(wm->isSim)
     {
-        if( wm->cmgs.ourDirectKick())
-            kickSpeed = 5; //Should Changed
-        else if( wm->cmgs.ourIndirectKick() )
-            kickSpeed = 3.5;//50; //Should Changed
-        else if( wm->cmgs.gameOn() )
-            kickSpeed = 5; //Should Changed
+        if( goalLine.contains(dest) )
+            kickSpeed = 8; //Should Changed
         else
-            kickSpeed = 7;//Should Changed
+            kickSpeed = 3;//Should Changed
     }
     else
     {
-        if( wm->cmgs.ourDirectKick())
-            kickSpeed = 200; //Should Changed
-        else if( wm->cmgs.ourIndirectKick() )
-            kickSpeed = 50;//50; //Should Changed
-        else if( wm->cmgs.gameOn() )
+        if( goalLine.contains(dest) )
             kickSpeed = 255; //Should Changed
         else
-            kickSpeed = 255;//Should Changed
+            kickSpeed = 100;//Should Changed
     }
 
     return kickSpeed;

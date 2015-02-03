@@ -17,7 +17,7 @@ RobotCommand TacticPenaltyKicker::getCommand()
         rc.fin_pos = kickPoint;
         if(wm->kn->CanKick(wm->ourRobot[this->id].pos,wm->ball.pos.loc))
         {
-            rc.kickspeedx = detectKickSpeed();
+            rc.kickspeedx = detectKickSpeed(Field::oppGoalCenter);
         }
     }
     else

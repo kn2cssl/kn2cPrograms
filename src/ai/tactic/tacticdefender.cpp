@@ -17,13 +17,15 @@ RobotCommand TacticDefender::getCommand()
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-        Position p = wm->kn->AdjustKickPoint(v, findTarget() );
+        Vector2D target = findTarget();
+
+        Position p = wm->kn->AdjustKickPoint(v, target);
 
         rc.fin_pos = p;
 
         if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
         {
-            rc.kickspeedx = detectKickSpeed();
+            rc.kickspeedx = detectKickSpeed(target);
         }
 
         rc.maxSpeed = 1.5;
