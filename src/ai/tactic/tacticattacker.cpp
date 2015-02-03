@@ -146,7 +146,7 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.fin_pos = idlePosition;
 
-        rc.maxSpeed = 1;
+        rc.maxSpeed = 2;
 
         rc.useNav = true;
         rc.isBallObs = true;
@@ -191,7 +191,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 {
     RobotCommand rc;
 
-    rc.maxSpeed = 2;
+    rc.maxSpeed = 0.25;
 
     int index = findBestPlayerForPass();
 
@@ -211,6 +211,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
         midlePoint.dir = kickPoint.dir;
 
         if( (midlePoint.loc - wm->ourRobot[id].pos.loc).length() > 50  && (!pastMidPoint) )
+//        if( (!wm->kn->ReachedToPos(wm->ourRobot[this->id].pos,midlePoint,90,6)) && (!pastMidPoint) )
         {
             rc.fin_pos = midlePoint;
             rc.useNav = true;

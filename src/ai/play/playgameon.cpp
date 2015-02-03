@@ -66,58 +66,43 @@ void PlayGameOn::setTactics(int index)
     }
 }
 
-void PlayGameOn::initPressing()
+void PlayGameOn::pressing()
 {
-    QList<int> oppAgents = wm->kn->ActiveOppAgents();
-    oppAgents.removeOne(wm->ref_goalie_opp);
+    QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
+    QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
+    oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
+    oppPlayers.removeOne(wm->ref_goalie_opp);
 
-    for(int i=0;i<oppAgents.size();i++)
+    oppPlayers.insert(0,oppNearestPlayerToBall.at(0));
+
+//    int index = 0;
+//    while( index < oppPlayers.size() )
+//    {
+//        if( !wm->kn->IsInsideOurField(wm->oppRobot[oppPlayers.at(index)].pos.loc) )
+//            oppPlayers.removeAt(index);
+//        else
+//            index++;
+//    }
+
+    QList<int> ourPlayers = findAttackers();
+
+    while( ourPlayers.size() > 0 )
     {
-        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppAgents.at(i)].pos.loc,wm->ball.pos.loc) )
+        int min_j;
+        double min_d = 10000;
+        for(int j=0;j<ourPlayers.size();j++)
         {
-            oppAgents.removeAt(i);
+            double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
+
+            if( distance < min_d )
+            {
+                min_d = distance;
+                min_j = ourPlayers.at(j);
+            }
         }
-    }
-
-    for(int i=0;i<oppAgents.size();i++)
-    {
-        for(int j=0;j<oppAgents.size();j++)
-        {
-            double distanceI = (wm->oppRobot[oppAgents.at(i)].pos.loc - Field::ourGoalCenter).length();
-            double distanceJ = (wm->oppRobot[oppAgents.at(j)].pos.loc - Field::ourGoalCenter).length();
-            if(distanceI > distanceJ)
-                oppAgents.swap(i,j);
-        }
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerMid->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerMid->getID()].Status = AgentStatus::Idle;
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerLeft->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::Idle;
-    }
-
-    if(!oppAgents.isEmpty())
-    {
-        tAttackerRight->setPlayerToKeep(oppAgents.takeLast());
-        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::BlockingRobot;
-    }
-    else
-    {
-        wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::Idle;
+        ourPlayers.removeOne(min_j);
+        setPlayer2Keep(min_j,oppPlayers.at(0));
+        oppPlayers.removeFirst();
     }
 }
 
@@ -128,7 +113,7 @@ int PlayGameOn::findBallOwner()
     QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
     QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
-    if( (wm->ball.vel.loc).length() > 0.5)
+    if( (wm->ball.vel.loc).length() > 0.25)
     {
         Ray2D ballRay(wm->ball.pos.loc,wm->ball.vel.loc.dir());
 
@@ -196,15 +181,6 @@ void PlayGameOn::setPlayer2Keep(int ourR, int oppR)
     case AgentRole::AttackerLeft:
         tAttackerLeft->setPlayerToKeep(oppR);
         break;
-    case AgentRole::DefenderMid:
-        tDefenderMid->setPlayerToKeep(oppR);
-        break;
-    case AgentRole::DefenderRight:
-        tDefenderRight->setPlayerToKeep(oppR);
-        break;
-    case AgentRole::DefenderLeft:
-        tDefenderLeft->setPlayerToKeep(oppR);
-        break;
     default:
         break;
     }
@@ -257,15 +233,13 @@ QList<AgentRegion> PlayGameOn::freeRegions()
 
 void PlayGameOn::initRole()
 {
-    int ballOwner = findBallOwner();
-
     if( wm->gs_last == STATE_Free_kick_Our || wm->gs_last == STATE_Indirect_Free_kick_Our )
     {
         //return ;
     }
     else if( wm->gs_last == STATE_Free_kick_Opp || wm->gs_last == STATE_Indirect_Free_kick_Opp )
     {
-        initPressing();
+        pressing();
     }
     else if(wm->gs_last == STATE_Penalty_Opp || wm->gs_last == STATE_Penalty_Our)
     {
@@ -278,37 +252,12 @@ void PlayGameOn::initRole()
 
         if( game_status == "Defending" )
         {
-            QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
-            QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-            oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
-            oppPlayers.removeOne(wm->ref_goalie_opp);
-
-            QList<int> ourPlayers = findAttackers();
-
-            ourPlayers.removeOne(ballOwner);
-            ourPlayers.removeOne(wm->ref_goalie_our);
-
-            while( oppPlayers.size() > 0 )
-            {
-                int min_j;
-                double min_d = 10000;
-                for(int j=0;j<ourPlayers.size();j++)
-                {
-                    double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
-
-                    if( distance < min_d )
-                    {
-                        min_d = distance;
-                        min_j = ourPlayers.at(j);
-                    }
-                }
-                ourPlayers.removeOne(min_j);
-                setPlayer2Keep(min_j,oppPlayers.at(0));
-                oppPlayers.removeFirst();
-            }
+            pressing();
         }
         else if( game_status == "Attacking" )
         {
+            int ballOwner = findBallOwner();
+
             if( wm->ball.isValid )
             {
                 QList<int> attackers = findAttackers();
@@ -415,6 +364,10 @@ void PlayGameOn::initRole()
                         setGameOnPos(i,wm->ourRobot[i].pos.loc);
                 }
             }
+        }
+        else
+        {
+            findBallOwner();
         }
     }
 }

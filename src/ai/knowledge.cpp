@@ -158,7 +158,7 @@ bool Knowledge::IsInsideField(Vector2D pos)
 
 bool Knowledge::IsInsideOurField(Vector2D pos)
 {
-    return IsInsideRect(pos, Field::upperLeftCorner, Vector2D(0,Field::MinY));
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0,Field::MinY));
 }
 
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
