@@ -44,6 +44,8 @@ public:
 
     QString gameStatus();
 
+    QList<int> findAttackers();
+
 private:
     WorldModel* _wm;
 

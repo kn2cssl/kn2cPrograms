@@ -84,7 +84,7 @@ void PlayGameOn::pressing()
 //            index++;
 //    }
 
-    QList<int> ourPlayers = findAttackers();
+    QList<int> ourPlayers = wm->kn->findAttackers();
 
     while( ourPlayers.size() > 0 )
     {
@@ -186,31 +186,6 @@ void PlayGameOn::setPlayer2Keep(int ourR, int oppR)
     }
 }
 
-QList<int> PlayGameOn::findAttackers()
-{
-    QList<int> output;
-    QList<int> ourAgents = wm->kn->ActiveAgents();
-
-    for(int i=0;i<ourAgents.size();i++)
-    {
-        switch (wm->ourRobot[ourAgents.at(i)].Role)
-        {
-        case AgentRole::AttackerMid:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerLeft:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerRight:
-            output.append(ourAgents.at(i));
-            break;
-        default:
-            break;
-        }
-    }
-    return output;
-}
-
 QList<AgentRegion> PlayGameOn::freeRegions()
 {
     QList<AgentRegion> regions;
@@ -260,7 +235,7 @@ void PlayGameOn::initRole()
 
             if( wm->ball.isValid )
             {
-                QList<int> attackers = findAttackers();
+                QList<int> attackers = wm->kn->findAttackers();
 
                 for(int i=0;i<attackers.size();i++)
                 {

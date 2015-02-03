@@ -16,7 +16,6 @@ public:
     void pressing();
     int findBallOwner();
     void setPlayer2Keep(int ourR,int oppR);
-    QList<int> findAttackers();
     QList<AgentRegion> freeRegions();
 private:
     TacticGoalie*   tGolie;

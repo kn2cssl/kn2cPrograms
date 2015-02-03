@@ -367,6 +367,31 @@ QString Knowledge::gameStatus()
     return out;
 }
 
+QList<int> Knowledge::findAttackers()
+{
+    QList<int> output;
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        switch (_wm->ourRobot[ourAgents.at(i)].Role)
+        {
+        case AgentRole::AttackerMid:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::AttackerLeft:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::AttackerRight:
+            output.append(ourAgents.at(i));
+            break;
+        default:
+            break;
+        }
+    }
+    return output;
+}
+
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
 {
     if( (current.loc-desired.loc).length() < distThreshold)
