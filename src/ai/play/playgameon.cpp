@@ -113,7 +113,7 @@ int PlayGameOn::findBallOwner()
     QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
     QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
-    if( (wm->ball.vel.loc).length() > 0.25)
+    if( (wm->ball.vel.loc).length() > 1)
     {
         Ray2D ballRay(wm->ball.pos.loc,wm->ball.vel.loc.dir());
 
