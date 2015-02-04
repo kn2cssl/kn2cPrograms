@@ -120,23 +120,6 @@ RobotCommand TacticAttacker::getCommand()
             rc.fin_pos = final;
         }
 
-        if( wm->kn->IsInsideGolieArea(final.loc) )
-        {
-            Circle2D attackerCircles(Field::ourGoalCenter , Field::goalCircle_R+200);
-            Line2D robotRay(wm->oppRobot[playerToKeep].pos.loc,wm->ourRobot[this->id].pos.loc);
-            Vector2D firstPoint,secondPoint;
-            attackerCircles.intersection(robotRay,&firstPoint,&secondPoint);
-
-            if( (wm->oppRobot[this->id].pos.loc-firstPoint).length() < (wm->oppRobot[this->id].pos.loc-secondPoint).length() )
-                rc.fin_pos.loc = firstPoint;
-            else
-                rc.fin_pos.loc = secondPoint;
-        }
-        else
-        {
-            rc.fin_pos = final;
-        }
-
         rc.maxSpeed = 2;
 
         rc.useNav = true;
@@ -152,6 +135,22 @@ RobotCommand TacticAttacker::getCommand()
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
+
+        if( wm->gs == STATE_Stop )
+            return rc;
+    }
+
+    if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )
+    {
+        Circle2D attackerCircles(Field::ourGoalCenter , Field::goalCircle_R+300);
+        Line2D robotRay(wm->oppRobot[playerToKeep].pos.loc,wm->ourRobot[this->id].pos.loc);
+        Vector2D firstPoint,secondPoint;
+        attackerCircles.intersection(robotRay,&firstPoint,&secondPoint);
+
+        if( (wm->oppRobot[this->id].pos.loc-firstPoint).length() < (wm->oppRobot[this->id].pos.loc-secondPoint).length() )
+            rc.fin_pos.loc = firstPoint;
+        else
+            rc.fin_pos.loc = secondPoint;
     }
 
     return rc;
