@@ -352,7 +352,7 @@ void TacticAttacker::isKicker()
 void TacticAttacker::waitTimerStart()
 {
     everyOneInTheirPos = false;
-    waitTimer->start(4000);
+    waitTimer->start(5000);
 }
 
 void TacticAttacker::setGameOnPositions(Position pos)

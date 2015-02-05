@@ -27,7 +27,7 @@ float Tactic::detectKickSpeed( Vector2D dest )
         if( goalLine.contains(dest) )
             kickSpeed = 8; //Should Changed
         else
-            kickSpeed = 3;//Should Changed
+            kickSpeed = 4;//Should Changed
     }
     else
     {

@@ -2,6 +2,7 @@
 #define PLAYTEST2_H
 
 #include "play.h"
+#include "QDebug"
 
 class PlayTest2 : public Play
 {
@@ -16,6 +17,7 @@ private:
     TacticGoalie* tGolie;
     TacticTestFriction* tTF;
     TacticHalt* thalt;
+    TacticTest* tTest;
 
     virtual void initRole();
 };
