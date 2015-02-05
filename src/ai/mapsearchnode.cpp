@@ -93,14 +93,9 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
             v.rotate(360/p_count * j);
             MapSearchNode node = obs[i].center() + v;
             //kamin
-            bool checkNodeInterference = true;
+           bool checkNodeInterference = true;
 
-<<<<<<< HEAD
-            bool checkNodeInterference = true;
-
-=======
->>>>>>> Mohammad
-            for(int g=0;g<obs.size();g++)
+           for(int g=0;g<obs.size();g++)
             {
                 if(obs[g].contains(node.vec))
                 {
@@ -110,12 +105,8 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
             if(checkNodeInterference == true)
             {
-<<<<<<< HEAD
-=======
-
                 wm->navigation_pos.append(node.vec);
             //kamout
->>>>>>> Mohammad
                 if(node.vec != parent) astarsearch->AddSuccessor(node);
             }
         }
