@@ -14,6 +14,10 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     QStringList indexses;
     indexses<<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"<<"8"<<"9"<<"10"<<"11";
     ui->astarIndex_comboBox->addItems(indexses);
+    ui->udpID_comboBox->addItems(indexses);
+    QStringList udp_values;
+    udp_values << "pos"<<"vel";
+    ui->valUDP_comboBox->addItems(udp_values);
     this->on_btnLoadVars_clicked();
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
@@ -325,6 +329,10 @@ void MainWindow::timer_timeout()
 
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
     sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
+
+    sc->wm->sendUDP = ui->udp_checkBox->isChecked();
+    sc->wm->indexOfUDP = ui->udpID_comboBox->currentText().toInt();
+    sc->wm->whichUDP = ui->valUDP_comboBox->currentText();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

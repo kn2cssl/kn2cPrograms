@@ -20,6 +20,9 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
     qDebug() << "AI Initialization...";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
 
+    udp = new QUdpSocket();
+    ip.setAddress("192.168.4.121");
+
     current_play = 0;
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
         current_tactic[i] = 0;
@@ -62,6 +65,29 @@ Tactic* AI::getCurrentTactic(int i)
 
 void AI::timer_timeout()
 {
+    if( wm->sendUDP)
+    {
+        double out_x;
+        double out_y;
+
+        if( wm->whichUDP == "pos" )
+        {
+            out_x = wm->ourRobot[wm->indexOfUDP].pos.loc.x;
+            out_y = wm->ourRobot[wm->indexOfUDP].pos.loc.y;
+        }
+        else
+        {
+            out_x = wm->ourRobot[wm->indexOfUDP].vel.loc.x;
+            out_y = wm->ourRobot[wm->indexOfUDP].vel.loc.y;
+        }
+
+        char* cp = (char*)&out_x ;
+        char* cp2 = (char*)&out_y;
+
+        udp->writeDatagram(cp,sizeof(double),ip,33433);
+        udp->writeDatagram(cp2,sizeof(double),ip,33433);
+    }
+
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
     {
         if(!wm->ourRobot[i].isValid)
