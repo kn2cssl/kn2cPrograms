@@ -56,7 +56,7 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
         if(bc.contains(vec))
         {
             int    p_count = 8;
-            double p_dist = ROBOT_RADIUS * 2 + BALL_RADIUS;
+            double p_dist = ROBOT_RADIUS * 2 +  BALL_RADIUS;
 
             for(int i=0; i<p_count; i++)
             {
@@ -85,7 +85,7 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
     for(int i=0; i<obs.size(); i++)
     {
         int    p_count = 6;
-        double p_dist  = ROBOT_RADIUS * 2 ;+ BALL_RADIUS;
+        double p_dist  = ROBOT_RADIUS * 2  + BALL_RADIUS;
 
         for(int j=0; j<p_count; j++)
         {
@@ -178,8 +178,8 @@ QList<Circle2D> MapSearchNode::getObsCircle()
     {
         if(i == selfRobot) continue;
         if(!wm->ourRobot[i].isValid) continue;
-        if((wm->ourRobot[i].pos.loc-wm->ourRobot[selfRobot].pos.loc).length() < 500
-                && (wm->ourRobot[i].vel.loc-wm->ourRobot[selfRobot].vel.loc).length() < 100) continue;
+        //if((wm->ourRobot[i].pos.loc-wm->ourRobot[selfRobot].pos.loc).length() < 500
+         //       && (wm->ourRobot[i].vel.loc-wm->ourRobot[selfRobot].vel.loc).length() < 1) continue;
         Circle2D c(wm->ourRobot[i].pos.loc + wm->ourRobot[i].vel.loc * AI_TIMER, r_rad);
         result.append(c);
     }

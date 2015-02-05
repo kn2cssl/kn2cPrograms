@@ -238,6 +238,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
         {
             rc.kickspeedx = detectKickSpeed(goal);
             pastMidPoint = false;
+            qDebug()<<"Kickk...";
         }
     }
     return rc;
@@ -269,6 +270,7 @@ RobotCommand TacticAttacker::KickTheBallDirect()
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
     {
         rc.kickspeedx = detectKickSpeed(target);
+        qDebug()<<"Kickk...";
     }
 
     return rc;
@@ -289,6 +291,7 @@ RobotCommand TacticAttacker::StartTheGame()
     {
         //rc.kickspeedz = 2.5;//50;
         rc.kickspeedx = detectKickSpeed(target);
+        qDebug()<<"Kickk...";
     }
 
     return rc;
