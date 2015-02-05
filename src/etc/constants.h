@@ -10,13 +10,9 @@
 #define BALL_RADIUS     22
 #define ROBOT_RADIUS    90
 
-#define RIGHT 0
-#define CENTER 1
-#define LEFT 2
-
 #define NUMOFDEFENDERS 2
 
-#define DangerDist 300
+#define DangerDist 350
 
 
 // rules constants
@@ -32,7 +28,7 @@
 
 // Timer speeds
 #define TRANSMITTER_TIMER   15
-#define AI_TIMER            15
+#define AI_TIMER            16
 
 namespace Field
 {
@@ -55,18 +51,25 @@ const Line2D bottomLine(Vector2D(MinX, MinY), Vector2D(MaxX, MinY));
 
 const double centerCircle_R = 500;
 const double goalCircle_R = 800;
-const double goalCircleEX_R = 800 + 3*ROBOT_RADIUS + 20;
+const double goalCircleEX_R = 600 + 3*ROBOT_RADIUS + 20;
 const double goalCircleDEF_R = goalCircleEX_R + 400;
 
 // Ours.
 const Vector2D ourGoalCenter(MinX, 0);
 const Vector2D ourGoalPost_L(MinX, 350);
 const Vector2D ourGoalPost_R(MinX, -350);
-const Vector2D ourGoalCC_L(MinX, 175);
-const Vector2D ourGoalCC_R(MinX, -175);
+const double defenceLineLinear = 350;
+const Vector2D defenceLineLinear_L(MinX, 175);
+const Vector2D defenceLineLinear_R(MinX, -175);
+
+const Line2D attackerMidLine(Vector2D(MinX,0),Vector2D(MaxX,0));
+const Line2D attackerLeftLine(Vector2D(MinX,(0.667*MaxY)),Vector2D(MaxX,(0.667*MaxY)));
+const Line2D attackerRightLine(Vector2D(MinX,(0.667*MinY)),Vector2D(MaxX,(0.667*MinY)));
 
 const Vector2D ourDefPost_L(MinX, 975);
 const Vector2D ourDefPost_R(MinX, -975);
+
+const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
 
 // Opps.
 const Vector2D oppGoalCenter(MaxX, 0);
@@ -74,8 +77,12 @@ const Vector2D oppGoalPost_L(MaxX, 350);
 const Vector2D oppGoalPost_R(MaxX, -350);
 const Vector2D oppGoalCC_L(MaxX, 175);
 const Vector2D oppGoalCC_R(MaxX, -175);
-const Vector2D oppGoalPenaltySpot(MaxX-850,0);
+const Vector2D oppGoalPenaltySpot(MaxX-750,0);
 
+
+
+const Vector2D ourPenaltyParallelLineCenter(oppGoalPenaltySpot.x-500,0);
+const Vector2D oppPenaltyParallelLineCenter(ourGoalCenter.x+750+500,0);
 //const Vector2D oppPenalty_Shoot = new Vector2D(3010, 500);
 
 //const Vector2D MidField_R = new Vector2D((-ConstVars.ROBOT_RADIUS)*2.5, -1800);

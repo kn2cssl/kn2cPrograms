@@ -2,6 +2,7 @@
 #define PLAYGAMEON_H
 
 #include "play.h"
+#include "QDebug"
 
 class PlayGameOn : public Play
 {
@@ -11,16 +12,22 @@ public:
     virtual void execute();
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
-
+    void setTactics(int index);
+    void pressing();
+    int findBallOwner();
+    void setPlayer2Keep(int ourR,int oppR);
+    QList<AgentRegion> freeRegions();
 private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
-    TacticBlocker*  tBlocker;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;
     TacticAttacker* tAttackerMid;
+
+    virtual void initRole();
+    void setGameOnPos(int ourR,Vector2D oppR);
 };
 
 #endif // PLAYGAMEON_H

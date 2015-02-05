@@ -2,6 +2,7 @@
 #define PLAYSTOP_H
 
 #include "play.h"
+#include "QDebug"
 
 class PlayStop : public Play
 {
@@ -13,7 +14,6 @@ public:
     virtual int enterCondition();
 
 private:
-    int numberOfDef;
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
@@ -21,6 +21,9 @@ private:
     TacticStop* tStopMid;
     TacticStop* tStopLeft;
     TacticStop* tStopRight;
+
+    virtual void initRole();
+    void setTactics(int index);
 };
 
 #endif // PLAYSTOP_H

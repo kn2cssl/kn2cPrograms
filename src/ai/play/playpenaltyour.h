@@ -12,13 +12,19 @@ public:
     virtual int enterCondition();
 
 private:
-    int numberOfDef;
+    void setTactics(int index);
+    void setPositions(int index);
+
+private:
     TacticPenaltyKicker* penaltyKicker;
     TacticDefender* tDefenderMid;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticGoalie* tGoalie;
-    TacticHalt* tHalt;
+    TacticAttacker* tAttackerLeft;
+    TacticAttacker* tAttackerRight;
+
+    virtual void initRole();
 
 };
 

@@ -7,11 +7,9 @@ PlayPenaltyOpp::PlayPenaltyOpp(WorldModel *worldmodel, QObject *parent) :
     tDefenderMid=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
-    tHalt=new TacticHalt(wm);
-
-    tDefenderMid->setDefenderPos(CENTER);
-    tDefenderLeft->setDefenderPos(LEFT);
-    tDefenderRight->setDefenderPos(RIGHT);
+    tAttackerMid = new TacticAttacker(wm);
+    tAttackerRight = new TacticAttacker(wm);
+    tAttackerLeft = new TacticAttacker(wm);
 }
 
 int PlayPenaltyOpp::enterCondition()
@@ -22,40 +20,110 @@ int PlayPenaltyOpp::enterCondition()
         return 0;
 }
 
-void PlayPenaltyOpp::execute()
+void PlayPenaltyOpp::setTactics(int index)
+{
+    switch (wm->ourRobot[index].Role) {
+    case AgentRole::Golie:
+        tactics[index] = tGoalie;
+        break;
+    case AgentRole::DefenderMid:
+        tactics[index] = tDefenderMid;
+        break;
+    case AgentRole::DefenderLeft:
+        tactics[index] = tDefenderLeft;
+        break;
+    case AgentRole::DefenderRight:
+        tactics[index] = tDefenderRight;
+        break;
+    case AgentRole::AttackerMid:
+        tactics[index] = tAttackerMid;
+        break;
+    case AgentRole::AttackerLeft:
+        tactics[index] = tAttackerLeft;
+        break;
+    case AgentRole::AttackerRight:
+        tactics[index] = tAttackerRight;
+        break;
+    default:
+        break;
+    }
+}
+
+void PlayPenaltyOpp::setPositions(int index)
+{
+    switch (wm->ourRobot[index].Role)
+    {
+    case AgentRole::AttackerMid :
+        tAttackerMid->setIdlePosition(Field::oppPenaltyParallelLineCenter);
+        break;
+    case AgentRole::AttackerRight :
+        tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                                 Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
+        break;
+    case AgentRole::AttackerLeft :
+        tAttackerLeft->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                                Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
+        break;
+    default:
+        break;
+    }
+}
+
+void PlayPenaltyOpp::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
+
+
     activeAgents.removeOne(wm->ref_goalie_our);
 
-    tactics[wm->ref_goalie_our]=tGoalie;
+    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
 
     switch (activeAgents.length()) {
 
     case 1:
-        tactics[activeAgents.takeFirst()]=tDefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
         break;
     case 2:
-       tactics[activeAgents.takeFirst()]=tDefenderRight;
-       tactics[activeAgents.takeFirst()]=tDefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 3:
-        tactics[activeAgents.takeFirst()]=tDefenderRight;
-        tactics[activeAgents.takeFirst()]=tDefenderMid;
-        tactics[activeAgents.takeFirst()]=tDefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+
         break;
     case 4:
-        tactics[activeAgents.takeFirst()]=tDefenderRight;
-        tactics[activeAgents.takeFirst()]=tDefenderMid;
-        tactics[activeAgents.takeFirst()]=tDefenderLeft;
-        tactics[activeAgents.takeFirst()]=tHalt;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
         break;
     case 5:
-        tactics[activeAgents.takeFirst()]=tDefenderRight;
-        tactics[activeAgents.takeFirst()]=tDefenderMid;
-        tactics[activeAgents.takeFirst()]=tDefenderLeft;
-        tactics[activeAgents.takeFirst()]=tHalt;
-        tactics[activeAgents.takeFirst()]=tHalt;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
         break;
     }
+}
 
+void PlayPenaltyOpp::execute()
+{
+    QList<int> activeAgents=wm->kn->ActiveAgents();
+
+    initRole();
+
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        wm->ourRobot[activeAgents.at(i)].Status = AgentStatus::Idle;
+    }
+
+    while( !activeAgents.isEmpty() )
+    {
+        int index = activeAgents.takeFirst();
+        setTactics(index);
+        setPositions(index);
+    }
 }

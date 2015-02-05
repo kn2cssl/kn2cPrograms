@@ -256,8 +256,8 @@ public:
      */
     bool contains( const Vector2D & p ) const
       {
-          return ( ( p.x - origin().x ) * ( p.x - terminal().x ) <= CALC_ERROR //EPSILON
-                   && ( p.y - origin().y ) * ( p.y - terminal().y ) <= CALC_ERROR ); //EPSILON );
+        return ( ( p.x - origin().x ) * ( p.x - terminal().x ) <= CALC_ERROR //EPSILON
+                   && ( p.y - origin().y ) * ( p.y - terminal().y ) <= CALC_ERROR); //EPSILON );
       }
 
     /*!

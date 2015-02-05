@@ -36,11 +36,11 @@ RobotCommand TacticTestFriction::getCommand()
 
         qDebug() << "Lenght To Ball : " << R2B.length();
         qDebug() << "Delta Angle : " << AngleDeg::rad2deg(delta_ang);
-//        if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos,p,wm->ball.pos.loc))
-        if(fabs(delta_ang) < AngleDeg::deg2rad(20) && R2B.length() < 500)
+        if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos,p,wm->ball.pos.loc))
+//        if(fabs(delta_ang) < AngleDeg::deg2rad(20) && R2B.length() < 500)
         {
             qDebug() << "KIKKKIKIKIKIKIK " << wm->ball.pos.loc.x;
-            rc.kickspeedx = 255;
+            rc.kickspeedx = 2.55;
         }
     }
     else

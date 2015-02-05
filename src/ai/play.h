@@ -14,11 +14,18 @@ public:
     virtual void execute() = 0;
     virtual Tactic* getTactic(int id);
     virtual int enterCondition() = 0;
+    bool conditionChanged();
+
 
 protected:
     WorldModel *wm;
     QString param;
     Tactic *tactics[PLAYERS_MAX_NUM];
+    virtual void initRole() = 0;
+
+    int numberOfDef;
+    int numberOfPlayers;
+    bool rolesIsInit;
 
 private:
     QString name;

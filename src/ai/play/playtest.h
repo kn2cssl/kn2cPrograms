@@ -13,12 +13,12 @@ public:
     virtual int enterCondition();
 
 private:
-    TacticAttacker* penaltyKicker;
-    TacticDefender* tDefenderMid;
-    TacticDefender* tDefenderLeft;
-    TacticDefender* tDefenderRight;
-    TacticHalt* tHalt;
+    TacticTest* training[PLAYERS_MAX_NUM];
 
+    QList<int> readyRobots;
+    int index;
+    bool firstInit;
+    virtual void initRole();
 };
 
 #endif // PLAYTEST_H

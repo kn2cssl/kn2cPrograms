@@ -15,6 +15,8 @@ public:
 private:
     TacticHalt *tHalt;
 
+    virtual void initRole();
+
 };
 
 #endif // PLAYHALT_H

@@ -12,8 +12,9 @@ enum AgentStatus
     Passing,
     Kicking,
     FollowingBall,
-    BlockingPass,
-    BlockingRobot
+    BlockingBall,
+    BlockingRobot,
+    RecievingPass
 };
 
 enum AgentRole
@@ -28,12 +29,18 @@ enum AgentRole
     AttackerLeft,
     AttackerRight,
     AttackerMid,
-    Receiver,
     Blocker,
     DefenderLeft,
     DefenderRight,
     DefenderMid,
     Golie
+};
+
+enum AgentRegion
+{
+    Left,
+    Center,
+    Right
 };
 
 class WorldModel;
@@ -52,6 +59,7 @@ public:
 
     AgentRole   Role;
     AgentStatus Status;
+    AgentRegion Region;
 
     RobotData rd;   //received data from robot
     Position  vel2; //speed from motors speed received from robot

@@ -13,10 +13,15 @@ public:
     QString getName();
     virtual RobotCommand getCommand() = 0;
     void setID(int id);
+    int getID();
+    Vector2D findTarget();
+    void setPlayerToKeep(int index);
+    float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
 
 protected:
     WorldModel *wm;
     QString param;
+    int playerToKeep;
     int id;
 
 private:

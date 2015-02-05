@@ -13,14 +13,29 @@ public:
     virtual int enterCondition();
 
 private:
+    bool go2ThePositions;
+
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticDefender* tDefenderMid;
-    TacticBlocker*  tBlocker;
-    TacticFixedPos* tFixedPosM;
-    TacticFixedPos* tFixedPosL;
-    TacticFixedPos* tFixedPosR;
+    TacticAttacker* tAttackerMid;
+    TacticAttacker* tAttackerLeft;
+    TacticAttacker* tAttackerRight;
+
+    QTimer *waitTimer;
+
+private slots:
+    void waitTimer_timout();
+
+protected:
+    virtual void initRole();
+
+private:
+    void pressing();
+    void setTactics(int index);
+    void setPositions(int index);
+    void setPlayer2Keep(int ourR,int oppR);
 };
 
 #endif // PLAYFREEKICKOPP_H

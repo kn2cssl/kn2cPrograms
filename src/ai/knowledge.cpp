@@ -48,6 +48,21 @@ QList<int> Knowledge::findNearestTo(Vector2D loc)
     return ans;
 }
 
+QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< PLAYERS_MAX_NUM; i++)
+    {
+        if(_wm->oppRobot[i].isValid==false) continue;
+        double dist=(_wm->oppRobot[i].pos.loc-loc).length();
+        smap.insert(dist, i);
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
 int Knowledge::findOppAttacker()
 {
     int ans=0;
@@ -65,10 +80,54 @@ int Knowledge::findOppAttacker()
     return ans;
 }
 
+void Knowledge::sortOurPlayers(QList<int> &players, Vector2D point, bool ascending)
+{
+    if( ascending )
+    {
+        for(int i=0;i<players.size();i++)
+        {
+            for(int j=i;j<players.size();j++)
+            {
+                if( (_wm->ourRobot[players.at(j)].pos.loc - point).length()
+                        < (_wm->ourRobot[players.at(i)].pos.loc - point).length() )
+                {
+                    int tmp = players.at(i);
+                    players.replace(i,players.at(j));
+                    players.replace(j,tmp);
+                }
+            }
+        }
+    }
+    else
+    {
+        for(int i=0;i<players.size();i++)
+        {
+            for(int j=i;j<players.size();j++)
+            {
+                if( (_wm->ourRobot[players.at(j)].pos.loc - point).length()
+                        > (_wm->ourRobot[players.at(i)].pos.loc - point).length() )
+                {
+                    int tmp = players.at(i);
+                    players.replace(i,players.at(j));
+                    players.replace(j,tmp);
+                }
+            }
+        }
+    }
+}
+
 bool Knowledge::IsInsideRect(Vector2D pos, Vector2D topLeft, Vector2D bottomRight)
 {
     return (pos.x > topLeft.x && pos.x < bottomRight.x &&
             pos.y > bottomRight.y && pos.y < topLeft.y);
+}
+
+bool Knowledge::IsInsideCircle(Vector2D pos, Vector2D center, double radios)
+{
+    if( (pos-center).length() < radios )
+        return true;
+    else
+        return false;
 }
 
 void Knowledge::ClampToRect(Vector2D *pos, Vector2D topLeft, Vector2D bottomRight)
@@ -97,19 +156,29 @@ bool Knowledge::IsInsideField(Vector2D pos)
     return IsInsideRect(pos, Field::upperLeftCorner, Field::bottomRightCorner);
 }
 
+bool Knowledge::IsInsideOurField(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0,Field::MinY));
+}
+
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
 {
     double x = pos.x - goalLeftX;
     Vector2D ccl(goalLeftX, goalCcOffset / 2), ccr(goalLeftX, -goalCcOffset / 2);
 
     return ( (pos-ccl).length() <= goalRadius || (pos-ccr).length() <= goalRadius ||
-            (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
+             (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
 {
     return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R,
-                             (Field::ourGoalCC_L-Field::ourGoalCC_R).length());
+                             (Field::defenceLineLinear_L-Field::defenceLineLinear_R).length());
+}
+
+bool Knowledge::IsInsideSecureArea(Vector2D pos, Vector2D ball)
+{
+    return IsInsideCircle(pos,ball,ALLOW_NEAR_BALL_RANGE);
 }
 
 Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, double sourceSpeed, Vector2D targetSpeed)
@@ -171,8 +240,10 @@ bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
     if(!_wm->ball.isValid) return false;
 
     double distThreshold = _wm->var[0], degThreshold = _wm->var[1] / 10;
-
-    AngleDeg d1((ballPos - robotPos.loc).dir());
+    //@kamin
+    AngleDeg d1((ballPos + _wm->ball.vel.loc * .015 - robotPos.loc ).dir());
+    //  AngleDeg d1((ballPos  - robotPos.loc).dir());
+    //@kmout
     AngleDeg d2(robotPos.dir * AngleDeg::RAD2DEG);
     if(fabs((d1 - d2).degree()) < degThreshold || (360.0 - fabs((d1 - d2).degree())) < degThreshold)
     {
@@ -235,6 +306,90 @@ bool Knowledge::agentIsFree(int index)
             break;
     }
     return isFree;
+}
+
+bool Knowledge::isOccupied(Vector2D input)
+{
+    for(int i = 0;i<PLAYERS_MAX_NUM;i++)
+    {
+        if(_wm->ourRobot[i].isValid)
+        {
+            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            {
+                return true;
+            }
+        }
+    }
+
+    for(int i = 0;i<PLAYERS_MAX_NUM;i++)
+    {
+        if(_wm->oppRobot[i].isValid)
+        {
+            if( (_wm->oppRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+QString Knowledge::gameStatus()
+{
+    QString out;
+
+    QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
+    QList<int> oppNearestPlayerToBall = _wm->kn->findNearestOppositeTo(_wm->ball.pos.loc);
+
+    if( !oppNearestPlayerToBall.isEmpty() )
+    {
+        double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+        double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+
+        if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
+        {
+            out = "Suspended";
+        }
+        else
+        {
+            if( ourDistance2Ball-oppDistance2Ball > 0 )
+                out = "Defending";
+            else if( ourDistance2Ball-oppDistance2Ball < 0 )
+                out = "Attacking";
+            else
+                out = "Suspended";
+        }
+    }
+    else
+        out = "Attacking";
+
+    return out;
+}
+
+QList<int> Knowledge::findAttackers()
+{
+    QList<int> output;
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        switch (_wm->ourRobot[ourAgents.at(i)].Role)
+        {
+        case AgentRole::AttackerMid:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::AttackerLeft:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::AttackerRight:
+            output.append(ourAgents.at(i));
+            break;
+        default:
+            break;
+        }
+    }
+    return output;
 }
 
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)

@@ -3,23 +3,15 @@
 PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
     Play("PlayStop", worldmodel, parent)
 {
-    numberOfDef=NUMOFDEFENDERS;
-
     tGolie=new TacticGoalie(wm);
+
     tDefenderMid=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
+
     tStopMid=new TacticStop(wm);
     tStopLeft=new TacticStop(wm);
     tStopRight=new TacticStop(wm);
-
-    tDefenderMid->setDefenderPos(CENTER);
-    tDefenderLeft->setDefenderPos(LEFT);
-    tDefenderRight->setDefenderPos(RIGHT);
-
-    tStopMid->setStopPosition(CENTER);
-    tStopLeft->setStopPosition(LEFT);
-    tStopRight->setStopPosition(RIGHT);
 }
 
 int PlayStop::enterCondition()
@@ -30,72 +22,114 @@ int PlayStop::enterCondition()
         return 10;
     else
         return 0;
+    //        return 20000;
 }
 
-void PlayStop::execute()
+void PlayStop::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
     activeAgents.removeOne(wm->ref_goalie_our);
-
-    tactics[wm->ref_goalie_our]=tGolie;
-
+    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {
-
     case 1:
-        tactics[activeAgents.takeFirst()]=tDefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
         break;
     case 2:
-       tactics[activeAgents.takeFirst()]=tDefenderRight;
-       tactics[activeAgents.takeFirst()]=tDefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 3:
         switch (numberOfDef) {
         case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
-            tactics[activeAgents.takeFirst()]=tStopMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
             break;
         case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
             break;
         }
         break;
     case 4:
         switch (numberOfDef) {
         case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
-            tactics[activeAgents.takeFirst()]=tStopLeft;
-            tactics[activeAgents.takeFirst()]=tStopRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
             break;
         case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
-            tactics[activeAgents.takeFirst()]=tStopMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
             break;
         }
         break;
     case 5:
         switch (numberOfDef) {
         case 2:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
-            tactics[activeAgents.takeFirst()]=tStopLeft;
-            tactics[activeAgents.takeFirst()]=tStopRight;
-            tactics[activeAgents.takeFirst()]=tStopMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
             break;
         case 3:
-            tactics[activeAgents.takeFirst()]=tDefenderRight;
-            tactics[activeAgents.takeFirst()]=tDefenderMid;
-            tactics[activeAgents.takeFirst()]=tDefenderLeft;
-            tactics[activeAgents.takeFirst()]=tStopLeft;
-            tactics[activeAgents.takeFirst()]=tStopRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
             break;
         }
         break;
     }
+}
 
+void PlayStop::setTactics(int index)
+{
+    switch (wm->ourRobot[index].Role) {
+    case AgentRole::Golie:
+        tactics[index] = tGolie;
+        break;
+    case AgentRole::DefenderMid:
+        tactics[index] = tDefenderMid;
+        break;
+    case AgentRole::DefenderLeft:
+        tactics[index] = tDefenderLeft;
+        break;
+    case AgentRole::DefenderRight:
+        tactics[index] = tDefenderRight;
+        break;
+    case AgentRole::AttackerMid:
+        tactics[index] = tStopMid;
+        break;
+    case AgentRole::AttackerRight:
+        tactics[index] = tStopRight;
+        break;
+    case AgentRole::AttackerLeft:
+        tactics[index] = tStopLeft;
+        break;
+    default:
+        break;
+    }
+}
+
+void PlayStop::execute()
+{
+    QList<int> activeAgents=wm->kn->ActiveAgents();
+
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        wm->ourRobot[activeAgents.at(i)].Status = AgentStatus::Idle;
+    }
+
+    initRole();
+    while (activeAgents.size() >0)
+    {
+        setTactics(activeAgents.takeFirst());
+    }
 }

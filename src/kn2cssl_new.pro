@@ -139,7 +139,6 @@ SOURCES +=	main.cpp \
     ai/knowledge.cpp \
     ai/tactic/tacticballtracker.cpp \
     ai/tactic/tacticcircle.cpp \
-    ai/tactic/tacticformation.cpp \
     ai/play/playstop.cpp \
     ai/play/playhalt.cpp \
     ai/play/playfreekickopp.cpp \
@@ -150,9 +149,7 @@ SOURCES +=	main.cpp \
     ai/play/playpenaltyopp.cpp \
     ai/play/playpenaltyour.cpp \
     ai/tactic/tactictestkickprecision.cpp \
-    ai/play/playcalibration.cpp \
     ai/tactic/tactictestfriction.cpp \
-    ai/play/playgameondefensive.cpp \
     ssl/sslrefbox/messages/referee.pb.cc \
     ssl/sslrefboxnew.cpp \
     geom2/shape2d.cpp \
@@ -162,7 +159,8 @@ SOURCES +=	main.cpp \
     ai/tactic/tactictechnical.cpp \
     ai/tactic/tacticpenaltykicker.cpp \
     ai/tactic/tactictest2.cpp \
-    ai/tactic/tactickicker.cpp
+    ai/tactic/tacticpreparing.cpp \
+    ai/play/playpreparing.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -235,7 +233,6 @@ HEADERS  += \
     ai/knowledge.h \
     ai/tactic/tacticballtracker.h \
     ai/tactic/tacticcircle.h \
-    ai/tactic/tacticformation.h \
     ai/tactics.h \
     ai/play/playstop.h \
     ai/play/playhalt.h \
@@ -246,10 +243,8 @@ HEADERS  += \
     ai/play/playkickoffour.h \
     ai/play/playpenaltyopp.h \
     ai/play/playpenaltyour.h \
-    ai/play/playcalibration.h \
     ai/tactic/tactictestkickprecision.h \
     ai/tactic/tactictestfriction.h \
-    ai/play/playgameondefensive.h \
     ssl/sslrefbox/messages/referee.pb.h \
     ssl/sslrefboxnew.h \
     geom2/shape2d.h \
@@ -259,7 +254,8 @@ HEADERS  += \
     ai/tactic/tactictechnical.h \
     ai/tactic/tacticpenaltykicker.h \
     ai/tactic/tactictest2.h \
-    ai/tactic/tactickicker.h
+    ai/tactic/tacticpreparing.h \
+    ai/play/playpreparing.h
 
 FORMS    +=	ui/mainwindow.ui
 

@@ -9,11 +9,6 @@ class TacticFixedPos : public Tactic
 public:
     explicit TacticFixedPos(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
-
-    void SetFixedPosition(int p);
-
-private:
-    int position;
 };
 
 #endif // TACTICFIXEDPOS_H

@@ -16,7 +16,46 @@ QString Tactic::getName()
         return name;
 }
 
+float Tactic::detectKickSpeed( Vector2D dest )
+{
+    float kickSpeed;
+
+    Segment2D goalLine(Field::oppGoalPost_L,Field::oppGoalPost_R);
+
+    if(wm->isSim)
+    {
+        if( goalLine.contains(dest) )
+            kickSpeed = 8; //Should Changed
+        else
+            kickSpeed = 4;//Should Changed
+    }
+    else
+    {
+        if( goalLine.contains(dest) )
+            kickSpeed = 255; //Should Changed
+        else
+            kickSpeed = 100;//Should Changed
+    }
+
+    return kickSpeed;
+}
+
 void Tactic::setID(int id)
 {
     this->id = id;
+}
+
+int Tactic::getID()
+{
+    return this->id;
+}
+
+void Tactic::setPlayerToKeep(int index)
+{
+    this->playerToKeep = index;
+}
+
+Vector2D Tactic::findTarget()
+{
+    return Field::oppGoalCenter;
 }

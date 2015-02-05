@@ -30,8 +30,11 @@ private:
     Vector2D u1;
     Vector2D derived0,derived1;
     Vector2D integral;
-
-    double wu1,wintegral,werr0,werr1;
+    //kamin
+    Vector2D LinearSpeed;
+    Vector2D LinearSpeed_past;
+    //kamout
+    double wu1,wu1_last,wintegral,werr0,werr1;
     double wderived0,wderived1;
 
     int stateCTRL;

@@ -1,14 +1,13 @@
 #include "ai.h"
-#include "play/playcalibration.h"
 #include "play/playfreekickopp.h"
 #include "play/playfreekickour.h"
 #include "play/playgameon.h"
-#include "play/playgameondefensive.h"
 #include "play/playhalt.h"
 #include "play/playkickoffopp.h"
 #include "play/playkickoffour.h"
 #include "play/playpenaltyopp.h"
 #include "play/playpenaltyour.h"
+#include "play/playpreparing.h"
 #include "play/playstop.h"
 #include "play/playtest.h"
 #include "play/playtest2.h"
@@ -21,21 +20,23 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
     qDebug() << "AI Initialization...";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
 
+    udp = new QUdpSocket();
+    ip.setAddress("192.168.4.121");
+
     current_play = 0;
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
         current_tactic[i] = 0;
 
-    plays.append(new PlayCalibration(wm));
     plays.append(new PlayFreeKickOpp(wm));
     plays.append(new PlayFreeKickOur(wm));
     plays.append(new PlayGameOn(wm));
-    plays.append(new PlayGameOnDefensive(wm));
     plays.append(new PlayHalt(wm));
     plays.append(new PlayKickoffOpp(wm));
     plays.append(new PlayKickoffOur(wm));
     plays.append(new PlayPenaltyOpp(wm));
     plays.append(new PlayPenaltyOur(wm));
     plays.append(new PlayStop(wm));
+    plays.append(new PlayPreparing(wm));
     plays.append(new PlayTest(wm));
     plays.append(new PlayTest2(wm));
 }
@@ -64,6 +65,29 @@ Tactic* AI::getCurrentTactic(int i)
 
 void AI::timer_timeout()
 {
+    if( wm->sendUDP)
+    {
+        double out_x;
+        double out_y;
+
+        if( wm->whichUDP == "pos" )
+        {
+            out_x = wm->ourRobot[wm->indexOfUDP].pos.loc.x;
+            out_y = wm->ourRobot[wm->indexOfUDP].pos.loc.y;
+        }
+        else
+        {
+            out_x = wm->ourRobot[wm->indexOfUDP].vel.loc.x;
+            out_y = wm->ourRobot[wm->indexOfUDP].vel.loc.y;
+        }
+
+        char* cp = (char*)&out_x ;
+        char* cp2 = (char*)&out_y;
+
+        udp->writeDatagram(cp,sizeof(double),ip,33433);
+        udp->writeDatagram(cp2,sizeof(double),ip,33433);
+    }
+
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
     {
         if(!wm->ourRobot[i].isValid)

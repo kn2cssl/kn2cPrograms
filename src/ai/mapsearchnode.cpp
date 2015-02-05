@@ -56,7 +56,7 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
         if(bc.contains(vec))
         {
             int    p_count = 8;
-            double p_dist = ROBOT_RADIUS * 2 + BALL_RADIUS;
+            double p_dist = ROBOT_RADIUS * 2 +  BALL_RADIUS;
 
             for(int i=0; i<p_count; i++)
             {
@@ -78,20 +78,28 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
     //----------
 
     auto obs = getObsCircle();
+    //@kamin
+    wm->navigation_pos.clear();
+    //kamin
 
     for(int i=0; i<obs.size(); i++)
     {
         int    p_count = 6;
-        double p_dist  = ROBOT_RADIUS * 2 ;+ BALL_RADIUS;
+        double p_dist  = ROBOT_RADIUS * 2  + BALL_RADIUS;
 
         for(int j=0; j<p_count; j++)
         {
             Vector2D v(p_dist, p_dist);
             v.rotate(360/p_count * j);
             MapSearchNode node = obs[i].center() + v;
-
+            //kamin
             bool checkNodeInterference = true;
 
+<<<<<<< HEAD
+            bool checkNodeInterference = true;
+
+=======
+>>>>>>> Mohammad
             for(int g=0;g<obs.size();g++)
             {
                 if(obs[g].contains(node.vec))
@@ -102,6 +110,12 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
             if(checkNodeInterference == true)
             {
+<<<<<<< HEAD
+=======
+
+                wm->navigation_pos.append(node.vec);
+            //kamout
+>>>>>>> Mohammad
                 if(node.vec != parent) astarsearch->AddSuccessor(node);
             }
         }
@@ -167,20 +181,28 @@ QList<Circle2D> MapSearchNode::getObsCircle()
         }
     }
 
+    //kamin
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
     {
         if(i == selfRobot) continue;
         if(!wm->ourRobot[i].isValid) continue;
-        Circle2D c(wm->ourRobot[i].pos.loc, r_rad);
+        //if((wm->ourRobot[i].pos.loc-wm->ourRobot[selfRobot].pos.loc).length() < 500
+         //       && (wm->ourRobot[i].vel.loc-wm->ourRobot[selfRobot].vel.loc).length() < 1) continue;
+        Circle2D c(wm->ourRobot[i].pos.loc + wm->ourRobot[i].vel.loc * AI_TIMER, r_rad);
         result.append(c);
     }
 
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
     {
         if(!wm->oppRobot[i].isValid) continue;
-        Circle2D c(wm->oppRobot[i].pos.loc, r_rad);
+        Circle2D c(wm->oppRobot[i].pos.loc+ wm->oppRobot[i].vel.loc * AI_TIMER, r_rad);
         result.append(c);
     }
+    //kamout
+
+    //    Circle2D c(Vector2D(0,0), 500);
+    //    result.append(c);
+    //    qDebug() << "Size Of Results :" << result.size();
 
     //    Circle2D c(Vector2D(0,0), 500);
     //    result.append(c);

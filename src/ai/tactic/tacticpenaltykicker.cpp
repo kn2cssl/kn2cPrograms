@@ -1,7 +1,7 @@
 #include "tacticpenaltykicker.h"
 
 TacticPenaltyKicker::TacticPenaltyKicker(WorldModel *worldmodel, QObject *parent) :
-    TacticAttacker(worldmodel)
+    TacticAttacker(worldmodel,parent)
 {
     this->setObjectName("TacticPenaltyKicker");
 }
@@ -11,25 +11,25 @@ RobotCommand TacticPenaltyKicker::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-
-
-    rc.maxSpeed=0.5;
-    rc.useNav=true;
-    rc.isBallObs=true;
-    rc.isKickObs=true;
-
     if(wm->cmgs.canKickBall())
     {
-        rc=goBehindBall();
-        if(canKick)
+        Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,Field::oppGoalCenter);
+        rc.fin_pos = kickPoint;
+        if(wm->kn->CanKick(wm->ourRobot[this->id].pos,wm->ball.pos.loc))
         {
-            rc.maxSpeed=0;
-            rc.kickspeedx=3;
+            rc.kickspeedx = detectKickSpeed(Field::oppGoalCenter);
         }
     }
     else
     {
-        rc.fin_pos.loc = Field::oppGoalPenaltySpot;
+        Vector2D penaltyPoint = Field::oppGoalPenaltySpot;
+        penaltyPoint.x = penaltyPoint.x -200;
+        rc.fin_pos.loc = penaltyPoint;
     }
+    rc.maxSpeed=0.75;
+    rc.useNav=false;
+    rc.isBallObs=true;
+    rc.isKickObs=true;
+
     return rc;
 }

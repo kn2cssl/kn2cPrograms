@@ -138,7 +138,7 @@ public:
 
   bool freeKick() { return directKick() || indirectKick(); }
   bool ourFreeKick() { return ourDirectKick() || ourIndirectKick(); }
-  bool theiFreeKick() { return theirDirectKick() || theirIndirectKick(); }
+  bool theirFreeKick() { return theirDirectKick() || theirIndirectKick(); }
 
   bool canMove() { return (state != HALTED); }
 

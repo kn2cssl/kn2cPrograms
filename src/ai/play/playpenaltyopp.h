@@ -13,11 +13,19 @@ public:
     virtual int enterCondition();
 
 private:
+    void setTactics(int index);
+    void setPositions(int index);
+
+private:
     TacticDefender* tDefenderMid;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticGoalie* tGoalie;
-    TacticHalt* tHalt;
+    TacticAttacker* tAttackerMid;
+    TacticAttacker* tAttackerRight;
+    TacticAttacker* tAttackerLeft;
+
+    virtual void initRole();
 
 };
 
