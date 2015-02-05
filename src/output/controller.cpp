@@ -2,10 +2,11 @@
 #include "constants.h"
 
 #define ROBOTRADIUS 0.090
+#define SpeedToRPMR 5000
 #define SpeedToRPM 1375.14
 Controller::Controller(QObject *parent) :
     QObject(parent)
-    ,out("/home/kn2c/Desktop/Untitled Folder/Data.txt")
+  ,out("/home/kn2c/Desktop/Untitled Folder/Data.txt")
 {
 
     qDebug() << "Controller Initialization...";
@@ -20,6 +21,7 @@ Controller::Controller(QObject *parent) :
     integral = {0,0};
 
     wu1 = 0;
+    wu1_last = 0;
     wintegral = 0;
     werr0 = 0;
     werr1 = 0;
@@ -86,27 +88,27 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     double ki;
     double kd;
 
-    if(err1.length()<1 && err1.length()>.3)
-    {
-        kp = 2;
-        kd = 0.08;
+    float err = err1.length();
 
-    }
-    if(err1.length()<.3)
-    {
-        kp = .9;
-        kd = 0.08;
-        if(ci.cur_vel.loc.length()<.8)
-        {
-            kp = 3;
-        }
-    }
-    if(err1.length()>1)
+
+    if(err > .6)
     {
         kp = 2;
         ki = 0;
         kd = 0;
-        integral = {0,0};
+    }
+
+    if(err <.6 && err>.2)
+    {
+        //if(ci.id == 2) qDebug() <<"a"<<timer;
+        kp = 4;
+        kd = 0.08;
+    }
+
+    if(err <.2)
+    {
+        kp = 3;//.9;
+        kd = 0.01;//8;
     }
 
     derived1 = (ci.cur_pos.loc*0.001 - err0)/(AI_TIMER/1000.0);
@@ -115,8 +117,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     LinearSpeed = err1*kp + integral*ki - derived0*kd;
 
-//    if(ci.cur_vel.loc.length() + .5 <LinearSpeed.length())
-//        LinearSpeed_past
 
     if(err1.length() > 0.3)
     {
@@ -125,7 +125,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
             LinearSpeed.setLength(LinearSpeed_past.length()+.05);
         }
     }
-
 
 
     if(LinearSpeed.length()>ci.maxSpeed)
@@ -142,69 +141,102 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     double wkp,wki,wkd,wu1;
     double MAXROTATIONSPEED = 2.5,RotationSpeed;
     werr1 = ci.fin_pos.dir - ci.cur_pos.dir ;
-//    if (err1.length()>.3)
-//    {
-//        Vector2D a =Vector2D(ci.mid_pos.loc - ci.cur_pos.loc);
-//        werr1 = atan(a.y/a.x) - ci.cur_pos.dir;
-//    }
+
 
     if (werr1 > M_PI) werr1 -= 2 * M_PI;
     if (werr1 < -M_PI) werr1 += 2 * M_PI;
 
     if(err1.length() >.5)
     {
-        if(fabs(werr1)*AngleDeg::RAD2DEG<30)
+
+        if(fabs(werr1)>.5)
         {
-            wkp = 2;
-            wki = 0;
-            wkd = 0.3;
+            if(ci.id == 2) qDebug() <<"A"<<timer;
+            wkp =.55;2;
+            wki =0;
+            wkd =.01;
 
         }
         else
         {
-            wkp =2;
+            if(ci.id == 2) qDebug() <<"B"<<timer;
+            wkp = 1;1;
             wki = 0;
-            wkd = 1;
+            wkd = 0.08;
         }
     }
-    else
+    if(err1.length() < .5)
     {
-        wkp = .5;
-        wki = 0;
-        wkd = 1;
-        if(err1.length() >.03 && ci.cur_vel.loc.length()<.5)
+        wkp = .55+3*pow(fabs(werr1), 3)*fabs(err1.length());
+        wkd = .2;
+    }
+
+    if(err1.length()<.2)
+    {
+
+
+        if(fabs(werr1) > 0.523)//30deg
         {
-            wkp = 2;
+            if(ci.id == 2) qDebug() <<"C"<<timer;
+            wkp = .9;
+            wkd = .4;
+        }
+        else if(fabs(werr1)>.174)//10deg
+        {
+            if(ci.id == 2) qDebug() <<"D"<<timer;
+            wkp = .09;
+            wkd = .4;
+        }
+        else
+        {
+            if(ci.id == 2) qDebug() <<"E"<<timer;
+            wkp = .01;
             wki = 0;
-            wkd = 1;
+            wkd = 0.04;
         }
     }
+
+
+   if(ci.id == 2)qDebug()<< wkp <<werr1<< err1.length();
 
 
     wderived1 = (ci.cur_pos.dir - werr0)/3;
     wderived0 = wderived0 + (wderived1 - wderived0)*0.1;
     werr0 = ci.cur_pos.dir;
-
     wu1 = (werr1*wkp) + wintegral*wki - wderived1*wkd;
     if (wu1>MAXROTATIONSPEED) wu1=MAXROTATIONSPEED;
     if (wu1<-MAXROTATIONSPEED) wu1=-MAXROTATIONSPEED;
     RotationSpeed = wu1;
 
-    //@kamin
-//    if(ci.fin_pos.loc.x == 0 && ci.fin_pos.loc.y == 0)
-//    {
-        if(1)//ci.cur_vel.loc.x > 0)
-        {
-            //qDebug() <<"MAN" << ci.cur_vel.dir*1000<< "SET" <<RotationSpeed;
-            //qDebug() << ci.cur_vel.dir*1000;
-//        qDebug()<< "loc" <<ci.cur_pos.loc.x<<ci.cur_pos.loc.y<<RotationSpeed<<LinearSpeed.x;
-//          qDebug() <<timer.msec()<<"MAN" <<ci.cur_vel.loc.x<<ci.cur_vel.loc.y<< ci.cur_vel.dir<< "SET" <<LinearSpeed.x<<LinearSpeed.y<<RotationSpeed<< "Err" <<err1.length();
-        }//<< "loc" <<ci.cur_pos.loc.x<<ci.cur_pos.loc.y
-//    }
 
-    double alpha = ci.cur_pos.dir+atan(RotationSpeed*0.187);
+
+
+
+//        if(fabs(wu1-wu1_last) > 0.6)
+//        {
+//            wu1 = wu1_last + .6 * sign(wu1);
+//        }
+
+
+    //    LinearSpeed.x = .5;
+    //    LinearSpeed.y = 0;
+
+    if(1)//ci.cur_vel.loc.x > 0)
+    {
+        //qDebug() <<"MAN" << ci.cur_vel.dir*1000<< "SET" <<RotationSpeed;
+        //qDebug() << ci.cur_vel.dir*1000;
+        //qDebug()<< "loc" <<ci.cur_pos.loc.x<<ci.cur_pos.loc.y<<wu1<<LinearSpeed.x;
+        //qDebug() <<"MAN"<< ci.cur_vel.dir*500<< "SET" <<RotationSpeed<< "Err"<<werr1 << ci.cur_pos.dir;
+        //            qDebug() <<timer.msec()<<"MAN" <<ci.cur_vel.loc.x<<ci.cur_vel.loc.y<< ci.cur_vel.dir<< "SET" <<LinearSpeed.x<<LinearSpeed.y<<RotationSpeed<< "Err" <<err1.length();
+
+    }
+
+
+    double alpha = ci.cur_pos.dir ;+atan(RotationSpeed*0.187);
     //alpha is the corrected angel whitch handle the problem
     //of nonlinear relation of rotational movement and linear movement
+
+
 
 
     RotLinearSpeed.x = LinearSpeed.x * cos(alpha) + LinearSpeed.y * sin(alpha);
@@ -212,18 +244,15 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     RobotSpeed ans;
 
-    ans.VX =  RotLinearSpeed.x ;
-    ans.VY =  RotLinearSpeed.y ;
-    ans.VW =  RotationSpeed ;
-
-    if(fabs(werr1) <0.1 && err1.length()<.02) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+    ans.VX = RotLinearSpeed.x;
+    ans.VY = RotLinearSpeed.y;
+    ans.VW = RotationSpeed ;
+    if(fabs(werr1) <0.07  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
     if(err1.length()<.02)
     {
         ans.VX=0;
         ans.VY=0;
     }
-
-    //@kamout
 
     return ans;
 }
@@ -435,10 +464,10 @@ MotorSpeed Controller::calcReal(RobotSpeed rs)
     rotate[2][2] = -ROBOTRADIUS;
     rotate[3][2] = -ROBOTRADIUS;
 
-    motor[0][0] = (rotate[0][0] * speed[0][0] + rotate[0][1] * speed[1][0] + rotate[0][2] * speed[2][0])*SpeedToRPM;
-    motor[1][0] = (rotate[1][0] * speed[0][0] + rotate[1][1] * speed[1][0] + rotate[1][2] * speed[2][0])*SpeedToRPM;
-    motor[2][0] = (rotate[2][0] * speed[0][0] + rotate[2][1] * speed[1][0] + rotate[2][2] * speed[2][0])*SpeedToRPM;
-    motor[3][0] = (rotate[3][0] * speed[0][0] + rotate[3][1] * speed[1][0] + rotate[3][2] * speed[2][0])*SpeedToRPM;
+    motor[0][0] = (rotate[0][0] * speed[0][0] + rotate[0][1] * speed[1][0])*SpeedToRPM + rotate[0][2] * speed[2][0]*SpeedToRPMR;
+    motor[1][0] = (rotate[1][0] * speed[0][0] + rotate[1][1] * speed[1][0])*SpeedToRPM + rotate[1][2] * speed[2][0]*SpeedToRPMR;
+    motor[2][0] = (rotate[2][0] * speed[0][0] + rotate[2][1] * speed[1][0])*SpeedToRPM + rotate[2][2] * speed[2][0]*SpeedToRPMR;
+    motor[3][0] = (rotate[3][0] * speed[0][0] + rotate[3][1] * speed[1][0])*SpeedToRPM + rotate[3][2] * speed[2][0]*SpeedToRPMR;
 
     MotorSpeed result;
 
@@ -477,7 +506,7 @@ MotorSpeed Controller::calcSimul(RobotSpeed rs)
     motor[3][0] = rotate[3][0] * speed[0][0] + rotate[3][1] * speed[1][0] + rotate[3][2] * speed[2][0];
 
     //qDebug()<<"M0:"<<motor[0][0]<<"M1:"<<motor[1][0]<<"M2:"<<motor[2][0]<<"M3:"<<motor[3][0];
-   //qDebug()<<err1.y;
+    //qDebug()<<err1.y;
     //out << err1.y <<" "<< endl;
     MotorSpeed result;
 
