@@ -4,6 +4,7 @@
 #include "mobileobject.h"
 #include "controller.h"
 #include "outputbuffer.h"
+#include "QDebug"
 
 class Robot : public MobileObject
 {
@@ -11,7 +12,7 @@ class Robot : public MobileObject
 
 public:
     Robot();
-
+    virtual void seenAt(vector<Position> p, double t, int c);
 };
 
 #endif // ROBOT_H

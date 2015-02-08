@@ -53,6 +53,7 @@ ControllerInput Navigation::calc(RobotCommand rc)
 
     ci.maxSpeed  = rc.maxSpeed;
     ci.angleMode = rc.angleMode;
+    ci.id = id;
     return ci;
 }
 

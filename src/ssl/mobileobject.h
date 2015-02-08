@@ -14,6 +14,7 @@ using namespace std;
 struct PositionTimeCamera
 {
     Position pos;
+
     double time;
     int camera;
     PositionTimeCamera()
@@ -29,14 +30,16 @@ class MobileObject : public QObject
 
 public:
     explicit MobileObject();
-    void seenAt(vector<Position> p, double t, int c);
+    virtual void seenAt(vector<Position> p, double t, int c) = 0;
 
     bool isValid;
 
     Position pos;
     Position pos_predicted;
     double time;
-    int camera;
+    int camera,camera_mem;
+
+    int camera_timeout;
 
     Position vel;
 
@@ -45,7 +48,7 @@ protected:
     PositionTimeCamera vel_postc;
     void appendPostc(PositionTimeCamera &postc);
 
-private:
+//private:
     QTimer timer_seen;
     int    timer_seen_interval;
     QTimer timer_vel;
