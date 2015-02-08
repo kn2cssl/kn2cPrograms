@@ -1,5 +1,5 @@
 #include "mobileobject.h"
-
+#include "constants.h"
 MobileObject::MobileObject() :
     QObject(0)
 {
@@ -27,105 +27,17 @@ void MobileObject::timer_seen_timeout()
 }
 void MobileObject::timer_vel_timeout()
 {
-    if(!isValid)
-    {
-        vel.loc = {0, 0};
-        vel.dir = 0;
-        return;
-    }
-    PositionTimeCamera last = vel_postc;
-    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc);// filter!!!!
-    vel.dir = (pos.dir - last.pos.dir) / (time - last.time);
-    vel_postc.pos = pos;
-    vel_postc.time = time;
-}
-
-
-void MobileObject::seenAt(vector<Position> p, double t, int c)
-{
-    //    if(p.size()<1) return;
-    //   isValid = true;
-    //   timer_seen.start(timer_seen_interval); //restart
-    //   if(!timer_vel.isActive()) timer_vel.start(timer_vel_interval);
-    //   PositionTimeCamera ans;
-    //   ans.time = t;
-    //   ans.camera = c;
-    //   int min_i = 0;
-    //   double min_d = pos.loc.dist2(p[0].loc);
-    //   for(size_t i=0; i < p.size(); i++)
-    //   {
-    //   double d = pos.loc.dist2(p[i].loc);
-    //   if(d < min_d)
-    //   {
-    //   min_d = d;
-    //   min_i = i;
-    //   }
-    //   }
-    //   Position sel_pos = p[min_i];
-    //   ans.pos.loc = pos.loc + (sel_pos.loc - pos.loc) * 0.5;
-    //   ans.pos.dir = fabs(pos.dir) + (fabs(sel_pos.dir) - fabs(pos.dir)) * 0.8;
-    //   if(sel_pos.dir < 0 ) ans.pos.dir *= -1;
-    //   appendPostc(ans);
-    //   /*
-    //   camera = ans.camera;
-    //   time = ans.time;
-    //   pos = ans.pos;
-    //   return;
-    //   */
-    //   min_i = 0;
-    //   min_d = pos.loc.dist2(last_postc[0].pos.loc);
-    //   for(int i=0; i<LAST_COUNT; i++)
-    //   {
-    //   if(last_postc[i].time < 0) continue;
-    //   double d = pos.loc.dist2(last_postc[i].pos.loc);
-    //   if(d < min_d)
-    //   {
-    //   min_d = d;
-    //   min_i = i;
-    //   }
-    //   }
-    //   PositionTimeCamera res = last_postc[min_i];
-    //   camera = res.camera;
-    //   time = res.time;
-    //   pos = res.pos;
-    /////////////////////////////////////////
-    if(p.size()<1) return;
-    isValid = true;
-    timer_seen.start(timer_seen_interval); //restart
-
-    PositionTimeCamera ans;
-    ans.time = t;
-    ans.camera = c;
-
-    Vector2D buff;
-    int min_i = 0;
-    buff = p[min_i].loc - pos_predicted.loc ;
-    double min_d = buff.length();
-    for(size_t i=0; i < p.size(); i++)
-    {
-        buff = p[i].loc - pos_predicted.loc ;
-        double d = buff.length();
-        if(d < min_d)
-        {
-            min_d = d;
-            min_i = i;
-        }
-    }
-
-    ans.pos.loc = p[min_i].loc;
-    ans.pos.dir = p[min_i].dir;
-
-    //    if(fabs(pos.dir - p[min_i].dir) < 1) ans.pos.dir = (p[min_i].dir);
-    //    else ans.pos.dir = pos.dir ;
-    //    ans.pos.dir = (p[min_i].dir+pos_predicted.dir)/2 ;
-    //    if (ans.pos.dir > M_PI) ans.pos.dir -= 2 * M_PI;
-    //    if (ans.pos.dir < -M_PI) ans.pos.dir += 2 * M_PI;
-
-
-    camera = ans.camera;
-    time = ans.time;
-    pos = ans.pos;
-    vel_calc();
+    //    if(!isValid)
+    //    {
+    //        vel.loc = {0, 0};
+    //        vel.dir = 0;
+    //        return;
+    //    }
+    //    PositionTimeCamera last = vel_postc;
+    //    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc);// filter!!!!
+    //    vel.dir = (pos.dir - last.pos.dir) / (time - last.time);
+    //    vel_postc.pos = pos;
+    //    vel_postc.time = time;
 }
 
 
@@ -143,24 +55,11 @@ void MobileObject::vel_calc()
 
     vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc)*0.12;
     vel.dir = (pos.dir - last.pos.dir) / (time - last.time );
-    //float pos_dir_diff = (pos.dir - last.pos.dir);
-    //    if (pos_dir_diff > M_PI) pos_dir_diff -= 2 * M_PI;
-    //    if (pos_dir_diff < -M_PI) pos_dir_diff += 2 * M_PI;
 
-    //    float vel_dir_buff = pos_dir_diff / (time - last.time );
-
-    //    //qDebug() << vel_dir_buff-vel.dir;
-    //    if(fabs(vel_dir_buff-vel.dir) < .3)
-    //    {
-    //        vel.dir = vel_dir_buff;
-    //        qDebug() << vel.dir;
-    //    }
 
     pos_predicted.loc = pos.loc + vel.loc * (time - last.time);
     pos_predicted.dir = pos.dir + vel.dir * (time - last.time);
 
-    //    if (pos_predicted.dir > M_PI) pos_predicted.dir -= 2 * M_PI;
-    //    if (pos_predicted.dir < -M_PI) pos_predicted.dir += 2 * M_PI;
 
     vel_postc.pos = pos;
     vel_postc.time = time;

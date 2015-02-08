@@ -151,7 +151,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
         if(fabs(werr1)>.5)
         {
-            if(ci.id == 2) qDebug() <<"A"<<timer;
+            //if(ci.id == 2) qDebug() <<"A"<<timer;
             wkp =.55;2;
             wki =0;
             wkd =.01;
@@ -159,7 +159,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         }
         else
         {
-            if(ci.id == 2) qDebug() <<"B"<<timer;
+            //if(ci.id == 2) qDebug() <<"B"<<timer;
             wkp = 1;1;
             wki = 0;
             wkd = 0.08;
@@ -177,27 +177,27 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
         if(fabs(werr1) > 0.523)//30deg
         {
-            if(ci.id == 2) qDebug() <<"C"<<timer;
+           // if(ci.id == 2) qDebug() <<"C"<<timer;
             wkp = .9;
             wkd = .4;
         }
         else if(fabs(werr1)>.174)//10deg
         {
-            if(ci.id == 2) qDebug() <<"D"<<timer;
+            //if(ci.id == 2) qDebug() <<"D"<<timer;
             wkp = .09;
             wkd = .4;
         }
         else
         {
-            if(ci.id == 2) qDebug() <<"E"<<timer;
-            wkp = .01;
+            //if(ci.id == 2) qDebug() <<"E"<<timer;
+            wkp = .04;
             wki = 0;
             wkd = 0.04;
         }
     }
 
 
-   if(ci.id == 2)qDebug()<< wkp <<werr1<< err1.length();
+   //if(ci.id == 2)qDebug()<< wkp <<werr1<< err1.length();
 
 
     wderived1 = (ci.cur_pos.dir - werr0)/3;
@@ -247,7 +247,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     ans.VX = RotLinearSpeed.x;
     ans.VY = RotLinearSpeed.y;
     ans.VW = RotationSpeed ;
-    if(fabs(werr1) <0.07  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+    if(fabs(werr1) <0.04  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
     if(err1.length()<.02)
     {
         ans.VX=0;
