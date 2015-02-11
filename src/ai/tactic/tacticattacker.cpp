@@ -27,17 +27,18 @@ RobotCommand TacticAttacker::getCommand()
         Vector2D target = findTarget();
         Position p = wm->kn->AdjustKickPoint(v, target);
 
-        rc.fin_pos = p;
+        rc.fin_pos.loc = p.loc;
+        rc.fin_pos.dir = (wm->ball.pos.loc - wm->ourRobot[this->id].pos.loc).dir().radian();
 
         //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
-        if(wm->kn->IsReadyForKick(wm->ourRobot[id].pos, p, wm->ball.pos.loc))
+        if(wm->kn->CanKick(wm->ourRobot[id].pos, wm->ball.pos.loc))
         {
             rc.kickspeedx = detectKickSpeed(target);
         }
 
         rc.maxSpeed = 2;
 
-        rc.useNav = false;
+        rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
