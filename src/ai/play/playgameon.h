@@ -13,10 +13,11 @@ public:
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
     void setTactics(int index);
-    void pressing();
+    void pressing(int ballOwner);
     int findBallOwner();
     void setPlayer2Keep(int ourR,int oppR);
     QList<AgentRegion> freeRegions();
+
 private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
@@ -27,6 +28,7 @@ private:
     TacticAttacker* tAttackerMid;
 
     virtual void initRole();
+    void coach();
     void setGameOnPos(int ourR,Vector2D oppR);
 };
 

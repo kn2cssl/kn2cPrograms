@@ -3,6 +3,8 @@
 PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
     Play("PlayGameOn", worldmodel, parent)
 {
+    rolesIsInit = false;
+
     tGolie = new TacticGoalie(wm);
 
     tDefenderLeft = new TacticDefender(wm);
@@ -17,7 +19,11 @@ PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
 int PlayGameOn::enterCondition()
 {
     if( wm->cmgs.gameOn() )
+    {
+        if(rolesIsInit)
+            rolesIsInit = conditionChanged();
         return 100;
+    }
     else
         return 0;
     return 0;
@@ -66,14 +72,12 @@ void PlayGameOn::setTactics(int index)
     }
 }
 
-void PlayGameOn::pressing()
+void PlayGameOn::pressing(int ballOwner)
 {
     QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
     QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
     oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
     oppPlayers.removeOne(wm->ref_goalie_opp);
-
-    oppPlayers.insert(0,oppNearestPlayerToBall.at(0));
 
     //    int index = 0;
     //    while( index < oppPlayers.size() )
@@ -85,7 +89,7 @@ void PlayGameOn::pressing()
     //    }
 
     QList<int> ourPlayers = wm->kn->findAttackers();
-    ourPlayers.removeOne(wm->ref_goalie_our);
+    ourPlayers.removeOne(ballOwner);
 
     while( ourPlayers.size() > 0 )
     {
@@ -209,16 +213,62 @@ QList<AgentRegion> PlayGameOn::freeRegions()
 
 void PlayGameOn::initRole()
 {
+    QList<int> activeAgents=wm->kn->ActiveAgents();
+    numberOfPlayers = activeAgents.size();
+    activeAgents.removeOne(wm->ref_goalie_our);
+    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
+    switch (activeAgents.length()) {
+    case 1:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        break;
+    case 2:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        break;
+    case 3:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        break;
+    case 4:
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+        break;
+    case 5:
+        switch (numberOfDef) {
+        case 2:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+            break;
+        case 3:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        }
+        break;
+    }
+    rolesIsInit = true;
+}
+
+void PlayGameOn::coach()
+{
     QString game_status = wm->kn->gameStatus();
+    int ballOwner = findBallOwner();
 
     if( game_status == "Defending" )
     {
-        pressing();
+        pressing(ballOwner);
     }
     else if( game_status == "Attacking" )
     {
-        int ballOwner = findBallOwner();
-
         if( wm->ball.isValid )
         {
             QList<int> attackers = wm->kn->findAttackers();
@@ -328,7 +378,7 @@ void PlayGameOn::initRole()
     }
     else
     {
-        findBallOwner();
+        //findBallOwner();
     }
 }
 
@@ -354,7 +404,10 @@ void PlayGameOn::execute()
 {
     QList<int> activeAgents = wm->kn->ActiveAgents();
 
-    initRole();
+    if( !rolesIsInit )
+        initRole();
+
+    coach();
 
     while( activeAgents.size() > 0 )
     {

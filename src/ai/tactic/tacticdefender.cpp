@@ -23,7 +23,7 @@ RobotCommand TacticDefender::getCommand()
 
         rc.fin_pos = p;
 
-        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc))
+        if(wm->kn->IsReadyForKick(wm->ourRobot[this->id].pos,p,wm->ball.pos.loc) )
         {
             rc.kickspeedx = detectKickSpeed(target);
         }
