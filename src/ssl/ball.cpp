@@ -58,7 +58,8 @@ void Ball::seenAt(vector<Position> p, double t, int c)
      }
      else
      {
-         camera_mem = 2;
+         camera_timeout++;
+         if(camera_timeout >8) camera_mem = 2;
      }
-
+     qDebug() << camera;
 }

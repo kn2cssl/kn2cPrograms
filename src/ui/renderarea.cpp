@@ -79,7 +79,7 @@ void RenderArea::paintEvent(QPaintEvent *)
             Vector2D point = _sc->wm->navigation_pos.takeFirst();
             painter.setPen(QColor::fromRgb(200,100,0));
             painter.setBrush(*brush_astarNode);
-            painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),BALL_R,BALL_R);
+            painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),NODE,NODE);
         }
 
         while( _sc->wm->navigation_result.size() > 0 )
@@ -87,7 +87,7 @@ void RenderArea::paintEvent(QPaintEvent *)
             Vector2D point = _sc->wm->navigation_result.takeFirst();
             painter.setPen(QColor::fromRgb(200,100,0));
             painter.setBrush(*brush_astarResult);
-            painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),BALL_R,BALL_R);
+            painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),NODE,NODE);
         }
     }
 }

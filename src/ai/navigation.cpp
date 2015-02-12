@@ -30,7 +30,7 @@ ControllerInput Navigation::calc(RobotCommand rc)
 
     //rc.useNav = false; //TOTALLY DISABLE A-STAR
     double direct_dist = ci.cur_pos.loc.dist(ci.fin_pos.loc);
-    if(rc.useNav == false || direct_dist < ROBOT_RADIUS)
+    if(rc.useNav == false || direct_dist < BALL_RADIUS)//ROBOT_RADIUS)//Dtest
     {
         ci.mid_pos = rc.fin_pos;
         ci.mid_vel = rc.fin_vel;
@@ -153,12 +153,27 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
 
         for(;;)
         {
+
             node = astarsearch.GetSolutionNext();
+            if(id == wm->indexOfAstarRobot )
+            {
+                qDebug() << "SolutionNext";
+                if(!node)
+                {
+                    wm->navigation_result.append(nodeEnd.vec);
+
+                }
+                else
+                {
+
+                    wm->navigation_result.append(node->vec);
+                }
+            }
+
             if(!node) break;
             //qDebug() << "SolutionNext" << node->vec.x << node->vec.y;
             //Kamin
-            if(id == wm->indexOfAstarRobot )
-                wm->navigation_result.append(node->vec);
+
             //Kamout
             if(points) points->append(node->vec);
             steps++;

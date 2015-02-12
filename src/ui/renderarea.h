@@ -17,6 +17,7 @@
 #define ROBOT_D 18
 
 #define BALL_R 4
+#define NODE 4
 
 #define ANGLE_TO_CHORD(a) 16*((a)*180/Pi+40), 16*280
 
