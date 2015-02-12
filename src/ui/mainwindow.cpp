@@ -337,7 +337,13 @@ void MainWindow::timer_timeout()
 
 void MainWindow::on_btnSaveVars_clicked()
 {
-    Settings s("vars.ini");
+    QString address;
+    if(sc->wm->isSim)
+        address = "vars_sim.ini";
+    else
+        address = "vars.ini";
+
+    Settings s(address);
     s.SetValue("vars" , "var0", ui->txtvar0->text());
     s.SetValue("vars" , "var1", ui->txtvar1->text());
     s.SetValue("vars" , "var2", ui->txtvar2->text());
@@ -353,7 +359,13 @@ void MainWindow::on_btnSaveVars_clicked()
 
 void MainWindow::on_btnLoadVars_clicked()
 {
-    Settings s("vars.ini");
+    QString address;
+    if(sc->wm->isSim)
+        address = "vars_sim.ini";
+    else
+        address = "vars.ini";
+
+    Settings s(address);
 
     QString var0 = s.Get("vars", "var0");
     ui->txtvar0->setText(var0);

@@ -67,7 +67,8 @@ RobotCommand TacticStop::getCommand()
     else
         rc.fin_pos.loc=finalPos;
 
-    rc.maxSpeed=3;
+    rc.maxSpeed=1;
+
     rc.useNav=true;
     rc.isBallObs=true;
     rc.isKickObs=true;
