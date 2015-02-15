@@ -40,7 +40,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabHome">
        <attribute name="title">
@@ -383,7 +383,7 @@
            <item>
             <widget class="QLabel" name="label_6">
              <property name="text">
-              <string>VAR 6</string>
+              <string>C1</string>
              </property>
             </widget>
            </item>
@@ -417,7 +417,7 @@
            <item>
             <widget class="QLabel" name="label_7">
              <property name="text">
-              <string>VAR 7</string>
+              <string>C2</string>
              </property>
             </widget>
            </item>
@@ -451,7 +451,7 @@
            <item>
             <widget class="QLabel" name="label_8">
              <property name="text">
-              <string>VAR 8</string>
+              <string>C3</string>
              </property>
             </widget>
            </item>
@@ -485,7 +485,7 @@
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>VAR 9</string>
+              <string>C4</string>
              </property>
             </widget>
            </item>

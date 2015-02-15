@@ -2,6 +2,7 @@
 #define PLAYTEST_H
 
 #include "play.h"
+#include "man2man.h"
 
 class PlayTest : public Play
 {
@@ -19,6 +20,9 @@ private:
     int index;
     bool firstInit;
     virtual void initRole();
+    int number;
+
+    Man2Man *defence;
 };
 
 #endif // PLAYTEST_H
