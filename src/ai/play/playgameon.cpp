@@ -79,35 +79,18 @@ void PlayGameOn::pressing(int ballOwner)
     oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
-    //    int index = 0;
-    //    while( index < oppPlayers.size() )
-    //    {
-    //        if( !wm->kn->IsInsideOurField(wm->oppRobot[oppPlayers.at(index)].pos.loc) )
-    //            oppPlayers.removeAt(index);
-    //        else
-    //            index++;
-    //    }
-
-    QList<int> ourPlayers = wm->kn->findAttackers();
+    QList<int> ourPlayers = wm->kn->ActiveAgents();
     ourPlayers.removeOne(ballOwner);
+    ourPlayers.removeOne(wm->ref_goalie_our);
 
-    while( ourPlayers.size() > 0 )
+    Man2Man defence;
+    defence.setWorldModel(wm);
+    bool isMatched;
+    QList<Man2Man_Struct> m2m = defence.findOpp(ourPlayers,oppPlayers,isMatched);
+    if( isMatched )
     {
-        int min_j;
-        double min_d = 10000;
-        for(int j=0;j<ourPlayers.size();j++)
-        {
-            double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
-
-            if( distance < min_d )
-            {
-                min_d = distance;
-                min_j = ourPlayers.at(j);
-            }
-        }
-        ourPlayers.removeOne(min_j);
-        setPlayer2Keep(min_j,oppPlayers.at(0));
-        oppPlayers.removeFirst();
+        for(int i=0;i<m2m.size();i++)
+            setPlayer2Keep(m2m.at(i).ourI,m2m.at(i).oppI);
     }
 }
 

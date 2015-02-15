@@ -4,10 +4,8 @@ MWBM::MWBM()
 {
 }
 
-QList<int> MWBM::run(QList<int> input_weights,int numberOfVertex)
+QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatched)
 {
-    qDebug()<< "numberOfVertex:"<<numberOfVertex;
-    qDebug()<<"input_weights :"<<input_weights.size();
     igraph_t graph;
     igraph_vector_bool_t types;
     igraph_vector_long_t matching;
@@ -44,13 +42,11 @@ QList<int> MWBM::run(QList<int> input_weights,int numberOfVertex)
 
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
-            qDebug()<<"not a matching: ";
-            igraph_vector_long_print(&matching);
+            isMatched = false;
         }
         else
         {
-            qDebug()<<"matched : ";
-            igraph_vector_long_print(&matching);
+            isMatched = true;
         }
     }
     else if(numberOfVertex == 4)
@@ -80,13 +76,11 @@ QList<int> MWBM::run(QList<int> input_weights,int numberOfVertex)
 
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
-            qDebug()<<"not a matching: ";
-            igraph_vector_long_print(&matching);
+            isMatched = false;
         }
         else
         {
-            qDebug()<<"matched : ";
-            igraph_vector_long_print(&matching);
+            isMatched = true;
         }
     }
     else if(numberOfVertex == 5)
@@ -98,13 +92,6 @@ QList<int> MWBM::run(QList<int> input_weights,int numberOfVertex)
              input_weights.at(15),input_weights.at(16),input_weights.at(17),input_weights.at(18),input_weights.at(19),
              input_weights.at(20),input_weights.at(21),input_weights.at(22),input_weights.at(23),input_weights.at(24)
         };
-
-        for(int j=0;j<input_weights.size();j++)
-        {
-//            if( j%5 ==0)
-//                qDebug()<<"=========";
-            qDebug()<<input_weights.at(j);
-        }
 
         igraph_small(&graph,
                      0,0,
@@ -126,12 +113,11 @@ QList<int> MWBM::run(QList<int> input_weights,int numberOfVertex)
 
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
-            qDebug()<<"not a matching: ";
+            isMatched = false;
         }
         else
         {
-            qDebug()<<"matched : ";
-            igraph_vector_long_print(&matching);
+            isMatched=true;
         }
     }
 

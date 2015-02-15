@@ -3,6 +3,7 @@
 
 #include "play.h"
 #include "QDebug"
+#include "man2man.h"
 
 class PlayGameOn : public Play
 {

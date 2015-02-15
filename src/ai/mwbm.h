@@ -10,7 +10,7 @@ class MWBM
 {
 public:
     MWBM();
-    QList<int> run(QList<int> input_weights,int numberOfVertex);
+    QList<int> run(QList<int> input_weights,int numberOfVertex,bool &isMatched);
 };
 
 #endif // MWBM_H

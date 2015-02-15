@@ -23,7 +23,7 @@ class Man2Man
 
 public:
     Man2Man();
-    QList<Man2Man_Struct> findOpp(QList<int> our,QList<int> opp);
+    QList<Man2Man_Struct> findOpp(QList<int> our, QList<int> opp, bool &isMatched);
     void setWorldModel(WorldModel *wm);
     QList<int> distanceToBall(QList<int>opp);
     QList<int> oppScoringChance(QList<int>opp);

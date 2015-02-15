@@ -5,13 +5,10 @@ Man2Man::Man2Man()
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
 }
 
-QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp)
+QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp, bool &isMatched)
 {
     QList<int> ourPlayers = our;
     QList<int> oppPlayers = opp;
-
-    ourPlayers.removeOne(wm->ref_goalie_our);
-    oppPlayers.removeOne(wm->ref_goalie_opp);
 
     int graphSize = (ourPlayers.size() > oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
 
@@ -42,11 +39,14 @@ QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp)
     {
         for(int j=0;j<oppPlayers.size();j++)
         {
-             int weight;
-             double Distance =((wm->ourRobot[ourPlayers.at(i)].pos.loc -
-                    wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / maxDistance);
+            int weight;
+            double Distance =((wm->ourRobot[ourPlayers.at(i)].pos.loc -
+                              wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / maxDistance);
 
-             if(ourPlayers.at(i) < 0 )
+            if(ourPlayers.at(i) < 0
+                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderMid
+                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderLeft
+                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderRight)
                 weight = 0;
             else
                 weight = int( (wm->var[6]*(1-Distance)) + (wm->var[7]*F2.at(j)) + (wm->var[8]*F3.at(j)));
@@ -56,19 +56,22 @@ QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp)
     }
 
     MWBM maximum_matching;
-    QList<int> matching = maximum_matching.run(weights,graphSize);
+    QList<int> matching = maximum_matching.run(weights,graphSize,isMatched);
 
     QList<Man2Man_Struct> out;
 
-    for(int i=0;i<graphSize;i++)
+    if(isMatched)
     {
-        Man2Man_Struct tmp;
-        tmp.ourI = ourPlayers.at(i);
-        tmp.oppI = oppPlayers.at(matching.at(i)%graphSize);
-        tmp.weight = weights.at((graphSize*i) + (matching.at(i)%graphSize));
+        for(int i=0;i<graphSize;i++)
+        {
+            Man2Man_Struct tmp;
+            tmp.ourI = ourPlayers.at(i);
+            tmp.oppI = oppPlayers.at(matching.at(i)%graphSize);
+            tmp.weight = weights.at((graphSize*i) + (matching.at(i)%graphSize));
 
-        if( tmp.weight > 0)
-            out.append(tmp);
+            if( tmp.weight > 0)
+                out.append(tmp);
+        }
     }
 
     return out;
@@ -85,10 +88,10 @@ QList<int> Man2Man::distanceToBall(QList<int> opp)
 
     for(int i=0;i<opp.size();i++)
     {
-//        if( opp.at(i) < 0)
-            out.append(0);
-//        else
-//            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
+        //        if( opp.at(i) < 0)
+        out.append(0);
+        //        else
+        //            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
     }
 
     return out;
@@ -100,11 +103,11 @@ QList<int> Man2Man::oppScoringChance(QList<int> opp)
 
     for(int i=0;i<opp.size();i++)
     {
-//        Ray2D goalRay()
-//        if( opp.at(i) < 0)
-            out.append(0);
-//        else
-//            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
+        //        Ray2D goalRay()
+        //        if( opp.at(i) < 0)
+        out.append(0);
+        //        else
+        //            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
     }
 
     return out;
