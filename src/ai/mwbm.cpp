@@ -14,6 +14,16 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatch
     igraph_real_t matching_weight;
     igraph_bool_t is_matching;
 
+    QString ss;
+    for(int i=0;i<input_weights.size();i++)
+    {
+        if(i%5 == 0)
+            ss.append("\n");
+        ss.append(QString::number(input_weights.at(i)));
+        ss.append(",");
+    }
+    qDebug()<<ss;
+
     int i;
     QList<int> out;
 
@@ -43,10 +53,12 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatch
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
             isMatched = false;
+            qDebug()<<"Not Matched!!!";
         }
         else
         {
             isMatched = true;
+            qDebug()<<"Matched.";
         }
     }
     else if(numberOfVertex == 4)
@@ -77,10 +89,12 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatch
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
             isMatched = false;
+            qDebug()<<"Not Matched!!!";
         }
         else
         {
             isMatched = true;
+            qDebug()<<"Matched.";
         }
     }
     else if(numberOfVertex == 5)
@@ -93,8 +107,7 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatch
              input_weights.at(20),input_weights.at(21),input_weights.at(22),input_weights.at(23),input_weights.at(24)
         };
 
-        igraph_small(&graph,
-                     0,0,
+        igraph_small(&graph,0,0,
                      0,5, 0,6, 0,7, 0,8, 0,9,
                      1,5, 1,6, 1,7, 1,8, 1,9,
                      2,5, 2,6, 2,7, 2,8, 2,9,
@@ -109,15 +122,17 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfVertex, bool &isMatch
                                 sizeof(weight_array) / sizeof(weight_array[0]));
 
         igraph_maximum_bipartite_matching(&graph, &types, &matching_size,
-                                          &matching_weight, &matching, &weights, 0);
+                                          &matching_weight, &matching, &weights,DBL_EPSILON);
 
         igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
         if (!is_matching) {
             isMatched = false;
+            qDebug()<<"Not Matched!!!";
         }
         else
         {
             isMatched=true;
+            qDebug()<<"Matched.";
         }
     }
 

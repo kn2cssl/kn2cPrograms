@@ -16,7 +16,9 @@ public:
     QList<int> ActiveAgents();
     QList<int> ActiveOppAgents();
     QList<int> findNearestTo(Vector2D loc);
+    QList<int> findNearestTo(QList<int> ours,Vector2D loc);
     QList<int> findNearestOppositeTo(Vector2D loc);
+    QList<int> findNearestOppositeTo(QList<int> opps,Vector2D loc);
     int findOppAttacker();
 
     void sortOurPlayers(QList<int> &players,Vector2D point,bool ascending);

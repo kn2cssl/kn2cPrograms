@@ -48,6 +48,21 @@ QList<int> Knowledge::findNearestTo(Vector2D loc)
     return ans;
 }
 
+QList<int> Knowledge::findNearestTo(QList<int> ours, Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< ours.size(); i++)
+    {
+        if(_wm->ourRobot[ours.at(i)].isValid==false) continue;
+        double dist=(_wm->ourRobot[ours.at(i)].pos.loc-loc).length();
+        smap.insert(dist, ours.at(i));
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
 QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
 {
     QMap<double, int> smap;
@@ -56,6 +71,21 @@ QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
         if(_wm->oppRobot[i].isValid==false) continue;
         double dist=(_wm->oppRobot[i].pos.loc-loc).length();
         smap.insert(dist, i);
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
+QList<int> Knowledge::findNearestOppositeTo(QList<int> opps, Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< opps.size(); i++)
+    {
+        if(_wm->oppRobot[opps.at(i)].isValid==false) continue;
+        double dist=(_wm->oppRobot[opps.at(i)].pos.loc-loc).length();
+        smap.insert(dist, opps.at(i));
     }
     QList<int> ans;
     for(auto i=smap.begin(); i!=smap.end(); i++)

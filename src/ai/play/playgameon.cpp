@@ -74,7 +74,7 @@ void PlayGameOn::setTactics(int index)
 
 void PlayGameOn::pressing(int ballOwner)
 {
-    QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
+    QList<int> oppPlayers = wm->kn->ActiveOppAgents();
     QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
     oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
     oppPlayers.removeOne(wm->ref_goalie_opp);
@@ -83,15 +83,16 @@ void PlayGameOn::pressing(int ballOwner)
     ourPlayers.removeOne(ballOwner);
     ourPlayers.removeOne(wm->ref_goalie_our);
 
-    Man2Man defence;
+    Marking defence;
     defence.setWorldModel(wm);
     bool isMatched;
-    QList<Man2Man_Struct> m2m = defence.findOpp(ourPlayers,oppPlayers,isMatched);
+    QList<Marking_Struct> m2m = defence.findMarking(ourPlayers,oppPlayers,isMatched);
     if( isMatched )
     {
         for(int i=0;i<m2m.size();i++)
             setPlayer2Keep(m2m.at(i).ourI,m2m.at(i).oppI);
     }
+    wm->marking = m2m;
 }
 
 int PlayGameOn::findBallOwner()
@@ -196,6 +197,8 @@ QList<AgentRegion> PlayGameOn::freeRegions()
 
 void PlayGameOn::initRole()
 {
+    wm->marking.clear();
+
     QList<int> activeAgents=wm->kn->ActiveAgents();
     numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);

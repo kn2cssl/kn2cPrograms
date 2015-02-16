@@ -2,6 +2,7 @@
 #define MWBM_H
 
 #include <igraph/igraph.h>
+#include <float.h>
 #include <stdio.h>
 #include <QList>
 #include <QDebug>

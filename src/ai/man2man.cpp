@@ -1,55 +1,49 @@
 #include "man2man.h"
 
-Man2Man::Man2Man()
+Marking::Marking()
 {
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
 }
 
-QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp, bool &isMatched)
+QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool &isMatched)
 {
     QList<int> ourPlayers = our;
     QList<int> oppPlayers = opp;
 
-    int graphSize = (ourPlayers.size() > oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
+    int graphSize = (ourPlayers.size() < oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
 
     if( graphSize == ourPlayers.size() )
     {
-        int redundant = -1;
+        QList<int> farest = wm->kn->findNearestOppositeTo(oppPlayers,Field::oppGoalCenter);
         while (oppPlayers.size() != graphSize)
         {
-            oppPlayers.append(redundant);
-            redundant--;
+            oppPlayers.removeOne(farest.at(0));
         }
     }
     else
     {
-        int redundant = -1;
+        QList<int> ours = wm->kn->findNearestTo(ourPlayers,Field::ourGoalCenter);
         while (ourPlayers.size() != graphSize)
         {
-            ourPlayers.append(redundant);
-            redundant--;
+            ourPlayers.removeOne(ours.at(0));
         }
     }
 
-    QList<int> F3 = distanceToBall(oppPlayers);
-    QList<int> F2 = oppScoringChance(oppPlayers);
+    QList<double> F2 = distanceToGoal(oppPlayers);
+    QList<double> F3 = oppScoringChance(oppPlayers);
+    QList<double> F5 = distanceToBall(oppPlayers);
 
     QList<int> weights;
     for(int i=0;i<ourPlayers.size();i++)
     {
         for(int j=0;j<oppPlayers.size();j++)
         {
-            int weight;
             double Distance =((wm->ourRobot[ourPlayers.at(i)].pos.loc -
                               wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / maxDistance);
-
-            if(ourPlayers.at(i) < 0
-                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderMid
-                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderLeft
-                    || wm->ourRobot[ourPlayers.at(i)].Role == AgentRole::DefenderRight)
-                weight = 0;
-            else
-                weight = int( (wm->var[6]*(1-Distance)) + (wm->var[7]*F2.at(j)) + (wm->var[8]*F3.at(j)));
+            double F4 = formationDistance(i);
+            int weight = int( (wm->var[6]*(1-Distance)) + (wm->var[7]*(1-F2.at(j)))
+                    + (wm->var[8]*(/*1-*/F3.at(j)))
+                    + (wm->var[9]*(2-F4)) );
 
             weights.append(weight);
         }
@@ -58,13 +52,13 @@ QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp, bool &isM
     MWBM maximum_matching;
     QList<int> matching = maximum_matching.run(weights,graphSize,isMatched);
 
-    QList<Man2Man_Struct> out;
+    QList<Marking_Struct> out;
 
     if(isMatched)
     {
         for(int i=0;i<graphSize;i++)
         {
-            Man2Man_Struct tmp;
+            Marking_Struct tmp;
             tmp.ourI = ourPlayers.at(i);
             tmp.oppI = oppPlayers.at(matching.at(i)%graphSize);
             tmp.weight = weights.at((graphSize*i) + (matching.at(i)%graphSize));
@@ -77,29 +71,55 @@ QList<Man2Man_Struct> Man2Man::findOpp(QList<int> our, QList<int> opp, bool &isM
     return out;
 }
 
-void Man2Man::setWorldModel(WorldModel *wm)
+void Marking::setWorldModel(WorldModel *wm)
 {
     this->wm = wm;
 }
 
-QList<int> Man2Man::distanceToBall(QList<int> opp)
+QList<double> Marking::distanceToBall(QList<int> opp)
 {
-    QList<int> out;
+    QList<double> out;
 
     for(int i=0;i<opp.size();i++)
     {
-        //        if( opp.at(i) < 0)
-        out.append(0);
-        //        else
-        //            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
+        if( opp.at(i) < 0)
+            out.append(0);
+        else
+            out.append((wm->ball.pos.loc - wm->oppRobot[opp.at(i)].pos.loc).length() / maxDistance);
     }
 
     return out;
 }
 
-QList<int> Man2Man::oppScoringChance(QList<int> opp)
+QList<double> Marking::distanceToGoal(QList<int> opp)
 {
-    QList<int> out;
+    QList<double> out;
+
+    for(int i=0;i<opp.size();i++)
+    {
+        if( opp.at(i) < 0)
+            out.append(0);
+        else
+            out.append((Field::ourGoalCenter - wm->oppRobot[opp.at(i)].pos.loc).length() / maxDistance);
+    }
+
+    return out;
+}
+
+double Marking::formationDistance(int our)
+{
+    if( wm->ourRobot[our].Role == AgentRole::AttackerMid   ||
+        wm->ourRobot[our].Role == AgentRole::AttackerRight ||
+        wm->ourRobot[our].Role == AgentRole::AttackerLeft
+        )
+        return 0;
+
+    return 2;
+}
+
+QList<double> Marking::oppScoringChance(QList<int> opp)
+{
+    QList<double> out;
 
     for(int i=0;i<opp.size();i++)
     {
@@ -107,7 +127,7 @@ QList<int> Man2Man::oppScoringChance(QList<int> opp)
         //        if( opp.at(i) < 0)
         out.append(0);
         //        else
-        //            out.append((wm->ball.pos.loc - wm->ourRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
+        //            out.append((wm->ball.pos.loc - wm->oppRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
     }
 
     return out;
