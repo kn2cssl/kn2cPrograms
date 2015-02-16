@@ -36,6 +36,9 @@ public:
     bool showAstarOut;
     int indexOfAstarRobot;
 
+    QList<Marking_Struct> marking;
+    bool showMarking;
+
     //---UDP 2 Matlab
     bool sendUDP;
     int indexOfUDP;

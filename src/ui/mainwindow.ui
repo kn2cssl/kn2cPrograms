@@ -40,7 +40,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tabHome">
        <attribute name="title">
@@ -145,6 +145,24 @@
             <width>79</width>
             <height>23</height>
            </rect>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="show_marking">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>120</y>
+            <width>181</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Marking</string>
           </property>
          </widget>
         </widget>

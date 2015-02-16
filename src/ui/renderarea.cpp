@@ -11,6 +11,7 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_test = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
     brush_astarNode = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
     brush_astarResult = new QBrush(QColor::fromRgb(250,50,55),Qt::SolidPattern);
+    brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
     _timer.start(40);
     connect(&_timer,SIGNAL(timeout()), this, SLOT(refresh()));
 }
@@ -88,6 +89,21 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.setPen(QColor::fromRgb(200,100,0));
             painter.setBrush(*brush_astarResult);
             painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),NODE,NODE);
+        }
+    }
+    //Draw Marking
+    if( _sc->wm->showMarking )
+    {
+        for(int i=0;i<_sc->wm->marking.size();i++)
+        {
+            int ourIndex = _sc->wm->marking.at(i).ourI;
+            QPoint our(_sc->wm->ourRobot[ourIndex].pos.loc.x/WORLD_SCALE , -_sc->wm->ourRobot[ourIndex].pos.loc.y/WORLD_SCALE);
+            int oppIndex = _sc->wm->marking.at(i).oppI;
+            QPoint opp(_sc->wm->oppRobot[oppIndex].pos.loc.x/WORLD_SCALE , -_sc->wm->oppRobot[oppIndex].pos.loc.y/WORLD_SCALE);
+
+            painter.setPen(QColor::fromRgb(0,0,0));
+            painter.setBrush(*brush_astarResult);
+            painter.drawLine(our,opp);
         }
     }
 }

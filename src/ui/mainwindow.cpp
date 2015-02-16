@@ -327,12 +327,15 @@ void MainWindow::timer_timeout()
     sc->wm->var[9] = ui->spnvar9->value();
     ui->txtvar9->setText(QString::number(sc->wm->var[9]));
 
+    //---Debuging Tools----
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
     sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
 
     sc->wm->sendUDP = ui->udp_checkBox->isChecked();
     sc->wm->indexOfUDP = ui->udpID_comboBox->currentText().toInt();
     sc->wm->whichUDP = ui->valUDP_comboBox->currentText();
+
+    sc->wm->showMarking = ui->show_marking->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()
