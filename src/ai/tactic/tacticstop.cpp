@@ -65,7 +65,10 @@ RobotCommand TacticStop::getCommand()
         }
     }
     else
+    {
         rc.fin_pos.loc=finalPos;
+        rc.fin_pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
+    }
 
     rc.maxSpeed=1;
 
