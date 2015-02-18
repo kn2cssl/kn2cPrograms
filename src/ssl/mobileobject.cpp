@@ -17,10 +17,7 @@ void MobileObject::timer_seen_timeout()
 {
     if(isValid==true)
     {
-        //qDebug() << "isValid == false";
         isValid = false;
-        pos.loc = {0, 0};
-        pos.dir = 0;
         vel.loc = {0, 0};
         vel.dir = 0;
     }
