@@ -24,6 +24,7 @@ private:
 
     virtual void initRole();
     void setTactics(int index);
+    void setPositions();
 };
 
 #endif // PLAYSTOP_H
