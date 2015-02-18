@@ -50,6 +50,8 @@ class GameState {
   static const int READY;
   static const int NOTREADY;
 
+  static const int TIMEOUT;
+
   int state;
 
   // The set of possible states are:
@@ -109,6 +111,11 @@ public:
       case COMM_INDIRECT_YELLOW:
         state = INDIRECT | YELLOW | READY; return;
 
+      case COMM_TIMEOUT_BLUE:
+          state = TIMEOUT | BLUE | NOTREADY; return;
+      case COMM_TIMEOUT_YELLOW:
+          state = TIMEOUT | YELLOW | NOTREADY; return;
+
       default: break;
       }
     }
@@ -147,6 +154,10 @@ public:
 
   bool canKickBall() {
     return gameOn() || (ourRestart() && (state & READY)); }
+
+  bool timeout(){
+      return (state & TIMEOUT);
+  }
 
 };
 
