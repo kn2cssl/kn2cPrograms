@@ -158,7 +158,8 @@ void PlayFreeKickOur::execute()
     activeAgents.removeOne(tAttackerMid->getID());
     if(wm->cmgs.ourIndirectKick())
     {
-        int recieverID = tAttackerMid->findBestPlayerForPass();
+        int recieverID = tAttackerMid->returnReceiverID();
+
         if(recieverID != -1)
         {
             wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;

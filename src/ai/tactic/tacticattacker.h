@@ -21,12 +21,14 @@ public:
     void setGameOnPositions(Vector2D pos);
     void setIdlePosition(Position pos);
     void setIdlePosition(Vector2D pos);
+    int returnReceiverID();
 
     bool everyOneInTheirPos;
 
 private:
     bool isFree(int index);
 
+    int receiverID;
     QTimer *waitTimer;
     Position idlePosition;
     bool pastMidPoint; // FreeKick

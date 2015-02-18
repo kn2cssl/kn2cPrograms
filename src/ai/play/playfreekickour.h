@@ -16,8 +16,6 @@ private:
     void setPositions(int index);
 
 private:
-
-
     bool freeKickStart;
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;

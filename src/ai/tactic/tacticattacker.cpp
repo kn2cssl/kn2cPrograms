@@ -193,7 +193,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
     rc.maxSpeed = 1.5;
 
-    int index = findBestPlayerForPass();
+    int index = receiverID;
 
     if(index != -1)
     {
@@ -378,6 +378,11 @@ void TacticAttacker::setIdlePosition(Vector2D pos)
     this->idlePosition.loc = pos;
 }
 
+int TacticAttacker::returnReceiverID()
+{
+    return receiverID;
+}
+
 bool TacticAttacker::isFree(int index)
 {
     QList<int> oppAgents = wm->kn->ActiveOppAgents();
@@ -401,5 +406,6 @@ bool TacticAttacker::isFree(int index)
 void TacticAttacker::dontWait()
 {
     everyOneInTheirPos = true;
+    receiverID = findBestPlayerForPass();
     waitTimer->stop();
 }
