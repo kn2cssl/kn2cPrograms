@@ -242,7 +242,6 @@ bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
     double distThreshold = _wm->var[0], degThreshold = _wm->var[1] / 10;
     //@kamin
     AngleDeg d1((ballPos + _wm->ball.vel.loc * .015 - robotPos.loc ).dir());
-    //  AngleDeg d1((ballPos  - robotPos.loc).dir());
     //@kmout
     AngleDeg d2(robotPos.dir * AngleDeg::RAD2DEG);
     if(fabs((d1 - d2).degree()) < degThreshold || (360.0 - fabs((d1 - d2).degree())) < degThreshold)
@@ -270,6 +269,7 @@ bool Knowledge::IsReadyForKick(Position current, Position desired, Vector2D ball
             (360.0 - fabs((current.dir - desired.dir) * AngleDeg::RAD2DEG)) < degThreshold)
     {
         return CanKick(current, ballPos);
+
     }
     else
     {
@@ -416,10 +416,11 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 {
     Position p;
     Vector2D dir = (ballPos - target);//.normalizedVector();
-    dir.setLength(/*scale(*/ROBOT_RADIUS - (35 /*- kickSpeed*/));
+    dir.setLength( ROBOT_RADIUS);
 
     p.loc = ballPos + dir;
     p.dir = (-dir).dir().radian();
+
 
     return p;
 }

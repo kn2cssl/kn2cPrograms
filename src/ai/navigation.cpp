@@ -40,7 +40,9 @@ ControllerInput Navigation::calc(RobotCommand rc)
     {
         QList<Vector2D> points;
         ci.fin_dist = getPath(rc, &points);
-        //qDebug() << "points" << points.size();
+
+        //showing all robot's final pos
+        wm->navigation_result.append(ci.fin_pos.loc);
 
         if(points.size() >= 2)
             ci.mid_pos.loc = points[1];

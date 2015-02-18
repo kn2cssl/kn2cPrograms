@@ -1,51 +1,34 @@
 #include "playtest.h"
-
 PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
-    Play("PlayTest", worldmodel, parent)
+Play("PlayTest", worldmodel, parent)
 {
-    for(int i=0;i<PLAYERS_MAX_NUM;i++)
-        training[i] = new TacticTest(wm);
-
-    firstInit = false;
+// tAttacker = new TacticAttacker(wm);
+// tDefenderMid=new TacticDefender(wm);
+// tDefenderLeft=new TacticDefender(wm);
+// tDefenderRight=new TacticDefender(wm);
+// tHalt=new TacticHalt(wm);
+tGoalie = new TacticGoalie(wm);
+tTT = new TacticTestKickPrecision(wm);
+ttest = new TacticTest(wm);
 }
-
 int PlayTest::enterCondition()
 {
-    return 0;
+return 0;
 }
-
 void PlayTest::initRole()
 {
-
 }
-
 void PlayTest::execute()
 {
-    if(!firstInit)
-    {
-        readyRobots = wm->kn->ActiveAgents();
-        index = readyRobots.takeFirst();
-        for(int i=0;i<PLAYERS_MAX_NUM;i++)
-        {
-            training[i]->queuePos = wm->ourRobot[i].pos;
-        }
-        firstInit = true;
-    }
-
-    if(training[index]->kickIt)
-    {
-        training[index]->kickIt = false;
-        training[index]->kickPermision = false;
-        readyRobots.append(index);
-        index = readyRobots.takeFirst();
-    }
-    else
-    {
-        training[index]->kickPermision = true;
-        tactics[index] = training[index];
-    }
-    qDebug()<<"kickIt["<<index<<"] : "<<training[index]->kickIt;
-    return ;
-
+// tPasser->setKickerID(1);
+// tactics[1] = tPasser;
+// int recieverID = tPasser->findBestPlayerForPass();
+// if(tPasser->kicked)
+// tAttacker->go = true;
+// wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
+// tactics[recieverID] = tAttacker;
+tactics[0] = tGoalie;
+tactics[3] = tTT;
+tactics[2] = ttest;
+return ;
 }
-

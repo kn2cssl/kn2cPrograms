@@ -35,8 +35,6 @@ void Ball::seenAt(vector<Position> p, double t, int c)
      ans.pos.dir = p[min_i].dir;
 
 
-//     qDebug() << time<< " " << camera << camera_mem ;
-
      if (camera_mem == ans.camera  || camera_mem ==2 )
      {
          if((pos.loc - ans.pos.loc).length() < 540 || camera_mem ==2)
@@ -61,5 +59,4 @@ void Ball::seenAt(vector<Position> p, double t, int c)
          camera_timeout++;
          if(camera_timeout >8) camera_mem = 2;
      }
-     qDebug() << camera;
 }

@@ -191,13 +191,5 @@ QList<Circle2D> MapSearchNode::getObsCircle()
     }
     //kamout
 
-    //    Circle2D c(Vector2D(0,0), 500);
-    //    result.append(c);
-    //    qDebug() << "Size Of Results :" << result.size();
-
-    //    Circle2D c(Vector2D(0,0), 500);
-    //    result.append(c);
-    //    qDebug() << "Size Of Results :" << result.size();
-
     return result;
 }
