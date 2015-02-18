@@ -104,10 +104,29 @@ void PlayKickoffOpp::setPositions(int index)
 
     QList<int> nearest;
     int i = 0;
+    Line2D toCenter(Vector2D(0,0),ALLOW_NEAR_BALL_RANGE);
+    Circle2D cir;
+    Vector2D first,second;
+    int numberOfIntersection;
+
     switch(wm->ourRobot[index].Role)
     {
     case AgentRole::AttackerMid:
-        tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);
+        toCenter.assign(wm->ball.pos.loc , Field::ourGoalCenter);
+        cir.assign(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+        numberOfIntersection = cir.intersection(toCenter,&first,&second);
+        if( numberOfIntersection == 2)
+        {
+            if( wm->kn->IsInsideOurField(first))
+                tAttackerMid->setIdlePosition(first);
+            else
+                tAttackerMid->setIdlePosition(second);
+        }
+        else if(numberOfIntersection == 1)
+            tAttackerMid->setIdlePosition(first);
+        else
+            tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);
+
         break;
     case AgentRole::AttackerRight:
         nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MaxY/2));
@@ -115,7 +134,7 @@ void PlayKickoffOpp::setPositions(int index)
         while( i<nearest.size() )
         {
             if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                    ||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000)
+                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
                 nearest.removeAt(i);
             else
                 i++;
@@ -147,7 +166,7 @@ void PlayKickoffOpp::setPositions(int index)
         while( i<nearest.size() )
         {
             if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                    ||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000)
+                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000*/)
                 nearest.removeAt(i);
             else
                 i++;
