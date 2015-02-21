@@ -6,6 +6,8 @@
 #include <iterator>
 #include <geom/geom.h>
 #include <QList>
+#include <QDebug>
+#include "worldmodel.h"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef K::Point_2 Point_2;
@@ -42,6 +44,10 @@ class Voronoi_Diagram
 public:
     Voronoi_Diagram();
     QList<Vector2D> calculate(QList<Vector2D> in_points);
+    void setWorldModel(WorldModel *wm);
+
+private:
+    WorldModel *wm;
  };
 
 #endif // VORONOI_DIAGRAM_H

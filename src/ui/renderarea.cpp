@@ -106,4 +106,16 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.drawLine(our,opp);
         }
     }
+    //Drawing Voronoi
+    if(_sc->wm->showVoronoi)
+    {
+        for(int i=0;i<_sc->wm->voronoi.size();i++)
+        {
+            QPoint first(_sc->wm->voronoi.at(i).origin().x/WORLD_SCALE, -_sc->wm->voronoi.at(i).origin().y/WORLD_SCALE);
+            QPoint second(_sc->wm->voronoi.at(i).terminal().x/WORLD_SCALE,-_sc->wm->voronoi.at(i).terminal().y/WORLD_SCALE);
+            painter.setPen(QColor::fromRgb(0,0,0));
+            painter.setBrush(*brush_astarResult);
+            painter.drawLine(first,second);
+        }
+    }
 }

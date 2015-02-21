@@ -29,15 +29,18 @@ public:
     bool isSim;
     Knowledge *kn;
 
+    //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
     QList<Vector2D> navigation_result;
 
-    //----Graphical Debug-----
     bool showAstarOut;
     int indexOfAstarRobot;
 
     QList<Marking_Struct> marking;
     bool showMarking;
+
+    QList<Segment2D> voronoi;
+    bool showVoronoi;
 
     //---UDP 2 Matlab
     bool sendUDP;

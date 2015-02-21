@@ -56,7 +56,7 @@
          </rect>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab_2">
          <attribute name="title">
@@ -163,6 +163,24 @@
           </property>
           <property name="text">
            <string>Show Marking</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="show_voronoi">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>170</y>
+            <width>261</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Voronoi Diagram</string>
           </property>
          </widget>
         </widget>

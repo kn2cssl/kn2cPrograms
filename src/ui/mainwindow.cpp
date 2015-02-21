@@ -336,6 +336,7 @@ void MainWindow::timer_timeout()
     sc->wm->whichUDP = ui->valUDP_comboBox->currentText();
 
     sc->wm->showMarking = ui->show_marking->isChecked();
+    sc->wm->showVoronoi = ui->show_voronoi->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()
