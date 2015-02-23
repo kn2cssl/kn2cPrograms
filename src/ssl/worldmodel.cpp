@@ -21,4 +21,10 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
 
     for(int i=0; i<10; i++)
         var[i] = 0;
+
+    for(int i=0; i<6; i++)
+        pos_coef[i] = 0;
+
+    for(int i=0; i<6; i++)
+        mark_coef[i] = 0;
 }

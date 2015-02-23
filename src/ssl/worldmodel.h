@@ -52,6 +52,9 @@ public:
     // 1: kick activation angle
     // 2: kick precision angle
     // 3: prediction sliding factor
+
+    double pos_coef[6];
+    double mark_coef[6];
 };
 
 #endif // WORLDMODEL_H

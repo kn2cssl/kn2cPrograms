@@ -327,7 +327,32 @@ void MainWindow::timer_timeout()
     sc->wm->var[9] = ui->spnvar9->value();
     ui->txtvar9->setText(QString::number(sc->wm->var[9]));
 
-    //---Debuging Tools----
+    //-----Coefficients----------------
+    sc->wm->mark_coef[0] = 0;
+    sc->wm->mark_coef[1] = ui->spnMarC1->value();
+    ui->txtMarC1->setText(QString::number(sc->wm->mark_coef[1]));
+    sc->wm->mark_coef[2] = ui->spnMarC2->value();
+    ui->txtMarC2->setText(QString::number(sc->wm->mark_coef[2]));
+    sc->wm->mark_coef[3] = ui->spnMarC3->value();
+    ui->txtMarC3->setText(QString::number(sc->wm->mark_coef[3]));
+    sc->wm->mark_coef[4] = ui->spnMarC4->value();
+    ui->txtMarC4->setText(QString::number(sc->wm->mark_coef[4]));
+    sc->wm->mark_coef[5] = ui->spnMarC5->value();
+    ui->txtMarC5->setText(QString::number(sc->wm->mark_coef[5]));
+
+    sc->wm->pos_coef[0] = 0;
+    sc->wm->pos_coef[1] = ui->spnPosC1->value();
+    ui->txtPosC1->setText(QString::number(sc->wm->pos_coef[1]));
+    sc->wm->pos_coef[2] = ui->spnPosC2->value();
+    ui->txtPosC2->setText(QString::number(sc->wm->pos_coef[2]));
+    sc->wm->pos_coef[3] = ui->spnPosC3->value();
+    ui->txtPosC3->setText(QString::number(sc->wm->pos_coef[3]));
+    sc->wm->pos_coef[4] = ui->spnPosC4->value();
+    ui->txtPosC4->setText(QString::number(sc->wm->pos_coef[4]));
+    sc->wm->pos_coef[5] = ui->spnPosC5->value();
+    ui->txtPosC5->setText(QString::number(sc->wm->pos_coef[5]));
+
+    //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
     sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
 
@@ -359,6 +384,17 @@ void MainWindow::on_btnSaveVars_clicked()
     s.SetValue("vars" , "var8", ui->txtvar8->text());
     s.SetValue("vars" , "var9", ui->txtvar9->text());
 
+    s.SetValue("vars" , "var10", ui->txtMarC1->text());
+    s.SetValue("vars" , "var11", ui->txtMarC2->text());
+    s.SetValue("vars" , "var12", ui->txtMarC3->text());
+    s.SetValue("vars" , "var13", ui->txtMarC4->text());
+    s.SetValue("vars" , "var14", ui->txtMarC5->text());
+
+    s.SetValue("vars" , "var15", ui->txtPosC1->text());
+    s.SetValue("vars" , "var16", ui->txtPosC2->text());
+    s.SetValue("vars" , "var17", ui->txtPosC3->text());
+    s.SetValue("vars" , "var18", ui->txtPosC4->text());
+    s.SetValue("vars" , "var19", ui->txtPosC5->text());
 }
 
 void MainWindow::on_btnLoadVars_clicked()
@@ -411,4 +447,43 @@ void MainWindow::on_btnLoadVars_clicked()
     ui->txtvar9->setText(var9);
     ui->spnvar9->setValue(var9.toInt());
 
+    QString var10 = s.Get("vars", "var10");
+    ui->txtMarC1->setText(var10);
+    ui->spnMarC1->setValue(var10.toInt());
+
+    QString var11 = s.Get("vars", "var11");
+    ui->txtMarC2->setText(var11);
+    ui->spnMarC2->setValue(var11.toInt());
+
+    QString var12 = s.Get("vars", "var12");
+    ui->txtMarC3->setText(var12);
+    ui->spnMarC3->setValue(var12.toInt());
+
+    QString var13 = s.Get("vars", "var13");
+    ui->txtMarC4->setText(var13);
+    ui->spnMarC4->setValue(var13.toInt());
+
+    QString var14 = s.Get("vars", "var14");
+    ui->txtMarC5->setText(var14);
+    ui->spnMarC5->setValue(var14.toInt());
+
+    QString var15 = s.Get("vars", "var15");
+    ui->txtPosC1->setText(var15);
+    ui->spnPosC1->setValue(var15.toInt());
+
+    QString var16 = s.Get("vars", "var16");
+    ui->txtPosC2->setText(var16);
+    ui->spnPosC2->setValue(var16.toInt());
+
+    QString var17 = s.Get("vars", "var17");
+    ui->txtPosC3->setText(var17);
+    ui->spnPosC3->setValue(var17.toInt());
+
+    QString var18 = s.Get("vars", "var18");
+    ui->txtPosC4->setText(var18);
+    ui->spnPosC4->setValue(var18.toInt());
+
+    QString var19 = s.Get("vars", "var19");
+    ui->txtPosC5->setText(var19);
+    ui->spnPosC5->setValue(var19.toInt());
 }
