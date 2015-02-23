@@ -9,10 +9,24 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 {
     qDebug()<<"ours size : "<<ours.size();
 
+    QList<Vector2D> static_points;
+    static_points.append(Field::oppGoalCenter);
+    static_points.append(Vector2D(0,0));
+    static_points.append(Vector2D(0,Field::MaxY));
+    static_points.append(Vector2D(0,Field::MinY));
+    static_points.append(Field::upperRightCorner);
+    static_points.append(Field::bottomRightCorner);
+
     QList<Vector2D> opp_pos;
     QList<int> opp = wm->kn->ActiveOppAgents();
+
     for(int i=0;i<opp.size();i++)
         opp_pos.append(wm->oppRobot[opp.at(i)].pos.loc);
+
+    while ( opp.size() < 2*ours.size() )
+    {
+        opp_pos.append(static_points.takeFirst());
+    }
 
     Voronoi_Diagram VD;
     VD.setWorldModel(wm);
@@ -46,9 +60,12 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
         for(int i=0;i<ours.size();i++)
         {
             Positioning_Struct tmp;
-            tmp.ourI = ours.at(i);
-            tmp.loc = candiates.at(matching.at(i) - ours.size());
-            out.append(tmp);
+            if( ours.at(i) >=0  && (matching.at(i) - ours.size())>=0 )
+            {
+                tmp.ourI = ours.at(i);
+                tmp.loc = candiates.at(matching.at(i) - ours.size());
+                out.append(tmp);
+            }
         }
     }
 
