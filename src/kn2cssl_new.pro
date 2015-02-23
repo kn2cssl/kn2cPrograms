@@ -163,7 +163,8 @@ SOURCES +=	main.cpp \
     ai/play/playpreparing.cpp \
     ai/mwbm.cpp \
     ai/man2man.cpp \
-    geom/voronoi_diagram.cpp
+    geom/voronoi_diagram.cpp \
+    ai/positioning.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -261,7 +262,8 @@ HEADERS  += \
     ai/play/playpreparing.h \
     ai/mwbm.h \
     ai/man2man.h \
-    geom/voronoi_diagram.h
+    geom/voronoi_diagram.h \
+    ai/positioning.h
 
 FORMS    +=	ui/mainwindow.ui
 
