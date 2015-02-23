@@ -7,8 +7,6 @@ Positioning::Positioning()
 
 QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isMatched)
 {
-    qDebug()<<"ours size : "<<ours.size();
-
     QList<Vector2D> static_points;
     static_points.append(Field::oppGoalCenter);
     static_points.append(Vector2D(0,0));
@@ -31,8 +29,6 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
     Voronoi_Diagram VD;
     VD.setWorldModel(wm);
     QList<Vector2D> candiates = VD.calculate(opp_pos);
-
-    qDebug()<<"candiates size : "<<candiates.size();
 
     QList<double> F2 = distance2OppGoal(candiates);
     QList<double> F3 = goalOpportunity(candiates);
