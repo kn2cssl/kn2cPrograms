@@ -41,16 +41,16 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
             double Distance =((wm->ourRobot[ourPlayers.at(i)].pos.loc -
                               wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / maxDistance);
             double F4 = formationDistance(i);
-            int weight = int( (wm->var[6]*(1-Distance)) + (wm->var[7]*(1-F2.at(j)))
-                    + (wm->var[8]*(/*1-*/F3.at(j)))
-                    + (wm->var[9]*(2-F4)) );
+            int weight = int( (wm->mark_coef[1]*(1-Distance)) + (wm->mark_coef[2]*(1-F2.at(j)))
+                    + (wm->mark_coef[3]*(/*1-*/F3.at(j)))
+                    + (wm->mark_coef[4]*(2-F4)) );
 
             weights.append(weight);
         }
     }
 
     MWBM maximum_matching;
-    QList<int> matching = maximum_matching.run(weights,graphSize,isMatched);
+    QList<int> matching = maximum_matching.run(weights,graphSize,graphSize,isMatched);
 
     QList<Marking_Struct> out;
 
