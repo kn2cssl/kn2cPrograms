@@ -27,7 +27,6 @@ int PlayGameOn::enterCondition()
     else
         return 0;
     return 0;
-    //        return 20000;
 }
 
 void PlayGameOn::setTactics(int index)
@@ -74,12 +73,11 @@ void PlayGameOn::setTactics(int index)
 
 void PlayGameOn::pressing(int ballOwner)
 {
-    QList<int> oppPlayers = wm->kn->ActiveOppAgents();
-    QList<int> oppNearestPlayerToBall = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-    oppPlayers.removeOne(oppNearestPlayerToBall.at(0));
+    QList<int> oppPlayers = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
+    oppPlayers.removeFirst();
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
-    QList<int> ourPlayers = wm->kn->ActiveAgents();
+    QList<int> ourPlayers = wm->kn->findAttackers();
     ourPlayers.removeOne(ballOwner);
     ourPlayers.removeOne(wm->ref_goalie_our);
 
@@ -92,6 +90,7 @@ void PlayGameOn::pressing(int ballOwner)
         for(int i=0;i<m2m.size();i++)
             setPlayer2Keep(m2m.at(i).ourI,m2m.at(i).oppI);
     }
+
     wm->marking = m2m;
 }
 
@@ -255,111 +254,18 @@ void PlayGameOn::coach()
     }
     else if( game_status == "Attacking" )
     {
-        if( wm->ball.isValid )
+        Positioning pos_calc;
+        pos_calc.setWorldModel(wm);
+
+        bool isMatched;
+
+        QList<int> ourAttackers = wm->kn->findAttackers();
+        ourAttackers.removeOne(ballOwner);
+        QList<Positioning_Struct> positions = pos_calc.find_positions(ourAttackers,isMatched);
+
+        for(int i=0;i<positions.size();i++)
         {
-            QList<int> attackers = wm->kn->findAttackers();
-
-            for(int i=0;i<attackers.size();i++)
-            {
-                switch (wm->ourRobot[attackers.at(i)].Role)
-                {
-                case AgentRole::AttackerMid:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Center;
-                    break;
-                case AgentRole::AttackerLeft:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Left;
-                    break;
-                case AgentRole::AttackerRight:
-                    wm->ourRobot[attackers.at(i)].Region = AgentRegion::Right;
-                    break;
-                default:
-                    break;
-                }
-            }
-
-            attackers.removeOne(ballOwner);
-
-            Segment2D toRightCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MinY));
-            Segment2D toLeftCorner(wm->ball.pos.loc,Vector2D(Field::MaxX,Field::MaxY));
-
-            Vector2D centerPos , leftPos , rightPos;
-
-            leftPos = toLeftCorner.intersection(Field::attackerLeftLine);
-            if( leftPos == Vector2D::INVALIDATED )
-                leftPos = Vector2D(0,0);
-            rightPos = toRightCorner.intersection(Field::attackerRightLine);
-            if( rightPos == Vector2D::INVALIDATED )
-                rightPos = Vector2D(0,0);
-
-            if( toLeftCorner.existIntersection(Field::attackerMidLine) )
-                centerPos = toLeftCorner.intersection(Field::attackerMidLine);
-            else if( toRightCorner.existIntersection(Field::attackerMidLine) )
-                centerPos = toRightCorner.intersection(Field::attackerMidLine);
-
-            if( centerPos == Vector2D::INVALIDATED)
-                centerPos = Vector2D(0,0);
-
-            QList<AgentRegion> free_regions = freeRegions();
-
-            int attackerIndex = 0 , regionIndex = 0;
-            while( attackerIndex < attackers.size() )
-            {
-                int attacker = attackers.at(attackerIndex);
-
-                while( regionIndex < free_regions.size() )
-                {
-                    if(wm->ourRobot[attackers.at(attackerIndex)].Region == free_regions.at(regionIndex) )
-                    {
-                        switch (wm->ourRobot[attackers.at(attackerIndex)].Region) {
-                        case AgentRegion::Center:
-                            tAttackerMid->setGameOnPositions(centerPos);
-                            break;
-                        case AgentRegion::Left:
-                            tAttackerLeft->setGameOnPositions(leftPos);
-                            break;
-                        case AgentRegion::Right:
-                            tAttackerRight->setGameOnPositions(rightPos);
-                            break;
-                        default:
-                            break;
-                        }
-                        attackers.removeAt(attackerIndex);
-                        free_regions.removeAt(regionIndex);
-                        break;
-                    }
-                    else
-                    {
-                        regionIndex++;
-                    }
-                }
-                regionIndex = 0;
-                if( attackers.contains(attacker))
-                    attackerIndex++;
-            }
-
-            while ( !attackers.isEmpty() )
-            {
-                int i = attackers.takeFirst();
-                if( !free_regions.isEmpty() )
-                {
-                    switch ( free_regions.takeFirst() )
-                    {
-                    case AgentRegion::Center:
-                        setGameOnPos(i,centerPos);
-                        break;
-                    case AgentRegion::Left:
-                        setGameOnPos(i,leftPos);
-                        break;
-                    case AgentRegion::Right:
-                        setGameOnPos(i,rightPos);
-                        break;
-                    default:
-                        break;
-                    }
-                }
-                else
-                    setGameOnPos(i,wm->ourRobot[i].pos.loc);
-            }
+            setGameOnPos(positions.at(i).ourI,positions.at(i).loc);
         }
     }
     else
@@ -368,18 +274,18 @@ void PlayGameOn::coach()
     }
 }
 
-void PlayGameOn::setGameOnPos(int ourR, Vector2D oppR)
+void PlayGameOn::setGameOnPos(int ourR, Vector2D loc)
 {
     switch (wm->ourRobot[ourR].Role)
     {
     case AgentRole::AttackerMid:
-        tAttackerMid->setGameOnPositions(oppR);
+        tAttackerMid->setGameOnPositions(loc);
         break;
     case AgentRole::AttackerRight:
-        tAttackerRight->setGameOnPositions(oppR);
+        tAttackerRight->setGameOnPositions(loc);
         break;
     case AgentRole::AttackerLeft:
-        tAttackerLeft->setGameOnPositions(oppR);
+        tAttackerLeft->setGameOnPositions(loc);
         break;
     default:
         break;

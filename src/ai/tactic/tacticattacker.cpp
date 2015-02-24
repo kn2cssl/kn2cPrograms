@@ -365,7 +365,8 @@ void TacticAttacker::setGameOnPositions(Position pos)
 
 void TacticAttacker::setGameOnPositions(Vector2D pos)
 {
-    setIdlePosition(pos);
+    Position position = wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter);
+    setIdlePosition(position);
 }
 
 void TacticAttacker::setIdlePosition(Position pos)

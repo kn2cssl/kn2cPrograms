@@ -4,6 +4,7 @@
 #include "play.h"
 #include "QDebug"
 #include "man2man.h"
+#include "positioning.h"
 
 class PlayGameOn : public Play
 {
@@ -30,7 +31,7 @@ private:
 
     virtual void initRole();
     void coach();
-    void setGameOnPos(int ourR,Vector2D oppR);
+    void setGameOnPos(int ourR,Vector2D loc);
 };
 
 #endif // PLAYGAMEON_H
