@@ -10,24 +10,24 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
     QList<int> ourPlayers = our;
     QList<int> oppPlayers = opp;
 
-    int graphSize = (ourPlayers.size() < oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
+//    int graphSize = (ourPlayers.size() < oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
 
-    if( graphSize == ourPlayers.size() )
-    {
-        QList<int> farest = wm->kn->findNearestOppositeTo(oppPlayers,Field::oppGoalCenter);
-        while (oppPlayers.size() != graphSize)
-        {
-            oppPlayers.removeOne(farest.at(0));
-        }
-    }
-    else
-    {
-        QList<int> ours = wm->kn->findNearestTo(ourPlayers,Field::ourGoalCenter);
-        while (ourPlayers.size() != graphSize)
-        {
-            ourPlayers.removeOne(ours.at(0));
-        }
-    }
+//    if( graphSize == ourPlayers.size() )
+//    {
+//        QList<int> farest = wm->kn->findNearestOppositeTo(oppPlayers,Field::oppGoalCenter);
+//        while (oppPlayers.size() != graphSize)
+//        {
+//            oppPlayers.removeOne(farest.at(0));
+//        }
+//    }
+//    else
+//    {
+//        QList<int> ours = wm->kn->findNearestTo(ourPlayers,Field::ourGoalCenter);
+//        while (ourPlayers.size() != graphSize)
+//        {
+//            ourPlayers.removeOne(ours.at(0));
+//        }
+//    }
 
     QList<double> F2 = distanceToGoal(oppPlayers);
     QList<double> F3 = oppScoringChance(oppPlayers);
@@ -39,32 +39,39 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
         for(int j=0;j<oppPlayers.size();j++)
         {
             double Distance =((wm->ourRobot[ourPlayers.at(i)].pos.loc -
-                              wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / maxDistance);
-            double F4 = formationDistance(i);
-            int weight = int( (wm->mark_coef[1]*(1-Distance)) + (wm->mark_coef[2]*(1-F2.at(j)))
-                    + (wm->mark_coef[3]*(/*1-*/F3.at(j)))
-                    + (wm->mark_coef[4]*(2-F4)) );
+                              wm->oppRobot[oppPlayers.at(j)].pos.loc).length() / (maxDistance*2));
+            double F4 = formationDistance(ourPlayers.at(i));
+            int weight = (int)( (wm->mark_coef[1]*(1-Distance)) + (wm->mark_coef[2]*(1-F2.at(j)))
+                    + (wm->mark_coef[3]*(F3.at(j)))
+                    + (wm->mark_coef[4]*F4) );
 
             weights.append(weight);
         }
     }
 
+    QString ss;
+    for(int i=0;i<weights.size();i++)
+    {
+        if( i%5 == 0)
+            ss.append("\n");
+        ss.append(QString::number(weights.at(i)));
+        ss.append(" , ");
+    }
+    qDebug()<<ss;
+
     MWBM maximum_matching;
-    QList<int> matching = maximum_matching.run(weights,graphSize,graphSize,isMatched);
+    QList<int> matching = maximum_matching.run(weights,ourPlayers.size(),oppPlayers.size(),isMatched);
 
     QList<Marking_Struct> out;
 
     if(isMatched)
     {
-        for(int i=0;i<graphSize;i++)
+        for(int i=0;i<ourPlayers.size();i++)
         {
             Marking_Struct tmp;
             tmp.ourI = ourPlayers.at(i);
-            tmp.oppI = oppPlayers.at(matching.at(i)%graphSize);
-            tmp.weight = weights.at((graphSize*i) + (matching.at(i)%graphSize));
-
-            if( tmp.weight > 0)
-                out.append(tmp);
+            tmp.oppI = oppPlayers.at(matching.at(i) - ourPlayers.size());
+            out.append(tmp);
         }
     }
 
@@ -108,12 +115,13 @@ QList<double> Marking::distanceToGoal(QList<int> opp)
 
 double Marking::formationDistance(int our)
 {
-    if( wm->ourRobot[our].Role == AgentRole::AttackerMid   ||
-        wm->ourRobot[our].Role == AgentRole::AttackerRight ||
-        wm->ourRobot[our].Role == AgentRole::AttackerLeft
+    if( wm->ourRobot[our].Role == AgentRole::DefenderMid   ||
+        wm->ourRobot[our].Role == AgentRole::DefenderRight ||
+        wm->ourRobot[our].Role == AgentRole::DefenderLeft
         )
+    {
         return 0;
-
+    }
     return 2;
 }
 

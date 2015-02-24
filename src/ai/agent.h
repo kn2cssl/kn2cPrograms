@@ -47,7 +47,6 @@ struct Marking_Struct
 {
     int ourI;
     int oppI;
-    int weight;
 };
 
 struct Positioning_Struct
