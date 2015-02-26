@@ -24,15 +24,15 @@ RobotCommand TacticAttacker::getCommand()
         else
             v = wm->ball.pos.loc;
 
-        Vector2D target = findTarget();
-        Position p = wm->kn->AdjustKickPoint(v, target);
+        tANDp target = findTarget();
+        Position p = wm->kn->AdjustKickPoint(v, target.pos);
 
         rc.fin_pos = p;
 
         //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
         if(wm->kn->IsReadyForKick(wm->ourRobot[this->id].pos,p,wm->ball.pos.loc) )
         {
-            rc.kickspeedx = detectKickSpeed(target);
+            rc.kickspeedx = detectKickSpeed(target.pos);
         }
 
         rc.maxSpeed = 2;
@@ -250,8 +250,8 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
     rc.maxSpeed = 0.5;
 
-    Vector2D target = findTarget();
-    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
+    tANDp target = findTarget();
+    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target.pos);
 
     rc.fin_pos = kickPoint;
     if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
@@ -269,7 +269,7 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
     if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
     {
-        rc.kickspeedx = detectKickSpeed(target);
+        rc.kickspeedx = detectKickSpeed(target.pos);
         qDebug()<<"Kickk...";
     }
 

@@ -13,6 +13,12 @@
 #include "ref_protocol.h"
 #include "knowledge.h"
 
+struct tANDp
+{
+    Vector2D pos;
+    int prob;
+};
+
 class WorldModel
 {
 public:
@@ -41,6 +47,9 @@ public:
 
     QList<Segment2D> voronoi;
     bool showVoronoi;
+
+    QList<tANDp> TANDPis;
+    bool showChances;
 
     //---UDP 2 Matlab
     bool sendUDP;

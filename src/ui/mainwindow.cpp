@@ -362,6 +362,7 @@ void MainWindow::timer_timeout()
 
     sc->wm->showMarking = ui->show_marking->isChecked();
     sc->wm->showVoronoi = ui->show_voronoi->isChecked();
+    sc->wm->showChances = ui->showChances->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()
