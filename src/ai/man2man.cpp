@@ -10,24 +10,10 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
     QList<int> ourPlayers = our;
     QList<int> oppPlayers = opp;
 
-//    int graphSize = (ourPlayers.size() < oppPlayers.size() )? ourPlayers.size():oppPlayers.size();
-
-//    if( graphSize == ourPlayers.size() )
-//    {
-//        QList<int> farest = wm->kn->findNearestOppositeTo(oppPlayers,Field::oppGoalCenter);
-//        while (oppPlayers.size() != graphSize)
-//        {
-//            oppPlayers.removeOne(farest.at(0));
-//        }
-//    }
-//    else
-//    {
-//        QList<int> ours = wm->kn->findNearestTo(ourPlayers,Field::ourGoalCenter);
-//        while (ourPlayers.size() != graphSize)
-//        {
-//            ourPlayers.removeOne(ours.at(0));
-//        }
-//    }
+    while ( oppPlayers.size() < ourPlayers.size() )
+    {
+        ourPlayers.removeFirst();
+    }
 
     QList<double> F2 = distanceToGoal(oppPlayers);
     QList<double> F3 = oppScoringChance(oppPlayers);
@@ -45,19 +31,15 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
                     + (wm->mark_coef[3]*(F3.at(j)))
                     + (wm->mark_coef[4]*F4) );
 
+//            qDebug()<<"-----"<<ourPlayers.at(i)<<" , "<<oppPlayers.at(j)<<"----";
+//            qDebug()<<"F1 : "<< (wm->mark_coef[1]*(1-Distance));
+//            qDebug()<<"F2 : "<< (wm->mark_coef[2]*(1-F2.at(j)));
+//            qDebug()<<"F3 : "<< (wm->mark_coef[3]*(F3.at(j)));
+//            qDebug()<<"F4 : "<< (wm->mark_coef[4]*F4);
+
             weights.append(weight);
         }
     }
-
-    QString ss;
-    for(int i=0;i<weights.size();i++)
-    {
-        if( i%5 == 0)
-            ss.append("\n");
-        ss.append(QString::number(weights.at(i)));
-        ss.append(" , ");
-    }
-    qDebug()<<ss;
 
     MWBM maximum_matching;
     QList<int> matching = maximum_matching.run(weights,ourPlayers.size(),oppPlayers.size(),isMatched);
@@ -131,11 +113,8 @@ QList<double> Marking::oppScoringChance(QList<int> opp)
 
     for(int i=0;i<opp.size();i++)
     {
-        //        Ray2D goalRay()
-        //        if( opp.at(i) < 0)
-        out.append(0);
-        //        else
-        //            out.append((wm->ball.pos.loc - wm->oppRobot[opp.at(i)].pos.loc).length() / Field::MaxX);
+        double chance = wm->kn->oppScoringChance(wm->oppRobot[opp.at(i)].pos.loc) / 100.0;
+        out.append(chance);
     }
 
     return out;
