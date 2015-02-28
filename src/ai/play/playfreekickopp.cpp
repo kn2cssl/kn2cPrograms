@@ -119,10 +119,25 @@ void PlayFreeKickOpp::pressing()
     if( isMatched )
     {
         for(int i=0;i<m2m.size();i++)
+        {
             setPlayer2Keep(m2m.at(i).ourI,m2m.at(i).oppI);
+            ourPlayers.removeOne(m2m.at(i).ourI);
+        }
+    }
+
+    while ( ourPlayers.size() > 0 )
+    {
+        wm->ourRobot[ourPlayers.takeFirst()].Status = AgentStatus::Idle;
     }
 
     wm->marking = m2m;
+
+    if( wm->cmgs.theirDirectKick() )
+    {
+        wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
+        wm->ourRobot[tDefenderMid->getID()].Status = AgentStatus::BlockingBall;
+        wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
+    }
 }
 
 void PlayFreeKickOpp::setTactics(int index)
