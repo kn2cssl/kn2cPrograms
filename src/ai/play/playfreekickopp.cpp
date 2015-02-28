@@ -101,7 +101,7 @@ void PlayFreeKickOpp::initRole()
 
 void PlayFreeKickOpp::pressing()
 {
-    QList<int> oppPlayers = wm->kn->findNearestOppositeTo(Field::ourGoalCenter);
+    QList<int> oppPlayers = wm->kn->ActiveOppAgents();
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
     QList<int> ourPlayers = wm->kn->findAttackers();
@@ -112,24 +112,17 @@ void PlayFreeKickOpp::pressing()
             oppPlayers.removeAt(i);
     }
 
-    while( ourPlayers.size() > 0 )
+    Marking defence;
+    defence.setWorldModel(wm);
+    bool isMatched;
+    QList<Marking_Struct> m2m = defence.findMarking(ourPlayers,oppPlayers,isMatched);
+    if( isMatched )
     {
-        int min_j;
-        double min_d = 10000;
-        for(int j=0;j<ourPlayers.size();j++)
-        {
-            double distance = (wm->oppRobot[oppPlayers.at(0)].pos.loc - wm->ourRobot[ourPlayers.at(j)].pos.loc).length();
-
-            if( distance < min_d )
-            {
-                min_d = distance;
-                min_j = ourPlayers.at(j);
-            }
-        }
-        ourPlayers.removeOne(min_j);
-        setPlayer2Keep(min_j,oppPlayers.at(0));
-        oppPlayers.removeFirst();
+        for(int i=0;i<m2m.size();i++)
+            setPlayer2Keep(m2m.at(i).ourI,m2m.at(i).oppI);
     }
+
+    wm->marking = m2m;
 }
 
 void PlayFreeKickOpp::setTactics(int index)

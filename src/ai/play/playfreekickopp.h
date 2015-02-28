@@ -2,6 +2,7 @@
 #define PLAYFREEKICKOPP_H
 
 #include "play.h"
+#include "man2man.h"
 
 class PlayFreeKickOpp : public Play
 {
