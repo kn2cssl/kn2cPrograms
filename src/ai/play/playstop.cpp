@@ -91,6 +91,8 @@ void PlayStop::initRole()
 
 void PlayStop::setTactics(int index)
 {
+    wm->ourRobot[index].Status = AgentStatus::Idle;
+
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGolie;
