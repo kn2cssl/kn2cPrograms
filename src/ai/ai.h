@@ -30,6 +30,7 @@ private:
     Tactic *current_tactic[PLAYERS_MAX_NUM];
     QUdpSocket *udp;
     QHostAddress ip;
+    int firstWait;
 
 private slots:
     void timer_timeout();
