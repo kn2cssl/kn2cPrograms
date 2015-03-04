@@ -14,4 +14,16 @@ struct Position
     }
 };
 
+struct OperatingPosition
+{
+    Position pos;
+    bool useNav;
+    bool readyToShoot;
+    OperatingPosition()
+    {
+        useNav=true;
+        readyToShoot = false;
+    }
+};
+
 #endif // POSITION_H
