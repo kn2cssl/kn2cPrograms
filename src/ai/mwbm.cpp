@@ -57,12 +57,10 @@ QList<int> MWBM::run(QList<int> input_weights, int numberOfLeft, int numberOfRig
     igraph_is_maximal_matching(&graph, &types, &matching, &is_matching);
     if (!is_matching) {
         isMatched = false;
-        qDebug()<<"Not Matched!!!";
     }
     else
     {
         isMatched=true;
-        qDebug()<<"Matched.";
     }
 
     for(int j=0;j<numberOfLeft*2;j++)
