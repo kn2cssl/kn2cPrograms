@@ -33,6 +33,8 @@ public:
     bool IsInsideGolieArea(Vector2D pos);
     bool IsInsideSecureArea(Vector2D pos,Vector2D ball);
 
+    bool IsInsideOppGolieArea(Vector2D pos);
+
     bool CanKick(Position robotPos, Vector2D ballPos);
     bool IsReadyForKick(Position current, Position desired, Vector2D ballPos);
     Position AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickSpeed = 5);
@@ -47,6 +49,12 @@ public:
     QString gameStatus();
 
     QList<int> findAttackers();
+    QList<int> findOurObstacles();
+
+    double scoringChance(Vector2D loc);
+    double oppScoringChance(Vector2D loc);
+
+    OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
 
 private:
     WorldModel* _wm;
