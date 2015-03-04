@@ -25,19 +25,17 @@ RobotCommand TacticAttacker::getCommand()
             v = wm->ball.pos.loc;
 
         tANDp target = findTarget();
-        Position p = wm->kn->AdjustKickPoint(v, target.pos);
-
-        rc.fin_pos = p;
-
+        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+        qDebug()<<wm->ball.vel.loc.length();
         //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
-        if(wm->kn->IsReadyForKick(wm->ourRobot[this->id].pos,p,wm->ball.pos.loc) )
+        if( p.readyToShoot )
         {
             rc.kickspeedx = detectKickSpeed(target.pos);
         }
 
         rc.maxSpeed = 2;
-
-        rc.useNav = false;
+        rc.fin_pos = p.pos;
+        rc.useNav = p.useNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
@@ -65,11 +63,11 @@ RobotCommand TacticAttacker::getCommand()
         {
             if(wm->ourRobot[id].Role == AgentRole::AttackerLeft)
             {
-                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_L.y+200);
+                rc.fin_pos.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200);
             }
             else if(wm->ourRobot[id].Role == AgentRole::AttackerRight)
             {
-                rc.fin_pos.loc = Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200);
+                rc.fin_pos.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200);
             }
 
             rc.maxSpeed = 1;
@@ -93,7 +91,8 @@ RobotCommand TacticAttacker::getCommand()
             {
                 Vector2D fstInt,secInt;
                 Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
-                Line2D connectedLine(wm->ball.pos.loc,final.loc);
+//                Line2D connectedLine(wm->ball.pos.loc,final.loc);
+                Line2D connectedLine(wm->oppRobot[playerToKeep].pos.loc,Field::ourGoalCenter);
                 int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
 
                 if( numberOfIntersections == 2 )
@@ -200,48 +199,47 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
         Vector2D target(wm->ourRobot[index].pos.loc.x,wm->ourRobot[index].pos.loc.y);
         Vector2D goal(target.x,target.y);
 
-        Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,goal);
+        OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,goal,wm->ourRobot[this->id].pos);
 
-        double kickRadius = ROBOT_RADIUS *3;
-        Vector2D midle_vector=Vector2D(kickRadius*sin(abs(kickPoint.dir)),kickRadius*cos(abs(kickPoint.dir)));
-        midle_vector =  midle_vector.setDir(AngleDeg(-kickPoint.dir));
+//        double kickRadius = ROBOT_RADIUS *3;
+//        Vector2D midle_vector=Vector2D(kickRadius*sin(abs(kickPoint.dir)),kickRadius*cos(abs(kickPoint.dir)));
+//        midle_vector =  midle_vector.setDir(AngleDeg(-kickPoint.dir));
 
-        Position midlePoint;
-        midlePoint.loc = (wm->ball.pos.loc+midle_vector);
-        midlePoint.dir = kickPoint.dir;
+//        Position midlePoint;
+//        midlePoint.loc = (wm->ball.pos.loc+midle_vector);
+//        midlePoint.dir = kickPoint.dir;
 
-        if( (midlePoint.loc - wm->ourRobot[id].pos.loc).length() > 50  && (!pastMidPoint) )
-//        if( (!wm->kn->ReachedToPos(wm->ourRobot[this->id].pos,midlePoint,90,6)) && (!pastMidPoint) )
-        {
-            rc.fin_pos = midlePoint;
-            rc.useNav = true;
-        }
-        else
-        {
-            pastMidPoint = true;
-            rc.fin_pos = kickPoint;
-            if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
+//        if( (midlePoint.loc - wm->ourRobot[id].pos.loc).length() > 50  && (!pastMidPoint) )
+////        if( (!wm->kn->ReachedToPos(wm->ourRobot[this->id].pos,midlePoint,90,6)) && (!pastMidPoint) )
+//        {
+//            rc.fin_pos = midlePoint;
+//            rc.useNav = true;
+//        }
+//        else
+//        {
+//            pastMidPoint = true;
+            rc.fin_pos = kickPoint.pos;
+            rc.useNav = kickPoint.useNav;
+//            rc.maxSpeed =
+//            if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
+//            {
+//                if(!everyOneInTheirPos)
+//                {
+//                    rc.maxSpeed = 0;
+//                }
+//                else
+//                {
+//                    rc.useNav = false;
+//                    rc.maxSpeed = 0.25;
+//                }
+//            }
+            if(  kickPoint.readyToShoot /*&& everyOneInTheirPos*/)
             {
-                if(!everyOneInTheirPos)
-                {
-                    rc.maxSpeed = 0;
-                }
-                else
-                {
-                    rc.useNav = false;
-                    rc.maxSpeed = 0.25;
-                }
+                rc.kickspeedx = 50;// detectKickSpeed(goal);
+                qDebug()<<"Kickk...";
             }
         }
-
-        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
-        {
-            rc.kickspeedx = detectKickSpeed(goal);
-            pastMidPoint = false;
-            qDebug()<<"Kickk...";
-        }
-    }
-    return rc;
+        return rc;
 }
 
 RobotCommand TacticAttacker::KickTheBallDirect()
@@ -251,27 +249,18 @@ RobotCommand TacticAttacker::KickTheBallDirect()
     rc.maxSpeed = 0.5;
 
     tANDp target = findTarget();
-    Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target.pos);
+    OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,target.pos,wm->ourRobot[this->id].pos);
 
-    rc.fin_pos = kickPoint;
-    if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
-    {
-        if(!everyOneInTheirPos)
-        {
-            rc.maxSpeed = 0;
-        }
-        else
-        {
-            rc.useNav = false;
-            rc.maxSpeed = 0.25;
-        }
-    }
+    rc.fin_pos = kickPoint.pos;
 
-    if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) && everyOneInTheirPos)
+    if( kickPoint.readyToShoot )
     {
         rc.kickspeedx = detectKickSpeed(target.pos);
         qDebug()<<"Kickk...";
     }
+
+    rc.maxSpeed = 2;
+    rc.useNav = kickPoint.useNav;
 
     return rc;
 }
@@ -283,11 +272,13 @@ RobotCommand TacticAttacker::StartTheGame()
     rc.maxSpeed = 0.5;
 
     Vector2D target(Field::oppGoalCenter.x,Field::oppGoalCenter.y);
-    rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
+    OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,target,wm->ourRobot[this->id].pos);
 
-    rc.useNav = false;
+    rc.fin_pos = kickPoint.pos;
 
-    if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
+    rc.useNav = kickPoint.useNav;
+
+    if( kickPoint.readyToShoot )
     {
         //rc.kickspeedz = 2.5;//50;
         rc.kickspeedx = detectKickSpeed(target);

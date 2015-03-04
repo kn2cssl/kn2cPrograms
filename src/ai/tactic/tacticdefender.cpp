@@ -19,18 +19,16 @@ RobotCommand TacticDefender::getCommand()
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
         tANDp target = findTarget();
 
-        Position p = wm->kn->AdjustKickPoint(v, target.pos);
+        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
 
-        rc.fin_pos = p;
-
-        if(wm->kn->IsReadyForKick(wm->ourRobot[this->id].pos,p,wm->ball.pos.loc) )
+        if( p.readyToShoot )
         {
             rc.kickspeedx = detectKickSpeed(target.pos);
         }
 
         rc.maxSpeed = 1.5;
-
-        rc.useNav = false;
+        rc.fin_pos = p.pos;
+        rc.useNav = p.useNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
