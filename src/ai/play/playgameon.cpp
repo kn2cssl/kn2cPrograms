@@ -101,53 +101,56 @@ int PlayGameOn::findBallOwner()
     QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
     QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
-    if( (wm->ball.vel.loc).length() > 0.5 )
+    if( nearestPlayers2Ball.size() > 0 )
     {
-        Ray2D ballRay(wm->ball.pos.loc,wm->ball.vel.loc.dir());
-
-        QList<int> ourRobots;
-
-        for(int i=0;i<ourRobots_temp.size();i++)
+        if( (wm->ball.vel.loc).length() > 0.5 )
         {
-            if(ballRay.inRightDir(wm->ourRobot[ourRobots_temp.at(i)].pos.loc,90))
+            Ray2D ballRay(wm->ball.pos.loc,wm->ball.vel.loc.dir());
+
+            QList<int> ourRobots;
+
+            for(int i=0;i<ourRobots_temp.size();i++)
             {
-                ourRobots.append(ourRobots_temp.at(i));
+                if(ballRay.inRightDir(wm->ourRobot[ourRobots_temp.at(i)].pos.loc,90))
+                {
+                    ourRobots.append(ourRobots_temp.at(i));
+                }
+                else
+                {
+                    wm->ourRobot[ourRobots_temp.at(i)].Status = AgentStatus::Idle;
+                }
             }
-            else
+
+            int min_i = -1;
+            double min_p = 5000;
+            for(int i=0;i<ourRobots.size();i++)
             {
-                wm->ourRobot[ourRobots_temp.at(i)].Status = AgentStatus::Idle;
+                if( ballRay.line().dist(wm->ourRobot[ourRobots.at(i)].pos.loc) < min_p)
+                {
+                    min_i = ourRobots.at(i);
+                    min_p = ballRay.line().dist(wm->ourRobot[ourRobots.at(i)].pos.loc);
+                }
             }
-        }
 
-        int min_i = -1;
-        double min_p = 5000;
-        for(int i=0;i<ourRobots.size();i++)
-        {
-            if( ballRay.line().dist(wm->ourRobot[ourRobots.at(i)].pos.loc) < min_p)
+            if(min_i != -1)
             {
-                min_i = ourRobots.at(i);
-                min_p = ballRay.line().dist(wm->ourRobot[ourRobots.at(i)].pos.loc);
+                wm->ourRobot[min_i].Status = AgentStatus::FollowingBall;
+                ownerIndex = min_i;
+                ourRobots.removeOne(min_i);
             }
-        }
 
-        if(min_i != -1)
-        {
-            wm->ourRobot[min_i].Status = AgentStatus::FollowingBall;
-            ownerIndex = min_i;
-            ourRobots.removeOne(min_i);
+            while( !ourRobots.isEmpty() )
+                wm->ourRobot[ourRobots.takeFirst()].Status = AgentStatus::Idle;
         }
-
-        while( !ourRobots.isEmpty() )
-            wm->ourRobot[ourRobots.takeFirst()].Status = AgentStatus::Idle;
-    }
-    else
-    {
-        wm->ourRobot[nearestPlayers2Ball.at(0)].Status = AgentStatus::FollowingBall;
-        ownerIndex = nearestPlayers2Ball.at(0);
-        ourRobots_temp.removeOne(nearestPlayers2Ball.takeFirst());
-        while( !ourRobots_temp.isEmpty() )
+        else
         {
-            wm->ourRobot[ourRobots_temp.takeFirst()].Status = AgentStatus::Idle;
+            wm->ourRobot[nearestPlayers2Ball.at(0)].Status = AgentStatus::FollowingBall;
+            ownerIndex = nearestPlayers2Ball.at(0);
+            ourRobots_temp.removeOne(nearestPlayers2Ball.takeFirst());
+            while( !ourRobots_temp.isEmpty() )
+            {
+                wm->ourRobot[ourRobots_temp.takeFirst()].Status = AgentStatus::Idle;
+            }
         }
     }
 
