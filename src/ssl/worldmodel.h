@@ -47,8 +47,10 @@ public:
 
     QList<Segment2D> voronoi;
     bool showVoronoi;
+    QList<Vector2D> selected;
 
     QList<tANDp> TANDPis;
+    tANDp max_TANDPis;
     bool showChances;
 
     //---UDP 2 Matlab
