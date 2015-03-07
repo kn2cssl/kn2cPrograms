@@ -2,11 +2,14 @@
 
 Positioning::Positioning()
 {
+    staticIsFinished = false;
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
 }
 
 QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isMatched)
 {
+    staticIsFinished = false;
+
     QList<Vector2D> static_points;
 
     static_points.append(Vector2D(0,0));
@@ -26,11 +29,21 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
     QList<Vector2D> candiates;
     while( candiates.size() < ours.size() )
     {
-        candiates.clear();
+        if( !staticIsFinished )
+        {
+            candiates.clear();
 
-        Voronoi_Diagram VD;
-        VD.setWorldModel(wm);
-        candiates = VD.calculate(opp_pos);
+            Voronoi_Diagram VD;
+            VD.setWorldModel(wm);
+            candiates = VD.calculate(opp_pos);
+        }
+        else
+        {
+            candiates.push_back(Vector2D(0,0.8*Field::MaxY));
+            candiates.push_back(Vector2D(0,0.8*Field::MinY));
+            candiates.push_back(Vector2D(0.6*Field::MaxX,0.8*Field::MaxY));
+            candiates.push_back(Vector2D(0.6*Field::MaxX,0.8*Field::MinY));
+        }
 
         int numberOfPoints = 0;
         while( numberOfPoints < candiates.size() )
@@ -62,7 +75,29 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
             i++;
         }
 
-        Triangle2D criticalTri(wm->ball.pos.loc , Field::oppGoalPost_L , Field::oppGoalPost_R);
+        double m1 = (wm->ball.pos.loc.y - Field::oppGoalPost_L.y) / (wm->ball.pos.loc.x - Field::oppGoalPost_L.x);
+        double m2 = (wm->ball.pos.loc.y - Field::oppGoalPost_R.y) / (wm->ball.pos.loc.x - Field::oppGoalPost_R.x);
+
+        double tetha1 = atan(m1);
+        double tetha2 = atan(m2);
+
+        double dy1 = (ROBOT_RADIUS+30.0) / cos(tetha1);
+        double dy2 = (ROBOT_RADIUS+30.0) / cos(tetha2);
+
+        Vector2D p1 = Vector2D(Field::oppGoalPost_L.x,Field::oppGoalPost_L.y+dy1);
+        Vector2D p2 = Vector2D(Field::oppGoalPost_R.x,Field::oppGoalPost_R.y-dy2);
+
+        Line2D l1(p1,AngleDeg::rad2deg(tetha1));
+        Line2D l2(p2,AngleDeg::rad2deg(tetha2));
+
+        Vector2D p3 = l1.intersection(l2);
+
+        Triangle2D criticalTri(p1 , p2 , p3);
+
+        wm->selected.clear();
+        wm->selected.append(p1);
+        wm->selected.append(p2);
+        wm->selected.append(p3);
 
         numberOfPoints = 0;
 
@@ -74,8 +109,13 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
                 numberOfPoints++;
         }
 
-        if( candiates.size() < ours.size() )
+        if( candiates.size() < ours.size() && !static_points.isEmpty() )
             opp_pos.push_back(static_points.takeFirst());
+        else
+        {
+            if( static_points.isEmpty() )
+                staticIsFinished = true;
+        }
     }
 
     QList<double> F2 = distance2OppGoal(candiates);

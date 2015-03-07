@@ -29,6 +29,7 @@ private:
 
     WorldModel *wm;
     double maxDistance;
+    bool staticIsFinished;
 };
 
 #endif // POSITIONING_H
