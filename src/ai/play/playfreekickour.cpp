@@ -119,10 +119,10 @@ void PlayFreeKickOur::setPositions(int index)
 {
     switch (wm->ourRobot[index].Role) {
     case AgentRole::AttackerLeft:
-        tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/2,Field::oppGoalPost_L.y+200));
+        tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
         break;
     case AgentRole::AttackerRight:
-        tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/2,Field::oppGoalPost_R.y-200));
+        tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
         break;
     case AgentRole::AttackerMid:
         tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);

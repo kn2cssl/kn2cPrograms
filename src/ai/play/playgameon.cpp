@@ -101,7 +101,7 @@ int PlayGameOn::findBallOwner()
     QList<int> nearestPlayers2Ball = wm->kn->findNearestTo(wm->ball.pos.loc);
     QList<int> ourRobots_temp = wm->kn->ActiveAgents();
 
-    if( nearestPlayers2Ball.size() > 0 )
+    if( nearestPlayers2Ball.size() > 0 && wm->ball.isValid )
     {
         if( (wm->ball.vel.loc).length() > 0.5 )
         {

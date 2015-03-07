@@ -206,8 +206,11 @@ void PlayFreeKickOpp::setPositions(int index)
     }
     finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
     finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+    Position pos;
+    pos.loc = finalPos;
+    pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
 
-    atck->setIdlePosition(finalPos);
+    atck->setIdlePosition(pos);
 }
 
 void PlayFreeKickOpp::setPlayer2Keep(int ourR, int oppR)
