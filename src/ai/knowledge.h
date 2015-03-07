@@ -16,7 +16,9 @@ public:
     QList<int> ActiveAgents();
     QList<int> ActiveOppAgents();
     QList<int> findNearestTo(Vector2D loc);
+    QList<int> findNearestTo(QList<int> ours,Vector2D loc);
     QList<int> findNearestOppositeTo(Vector2D loc);
+    QList<int> findNearestOppositeTo(QList<int> opps,Vector2D loc);
     int findOppAttacker();
 
     void sortOurPlayers(QList<int> &players,Vector2D point,bool ascending);
@@ -30,6 +32,8 @@ public:
     bool IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset);
     bool IsInsideGolieArea(Vector2D pos);
     bool IsInsideSecureArea(Vector2D pos,Vector2D ball);
+
+    bool IsInsideOppGolieArea(Vector2D pos);
 
     bool CanKick(Position robotPos, Vector2D ballPos);
     bool IsReadyForKick(Position current, Position desired, Vector2D ballPos);
@@ -45,6 +49,12 @@ public:
     QString gameStatus();
 
     QList<int> findAttackers();
+    QList<int> findOurObstacles();
+
+    double scoringChance(Vector2D loc);
+    double oppScoringChance(Vector2D loc);
+
+    OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
 
 private:
     WorldModel* _wm;

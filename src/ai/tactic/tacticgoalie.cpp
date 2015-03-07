@@ -58,9 +58,9 @@ RobotCommand TacticGoalie::getCommand()
 
 
         if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
-            rc.maxSpeed = 1;
+            rc.maxSpeed = 2;
         else
-            rc.maxSpeed = 1;//3;
+            rc.maxSpeed = 2;//3;
 
         return rc;
 }

@@ -18,3 +18,5 @@ const int GameState::YELLOW =   (1 << 9);
 const int GameState::READY =    (1 << 10);
 const int GameState::NOTREADY = (1 << 11);
 
+const int GameState::TIMEOUT =  (1 << 12);
+

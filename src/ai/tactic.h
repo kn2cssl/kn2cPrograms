@@ -14,7 +14,7 @@ public:
     virtual RobotCommand getCommand() = 0;
     void setID(int id);
     int getID();
-    Vector2D findTarget();
+    tANDp findTarget();
     void setPlayerToKeep(int index);
     float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
 

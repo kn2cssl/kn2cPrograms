@@ -111,11 +111,11 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     if(err1.length()>.05)
     {
-         wkp = werr*werr;
-         //wki = .0015;
-         wkd = .5;
-//        wintegral = wintegral + werr1*AI_TIMER;
-//        if(werr<.2)wintegral=0;
+        wkp = werr*werr;
+        //wki = .0015;
+        wkd = .5;
+        //        wintegral = wintegral + werr1*AI_TIMER;
+        //        if(werr<.2)wintegral=0;
     }
 
     if(err1.length()<.05)
@@ -145,9 +145,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
 
-//    wderived1 = (ci.cur_pos.dir - werr0)/3;
-//    wderived0 = wderived0 + (wderived1 - wderived0)*0.1;
-//    werr0 = ci.cur_pos.dir;
+    //    wderived1 = (ci.cur_pos.dir - werr0)/3;
+    //    wderived0 = wderived0 + (wderived1 - wderived0)*0.1;
+    //    werr0 = ci.cur_pos.dir;
     wderived1 = (ci.cur_vel.dir - werr0)*10;
     wderived0 = ci.cur_vel.dir;
     wu1 = (werr1*wkp) + wintegral*wki*werr - wderived1*wkd;
@@ -171,7 +171,8 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     ans.VX = RotLinearSpeed.x;
     ans.VY = RotLinearSpeed.y;
     ans.VW = RotationSpeed ;
-    if(fabs(werr1) <0.1/*04*/  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+
+    if(fabs(werr1) <0.04  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
 
     if(err1.length()<.02)
     {
@@ -425,10 +426,10 @@ MotorSpeed Controller::calcSimul(RobotSpeed rs)
     rotate[2][2] = -ROBOTRADIUS;
     rotate[3][2] = -ROBOTRADIUS;
 
-    motor[0][0] = rotate[0][0] * speed[0][0] + rotate[0][1] * speed[1][0] + rotate[0][2] * speed[2][0];
-    motor[1][0] = rotate[1][0] * speed[0][0] + rotate[1][1] * speed[1][0] + rotate[1][2] * speed[2][0];
-    motor[2][0] = rotate[2][0] * speed[0][0] + rotate[2][1] * speed[1][0] + rotate[2][2] * speed[2][0];
-    motor[3][0] = rotate[3][0] * speed[0][0] + rotate[3][1] * speed[1][0] + rotate[3][2] * speed[2][0];
+    motor[0][0] = (rotate[0][0] * speed[0][0] + rotate[0][1] * speed[1][0] + rotate[0][2] * speed[2][0])*100;
+    motor[1][0] = (rotate[1][0] * speed[0][0] + rotate[1][1] * speed[1][0] + rotate[1][2] * speed[2][0])*100;
+    motor[2][0] = (rotate[2][0] * speed[0][0] + rotate[2][1] * speed[1][0] + rotate[2][2] * speed[2][0])*100;
+    motor[3][0] = (rotate[3][0] * speed[0][0] + rotate[3][1] * speed[1][0] + rotate[3][2] * speed[2][0])*100;
 
     //qDebug()<<"M0:"<<motor[0][0]<<"M1:"<<motor[1][0]<<"M2:"<<motor[2][0]<<"M3:"<<motor[3][0];
     //qDebug()<<err1.y;

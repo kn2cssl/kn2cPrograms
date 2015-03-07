@@ -91,6 +91,8 @@ void PlayStop::initRole()
 
 void PlayStop::setTactics(int index)
 {
+    wm->ourRobot[index].Status = AgentStatus::Idle;
+
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGolie;
@@ -118,6 +120,61 @@ void PlayStop::setTactics(int index)
     }
 }
 
+void PlayStop::setPositions()
+{
+    if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
+    {
+        tStopLeft->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalPost_L.y+200));
+        tStopRight->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalPost_R.y-200));
+        tStopMid->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalCenter.y));
+    }
+    else
+    {
+        Vector2D finalPos,notImportant,leftPos,rightPos;
+
+        Circle2D robotCircle(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+        Segment2D line2Goal(wm->ball.pos.loc,Field::ourGoalCenter);
+        robotCircle.intersection(line2Goal,&finalPos,&notImportant);
+
+        Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+        robotCircle.intersection(secondCircle,&leftPos,&rightPos);
+
+        if( !wm->kn->IsInsideField(leftPos) )
+        {
+            leftPos = finalPos;
+            finalPos = rightPos;
+
+            Vector2D leftPos2,rightPos2;
+            Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+            robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
+
+            if( leftPos.dist(leftPos2) < leftPos.dist(rightPos2) )
+                rightPos = rightPos2;
+            else
+                rightPos = leftPos2;
+
+        }
+        else if( !wm->kn->IsInsideField(rightPos) )
+        {
+            rightPos = finalPos;
+            finalPos = leftPos;
+
+            Vector2D leftPos2,rightPos2;
+            Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+            robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
+
+            if( rightPos.dist(leftPos2) < rightPos.dist(rightPos2) )
+                leftPos = rightPos2;
+            else
+                leftPos = leftPos2;
+        }
+
+        tStopLeft->setStopPosition(leftPos);
+        tStopMid->setStopPosition(finalPos);
+        tStopRight->setStopPosition(rightPos);
+    }
+}
+
 void PlayStop::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -128,6 +185,8 @@ void PlayStop::execute()
     }
 
     initRole();
+    setPositions();
+
     while (activeAgents.size() >0)
     {
         setTactics(activeAgents.takeFirst());

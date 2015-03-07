@@ -50,7 +50,7 @@ MOC_DIR = ../tmp/.moc
 RCC_DIR = ../tmp/.rcc
 UI_DIR = ../tmp/.ui
 
-unix:  LIBS += -lprotobuf
+unix:  LIBS += -lprotobuf -L/usr/local/lib -ligraph -L/usr/include/ -lCGAL -lgmp -lmpfr
 
 #win32
 #{
@@ -160,7 +160,11 @@ SOURCES +=	main.cpp \
     ai/tactic/tacticpenaltykicker.cpp \
     ai/tactic/tactictest2.cpp \
     ai/tactic/tacticpreparing.cpp \
-    ai/play/playpreparing.cpp
+    ai/play/playpreparing.cpp \
+    ai/mwbm.cpp \
+    ai/man2man.cpp \
+    geom/voronoi_diagram.cpp \
+    ai/positioning.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -255,7 +259,11 @@ HEADERS  += \
     ai/tactic/tacticpenaltykicker.h \
     ai/tactic/tactictest2.h \
     ai/tactic/tacticpreparing.h \
-    ai/play/playpreparing.h
+    ai/play/playpreparing.h \
+    ai/mwbm.h \
+    ai/man2man.h \
+    geom/voronoi_diagram.h \
+    ai/positioning.h
 
 FORMS    +=	ui/mainwindow.ui
 

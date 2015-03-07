@@ -48,6 +48,21 @@ QList<int> Knowledge::findNearestTo(Vector2D loc)
     return ans;
 }
 
+QList<int> Knowledge::findNearestTo(QList<int> ours, Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< ours.size(); i++)
+    {
+        if(_wm->ourRobot[ours.at(i)].isValid==false) continue;
+        double dist=(_wm->ourRobot[ours.at(i)].pos.loc-loc).length();
+        smap.insert(dist, ours.at(i));
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
 QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
 {
     QMap<double, int> smap;
@@ -56,6 +71,21 @@ QList<int> Knowledge::findNearestOppositeTo(Vector2D loc)
         if(_wm->oppRobot[i].isValid==false) continue;
         double dist=(_wm->oppRobot[i].pos.loc-loc).length();
         smap.insert(dist, i);
+    }
+    QList<int> ans;
+    for(auto i=smap.begin(); i!=smap.end(); i++)
+        ans.append(i.value());
+    return ans;
+}
+
+QList<int> Knowledge::findNearestOppositeTo(QList<int> opps, Vector2D loc)
+{
+    QMap<double, int> smap;
+    for(int i=0; i< opps.size(); i++)
+    {
+        if(_wm->oppRobot[opps.at(i)].isValid==false) continue;
+        double dist=(_wm->oppRobot[opps.at(i)].pos.loc-loc).length();
+        smap.insert(dist, opps.at(i));
     }
     QList<int> ans;
     for(auto i=smap.begin(); i!=smap.end(); i++)
@@ -179,6 +209,11 @@ bool Knowledge::IsInsideGolieArea(Vector2D pos)
 bool Knowledge::IsInsideSecureArea(Vector2D pos, Vector2D ball)
 {
     return IsInsideCircle(pos,ball,ALLOW_NEAR_BALL_RANGE);
+}
+
+bool Knowledge::IsInsideOppGolieArea(Vector2D pos)
+{
+    return IsInsideGoalShape(pos, Field::oppGoalCenter.x, Field::goalCircle_R,350);
 }
 
 Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, double sourceSpeed, Vector2D targetSpeed)
@@ -340,9 +375,9 @@ QString Knowledge::gameStatus()
     QString out;
 
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
-    QList<int> oppNearestPlayerToBall = _wm->kn->findNearestOppositeTo(_wm->ball.pos.loc);
+    QList<int> oppNearestPlayerToBall = findNearestOppositeTo(_wm->ball.pos.loc);
 
-    if( !oppNearestPlayerToBall.isEmpty() )
+    if( oppNearestPlayerToBall.size() > 3 )
     {
         double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
         double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
@@ -362,7 +397,12 @@ QString Knowledge::gameStatus()
         }
     }
     else
-        out = "Attacking";
+    {
+        if( ourNearestPlayerToBall.size() > 3 )
+            out = "Attacking";
+        else
+            out = "Suspended";
+    }
 
     return out;
 }
@@ -390,6 +430,136 @@ QList<int> Knowledge::findAttackers()
         }
     }
     return output;
+}
+
+QList<int> Knowledge::findOurObstacles()
+{
+    QList<int> output;
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        switch (_wm->ourRobot[ourAgents.at(i)].Role)
+        {
+        case AgentRole::DefenderMid:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::DefenderLeft:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::DefenderRight:
+            output.append(ourAgents.at(i));
+            break;
+        case AgentRole::Golie:
+            output.append(ourAgents.at(i));
+            break;
+        default:
+            break;
+        }
+    }
+    return output;
+}
+
+double Knowledge::scoringChance(Vector2D loc)
+{
+    tANDp out;
+    out.prob = 0;
+
+    QList<tANDp> TANDPis;
+    int prob=100;
+    int dist_Clearance = 30 ; // 3 cm for opp Robot Reaction displacement
+    for(int jj=-10;jj<11;jj++)
+    {
+        Vector2D Point;
+        Point.x = Field::oppGoalCenter.x;
+        Point.y = Field::oppGoalCenter.y + jj*(Field::oppGoalPost_L.y/10);
+        tANDp tp;
+        tp.pos=Point;
+        int min_prob = 100;
+        for(int ii=0;ii<12;ii++)
+        {
+            if(_wm->oppRobot[ii].isValid)
+            {
+                if(_wm->oppRobot[ii].pos.loc.x > loc.x)
+                {
+                    Segment2D ball2Point(loc,Point);
+                    double dist2R = ball2Point.dist(_wm->oppRobot[ii].pos.loc);
+                    if (dist2R < (ROBOT_RADIUS + BALL_RADIUS + dist_Clearance) ) prob=0;
+                    else if (dist2R < 400 ) prob = dist2R/4;
+                    else prob = 100;
+                    if(prob < min_prob) min_prob = prob;
+                }
+            }
+            if(abs(jj) > 7) prob = prob*((17-abs(jj))/10);
+            if(min_prob == 0) break;
+        }
+        tp.prob=min_prob;
+        TANDPis.push_back(tp);
+    }
+
+    out = TANDPis.at(0);
+    for(int i=1;i<TANDPis.size();i++)
+    {
+        if( out.prob < TANDPis.at(i).prob)
+            out = TANDPis.at(i);
+    }
+    return out.prob;
+}
+
+double Knowledge::oppScoringChance(Vector2D loc)
+{
+    tANDp out;
+    out.prob = 0;
+
+    QList<tANDp> TANDPis;
+    int prob=100;
+    int dist_Clearance = 30 ; // 3 cm for opp Robot Reaction displacement
+    QList<int> our = this->findOurObstacles();
+    if( !_wm->kn->IsInsideRect(loc , Vector2D(Field::MaxX/2,Field::MaxY) ,Vector2D(Field::MaxX,Field::MinY)) )
+    {
+        for(int jj=-10;jj<11;jj++)
+        {
+            Vector2D Point;
+            Point.x = Field::ourGoalCenter.x;
+            Point.y = Field::ourGoalCenter.y + jj*(Field::ourGoalPost_L.y/10);
+            tANDp tp;
+            tp.pos=Point;
+            int min_prob = 100;
+            for(int ii=0;ii<our.size();ii++)
+            {
+                if(_wm->ourRobot[our.at(ii)].isValid)
+                {
+                    if(_wm->ourRobot[our.at(ii)].pos.loc.x < loc.x)
+                    {
+                        Segment2D ball2Point(loc,Point);
+                        double dist2R = ball2Point.dist(_wm->ourRobot[our.at(ii)].pos.loc);
+                        if (dist2R < (ROBOT_RADIUS + BALL_RADIUS + dist_Clearance) ) prob=0;
+                        else if (dist2R < 400 ) prob = dist2R/4;
+                        else prob = 100;
+                        if(prob < min_prob) min_prob = prob;
+                    }
+                }
+                if(abs(jj) > 7) prob = prob*((17-abs(jj))/10);
+                if(min_prob == 0) break;
+            }
+            tp.prob=min_prob;
+            TANDPis.push_back(tp);
+        }
+    }
+    else
+    {
+        tANDp tp;
+        tp.prob = 0;
+        TANDPis.push_back(tp);
+    }
+
+    out = TANDPis.at(0);
+    for(int i=1;i<TANDPis.size();i++)
+    {
+        if( out.prob < TANDPis.at(i).prob)
+            out = TANDPis.at(i);
+    }
+    return out.prob;
 }
 
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
@@ -423,4 +593,59 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 
 
     return p;
+}
+
+OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos)
+{
+    OperatingPosition KickPos;
+    Vector2D KickDir = (ballLoc - target);
+
+    //possession point >>navigation : ON
+    KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*1.5);
+    KickPos.useNav = true ;
+
+    KickPos.pos.dir = (-KickDir).dir().radian();
+    KickPos.pos.loc = ballLoc + KickDir;
+
+    //possession point check
+    double DirErr;
+    double DistErr;
+    DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
+    if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+
+    DistErr = (KickPos.pos.loc - robotPos.loc).length();
+
+    if(DirErr < 15 && DistErr < 70)
+    {
+        //qDebug()<<"A";
+
+        //control point >>navigation : OFF
+        KickDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
+        KickPos.useNav = false ;
+        KickPos.pos.dir = (ballLoc - robotPos.loc).dir().radian();//(-KickDir).dir().radian();//
+        KickPos.pos.loc = ballLoc + KickDir;
+
+        DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
+        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+
+        DistErr = (KickPos.pos.loc - robotPos.loc).length();(-KickDir).dir().radian();
+
+        if(DirErr < 2 && DistErr < 20)
+        {
+             KickPos.pos.dir = (-KickDir).dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
+            KickPos.readyToShoot = true;
+        }
+        else
+        {
+            KickPos.readyToShoot = false;
+        }
+
+    }
+    else
+    {
+        //qDebug()<<"B";
+    }
+
+
+    return KickPos;
 }

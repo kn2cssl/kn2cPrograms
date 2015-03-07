@@ -58,11 +58,11 @@ void PlayPenaltyOpp::setPositions(int index)
         break;
     case AgentRole::AttackerRight :
         tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
-                                                 Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
+                                                 Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
         break;
     case AgentRole::AttackerLeft :
         tAttackerLeft->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
-                                                Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
+                                                Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
         break;
     default:
         break;
@@ -102,8 +102,8 @@ void PlayPenaltyOpp::initRole()
     case 5:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
         break;
     }

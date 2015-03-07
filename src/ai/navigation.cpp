@@ -142,7 +142,6 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
     {
         //qDebug() << "AStarSearch SUCCEEDED";
         MapSearchNode *node = astarsearch.GetSolutionStart();
-        //qDebug() << "SolutionStart" << node->vec.x << node->vec.y;
         int steps = 0;
         if(points) points->append(node->vec); //nodeStart
         Vector2D lastNode = node->vec;
@@ -159,7 +158,6 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
             node = astarsearch.GetSolutionNext();
             if(id == wm->indexOfAstarRobot )
             {
-                qDebug() << "SolutionNext";
                 if(!node)
                 {
                     wm->navigation_result.append(nodeEnd.vec);
@@ -173,7 +171,7 @@ double Navigation::getPath(RobotCommand rc, QList<Vector2D> *points)
             }
 
             if(!node) break;
-            //qDebug() << "SolutionNext" << node->vec.x << node->vec.y;
+
             //Kamin
 
             //Kamout

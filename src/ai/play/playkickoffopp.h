@@ -23,7 +23,7 @@ private:
 
     virtual void initRole();
     void setTactics(int index);
-    void setPositions(int index);
+    void setPositions();
 };
 
 #endif // PLAYKICKOFFOPP_H

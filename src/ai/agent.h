@@ -43,6 +43,18 @@ enum AgentRegion
     Right
 };
 
+struct Marking_Struct
+{
+    int ourI;
+    int oppI;
+};
+
+struct Positioning_Struct
+{
+    int ourI;
+    Vector2D loc;
+};
+
 class WorldModel;
 
 class Agent : public Robot

@@ -21,5 +21,9 @@ http://code.google.com/p/ssl-vision/
 
 <b> grSim: </b>  <br>
 https://github.com/ali-k/grSim  <br>
-https://github.com/mani-monaj/grSim
+https://github.com/mani-monaj/grSim <br>
+
+<b> Used Library: </b>  <br>
+http://www.cgal.org <br>
+http://igraph.org 
 

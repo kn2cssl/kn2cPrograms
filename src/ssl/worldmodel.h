@@ -13,6 +13,12 @@
 #include "ref_protocol.h"
 #include "knowledge.h"
 
+struct tANDp
+{
+    Vector2D pos;
+    int prob;
+};
+
 class WorldModel
 {
 public:
@@ -29,12 +35,21 @@ public:
     bool isSim;
     Knowledge *kn;
 
+    //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
     QList<Vector2D> navigation_result;
 
-    //----Graphical Debug-----
     bool showAstarOut;
     int indexOfAstarRobot;
+
+    QList<Marking_Struct> marking;
+    bool showMarking;
+
+    QList<Segment2D> voronoi;
+    bool showVoronoi;
+
+    QList<tANDp> TANDPis;
+    bool showChances;
 
     //---UDP 2 Matlab
     bool sendUDP;
@@ -46,6 +61,9 @@ public:
     // 1: kick activation angle
     // 2: kick precision angle
     // 3: prediction sliding factor
+
+    double pos_coef[6];
+    double mark_coef[6];
 };
 
 #endif // WORLDMODEL_H

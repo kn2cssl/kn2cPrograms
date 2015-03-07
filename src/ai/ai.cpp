@@ -27,6 +27,8 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
         current_tactic[i] = 0;
 
+    firstWait = 0;
+
     plays.append(new PlayFreeKickOpp(wm));
     plays.append(new PlayFreeKickOur(wm));
     plays.append(new PlayGameOn(wm));
@@ -65,81 +67,86 @@ Tactic* AI::getCurrentTactic(int i)
 
 void AI::timer_timeout()
 {
-    for(int i=0; i<PLAYERS_MAX_NUM; i++)
+    if( firstWait > 5 )
     {
-        if(!wm->ourRobot[i].isValid)
-            wm->ourRobot[i].Role = NoRole;
-    }
-
-    int max_i = 0;
-    int max_p = 0;
-    for(int i=0; i<plays.size(); i++)
-    {
-        int p = plays[i]->enterCondition();
-        if(p > max_p)
+        for(int i=0; i<PLAYERS_MAX_NUM; i++)
         {
-            max_i = i;
-            max_p = p;
+            if(!wm->ourRobot[i].isValid)
+                wm->ourRobot[i].Role = NoRole;
         }
-    }
 
-    Play *play = plays[max_i];
-    current_play = play;
-    play->execute();
-
-    for(int i=0; i<PLAYERS_MAX_NUM; i++)
-    {
-        Tactic *tactic = play->getTactic(i);
-        current_tactic[i] = tactic;
-        if(tactic == NULL) continue;
-        tactic->setID(i);
-        RobotCommand rc = tactic->getCommand();
-
-        wm->ourRobot[i].SendCommand(rc);
-        if(i == wm->indexOfUDP)
+        int max_i = 0;
+        int max_p = 0;
+        for(int i=0; i<plays.size(); i++)
         {
-            if( wm->sendUDP)
+            int p = plays[i]->enterCondition();
+            if(p > max_p)
             {
-                double out_x,Sout_x;
-                double out_y,Sout_y;
-                double out_w,Sout_w;
-
-                if( wm->whichUDP == "pos" )
-                {
-                    out_x = wm->ourRobot[wm->indexOfUDP].pos.loc.x;
-                    out_y = wm->ourRobot[wm->indexOfUDP].pos.loc.y;
-                    out_w = wm->ourRobot[wm->indexOfUDP].pos.dir;
-
-
-                    Sout_x = rc.fin_pos.loc.x;
-                    Sout_y = rc.fin_pos.loc.y;
-                    Sout_w = rc.fin_pos.dir;
-
-                }
-                else
-                {
-                    out_x = wm->ourRobot[wm->indexOfUDP].vel.loc.x;
-                    out_y = wm->ourRobot[wm->indexOfUDP].vel.loc.y;
-                }
-
-                char* cp = (char*)&out_x ;
-                char* cp2 = (char*)&out_y;
-                char* cp3 = (char*)&out_w;
-                char* cp4 = (char*)&Sout_x ;
-                char* cp5 = (char*)&Sout_y;
-                char* cp6 = (char*)&Sout_w;
-                //point
-                udp->writeDatagram(cp,sizeof(double),ip,33433);
-                udp->writeDatagram(cp2,sizeof(double),ip,33434);
-                udp->writeDatagram(cp3,sizeof(double),ip,33435);
-                //setpoint
-                udp->writeDatagram(cp4,sizeof(double),ip,33433);
-                udp->writeDatagram(cp5,sizeof(double),ip,33434);
-                udp->writeDatagram(cp6,sizeof(double),ip,33435);
+                max_i = i;
+                max_p = p;
             }
         }
+
+        Play *play = plays[max_i];
+        current_play = play;
+        play->execute();
+
+        for(int i=0; i<PLAYERS_MAX_NUM; i++)
+        {
+            Tactic *tactic = play->getTactic(i);
+            current_tactic[i] = tactic;
+            if(tactic == NULL) continue;
+            tactic->setID(i);
+            RobotCommand rc = tactic->getCommand();
+
+            wm->ourRobot[i].SendCommand(rc);
+            if(i == wm->indexOfUDP)
+            {
+                if( wm->sendUDP)
+                {
+                    double out_x,Sout_x;
+                    double out_y,Sout_y;
+                    double out_w,Sout_w;
+
+                    if( wm->whichUDP == "pos" )
+                    {
+                        out_x = wm->ourRobot[wm->indexOfUDP].pos.loc.x;
+                        out_y = wm->ourRobot[wm->indexOfUDP].pos.loc.y;
+                        out_w = wm->ourRobot[wm->indexOfUDP].pos.dir;
+
+
+                        Sout_x = rc.fin_pos.loc.x;
+                        Sout_y = rc.fin_pos.loc.y;
+                        Sout_w = rc.fin_pos.dir;
+
+                    }
+                    else
+                    {
+                        out_x = wm->ourRobot[wm->indexOfUDP].vel.loc.x;
+                        out_y = wm->ourRobot[wm->indexOfUDP].vel.loc.y;
+                    }
+
+                    char* cp = (char*)&out_x ;
+                    char* cp2 = (char*)&out_y;
+                    char* cp3 = (char*)&out_w;
+                    char* cp4 = (char*)&Sout_x ;
+                    char* cp5 = (char*)&Sout_y;
+                    char* cp6 = (char*)&Sout_w;
+                    //point
+                    udp->writeDatagram(cp,sizeof(double),ip,33433);
+                    udp->writeDatagram(cp2,sizeof(double),ip,33434);
+                    udp->writeDatagram(cp3,sizeof(double),ip,33435);
+                    //setpoint
+                    udp->writeDatagram(cp4,sizeof(double),ip,33433);
+                    udp->writeDatagram(cp5,sizeof(double),ip,33434);
+                    udp->writeDatagram(cp6,sizeof(double),ip,33435);
+                }
+            }
+        }
+
+
+        fps.Pulse();
     }
-
-
-    fps.Pulse();
+    else
+        firstWait++;
 }

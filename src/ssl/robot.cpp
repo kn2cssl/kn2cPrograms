@@ -55,6 +55,7 @@ void Robot::seenAt(vector<Position> p, double t, int c)
      else
      {
          camera_mem = 2;
+         if(camera_timeout >8) camera_mem = 2;
      }
 
 }
