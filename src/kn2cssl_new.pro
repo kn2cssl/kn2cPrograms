@@ -164,7 +164,10 @@ SOURCES +=	main.cpp \
     ai/mwbm.cpp \
     ai/man2man.cpp \
     geom/voronoi_diagram.cpp \
-    ai/positioning.cpp
+    ai/positioning.cpp \
+    ai/play/freeKicks/freekick_base.cpp \
+    ai/play/freeKicks/freekick1.cpp \
+    ai/play/freeKicks/freekick2.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -263,7 +266,11 @@ HEADERS  += \
     ai/mwbm.h \
     ai/man2man.h \
     geom/voronoi_diagram.h \
-    ai/positioning.h
+    ai/positioning.h \
+    ai/play/freeKicks/freekick_base.h \
+    ai/play/freeKicks/freekick1.h \
+    ai/play/freeKicks/freeKicks.h \
+    ai/play/freeKicks/freekick2.h
 
 FORMS    +=	ui/mainwindow.ui
 
