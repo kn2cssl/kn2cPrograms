@@ -12,13 +12,15 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 
     QList<Vector2D> static_points;
 
+    static_points.append(Field::oppGoalPost_L);
+    static_points.append(Field::oppGoalPost_R);
+
+    static_points.append(Field::upperRightCorner);
+    static_points.append(Field::bottomRightCorner);
+
     static_points.append(Vector2D(0,0));
     static_points.append(Vector2D(0,Field::MaxY));
     static_points.append(Vector2D(0,Field::MinY));
-    static_points.append(Field::upperRightCorner);
-    static_points.append(Field::bottomRightCorner);
-    static_points.append(Field::oppGoalPost_L);
-    static_points.append(Field::oppGoalPost_R);
 
     QList<Vector2D> opp_pos;
     QList<int> opp = wm->kn->ActiveOppAgents();
@@ -110,7 +112,10 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
         }
 
         if( candiates.size() < ours.size() && !static_points.isEmpty() )
+        {
+            qDebug()<<"static numbers : "<<static_points.size();
             opp_pos.push_back(static_points.takeFirst());
+        }
         else
         {
             if( static_points.isEmpty() )
