@@ -40,7 +40,7 @@ void Agent::SendCommand(RobotCommand rc)
     reRD.M2  = co.msR.M2;
     reRD.M3  = co.msR.M3;
     reRD.KCK = (quint8) rc.kickspeedx;
-    reRD.CHP = 0;
+    reRD.CHP = (quint8) rc.kickspeedz;
     outputBuffer->wpck.AddRobot(reRD);
 
     // grSim Packet
