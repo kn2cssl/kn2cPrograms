@@ -64,7 +64,7 @@ void freeKick1::execute()
 
     if(!freeKickStart)
     {
-        tAttackerMid->waitTimerStart();
+        tAttackerMid->waitTimerStart(false);
         freeKickStart = true;
     }
 

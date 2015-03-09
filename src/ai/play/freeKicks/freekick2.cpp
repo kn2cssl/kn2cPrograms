@@ -11,7 +11,7 @@ int freeKick2::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D((1/3)*Field::MaxX,Field::MaxY)
                              , Vector2D(Field::MaxX,Field::MinY)))
-        return 600;
+        return 500;
 
     return 0;
 }
@@ -59,7 +59,7 @@ void freeKick2::execute()
 
     if(!freeKickStart)
     {
-        tAttackerMid->waitTimerStart();
+        tAttackerMid->waitTimerStart(false);
         freeKickStart = true;
     }
 

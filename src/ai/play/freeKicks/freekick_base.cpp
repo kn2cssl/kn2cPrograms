@@ -63,6 +63,7 @@ void freeKick_base::initRole()
         break;
     }
     rolesIsInit = true;
+    freeKickStart = false;
 }
 
 void freeKick_base::setTactics(int index)

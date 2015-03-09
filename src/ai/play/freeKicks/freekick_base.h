@@ -35,7 +35,6 @@ protected:
 
 protected:
     WorldModel *wm;
-    QString param;
     Tactic *tactics[PLAYERS_MAX_NUM];
     fkRegion freeKickRegion;
     Level oppLevel;

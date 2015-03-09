@@ -4,5 +4,7 @@
 #include "freekick_base.h"
 #include "freekick1.h"
 #include "freekick2.h"
+#include "freekick3.h"
+#include "freekick4.h"
 
 #endif // FREEKICKS_H

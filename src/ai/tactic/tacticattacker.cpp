@@ -18,11 +18,11 @@ RobotCommand TacticAttacker::getCommand()
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
         Vector2D v;
-//        if( wm->ball.vel.loc.length() > 0.5 )
-            v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
-                    wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-//        else
-//            v = wm->ball.pos.loc;
+        //        if( wm->ball.vel.loc.length() > 0.5 )
+        v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
+                wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
+        //        else
+        //            v = wm->ball.pos.loc;
 
         tANDp target = findTarget();
         OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
@@ -62,7 +62,7 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.fin_pos = idlePosition;
 
-        rc.maxSpeed = 1.5;
+        rc.maxSpeed = 2.5;
 
         rc.useNav = true;
         rc.isBallObs = true;
@@ -82,7 +82,7 @@ RobotCommand TacticAttacker::getCommand()
             {
                 Vector2D fstInt,secInt;
                 Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
-//                Line2D connectedLine(wm->ball.pos.loc,final.loc);
+                //                Line2D connectedLine(wm->ball.pos.loc,final.loc);
                 Line2D connectedLine(wm->oppRobot[playerToKeep].pos.loc,Field::ourGoalCenter);
                 int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
 
@@ -183,54 +183,21 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
     rc.maxSpeed = 0.5;
 
-    int index = receiverID;
+    Vector2D target = receiverPos;
+    Vector2D goal(target.x,target.y);
 
-    if(index != -1)
+    OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,goal,wm->ourRobot[this->id].pos);
+
+    rc.fin_pos = kickPoint.pos;
+    rc.useNav = kickPoint.useNav;
+
+    if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        Vector2D target(wm->ourRobot[index].pos.loc.x,wm->ourRobot[index].pos.loc.y);
-        Vector2D goal(target.x,target.y);
+        rc.kickspeedx = 25;// detectKickSpeed(goal);
+        qDebug()<<"Kickk...";
+    }
 
-        OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,goal,wm->ourRobot[this->id].pos);
-
-//        double kickRadius = ROBOT_RADIUS *3;
-//        Vector2D midle_vector=Vector2D(kickRadius*sin(abs(kickPoint.dir)),kickRadius*cos(abs(kickPoint.dir)));
-//        midle_vector =  midle_vector.setDir(AngleDeg(-kickPoint.dir));
-
-//        Position midlePoint;
-//        midlePoint.loc = (wm->ball.pos.loc+midle_vector);
-//        midlePoint.dir = kickPoint.dir;
-
-//        if( (midlePoint.loc - wm->ourRobot[id].pos.loc).length() > 50  && (!pastMidPoint) )
-////        if( (!wm->kn->ReachedToPos(wm->ourRobot[this->id].pos,midlePoint,90,6)) && (!pastMidPoint) )
-//        {
-//            rc.fin_pos = midlePoint;
-//            rc.useNav = true;
-//        }
-//        else
-//        {
-//            pastMidPoint = true;
-            rc.fin_pos = kickPoint.pos;
-            rc.useNav = kickPoint.useNav;
-//            rc.maxSpeed =
-//            if( (rc.fin_pos.loc-wm->ourRobot[this->id].pos.loc).length() < 150)
-//            {
-//                if(!everyOneInTheirPos)
-//                {
-//                    rc.maxSpeed = 0;
-//                }
-//                else
-//                {
-//                    rc.useNav = false;
-//                    rc.maxSpeed = 0.25;
-//                }
-//            }
-            if(  kickPoint.readyToShoot /*&& everyOneInTheirPos*/)
-            {
-                rc.kickspeedx = 25;// detectKickSpeed(goal);
-                qDebug()<<"Kickk...";
-            }
-        }
-        return rc;
+    return rc;
 }
 
 RobotCommand TacticAttacker::KickTheBallDirect()
@@ -339,13 +306,23 @@ void TacticAttacker::isKicker(int recieverID)
 {
     wm->ourRobot[this->id].Status = AgentStatus::Kicking;
     findReciever = false;
-    this->receiverID = recieverID;
+    this->receiverPos = wm->ourRobot[recieverID].pos.loc;
 }
 
-void TacticAttacker::waitTimerStart()
+void TacticAttacker::isKicker(Vector2D pos)
 {
-    everyOneInTheirPos = false;
-    waitTimer->start(5000);
+    wm->ourRobot[this->id].Status = AgentStatus::Kicking;
+    findReciever = false;
+    this->receiverPos = pos;
+}
+
+void TacticAttacker::waitTimerStart(bool onMyCommand)
+{
+    if(!onMyCommand)
+    {
+        everyOneInTheirPos = false;
+        waitTimer->start(5000);
+    }
 }
 
 void TacticAttacker::setGameOnPositions(Position pos)
@@ -370,9 +347,9 @@ void TacticAttacker::setIdlePosition(Vector2D pos)
     this->idlePosition.dir = ( wm->ball.pos.loc - pos).dir().radian();
 }
 
-int TacticAttacker::returnReceiverID()
+void TacticAttacker::youHavePermissionForKick()
 {
-    return receiverID;
+    everyOneInTheirPos = true;
 }
 
 bool TacticAttacker::isFree(int index)
@@ -399,6 +376,6 @@ void TacticAttacker::dontWait()
 {
     everyOneInTheirPos = true;
     if( findReciever )
-        receiverID = findBestPlayerForPass();
+        receiverPos = wm->ourRobot[findBestPlayerForPass()].pos.loc;
     waitTimer->stop();
 }
