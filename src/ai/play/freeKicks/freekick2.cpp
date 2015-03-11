@@ -9,7 +9,7 @@ freeKick2::freeKick2(WorldModel *wm, QObject *parent) :
 
 int freeKick2::enterCondition()
 {
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D((1/3)*Field::MaxX,Field::MaxY)
+    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
                              , Vector2D(Field::MaxX,Field::MinY)))
         return 500;
 
