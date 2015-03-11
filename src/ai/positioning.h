@@ -19,7 +19,7 @@ class Positioning
 public:
     Positioning();
     QList<Positioning_Struct> find_positions(QList<int> ours , bool &isMatched);
-    QList<Positioning_Struct> kickPositions(QList<int> ours , bool &isMatched);
+    QList<Positioning_Struct> kickPositions(QList<int> ours, Vector2D target, bool &isMatched);
     void setWorldModel(WorldModel *wm);
 
 private:
@@ -29,6 +29,7 @@ private:
 
     WorldModel *wm;
     double maxDistance;
+    bool staticIsFinished;
 };
 
 #endif // POSITIONING_H

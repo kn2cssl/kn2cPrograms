@@ -61,7 +61,7 @@ void RenderArea::paintEvent(QPaintEvent *)
         Pball.setY(-_sc->wm->ball.pos.loc.y/WORLD_SCALE);
 
         //painter.setBrush(*brush_ball);
-        if(_sc->wm->ball.isValid)
+        if(_sc->wm->ball.isValid /*&& _sc->wm->TANDPis.size() > 0*/ )
         {
             for(int i=0;i<_sc->wm->TANDPis.size();i++)
             {
@@ -71,6 +71,13 @@ void RenderArea::paintEvent(QPaintEvent *)
                 pnt.setX(_sc->wm->TANDPis.at(i).pos.x/WORLD_SCALE); pnt.setY(-_sc->wm->TANDPis.at(i).pos.y/WORLD_SCALE);
                 painter.drawLine(pnt,Pball);
             }
+
+            int tmp= 2.5*_sc->wm->max_TANDPis.prob;
+            painter.setPen(QColor::fromRgb(255,0,0));
+            QPoint pnt;
+            pnt.setX(_sc->wm->max_TANDPis.pos.x/WORLD_SCALE); pnt.setY(-_sc->wm->max_TANDPis.pos.y/WORLD_SCALE);
+            painter.drawLine(pnt,Pball);
+
         }
     }
 
@@ -152,4 +159,17 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.drawLine(first,second);
         }
     }
+
+//    if(_sc->wm->selected.size()!=0)
+//    {
+//        QPoint first(_sc->wm->selected.at(0).x/WORLD_SCALE , -_sc->wm->selected.at(0).y/WORLD_SCALE);
+//        QPoint second(_sc->wm->selected.at(1).x/WORLD_SCALE , -_sc->wm->selected.at(1).y/WORLD_SCALE);
+//        QPoint third(_sc->wm->selected.at(2).x/WORLD_SCALE , -_sc->wm->selected.at(2).y/WORLD_SCALE);
+
+//        painter.setPen(QColor::fromRgb(50,50,50));
+//        painter.setBrush(*brush_astarResult);
+//        painter.drawLine(first,second);
+//        painter.drawLine(second,third);
+//        painter.drawLine(first,third);
+//    }
 }

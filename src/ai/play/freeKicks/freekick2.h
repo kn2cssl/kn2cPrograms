@@ -2,16 +2,18 @@
 #define FREEKICK2_H
 
 #include <QObject>
+#include "freekick_base.h"
 
-class freeKick2 : public QObject
+class freeKick2 : public freeKick_base
 {
     Q_OBJECT
 public:
-    explicit freeKick2(QObject *parent = 0);
+    explicit freeKick2(WorldModel *wm,QObject *parent = 0);
+    virtual int enterCondition();
+    virtual void execute();
 
-signals:
-
-public slots:
+private:
+    void setPositions(int index);
 
 };
 

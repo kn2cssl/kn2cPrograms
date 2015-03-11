@@ -14,21 +14,30 @@ public:
     RobotCommand KickTheBallIndirect();
     RobotCommand KickTheBallDirect();
     RobotCommand StartTheGame();
+
+    RobotCommand ChipTheBallIndirect();
+
     int findBestPlayerForPass();
     void isKicker();
-    void waitTimerStart();
+    void isChiper();
+    void isKicker(int recieverID);
+    void isKicker(Vector2D pos);
+    void isChiper(Vector2D pos);
+    void waitTimerStart(bool onMyCommand);
     void setGameOnPositions(Position pos);
     void setGameOnPositions(Vector2D pos);
     void setIdlePosition(Position pos);
     void setIdlePosition(Vector2D pos);
-    int returnReceiverID();
+
+    void youHavePermissionForKick();
 
     bool everyOneInTheirPos;
 
 private:
     bool isFree(int index);
 
-    int receiverID;
+    Vector2D receiverPos;
+    bool findReciever;
     QTimer *waitTimer;
     Position idlePosition;
     bool pastMidPoint; // FreeKick
