@@ -8,5 +8,6 @@
 #include "freekick4.h"
 #include "freekick5.h"
 #include "freekick6.h"
+#include "freekick7.h"
 
 #endif // FREEKICKS_H
