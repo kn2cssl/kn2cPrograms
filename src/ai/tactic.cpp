@@ -34,7 +34,7 @@ float Tactic::detectKickSpeed( Vector2D dest )
         if( goalLine.contains(dest) )
             kickSpeed = 255; //Should Changed
         else
-            kickSpeed = 100;//Should Changed
+            kickSpeed = 101;//Should Changed
     }
 
     return kickSpeed;
@@ -81,7 +81,9 @@ tANDp Tactic::findTarget()
                     if(prob < min_prob) min_prob = prob;
                 }
             }
-            if(abs(jj) > 7) prob = prob*((17-abs(jj))/10);
+
+            min_prob=min_prob-abs(jj);
+            if(min_prob < 0) min_prob=0;
             if(min_prob == 0) break;
         }
         tp.prob=min_prob;
@@ -94,6 +96,7 @@ tANDp Tactic::findTarget()
         if( out.prob < wm->TANDPis.at(i).prob)
             out = wm->TANDPis.at(i);
     }
+    wm->max_TANDPis = out;
     return out;
 }
 
