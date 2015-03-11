@@ -6,6 +6,8 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     fk.append(new freeKick2(wm));
     fk.append(new freeKick3(wm));
     fk.append(new freeKick4(wm));
+    fk.append(new freeKick5(wm));
+    fk.append(new freeKick6(wm));
 }
 int PlayFreeKickOur::enterCondition()
 {

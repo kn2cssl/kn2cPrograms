@@ -58,6 +58,13 @@ RobotCommand TacticAttacker::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
+    else if(wm->ourRobot[id].Status == AgentStatus::Chiping)
+    {
+        rc = ChipTheBallIndirect();
+
+        rc.isBallObs = true;
+        rc.isKickObs = true;
+    }
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
     {
         rc.fin_pos = idlePosition;
@@ -246,6 +253,29 @@ RobotCommand TacticAttacker::StartTheGame()
     return rc;
 }
 
+RobotCommand TacticAttacker::ChipTheBallIndirect()
+{
+    RobotCommand rc;
+
+    rc.maxSpeed = 0.5;
+
+    Vector2D target = receiverPos;
+    Vector2D goal(target.x,target.y);
+
+    OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,goal,wm->ourRobot[this->id].pos);
+
+    rc.fin_pos = kickPoint.pos;
+    rc.useNav = kickPoint.useNav;
+
+    if(  kickPoint.readyToShoot && everyOneInTheirPos)
+    {
+        rc.kickspeedz = 255;// detectKickSpeed(goal);
+        qDebug()<<"Chip...";
+    }
+
+    return rc;
+}
+
 int TacticAttacker::findBestPlayerForPass()
 {
     int index = -1;
@@ -302,6 +332,12 @@ void TacticAttacker::isKicker()
     findReciever = true;
 }
 
+void TacticAttacker::isChiper()
+{
+    wm->ourRobot[this->id].Status = AgentStatus::Chiping;
+    findReciever = true;
+}
+
 void TacticAttacker::isKicker(int recieverID)
 {
     wm->ourRobot[this->id].Status = AgentStatus::Kicking;
@@ -312,6 +348,13 @@ void TacticAttacker::isKicker(int recieverID)
 void TacticAttacker::isKicker(Vector2D pos)
 {
     wm->ourRobot[this->id].Status = AgentStatus::Kicking;
+    findReciever = false;
+    this->receiverPos = pos;
+}
+
+void TacticAttacker::isChiper(Vector2D pos)
+{
+    wm->ourRobot[this->id].Status = AgentStatus::Chiping;
     findReciever = false;
     this->receiverPos = pos;
 }

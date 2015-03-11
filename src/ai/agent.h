@@ -11,6 +11,7 @@ enum AgentStatus
     Idle,
     Passing,
     Kicking,
+    Chiping,
     FollowingBall,
     BlockingBall,
     BlockingRobot,

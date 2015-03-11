@@ -6,5 +6,7 @@
 #include "freekick2.h"
 #include "freekick3.h"
 #include "freekick4.h"
+#include "freekick5.h"
+#include "freekick6.h"
 
 #endif // FREEKICKS_H

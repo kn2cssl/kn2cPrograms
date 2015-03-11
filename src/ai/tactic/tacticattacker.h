@@ -14,10 +14,15 @@ public:
     RobotCommand KickTheBallIndirect();
     RobotCommand KickTheBallDirect();
     RobotCommand StartTheGame();
+
+    RobotCommand ChipTheBallIndirect();
+
     int findBestPlayerForPass();
     void isKicker();
+    void isChiper();
     void isKicker(int recieverID);
     void isKicker(Vector2D pos);
+    void isChiper(Vector2D pos);
     void waitTimerStart(bool onMyCommand);
     void setGameOnPositions(Position pos);
     void setGameOnPositions(Vector2D pos);

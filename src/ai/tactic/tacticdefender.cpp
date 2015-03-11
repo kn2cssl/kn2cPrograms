@@ -35,7 +35,13 @@ RobotCommand TacticDefender::getCommand()
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::RecievingPass)
     {
-        rc.fin_pos.loc = Vector2D(0,0);
+        rc.fin_pos = idlePosition;
+
+        rc.maxSpeed = 2.5;
+
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingBall)
     {
@@ -291,4 +297,14 @@ RobotCommand TacticDefender::getCommand()
     }
 
     return rc;
+}
+
+void TacticDefender::setIdlePosition(Position pos)
+{
+    this->idlePosition = pos;
+}
+
+void TacticDefender::setIdlePosition(Vector2D pos)
+{
+    this->idlePosition.loc = pos;
 }
