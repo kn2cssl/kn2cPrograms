@@ -1,4 +1,5 @@
 #include "ai.h"
+#include "play/playcontrol.h"
 #include "play/playfreekickopp.h"
 #include "play/playfreekickour.h"
 #include "play/playgameon.h"
@@ -29,6 +30,7 @@ AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
 
     firstWait = 0;
 
+    plays.append(new playControl(wm));
     plays.append(new PlayFreeKickOpp(wm));
     plays.append(new PlayFreeKickOur(wm));
     plays.append(new PlayGameOn(wm));

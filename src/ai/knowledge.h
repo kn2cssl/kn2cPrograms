@@ -46,6 +46,8 @@ public:
     bool agentIsFree(int index);
     bool isOccupied(Vector2D input);
 
+    bool kickPermission;
+
     QString gameStatus();
 
     QList<int> findAttackers();

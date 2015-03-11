@@ -75,7 +75,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     {
         if(ci.fin_pos.loc == ci.mid_pos.loc)
         {
-            kp = fabs(err1.length())+2.6;
+            kp = fabs(err1.length())+2.9;
         }
         else
         {
@@ -109,52 +109,40 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     double werr = fabs(werr1);
 
-    if(err1.length()>.05)
+
+    wki=.003*fabs(werr0);
+    wintegral = wintegral + werr1*AI_TIMER;
+
+    wkp=0;
+    wkd=0;
+    if(werr<.3)
     {
-        wkp = werr*werr;
-        //wki = .0015;
-        wkd = .5;
-        //        wintegral = wintegral + werr1*AI_TIMER;
-        //        if(werr<.2)wintegral=0;
-    }
+         wintegral=0;
+        //wintegral = wintegral - 3*werr1*AI_TIMER;
 
-    if(err1.length()<.05)
-    {
-
-
-        if(werr > 0.523)//30deg
-        {
-            //if(ci.id == 3) qDebug() <<"C"<<timer;
-            wkp = .9;
-            wkd = .4;
-        }
-        else if(werr>.174)//10deg
-        {
-            //if(ci.id == 3) qDebug() <<"D"<<timer;
-            wkp = .2;
-            wkd = .4;
-        }
-        else
-        {
-            //if(ci.id == 3) qDebug() <<"E"<<timer;
-            wkp = .055;
-
-            wkd = 0.04;
-        }
+        wkp=0.4;
+        wkd=0.004;
     }
 
 
 
-    //    wderived1 = (ci.cur_pos.dir - werr0)/3;
-    //    wderived0 = wderived0 + (wderived1 - wderived0)*0.1;
-    //    werr0 = ci.cur_pos.dir;
-    wderived1 = (ci.cur_vel.dir - werr0)*10;
+    //if(ci.id == 3)
+    //qDebug()<<werr1<<wintegral;
+    werr0=werr0+(werr1-werr0)*0.1;
+
+    wderived1 = (ci.cur_vel.dir)*10;
     wderived0 = ci.cur_vel.dir;
-    wu1 = (werr1*wkp) + wintegral*wki*werr - wderived1*wkd;
-    if (wu1>MAXROTATIONSPEED) wu1=MAXROTATIONSPEED;
-    if (wu1<-MAXROTATIONSPEED) wu1=-MAXROTATIONSPEED;
+    wu1 = werr1*wkp + wintegral*wki - wderived1*wkd;
+
+
+    if (fabs(wu1)>MAXROTATIONSPEED)
+    {
+        wintegral = wintegral - werr1*AI_TIMER;
+        wu1=MAXROTATIONSPEED*sign(wu1);
+    }
+
     RotationSpeed = wu1;
-    //if(ci.id == 5)qDebug()<<werr1*wkp<<wintegral*wki<<- wderived1*wkd<<werr1;
+
 
     double alpha = ci.cur_pos.dir ;+atan(RotationSpeed*0.187);
     //alpha is the corrected angel whitch handle the problem
@@ -172,7 +160,8 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     ans.VY = RotLinearSpeed.y;
     ans.VW = RotationSpeed ;
 
-    if(fabs(werr1) <0.04  && err1.length()<.002) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+    if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+
 
     if(err1.length()<.02)
     {

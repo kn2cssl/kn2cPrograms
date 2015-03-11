@@ -614,26 +614,29 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
     if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
     DistErr = (KickPos.pos.loc - robotPos.loc).length();
+    if(DirErr < 15 && DistErr < 70) kickPermission = true;
+    if(DirErr > 18 && DistErr > 80) kickPermission = false;
 
-    if(DirErr < 15 && DistErr < 70)
+    if(kickPermission)
     {
-        //qDebug()<<"A";
+
 
         //control point >>navigation : OFF
         KickDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
         KickPos.useNav = false ;
-        KickPos.pos.dir = (ballLoc - robotPos.loc).dir().radian();//(-KickDir).dir().radian();//
+        KickPos.pos.dir = (-KickDir).dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
         KickPos.pos.loc = ballLoc + KickDir;
 
         DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
         if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
         DistErr = (KickPos.pos.loc - robotPos.loc).length();(-KickDir).dir().radian();
+                qDebug()<<"A"<<DirErr<<DistErr;
 
-        if(DirErr < 2 && DistErr < 20)
+        if(DirErr < 5 && DistErr < 45)
         {
-             KickPos.pos.dir = (-KickDir).dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
-            KickPos.readyToShoot = true;
+           KickPos.readyToShoot = true;
+            qDebug()<<"shooooooooooooooooooooooooooooooooooooooot";
         }
         else
         {
@@ -643,7 +646,7 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
     }
     else
     {
-        //qDebug()<<"B";
+        qDebug()<<"B";
     }
 
 
