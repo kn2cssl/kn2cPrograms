@@ -9,6 +9,7 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     fk.append(new freeKick5(wm));
     fk.append(new freeKick6(wm));
     fk.append(new freeKick7(wm));
+    fk.append(new freeKick8(wm));
 }
 int PlayFreeKickOur::enterCondition()
 {
@@ -27,7 +28,6 @@ int PlayFreeKickOur::enterCondition()
     else
         return 0;
     return 0;
-    // return 2000000;
 }
 
 void PlayFreeKickOur::initRole()
