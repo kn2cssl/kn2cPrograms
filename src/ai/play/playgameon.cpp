@@ -205,44 +205,22 @@ void PlayGameOn::initRole()
     numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
-    switch (activeAgents.length()) {
-    case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        break;
-    case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        break;
-    case 3:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        break;
-    case 4:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        break;
-    case 5:
-        switch (numberOfDef) {
-        case 2:
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
-            break;
-        case 3:
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-            break;
-        }
-        break;
+
+    QList<AgentRole> roles;
+    roles.append(AgentRole::DefenderLeft);
+    roles.append(AgentRole::DefenderRight);
+    roles.append(AgentRole::AttackerLeft);
+    roles.append(AgentRole::AttackerRight);
+    roles.append(AgentRole::AttackerMid);
+
+    for(int i=0;i<activeAgents.size();i++)
+    {
+        if( roleIsValid(wm->ourRobot[activeAgents.at(i)].Role) )
+            roles.removeOne(wm->ourRobot[activeAgents.at(i)].Role);
+        else
+            wm->ourRobot[activeAgents.at(i)].Role = roles.takeFirst();
     }
+
     rolesIsInit = true;
 }
 
@@ -293,6 +271,14 @@ void PlayGameOn::setGameOnPos(int ourR, Vector2D loc)
     default:
         break;
     }
+}
+
+bool PlayGameOn::roleIsValid(AgentRole role)
+{
+    if( role == AgentRole::NoRole)
+        return false;
+
+    return true;
 }
 
 void PlayGameOn::execute()

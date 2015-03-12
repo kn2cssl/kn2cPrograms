@@ -32,6 +32,7 @@ private:
     virtual void initRole();
     void coach();
     void setGameOnPos(int ourR,Vector2D loc);
+    bool roleIsValid(AgentRole role);
 };
 
 #endif // PLAYGAMEON_H
