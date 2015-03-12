@@ -4,25 +4,17 @@ freeKick1::freeKick1(WorldModel *worldmodel, QObject *parent) :
     freeKick_base(worldmodel,parent)
 {
     freeKickStart = false;
-
     freeKickRegion = fkRegion::RightRegion;
     oppLevel = Level::Beginner;
-
-    tGolie = new TacticGoalie(wm);
-
-    tDefenderLeft = new TacticDefender(wm);
-    tDefenderRight = new TacticDefender(wm);
-    tDefenderMid = new TacticDefender(wm);
-
-    tAttackerLeft = new TacticAttacker(wm);
-    tAttackerMid = new TacticAttacker(wm);
-    tAttackerRight = new TacticAttacker(wm);
 }
 
 int freeKick1::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                             , Vector2D(Field::MaxX,Field::MinY)))
+                             , Vector2D(Field::MaxX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+                                         , Vector2D(Field::MaxX,Field::MinY)))
         return 500;
 
     return 0;

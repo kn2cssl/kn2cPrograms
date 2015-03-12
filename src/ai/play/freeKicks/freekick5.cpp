@@ -10,7 +10,10 @@ freeKick5::freeKick5(WorldModel *wm, QObject *parent) :
 int freeKick5::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,Field::MaxY)
-                             , Vector2D(0.33*Field::MaxX,Field::MinY)) )
+                             , Vector2D(0.33*Field::MaxX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,0.33*Field::MinY)
+                                         , Vector2D(0.33*Field::MaxX,Field::MinY)))
     {
         if(wm->gs_last != wm->gs)
         {

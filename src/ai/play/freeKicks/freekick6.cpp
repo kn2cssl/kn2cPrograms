@@ -3,14 +3,18 @@
 freeKick6::freeKick6(WorldModel *wm, QObject *parent) :
     freeKick_base(wm ,parent)
 {
-    this->freeKickRegion = fkRegion::RightRegion;
+    this->freeKickRegion = fkRegion::LeftRegion;
     this->oppLevel = Level::Amatuer;
 }
 
 int freeKick6::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(Field::MinX,Field::MaxY)
-                             , Vector2D(0.33*Field::MinX,Field::MinY)) )
+                             , Vector2D(0.33*Field::MinX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(Field::MinX,0.33*Field::MinY)
+                                 , Vector2D(0.33*Field::MinX,Field::MinY))
+            )
     {
         if(wm->gs_last != wm->gs)
         {
@@ -18,7 +22,7 @@ int freeKick6::enterCondition()
             state = 0;
         }
 
-        return 600;
+        return 500;
     }
 
     return 0;

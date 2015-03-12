@@ -93,6 +93,9 @@ QString MainWindow::returnStatus(AgentStatus Status)
     case AgentStatus::Kicking :
         out = "Kicking";
         break;
+    case AgentStatus::Chiping :
+        out = "Chiping";
+        break;
     case AgentStatus::FollowingBall :
         out = "FollowingBall";
         break;

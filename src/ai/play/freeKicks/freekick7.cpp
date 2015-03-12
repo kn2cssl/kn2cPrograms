@@ -11,7 +11,10 @@ freeKick7::freeKick7(WorldModel *wm, QObject *parent) :
 int freeKick7::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                             , Vector2D(Field::MaxX,Field::MinY)))
+                             , Vector2D(Field::MaxX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+                                         , Vector2D(Field::MaxX,Field::MinY)))
     {
         if(wm->gs_last != wm->gs)
         {
@@ -19,7 +22,7 @@ int freeKick7::enterCondition()
             state = 0;
         }
 
-        return 500;
+        return 900;
     }
 
     return 0;
@@ -71,7 +74,7 @@ void freeKick7::setPositions(QList<int> our)
                 tAttackerMid->setIdlePosition(Vector2D(wm->ball.pos.loc.x-200,wm->ball.pos.loc.y));
                 break;
             case AgentRole::DefenderLeft:
-                pos.loc = Vector2D(-sign(wm->ball.pos.loc.x)*200 ,-sign(wm->ball.pos.loc.y)*200);
+                pos.loc = Vector2D(-sign(wm->ball.pos.loc.x)*50 ,-sign(wm->ball.pos.loc.y)*50);
                 pos.dir = (Field::oppGoalCenter - wm->ourRobot[tDefenderLeft->getID()].pos.loc).dir().radian();
                 tDefenderLeft->setIdlePosition(pos);
                 break;
@@ -123,10 +126,10 @@ bool freeKick7::zeroCheckAttackersDistance()
 bool freeKick7::firstCheckDistance()
 {
     if( (wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc
-                              , Vector2D(sign(wm->ball.pos.loc.x)*200 ,sign(wm->ball.pos.loc.y)*200),800))
+                              , Vector2D(sign(wm->ball.pos.loc.x)*200 ,sign(wm->ball.pos.loc.y)*200),900))
             &&
             (wm->kn->ReachedToPos(wm->ourRobot[tDefenderLeft->getID()].pos.loc
-                                  , Vector2D(-sign(wm->ball.pos.loc.x)*200 ,-sign(wm->ball.pos.loc.y)*200),100)) )
+                                  , Vector2D(-sign(wm->ball.pos.loc.x)*50 ,-sign(wm->ball.pos.loc.y)*50),400)) )
         return true;
 
     return false;

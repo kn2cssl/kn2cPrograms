@@ -11,7 +11,10 @@ freeKick4::freeKick4(WorldModel *wm, QObject *parent) :
 int freeKick4::enterCondition()
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                             , Vector2D(Field::MaxX,Field::MinY)))
+                             , Vector2D(Field::MaxX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+                                         , Vector2D(Field::MaxX,Field::MinY)))
     {
         if(wm->gs_last != wm->gs)
         {
