@@ -31,7 +31,7 @@ int PlayFreeKickOpp::enterCondition()
             rolesIsInit = false;
             go2ThePositions = false;
 
-            waitTimer->start(1000);
+            waitTimer->start(500);
         }
         //        else
         //        {
@@ -187,30 +187,39 @@ void PlayFreeKickOpp::setPositions(int index)
         alfa=-120.0*3.14/180;
     }
 
-    TacticAttacker *atck;
+    TacticAttacker* atck;
+    Position pos;
 
     switch (wm->ourRobot[index].Role) {
     case AgentRole::AttackerMid:
         atck = tAttackerMid;
+        finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
+        finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+        pos.loc = finalPos;
+        pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
+        atck->setIdlePosition(pos);
         break;
     case AgentRole::AttackerRight:
         atck = tAttackerRight;
         alfa+=AngleDeg::PI/10;
+        finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
+        finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+        pos.loc = finalPos;
+        pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
+        atck->setIdlePosition(pos);
         break;
     case AgentRole::AttackerLeft:
         atck = tAttackerLeft;
         alfa-=AngleDeg::PI/10;
+        finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
+        finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
+        pos.loc = finalPos;
+        pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
+        atck->setIdlePosition(pos);
         break;
     default:
         break;
     }
-    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
-    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
-    Position pos;
-    pos.loc = finalPos;
-    pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
-
-    atck->setIdlePosition(pos);
 }
 
 void PlayFreeKickOpp::setPlayer2Keep(int ourR, int oppR)
@@ -249,5 +258,4 @@ void PlayFreeKickOpp::execute()
             setPositions(activeAgents.at(i));
         }
     }
-
 }
