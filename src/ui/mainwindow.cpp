@@ -355,6 +355,13 @@ void MainWindow::timer_timeout()
     sc->wm->pos_coef[5] = ui->spnPosC5->value();
     ui->txtPosC5->setText(QString::number(sc->wm->pos_coef[5]));
 
+    if( ui->oppIsBeginner->isChecked() )
+        sc->wm->oppLevel = Level::Beginner;
+    if( ui->oppIsAmatuer->isChecked() )
+        sc->wm->oppLevel = Level::Amatuer;
+    if( ui->oppIsProfessional->isChecked() )
+        sc->wm->oppLevel = Level::Profesional;
+
     //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
     sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
