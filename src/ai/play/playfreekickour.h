@@ -14,6 +14,8 @@ public:
 private:
     virtual void initRole();
     QList<freeKick_base*> fk;
+    freeKick_base *freeKick;
+    bool freeKickSelected;
 
 };
 

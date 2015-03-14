@@ -2,6 +2,8 @@
 PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     Play("PlayFreeKickOur", worldmodel, parent)
 {
+    freeKickSelected = false;
+
     fk.append(new freeKick1(wm));
     fk.append(new freeKick2(wm));
     fk.append(new freeKick3(wm));
@@ -19,6 +21,7 @@ int PlayFreeKickOur::enterCondition()
         if(wm->gs_last != wm->gs)
         {
             rolesIsInit = false;
+            freeKickSelected = false;
         }
         else
         {
@@ -38,19 +41,36 @@ void PlayFreeKickOur::initRole()
 
 void PlayFreeKickOur::execute()
 {
-    int max_i = 0;
-    int max_p = 0;
-    for(int i=0; i<fk.size(); i++)
+    if( !freeKickSelected )
     {
-        int p = fk[i]->enterCondition(wm->oppLevel);
-        if(p >= max_p)
+        QList<freeKick_base*> candidates;
+
+        int max_i = 0;
+        int max_p = 0;
+
+        for(int i=0; i<fk.size(); i++)
         {
-            max_i = i;
-            max_p = p;
+            int p = fk[i]->enterCondition(wm->oppLevel);
+            if(p > max_p)
+            {
+                max_i = i;
+                max_p = p;
+                candidates.clear();
+                candidates.append(fk[i]);
+            }
+            else if ( p == max_p )
+            {
+                candidates.append(fk[i]);
+            }
         }
+
+        srand(time(NULL));
+        int finalNum = rand()%(candidates.size());
+
+        freeKick = candidates.at(finalNum);
+        freeKickSelected = true;
     }
 
-    freeKick_base *freeKick = fk[max_i];
     freeKick->execute();
 
     for(int i=0; i<PLAYERS_MAX_NUM; i++)
