@@ -7,9 +7,9 @@ freeKick8::freeKick8(WorldModel *wm, QObject *parent) :
     this->oppLevel = Level::Amatuer;
 }
 
-int freeKick8::enterCondition()
+int freeKick8::enterCondition(Level level)
 {
-    return 400;
+    return 200;
 }
 
 void freeKick8::setPositions()
@@ -61,6 +61,7 @@ void freeKick8::execute()
     target = Field::oppGoalCenter;
     tAttackerMid->isChiper(target);
     tAttackerMid->waitTimerStart(true);
+    tAttackerMid->youHavePermissionForKick();
     activeAgents.removeOne(tAttackerMid->getID());
 
     while(activeAgents.size() > 0)

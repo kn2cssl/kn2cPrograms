@@ -8,10 +8,11 @@ class freeKick1 : public freeKick_base
 public:
     explicit freeKick1(WorldModel *worldmodel, QObject *parent = 0);
     virtual void execute();
-    virtual int enterCondition();
+    virtual int enterCondition(Level level);
 
 private:
     void setPositions(int index);
+    bool firstTimeInitial;
 };
 
 #endif // FREEKICK1_H

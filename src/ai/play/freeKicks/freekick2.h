@@ -9,7 +9,7 @@ class freeKick2 : public freeKick_base
     Q_OBJECT
 public:
     explicit freeKick2(WorldModel *wm,QObject *parent = 0);
-    virtual int enterCondition();
+    virtual int enterCondition(Level level);
     virtual void execute();
 
 private:

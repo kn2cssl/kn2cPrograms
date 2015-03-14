@@ -7,7 +7,7 @@ freeKick5::freeKick5(WorldModel *wm, QObject *parent) :
     this->oppLevel = Level::Amatuer;
 }
 
-int freeKick5::enterCondition()
+int freeKick5::enterCondition(Level level)
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,Field::MaxY)
                              , Vector2D(0.33*Field::MaxX,0.33*Field::MaxY))
@@ -21,7 +21,10 @@ int freeKick5::enterCondition()
             state = 0;
         }
 
-        return 600;
+        if( level == this->oppLevel)
+            return 600;
+        else
+            return 300;
     }
 
     return 0;

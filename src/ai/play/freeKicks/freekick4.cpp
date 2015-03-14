@@ -8,13 +8,14 @@ freeKick4::freeKick4(WorldModel *wm, QObject *parent) :
     this->oppLevel = Level::Amatuer;
 }
 
-int freeKick4::enterCondition()
+int freeKick4::enterCondition(Level level)
 {
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                             , Vector2D(Field::MaxX,0.33*Field::MaxY))
-            ||
-            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
-                                         , Vector2D(Field::MaxX,Field::MinY)))
+    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
+                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
+         ||
+         wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+                              , Vector2D(Field::MaxX,Field::MinY)))
+            && (wm->kn->CountActiveAgents() == 6) )
     {
         if(wm->gs_last != wm->gs)
         {
@@ -22,7 +23,10 @@ int freeKick4::enterCondition()
             state = 0;
         }
 
-        return 500;
+        if( level == this->oppLevel)
+            return 600;
+        else
+            return 300;
     }
 
     return 0;
@@ -95,7 +99,7 @@ void freeKick4::setPositions(QList<int> our)
                 pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
 
                 if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc
-                                , Vector2D(0.6*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY),200))
+                                         , Vector2D(0.6*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY),200))
                     state = 3;
                 tAttackerLeft->setIdlePosition(pos);
                 break;
