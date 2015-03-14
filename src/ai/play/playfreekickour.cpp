@@ -10,6 +10,7 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     fk.append(new freeKick6(wm));
     fk.append(new freeKick7(wm));
     fk.append(new freeKick8(wm));
+    fk.append(new freeKickDirect(wm));
 }
 int PlayFreeKickOur::enterCondition()
 {
@@ -41,8 +42,8 @@ void PlayFreeKickOur::execute()
     int max_p = 0;
     for(int i=0; i<fk.size(); i++)
     {
-        int p = fk[i]->enterCondition();
-        if(p > max_p)
+        int p = fk[i]->enterCondition(wm->oppLevel);
+        if(p >= max_p)
         {
             max_i = i;
             max_p = p;
