@@ -84,8 +84,9 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
     for(int i=0; i<obs.size(); i++)
     {
+        //Circle2D obs_circle=obs.at(i);
         int    p_count = 6;
-        double p_dist  = ROBOT_RADIUS * 2  + BALL_RADIUS;
+        double p_dist  = 2*ROBOT_RADIUS+BALL_RADIUS; //obs_circle.radius();
 
         for(int j=0; j<p_count; j++)
         {
@@ -149,6 +150,7 @@ QList<Circle2D> MapSearchNode::getObsCircle()
     double b_rad = ROBOT_RADIUS + BALL_RADIUS;
     double r_rad = ROBOT_RADIUS * 2 ;
 
+
     if(isBallObs && wm->ball.isValid)
     {
         Circle2D c(wm->ball.pos.loc, b_rad);
@@ -189,6 +191,17 @@ QList<Circle2D> MapSearchNode::getObsCircle()
         Circle2D c(wm->oppRobot[i].pos.loc+ wm->oppRobot[i].vel.loc * AI_TIMER, r_rad);
         result.append(c);
     }
+
+//    for(int i=0; i<wm->predict_pos.size(); i++)
+//    {
+//        Circle2D c(wm->predict_pos[i], b_rad);
+//        qDebug()<<"result size " << result.size();
+//        result.append(c);
+//        qDebug()<<"result size " << result.size();
+//        wm->predict_pos.clear();
+//    }
+
+
     //kamout
 
     return result;

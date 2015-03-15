@@ -19,6 +19,7 @@ struct OperatingPosition
     Position pos;
     bool useNav;
     bool readyToShoot;
+    float kickSpeed;
     OperatingPosition()
     {
         useNav=true;

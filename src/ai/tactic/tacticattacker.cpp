@@ -30,7 +30,7 @@ RobotCommand TacticAttacker::getCommand()
         //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
         if( p.readyToShoot )
         {
-            rc.kickspeedx = detectKickSpeed(target.pos);
+            rc.kickspeedx = p.kickSpeed;
         }
 
         rc.maxSpeed = 2;

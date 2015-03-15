@@ -10,7 +10,7 @@ playControl::playControl(WorldModel *worldmodel, QObject *parent) :
 
 int playControl::enterCondition()
 {
-    return 20000;
+    return 0;
 }
 
 void playControl::initRole()

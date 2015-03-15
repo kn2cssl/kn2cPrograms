@@ -57,6 +57,7 @@ public:
     double oppScoringChance(Vector2D loc);
 
     OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
+    Vector2D last_ball_vell;
 
 private:
     WorldModel* _wm;

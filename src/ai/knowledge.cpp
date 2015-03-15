@@ -5,6 +5,7 @@ Knowledge::Knowledge(WorldModel *wm, QObject *parent) :
     QObject(parent),
     _wm(wm)
 {
+    kickPermission=false;
 }
 
 int Knowledge::CountActiveAgents()
@@ -266,8 +267,10 @@ Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, d
 
     double catchDist = targetSpeed.length() * tf * 1000;
     Vector2D catchDiff(catchDist * cos(gamaT), catchDist * sin(gamaT));
+    Vector2D Pred_pos=targetPos + catchDiff;
 
-    return targetPos + catchDiff;
+    //_wm->predict_pos.append(Pred_pos);
+    return Pred_pos;
 }
 
 bool Knowledge::CanKick(Position robotPos, Vector2D ballPos)
@@ -598,57 +601,102 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos)
 {
     OperatingPosition KickPos;
-    Vector2D KickDir = (ballLoc - target);
-
-    //possession point >>navigation : ON
-    KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*1.5);
-    KickPos.useNav = true ;
-
-    KickPos.pos.dir = (-KickDir).dir().radian();
-    KickPos.pos.loc = ballLoc + KickDir;
-
-    //possession point check
+    Vector2D KickDir = (target - ballLoc);
+    bool shoot_sensor = true;
     double DirErr;
     double DistErr;
-    DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
-    if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+    double BallDir = _wm->ball.vel.loc.dir().radian();
 
-    DistErr = (KickPos.pos.loc - robotPos.loc).length();
-    if(DirErr < 15 && DistErr < 70) kickPermission = true;
-    if(DirErr > 18 && DistErr > 80) kickPermission = false;
+   if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-80)<BallDir && (-KickDir.dir().radian()+80)>BallDir)
+   {
+       KickPos.pos.dir = BallDir-M_PI;
+       if (KickPos.pos.dir > M_PI) KickPos.pos.dir -= 2 * M_PI;
+       if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
+
+       KickPos.pos.loc = ballLoc ;
+       qDebug()<<"BallDir"<<BallDir;
+    }
+       else
+       {
+           //possession point >>navigation : ON
+           KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*2);
+           KickPos.useNav = true ;
+
+           KickPos.pos.dir = KickDir.dir().radian();
+           KickPos.pos.loc = ballLoc - KickDir;
+
+           //possession point check
+           DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
+           if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+
+           DistErr = (KickPos.pos.loc - robotPos.loc).length();
+           if(DirErr < 15 && DistErr < BALL_RADIUS*2) kickPermission = true;
+           if(DirErr > 19 && DistErr > BALL_RADIUS*3) kickPermission = false;
+
+       }
+
+
+
 
     if(kickPermission)
     {
+        Vector2D ball_vel_change;
 
+
+        ball_vel_change =_wm->ball.vel.loc - last_ball_vell;
+        last_ball_vell = _wm->ball.vel.loc ;
+
+        if(ball_vel_change.length()>0.02)
+            shoot_sensor = false;
 
         //control point >>navigation : OFF
         KickDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
         KickPos.useNav = false ;
-        KickPos.pos.dir = (-KickDir).dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
-        KickPos.pos.loc = ballLoc + KickDir;
+        KickPos.pos.dir = KickDir.dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
+        KickPos.pos.loc = ballLoc - KickDir;
 
         DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
         if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
-        DistErr = (KickPos.pos.loc - robotPos.loc).length();(-KickDir).dir().radian();
-                qDebug()<<"A"<<DirErr<<DistErr;
+        DistErr = (KickPos.pos.loc - robotPos.loc).length();
+        //qDebug()<<"A"<<DirErr<<DistErr<<ball_vel_change.length();
 
-        if(DirErr < 5 && DistErr < 45)
+        //#kick distance and angel limits
+        if(shoot_sensor)//kicking limits when shooting with sensor
         {
-           KickPos.readyToShoot = true;
-            qDebug()<<"shooooooooooooooooooooooooooooooooooooooot";
-        }
-        else
-        {
-            KickPos.readyToShoot = false;
-        }
 
+        }
+        else//kicking limits when shooting without sensor
+        {
+            if(DirErr < 10 && DistErr < 45)
+            {
+                KickPos.readyToShoot = true;
+                qDebug()<<"shooooooooooooooooooooooooooooooooooooooot";
+            }
+            else
+            {
+                KickPos.readyToShoot = false;
+            }
+
+        }
+        //##kick distance and angel limits
     }
     else
     {
         qDebug()<<"B";
     }
 
+    if(shoot_sensor)//shooting with sensor or without it
+    {
+        KickPos.kickSpeed=256;
+    }
+    else
+    {
+        KickPos.kickSpeed=255;
+    }
+
 
     return KickPos;
 }
+
+
