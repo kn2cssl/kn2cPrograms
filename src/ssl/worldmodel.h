@@ -19,6 +19,13 @@ struct tANDp
     int prob;
 };
 
+enum Level
+{
+    Beginner,
+    Amatuer,
+    Profesional
+};
+
 class WorldModel
 {
 public:
@@ -34,6 +41,9 @@ public:
     int ref_goalie_opp;
     bool isSim;
     Knowledge *kn;
+
+    //----Input Data----------
+    Level oppLevel;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;

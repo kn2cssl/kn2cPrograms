@@ -15,6 +15,7 @@ public:
     virtual Tactic* getTactic(int id);
     virtual int enterCondition() = 0;
     bool conditionChanged();
+    void zonePositions(int leftID,int RightID,Position& goalie,Position& left,Position& right);
 
 
 protected:

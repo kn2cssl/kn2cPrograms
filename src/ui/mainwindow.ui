@@ -840,6 +840,68 @@
           </property>
          </widget>
         </widget>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="title">
+          <string>Opposite Team</string>
+         </attribute>
+         <widget class="QLabel" name="label_40">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>20</y>
+            <width>131</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Team Level :</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="oppIsBeginner">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>60</y>
+            <width>201</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Beginner</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="oppIsProfessional">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>120</y>
+            <width>141</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Professional</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="oppIsAmatuer">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>90</y>
+            <width>85</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Amatuer</string>
+          </property>
+         </widget>
+        </widget>
        </widget>
       </widget>
       <widget class="QWidget" name="tabLog">

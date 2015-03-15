@@ -12,6 +12,7 @@ public:
     virtual void execute();
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
+    bool collisionwithDefenders(Vector2D center,Vector2D left,Vector2D right);
 
 private:
     TacticGoalie*   tGolie;

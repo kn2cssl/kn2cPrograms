@@ -93,6 +93,9 @@ QString MainWindow::returnStatus(AgentStatus Status)
     case AgentStatus::Kicking :
         out = "Kicking";
         break;
+    case AgentStatus::Chiping :
+        out = "Chiping";
+        break;
     case AgentStatus::FollowingBall :
         out = "FollowingBall";
         break;
@@ -351,6 +354,13 @@ void MainWindow::timer_timeout()
     ui->txtPosC4->setText(QString::number(sc->wm->pos_coef[4]));
     sc->wm->pos_coef[5] = ui->spnPosC5->value();
     ui->txtPosC5->setText(QString::number(sc->wm->pos_coef[5]));
+
+    if( ui->oppIsBeginner->isChecked() )
+        sc->wm->oppLevel = Level::Beginner;
+    if( ui->oppIsAmatuer->isChecked() )
+        sc->wm->oppLevel = Level::Amatuer;
+    if( ui->oppIsProfessional->isChecked() )
+        sc->wm->oppLevel = Level::Profesional;
 
     //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();

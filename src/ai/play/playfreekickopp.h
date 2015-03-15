@@ -35,7 +35,7 @@ protected:
 private:
     void pressing();
     void setTactics(int index);
-    void setPositions(int index);
+    void setPositions();
     void setPlayer2Keep(int ourR,int oppR);
 };
 

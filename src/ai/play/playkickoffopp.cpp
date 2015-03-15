@@ -99,6 +99,11 @@ void PlayKickoffOpp::setTactics(int index)
 
 void PlayKickoffOpp::setPositions()
 {
+    Position goaliePos,leftDefPos,rightDefPos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     QList<int> opps = wm->kn->ActiveOppAgents();
     opps.removeOne(wm->ref_goalie_opp);
 

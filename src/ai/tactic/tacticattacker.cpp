@@ -17,17 +17,17 @@ RobotCommand TacticAttacker::getCommand()
 
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
+        rc.maxSpeed = 2;
+
         Vector2D v;
-        //        if( wm->ball.vel.loc.length() > 0.5 )
+
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-        //        else
-        //            v = wm->ball.pos.loc;
 
         tANDp target = findTarget();
         OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
         qDebug()<<wm->ball.vel.loc.length();
-        //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
+
         if( p.readyToShoot )
         {
             rc.kickspeedx = p.kickSpeed;
@@ -42,17 +42,26 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Kicking)
     {
-        if(wm->gs == STATE_Indirect_Free_kick_Our)
-        {
-            rc = KickTheBallIndirect();
-        }
-        else if(wm->gs == STATE_Free_kick_Our)
-        {
-            rc = KickTheBallDirect();
-        }
-        else if(wm->gs == STATE_Start)
+//        if(wm->gs == STATE_Indirect_Free_kick_Our)
+//        {
+//            rc = KickTheBallIndirect();
+//        }
+//        else if(wm->gs == STATE_Free_kick_Our)
+//        {
+//            rc = KickTheBallDirect();
+//        }
+//        else if(wm->gs == STATE_Start)
+//        {
+//            rc = StartTheGame();
+//        }
+
+        if(wm->gs == STATE_Start)
         {
             rc = StartTheGame();
+        }
+        else
+        {
+            rc = KickTheBallIndirect();
         }
 
         rc.isBallObs = true;
@@ -200,8 +209,33 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
     if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        rc.kickspeedx = 25;// detectKickSpeed(goal);
-        qDebug()<<"Kickk...";
+        Line2D ball2Target(wm->ball.pos.loc,goal);
+
+        QList<int> activeOpp = wm->kn->ActiveOppAgents();
+        bool wayIsClear = true;
+
+        for(int i=0;i<activeOpp.size();i++)
+        {
+            double distance = ball2Target.dist(wm->oppRobot[activeOpp.at(i)].pos.loc);
+            if( distance < ROBOT_RADIUS+BALL_RADIUS )
+            {
+                wayIsClear = false;
+                break;
+            }
+        }
+
+        if( wayIsClear )
+        {
+            rc.kickspeedx = 4;//255;// detectKickSpeed(goal);
+            qDebug()<<"Kickk...";
+        }
+        else
+        {
+            rc.kickspeedx = 3;//255;// detectKickSpeed(goal);
+            rc.kickspeedz = 3;
+            qDebug()<<"CHIP...";
+        }
+
     }
 
     return rc;
@@ -269,7 +303,8 @@ RobotCommand TacticAttacker::ChipTheBallIndirect()
 
     if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        rc.kickspeedz = 255;// detectKickSpeed(goal);
+        rc.kickspeedz = 3;// detectKickSpeed(goal);
+        rc.kickspeedx = 3;
         qDebug()<<"Chip...";
     }
 
@@ -364,7 +399,7 @@ void TacticAttacker::waitTimerStart(bool onMyCommand)
     if(!onMyCommand)
     {
         everyOneInTheirPos = false;
-        waitTimer->start(5000);
+        waitTimer->start(1500);
     }
 }
 

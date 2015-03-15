@@ -97,22 +97,16 @@ void PlayKickoffOur::setTactics(int index)
     }
 }
 
-void PlayKickoffOur::setPositions(int index)
+void PlayKickoffOur::setPositions()
 {
-    switch(wm->ourRobot[index].Role)
-    {
-    case AgentRole::AttackerMid:
-        tAttackerMid->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y),Field::oppGoalCenter));
-        break;
-    case AgentRole::AttackerRight:
-        tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , 1550),Field::oppGoalCenter));
-        break;
-    case AgentRole::AttackerLeft:
-        tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , -1550),Field::oppGoalCenter));
-        break;
-    default:
-        break;
-    }
+    Position goaliePos,leftDefPos,rightDefPos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
+    tAttackerMid->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y),Field::oppGoalCenter));
+    tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , 1550),Field::oppGoalCenter));
+    tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(Vector2D(wm->ball.pos.loc.x - 250 , -1550),Field::oppGoalCenter));
 }
 
 void PlayKickoffOur::execute()
@@ -122,14 +116,11 @@ void PlayKickoffOur::execute()
     initRole();
 
     for(int i=0;i<activeAgents.size();i++)
-    {
         setTactics(activeAgents.at(i));
-        setPositions(activeAgents.at(i));
-    }
+
+    setPositions();
 
     if( wm->cmgs.canKickBall() )
-    {
         wm->ourRobot[tAttackerMid->getID()].Status =  AgentStatus::Kicking;
-    }
 
 }

@@ -3,14 +3,18 @@
 freeKick6::freeKick6(WorldModel *wm, QObject *parent) :
     freeKick_base(wm ,parent)
 {
-    this->freeKickRegion = fkRegion::RightRegion;
+    this->freeKickRegion = fkRegion::LeftRegion;
     this->oppLevel = Level::Amatuer;
 }
 
-int freeKick6::enterCondition()
+int freeKick6::enterCondition(Level level)
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(Field::MinX,Field::MaxY)
-                             , Vector2D(0.33*Field::MinX,Field::MinY)) )
+                             , Vector2D(0.33*Field::MinX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(Field::MinX,0.33*Field::MinY)
+                                 , Vector2D(0.33*Field::MinX,Field::MinY))
+            )
     {
         if(wm->gs_last != wm->gs)
         {
@@ -18,7 +22,10 @@ int freeKick6::enterCondition()
             state = 0;
         }
 
-        return 600;
+        if( level == this->oppLevel)
+            return 600;
+        else
+            return 300;
     }
 
     return 0;
@@ -26,6 +33,11 @@ int freeKick6::enterCondition()
 
 void freeKick6::setPositions()
 {
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     Position pos;
 
     QList<int> ourAttackers = wm->kn->findAttackers();
@@ -82,21 +94,18 @@ void freeKick6::setPositions()
                 pos.loc = final;
                 pos.dir = (Field::oppGoalCenter - wm->ball.pos.loc).dir().radian();
                 tDefenderLeft->setIdlePosition(pos);
+
+                if( wm->kn->ReachedToPos(wm->ourRobot[tDefenderLeft->getID()].pos.loc
+                                         ,pos.loc, 95))
+                state = 2;
             }
             break;
         case AgentRole::AttackerMid:
             if( state == 1)
             {
-                pos.loc = Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y);
+                pos.loc = Vector2D(wm->ball.pos.loc.x-200,wm->ball.pos.loc.y);
                 pos.dir = 0;
                 tAttackerMid->setIdlePosition(pos);
-
-                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerMid->getID()].pos.loc
-                                         ,Vector2D(wm->ball.pos.loc.x-100,wm->ball.pos.loc.y)
-                                         , 95))
-                {
-                    state = 2;
-                }
             }
             else if(state == 0)
                 tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
@@ -151,12 +160,17 @@ void freeKick6::execute()
     if(state > 1)
     {
         activeAgents.removeOne(tAttackerMid->getID());
+        wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
+        activeAgents.removeOne(recieverID);
+        tAttackerMid->youHavePermissionForKick();
+    }
+    else if( state == 1)
+    {
         if(wm->cmgs.ourIndirectKick())
         {
             wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
             activeAgents.removeOne(recieverID);
         }
-        tAttackerMid->youHavePermissionForKick();
     }
 
     while(activeAgents.size() > 0)

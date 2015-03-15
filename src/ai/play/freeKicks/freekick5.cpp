@@ -7,10 +7,13 @@ freeKick5::freeKick5(WorldModel *wm, QObject *parent) :
     this->oppLevel = Level::Amatuer;
 }
 
-int freeKick5::enterCondition()
+int freeKick5::enterCondition(Level level)
 {
     if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,Field::MaxY)
-                             , Vector2D(0.33*Field::MaxX,Field::MinY)) )
+                             , Vector2D(0.33*Field::MaxX,0.33*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,0.33*Field::MinY)
+                                         , Vector2D(0.33*Field::MaxX,Field::MinY)))
     {
         if(wm->gs_last != wm->gs)
         {
@@ -18,7 +21,10 @@ int freeKick5::enterCondition()
             state = 0;
         }
 
-        return 600;
+        if( level == this->oppLevel)
+            return 600;
+        else
+            return 300;
     }
 
     return 0;
@@ -26,6 +32,11 @@ int freeKick5::enterCondition()
 
 void freeKick5::setPositions()
 {
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     Position pos;
 
     QList<int> ourAttackers = wm->kn->findAttackers();

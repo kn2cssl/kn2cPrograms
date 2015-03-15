@@ -49,22 +49,19 @@ void PlayPenaltyOur::setTactics(int index)
     }
 }
 
-void PlayPenaltyOur::setPositions(int index)
+void PlayPenaltyOur::setPositions()
 {
+    Position goaliePos,leftDefPos,rightDefPos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     Vector2D pos;
-    switch (wm->ourRobot[index].Role)
-    {
-    case AgentRole::AttackerRight :
-        pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y + (Field::MaxY*0.75));
-        tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
-        break;
-    case AgentRole::AttackerLeft :
-        pos.assign(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y - (Field::MaxY*0.75));
-        tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
-        break;
-    default:
-        break;
-    }
+    pos = Vector2D(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y + (Field::MaxY*0.75));
+    tAttackerRight->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
+
+    pos = Vector2D(Field::ourPenaltyParallelLineCenter.x,Field::ourPenaltyParallelLineCenter.y - (Field::MaxY*0.75));
+    tAttackerLeft->setIdlePosition(wm->kn->AdjustKickPoint(pos,Field::oppGoalCenter));
 }
 
 void PlayPenaltyOur::initRole()
@@ -139,8 +136,9 @@ void PlayPenaltyOur::execute()
     for(int i=0;i<activeAgents.size();i++)
     {
         setTactics(activeAgents.at(i));
-        setPositions(activeAgents.at(i));
     }
+
+    setPositions();
 
     wm->ourRobot[penaltyKicker->getID()].Status = AgentStatus::Kicking;
 }
