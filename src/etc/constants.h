@@ -5,10 +5,10 @@
 
 // global constants
 #define PLAYERS_MAX_NUM 12
-#define FIELD_MAX_X     3025
-#define FIELD_MAX_Y     2025
+#define FIELD_MAX_X     3275
+#define FIELD_MAX_Y     2275
 #define BALL_RADIUS     22
-#define ROBOT_RADIUS    90
+#define ROBOT_RADIUS    90.0
 
 #define NUMOFDEFENDERS 2
 

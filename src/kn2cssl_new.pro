@@ -166,7 +166,14 @@ SOURCES +=	main.cpp \
     geom/voronoi_diagram.cpp \
     ai/positioning.cpp \
     ai/play/playcontrol.cpp \
-    ai/tactic/tacticcontrol.cpp
+    ai/tactic/tacticcontrol.cpp \
+    ai/play/freeKicks/freekick_base.cpp \
+    ai/play/freeKicks/freekick1.cpp \
+    ai/play/freeKicks/freekick2.cpp \
+    ai/play/freeKicks/freekick3.cpp \
+    ai/play/freeKicks/freekick4.cpp \
+    ai/play/freeKicks/freekick5.cpp \
+    ai/play/freeKicks/freekick6.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -267,7 +274,15 @@ HEADERS  += \
     geom/voronoi_diagram.h \
     ai/positioning.h \
     ai/play/playcontrol.h \
-    ai/tactic/tacticcontrol.h
+    ai/tactic/tacticcontrol.h \
+    ai/play/freeKicks/freekick_base.h \
+    ai/play/freeKicks/freekick1.h \
+    ai/play/freeKicks/freeKicks.h \
+    ai/play/freeKicks/freekick2.h \
+    ai/play/freeKicks/freekick3.h \
+    ai/play/freeKicks/freekick4.h \
+    ai/play/freeKicks/freekick5.h \
+    ai/play/freeKicks/freekick6.h
 
 FORMS    +=	ui/mainwindow.ui
 

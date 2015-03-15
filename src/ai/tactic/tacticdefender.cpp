@@ -35,7 +35,13 @@ RobotCommand TacticDefender::getCommand()
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::RecievingPass)
     {
-        rc.fin_pos.loc = Vector2D(0,0);
+        rc.fin_pos = idlePosition;
+
+        rc.maxSpeed = 2.5;
+
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingBall)
     {
@@ -63,7 +69,7 @@ RobotCommand TacticDefender::getCommand()
         dtgc=(float)(Field::goalCircleEX_R)*sin(AngleDeg::PI-gama-beta)/sin(gama);
         dtgc2 = sqrt(dtgc*dtgc+(float)(ROBOT_RADIUS+10)*(float)(ROBOT_RADIUS+10));
         teta=atan((float)(ROBOT_RADIUS+10)/dtgc);
-        ballDistance=pow((pow(wm->ball.pos.loc.x+(float)(FIELD_MAX_X),2)+pow(wm->ball.pos.loc.y,2)),0.5);
+        ballDistance=pow((pow(wm->ball.pos.loc.x+(float)(Field::MaxX),2)+pow(wm->ball.pos.loc.y,2)),0.5);
 
         switch(wm->ourRobot[this->id].Role)
         {
@@ -71,19 +77,19 @@ RobotCommand TacticDefender::getCommand()
             if(abs(ballDeg)<alpha)
             {
                 rc.fin_pos.dir=ballDeg;
-                rc.fin_pos.loc=Vector2D(-(float)(FIELD_MAX_X)+Field::goalCircle_R+ROBOT_RADIUS,0.0+tan(ballDeg)*(Field::goalCircle_R+ROBOT_RADIUS));
+                rc.fin_pos.loc=Vector2D(-(float)(Field::MaxX)+Field::goalCircle_R+ROBOT_RADIUS,0.0+tan(ballDeg)*(Field::goalCircle_R+ROBOT_RADIUS));
             }
 
             else
             {
                 rc.fin_pos.dir=ballDeg;
-                rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg)*dtgc,0.0+sin(ballDeg)*dtgc};
+                rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg)*dtgc,0.0+sin(ballDeg)*dtgc};
             }
             break;
 
         case AgentRole::DefenderLeft:
             rc.fin_pos.dir=ballDeg;
-            rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg+teta)*dtgc2,0.0+sin(ballDeg+teta)*dtgc2};
+            rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg+teta)*dtgc2,0.0+sin(ballDeg+teta)*dtgc2};
             if(dtgc+2*ROBOT_RADIUS<ballDistance && ballDistance<dtgc+4*ROBOT_RADIUS && wm->ball.pos.loc.y>0)
             {
                 if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 30, 180))
@@ -107,7 +113,7 @@ RobotCommand TacticDefender::getCommand()
 
         case AgentRole::DefenderRight:
             rc.fin_pos.dir=ballDeg;
-            rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg-teta)*dtgc2,0.0+sin(ballDeg-teta)*dtgc2};
+            rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg-teta)*dtgc2,0.0+sin(ballDeg-teta)*dtgc2};
             if(dtgc+2*ROBOT_RADIUS<ballDistance && ballDistance<dtgc+4*ROBOT_RADIUS && wm->ball.pos.loc.y<0)
             {
                 if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 30, 180))
@@ -200,7 +206,7 @@ RobotCommand TacticDefender::getCommand()
             dtgc=(float)(Field::goalCircleEX_R)*sin(AngleDeg::PI-gama-beta)/sin(gama);
             dtgc2=sqrt(dtgc*dtgc+(float)(2*ROBOT_RADIUS+10)*(float)(2*ROBOT_RADIUS+10));
             teta=atan((float)(2*ROBOT_RADIUS+10)/dtgc);
-            ballDistance=pow((pow(wm->ball.pos.loc.x+(float)(FIELD_MAX_X),2)+pow(wm->ball.pos.loc.y,2)),0.5);
+            ballDistance=pow((pow(wm->ball.pos.loc.x+(float)(Field::MaxX),2)+pow(wm->ball.pos.loc.y,2)),0.5);
 
             switch(wm->ourRobot[this->id].Role)
             {
@@ -208,19 +214,19 @@ RobotCommand TacticDefender::getCommand()
                 if(abs(ballDeg)<alpha)
                 {
                     rc.fin_pos.dir=ballDeg;
-                    rc.fin_pos.loc=Vector2D(-(float)(FIELD_MAX_X)+Field::goalCircle_R+ROBOT_RADIUS,0.0+tan(ballDeg)*(Field::goalCircle_R+ROBOT_RADIUS));
+                    rc.fin_pos.loc=Vector2D(-(float)(Field::MaxX)+Field::goalCircle_R+ROBOT_RADIUS,0.0+tan(ballDeg)*(Field::goalCircle_R+ROBOT_RADIUS));
                 }
 
                 else
                 {
                     rc.fin_pos.dir=ballDeg;
-                    rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg)*dtgc,0.0+sin(ballDeg)*dtgc};
+                    rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg)*dtgc,0.0+sin(ballDeg)*dtgc};
                 }
                 break;
 
             case AgentRole::DefenderLeft:
                 rc.fin_pos.dir=ballDeg;
-                rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg+teta)*dtgc2,0.0+sin(ballDeg+teta)*dtgc2};
+                rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg+teta)*dtgc2,0.0+sin(ballDeg+teta)*dtgc2};
                 if(dtgc+2*ROBOT_RADIUS<ballDistance && ballDistance<dtgc+4*ROBOT_RADIUS && wm->ball.pos.loc.y>0)
                 {
                     if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 30, 180))
@@ -244,7 +250,7 @@ RobotCommand TacticDefender::getCommand()
 
             case AgentRole::DefenderRight:
                 rc.fin_pos.dir=ballDeg;
-                rc.fin_pos.loc={-(float)(FIELD_MAX_X)+cos(ballDeg-teta)*dtgc2,0.0+sin(ballDeg-teta)*dtgc2};
+                rc.fin_pos.loc={-(float)(Field::MaxX)+cos(ballDeg-teta)*dtgc2,0.0+sin(ballDeg-teta)*dtgc2};
                 if(dtgc+2*ROBOT_RADIUS<ballDistance && ballDistance<dtgc+4*ROBOT_RADIUS && wm->ball.pos.loc.y<0)
                 {
                     if(!wm->kn->ReachedToPos(wm->ourRobot[id].pos, rc.fin_pos, 30, 180))
@@ -291,4 +297,14 @@ RobotCommand TacticDefender::getCommand()
     }
 
     return rc;
+}
+
+void TacticDefender::setIdlePosition(Position pos)
+{
+    this->idlePosition = pos;
+}
+
+void TacticDefender::setIdlePosition(Vector2D pos)
+{
+    this->idlePosition.loc = pos;
 }

@@ -2,6 +2,7 @@
 #define PLAYFREEKICKOUR_H
 
 #include "play.h"
+#include "freeKicks/freeKicks.h"
 
 class PlayFreeKickOur : public Play
 {
@@ -12,18 +13,8 @@ public:
     virtual int enterCondition();
 private:
     virtual void initRole();
-    void setTactics(int index);
-    void setPositions(int index);
+    QList<freeKick_base*> fk;
 
-private:
-    bool freeKickStart;
-    TacticGoalie*   tGolie;
-    TacticDefender* tDefenderLeft;
-    TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
-    TacticAttacker* tAttackerMid;
-    TacticAttacker* tAttackerLeft;
-    TacticAttacker* tAttackerRight;
 };
 
 #endif // PLAYFREEKICKOUR_H
