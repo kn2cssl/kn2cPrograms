@@ -33,6 +33,11 @@ int freeKick6::enterCondition(Level level)
 
 void freeKick6::setPositions()
 {
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     Position pos;
 
     QList<int> ourAttackers = wm->kn->findAttackers();

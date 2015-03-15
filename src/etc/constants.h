@@ -12,7 +12,7 @@
 
 #define NUMOFDEFENDERS 2
 
-#define DangerDist 350
+#define DangerDist 500
 
 
 // rules constants
@@ -61,6 +61,7 @@ const Vector2D ourGoalPost_R(MinX, -350);
 const double defenceLineLinear = 350;
 const Vector2D defenceLineLinear_L(MinX, 175);
 const Vector2D defenceLineLinear_R(MinX, -175);
+const Vector2D ourPenaltySpot(MinX+750,0);
 
 const Line2D attackerMidLine(Vector2D(MinX,0),Vector2D(MaxX,0));
 const Line2D attackerLeftLine(Vector2D(MinX,(0.667*MaxY)),Vector2D(MaxX,(0.667*MaxY)));

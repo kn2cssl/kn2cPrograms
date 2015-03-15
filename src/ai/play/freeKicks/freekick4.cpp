@@ -34,6 +34,11 @@ int freeKick4::enterCondition(Level level)
 
 void freeKick4::setPositions(QList<int> our)
 {
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     Position pos;
 
     for(int i =0;i<our.size();i++)

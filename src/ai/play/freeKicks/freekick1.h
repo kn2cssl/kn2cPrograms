@@ -11,7 +11,7 @@ public:
     virtual int enterCondition(Level level);
 
 private:
-    void setPositions(int index);
+    void setPositions();
     bool firstTimeInitial;
 };
 

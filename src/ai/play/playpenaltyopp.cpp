@@ -49,24 +49,19 @@ void PlayPenaltyOpp::setTactics(int index)
     }
 }
 
-void PlayPenaltyOpp::setPositions(int index)
+void PlayPenaltyOpp::setPositions()
 {
-    switch (wm->ourRobot[index].Role)
-    {
-    case AgentRole::AttackerMid :
-        tAttackerMid->setIdlePosition(Field::oppPenaltyParallelLineCenter);
-        break;
-    case AgentRole::AttackerRight :
-        tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
-                                                 Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
-        break;
-    case AgentRole::AttackerLeft :
-        tAttackerLeft->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
-                                                Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
-        break;
-    default:
-        break;
-    }
+    Position goaliePos,leftDefPos,rightDefPos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
+    tAttackerMid->setIdlePosition(Field::oppPenaltyParallelLineCenter);
+    tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                             Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.75)));
+    tAttackerLeft->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,
+                                            Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.75)));
+
 }
 
 void PlayPenaltyOpp::initRole()
@@ -124,6 +119,7 @@ void PlayPenaltyOpp::execute()
     {
         int index = activeAgents.takeFirst();
         setTactics(index);
-        setPositions(index);
     }
+
+    setPositions();
 }

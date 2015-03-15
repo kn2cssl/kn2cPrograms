@@ -229,6 +229,11 @@ void PlayGameOn::coach()
     QString game_status = wm->kn->gameStatus();
     int ballOwner = findBallOwner();
 
+    Position goaliePos,leftDefPos,rightDefPos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     if( game_status == "Defending" )
     {
         pressing(ballOwner);

@@ -21,6 +21,7 @@ public:
     virtual void execute() = 0;
     Tactic* getTactic(int id);
     virtual int enterCondition(Level level) = 0;
+    void zonePositions(int leftID,int RightID,Position& goalie,Position& left,Position& right);
 
 protected:
     void initRole();

@@ -25,6 +25,25 @@ int PlayStop::enterCondition()
     //        return 20000;
 }
 
+bool PlayStop::collisionwithDefenders(Vector2D center, Vector2D left, Vector2D right)
+{
+    if(  ((center-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         ||
+         ((left-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         ||
+         ((right-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         ||
+         ((center-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         ||
+         ((left-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         ||
+         ((right-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
+         )
+        return true;
+
+    return false;
+}
+
 void PlayStop::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -122,6 +141,11 @@ void PlayStop::setTactics(int index)
 
 void PlayStop::setPositions()
 {
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
         tStopLeft->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalPost_L.y+200));
@@ -169,9 +193,50 @@ void PlayStop::setPositions()
                 leftPos = leftPos2;
         }
 
-        tStopLeft->setStopPosition(leftPos);
-        tStopMid->setStopPosition(finalPos);
-        tStopRight->setStopPosition(rightPos);
+        if( collisionwithDefenders(finalPos,leftPos,rightPos) )
+        {
+            if( wm->kn->IsInsideRect(wm->ball.pos.loc,Vector2D(Field::MinX,Field::MaxY),Vector2D(0,0.25*Field::MaxY))
+                    ||
+                wm->kn->IsInsideRect(wm->ball.pos.loc,Vector2D(Field::MinX,0.25*Field::MinY),Vector2D(0,Field::MinY)) )
+            {
+                Vector2D candidate60_1, candidate60_2, candidate30_1, candidate30_2, main60, main30;
+                Circle2D cir(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
+                Line2D sixty(Field::defenceLineLinear_L,AngleDeg(60));
+                cir.intersection(sixty,&candidate60_1,&candidate60_2);
+                if( wm->kn->IsInsideField(candidate60_1) )
+                    main60 = candidate60_1;
+                else
+                    main60 = candidate60_2;
+
+                Line2D thirty(Field::defenceLineLinear_L,AngleDeg(30));
+                cir.intersection(thirty,&candidate30_1,&candidate30_2);
+                if( wm->kn->IsInsideField(candidate30_1) )
+                    main30 = candidate30_1;
+                else
+                    main30 = candidate30_2;
+
+                tStopLeft->setStopPosition(Vector2D(main30.x,-sign(wm->ball.pos.loc.y)*main30.y));
+                tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+                tStopRight->setStopPosition(Vector2D(main60.x,-sign(wm->ball.pos.loc.y)*main60.y));
+            }
+            else
+            {
+                //tStopLeft->setStopPosition(Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x
+                  //                         , wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+5*ROBOT_RADIUS));
+                finalPos = Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x,
+                                    0.5*(wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+wm->ourRobot[tDefenderRight->getID()].pos.loc.y)
+                                    );
+                tStopLeft->setStopPosition(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
+                tStopMid->setStopPosition(finalPos);
+                tStopRight->setStopPosition(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
+            }
+        }
+        else
+        {
+            tStopLeft->setStopPosition(leftPos);
+            tStopMid->setStopPosition(finalPos);
+            tStopRight->setStopPosition(rightPos);
+        }
     }
 }
 
@@ -185,10 +250,10 @@ void PlayStop::execute()
     }
 
     initRole();
-    setPositions();
 
     while (activeAgents.size() >0)
     {
         setTactics(activeAgents.takeFirst());
     }
+    setPositions();
 }

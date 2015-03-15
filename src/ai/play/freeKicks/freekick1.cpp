@@ -14,7 +14,7 @@ int freeKick1::enterCondition(Level level)
                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
             ||
             wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
-                                         , Vector2D(Field::MaxX,Field::MinY)))
+                                 , Vector2D(Field::MaxX,Field::MinY)))
     {
         if( level == this->oppLevel)
             return 600;
@@ -25,21 +25,16 @@ int freeKick1::enterCondition(Level level)
     return 0;
 }
 
-void freeKick1::setPositions(int index)
+void freeKick1::setPositions()
 {
-    switch (wm->ourRobot[index].Role) {
-    case AgentRole::AttackerLeft:
-        tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
-        break;
-    case AgentRole::AttackerRight:
-        tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
-        break;
-    case AgentRole::AttackerMid:
-        tAttackerMid->setIdlePosition(wm->ourRobot[index].pos);
-        break;
-    default:
-        break;
-    }
+    Position leftDefPos,rightDefPos,goaliePos;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderRight->setIdlePosition(rightDefPos);
+
+    tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
+    tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
+    tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
 }
 
 void freeKick1::execute()
@@ -52,10 +47,9 @@ void freeKick1::execute()
     }
 
     for(int i=0;i<activeAgents.size();i++)
-    {
         setTactics(activeAgents.at(i));
-        setPositions(activeAgents.at(i));
-    }
+
+    setPositions();
 
     tAttackerMid->isKicker();
 

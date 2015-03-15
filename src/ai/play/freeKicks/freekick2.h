@@ -13,7 +13,7 @@ public:
     virtual void execute();
 
 private:
-    void setPositions(int index);
+    void setPositions();
 
 };
 
