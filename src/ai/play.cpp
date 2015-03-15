@@ -41,6 +41,8 @@ bool Play::conditionChanged()
 
 void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &left, Position &right)
 {
+    goalie.loc = Vector2D(Field::MinX,0);
+
     if( wm->cmgs.theirPenaltyKick() )
     {
         //        center.loc = Field::oppPenaltyParallelLineCenter;

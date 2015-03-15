@@ -234,6 +234,7 @@ void PlayGameOn::coach()
     zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tGolie->setIdlePosition(goaliePos);
 
     if( game_status == "Defending" )
     {

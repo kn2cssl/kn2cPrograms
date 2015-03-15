@@ -55,6 +55,7 @@ void PlayPenaltyOpp::setPositions()
     zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tGoalie->setIdlePosition(goaliePos);
 
     tAttackerMid->setIdlePosition(Field::oppPenaltyParallelLineCenter);
     tAttackerRight->setIdlePosition(Vector2D(Field::oppPenaltyParallelLineCenter.x,

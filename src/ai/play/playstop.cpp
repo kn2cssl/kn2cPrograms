@@ -145,6 +145,7 @@ void PlayStop::setPositions()
     zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tGolie->setIdlePosition(goaliePos);
 
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
