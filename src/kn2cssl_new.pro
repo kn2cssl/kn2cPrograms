@@ -164,7 +164,9 @@ SOURCES +=	main.cpp \
     ai/mwbm.cpp \
     ai/man2man.cpp \
     geom/voronoi_diagram.cpp \
-    ai/positioning.cpp
+    ai/positioning.cpp \
+    ai/play/playcontrol.cpp \
+    ai/tactic/tacticcontrol.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -263,7 +265,9 @@ HEADERS  += \
     ai/mwbm.h \
     ai/man2man.h \
     geom/voronoi_diagram.h \
-    ai/positioning.h
+    ai/positioning.h \
+    ai/play/playcontrol.h \
+    ai/tactic/tacticcontrol.h
 
 FORMS    +=	ui/mainwindow.ui
 
