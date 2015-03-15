@@ -12,7 +12,7 @@ RobotCommand TacticDefender::getCommand()
 
     if(wm->ourRobot[this->id].Status == AgentStatus::FollowingBall)
     {
-        rc.maxSpeed = 1;
+        rc.maxSpeed = 1.5;
 
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
@@ -26,7 +26,6 @@ RobotCommand TacticDefender::getCommand()
             rc.kickspeedx = detectKickSpeed(target.pos);
         }
 
-        rc.maxSpeed = 1.5;
         rc.fin_pos = p.pos;
         rc.useNav = p.useNav;
         rc.isBallObs = true;

@@ -11,7 +11,7 @@ int freeKickDirect::enterCondition(Level level)
 {
     tANDp tandp = tAttackerMid->findTarget();
 
-    if( wm->cmgs.directKick() && (tandp.prob > 90) )
+    if( wm->cmgs.directKick() && (tandp.prob > 60) )
         return 800;
 
     return 0;

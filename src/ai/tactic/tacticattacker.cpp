@@ -17,17 +17,17 @@ RobotCommand TacticAttacker::getCommand()
 
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
+        rc.maxSpeed = 2;
+
         Vector2D v;
-        //        if( wm->ball.vel.loc.length() > 0.5 )
+
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-        //        else
-        //            v = wm->ball.pos.loc;
 
         tANDp target = findTarget();
         OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
         qDebug()<<wm->ball.vel.loc.length();
-        //        qDebug()<<"Distance "<<(wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length();
+
         if( p.readyToShoot )
         {
             qDebug()<<"KKKKKKKKKKIIIIIIIIIIIIIIIIIIICKKKKKKKKKKKKKKKKKKKK";
