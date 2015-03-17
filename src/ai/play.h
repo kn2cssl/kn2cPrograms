@@ -15,7 +15,7 @@ public:
     virtual Tactic* getTactic(int id);
     virtual int enterCondition() = 0;
     bool conditionChanged();
-    void zonePositions(int leftID,int RightID,Position& goalie,Position& left,Position& right);
+    void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left,Position& right);
 
 
 
@@ -37,6 +37,8 @@ private:
 
     void Ref_2Deff_Player(Position p);
     void Ref_2Deff_Ball();
+    void Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID);
+    void Ref_1Deff_Ball(int Left_ID,int Right_ID,int Mid_ID);
 
 
     Segment2D Ball_2_Left_Goal,Ball_2_Right_Goal;

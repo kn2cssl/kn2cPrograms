@@ -40,7 +40,7 @@ bool Play::conditionChanged()
     return out;
 }
 
-void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &left, Position &right)
+void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, Position &right)
 {
     goalie.loc = Vector2D(Field::MinX,0);
 
@@ -67,17 +67,24 @@ void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &le
         Player1 = Find_OppRobot_BallOwner();
         Deffence_Geometry_making();
 
-        if(!BallOwner_Finded)// NIST dar ekhtiare kesi  >> Ref2b(ball)
+        if(wm->ourRobot[1].isValid)//MidID==-1)
         {
-            Ref_2Deff_Ball();
-        }
+            if(!BallOwner_Finded)// NIST dar ekhtiare kesi  >> Ref2b(ball)
+            {
+                Ref_2Deff_Ball();
+            }
 
-        else if(BallOwner_Finded)
+            else if(BallOwner_Finded)
+            {
+                Ref_2Deff_Player(Player1);
+            }
+
+        }
+        if(!wm->ourRobot[1].isValid)//MidID!=-1)
         {
-            Ref_2Deff_Player(Player1);
+            if(!BallOwner_Finded) Ref_1Deff_Ball(leftID,RightID,2);//mid Id
+            else if(BallOwner_Finded) Ref_1Deff_Player(Player1,leftID,RightID,2);// Mid Id
         }
-
-
         left.loc = Left_loc;
         right.loc = Right_loc;
         left.dir =(wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
@@ -85,11 +92,6 @@ void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &le
         //        UseNav = false ;
         //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
         //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
-
-        //---------------------------------------------------------------------------------------
-
-
-        // -----------------------------------------------------------------------
     }
 }
 
@@ -136,6 +138,40 @@ void Play::Ref_2Deff_Ball()
     if(Dist_2_Deffence<700) Right_loc.setLength(90) ;
     Right_loc = Deffence_center+Right_loc;
 }
+
+//===========================================================================================
+
+void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
+{
+
+}
+
+//===========================================================================================
+
+void Play::Ref_1Deff_Ball(int Left_ID, int Right_ID, int Mid_ID)
+{
+    if(Mid_ID==Left_ID)
+    {
+        Left_loc = Wall;
+        Left_loc.setLength(Wall_length/4);
+        if(Dist_2_Deffence<700) Left_loc.setLength(90) ;
+        Left_loc = Deffence_center-Left_loc;
+    }
+    else if(Mid_ID==Right_ID)
+    {
+        Right_loc = Wall;
+        Right_loc.setLength(Wall_length/4);
+        if(Dist_2_Deffence<700) Right_loc.setLength(90) ;
+        Right_loc = Deffence_center+Right_loc;
+    }
+    else
+    {
+        Left_loc =Vector2D(0,0);
+        Right_loc=Vector2D(0,0);
+    }
+}
+
+//===========================================================================================
 
 void Play::Deffence_Geometry_making()
 {
