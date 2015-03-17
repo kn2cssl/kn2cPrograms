@@ -197,6 +197,7 @@ void PlayGameOn::initRole()
     wm->marking.clear();
 
     QList<int> activeAgents=wm->kn->ActiveAgents();
+    QList<int> attackers;
     numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
@@ -216,10 +217,49 @@ void PlayGameOn::initRole()
             activeAgents.removeAt(i);
         }
     }
+    int counter = 0;
+    while( counter < activeAgents.size() )
+    {
+        if( roleIsValid(wm->ourRobot[activeAgents.at(counter)].Role) )
+        {
+            roles.removeOne(wm->ourRobot[activeAgents.at(counter)].Role);
+            activeAgents.removeAt(counter);
+        }
+        else
+            counter++;
+    }
+
+    attackers = wm->kn->findAttackers();
 
     for(int i=0;i<activeAgents.size();i++)
     {
         wm->ourRobot[activeAgents.at(i)].Role = roles.takeFirst();
+    }
+
+    if( roles.contains(AgentRole::DefenderLeft) )
+    {
+        for(int i=0;i<attackers.size();i++)
+        {
+            if(wm->ourRobot[attackers.at(i)].Status != AgentStatus::FollowingBall )
+            {
+                wm->ourRobot[attackers.at(i)].Role = AgentRole::DefenderLeft;
+                attackers.removeAt(i);
+                break;
+            }
+        }
+    }
+
+    if( roles.contains(AgentRole::DefenderRight) )
+    {
+        for(int i=0;i<attackers.size();i++)
+        {
+            if(wm->ourRobot[attackers.at(i)].Status != AgentStatus::FollowingBall )
+            {
+                wm->ourRobot[attackers.at(i)].Role = AgentRole::DefenderRight;
+                attackers.removeAt(i);
+                break;
+            }
+        }
     }
 
     rolesIsInit = true;
@@ -292,7 +332,7 @@ void PlayGameOn::execute()
 {
     QList<int> activeAgents = wm->kn->ActiveAgents();
 
-    if( !rolesIsInit )
+//    if( !rolesIsInit )
         initRole();
 
     coach();
