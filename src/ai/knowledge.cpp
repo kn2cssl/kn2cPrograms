@@ -380,31 +380,24 @@ QString Knowledge::gameStatus()
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
     QList<int> oppNearestPlayerToBall = findNearestOppositeTo(_wm->ball.pos.loc);
 
-    if( oppNearestPlayerToBall.size() > 3 )
+    if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
     {
         double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
         double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
 
-        if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
-        {
-            out = "Suspended";
-        }
+        if( ourDistance2Ball - oppDistance2Ball > 300 )
+            out = "Attacking";
+        else if( oppDistance2Ball - ourDistance2Ball > 300 )
+            out = "Defending";
         else
-        {
-            if( ourDistance2Ball-oppDistance2Ball > 0 )
-                out = "Defending";
-            else if( ourDistance2Ball-oppDistance2Ball < 0 )
-                out = "Attacking";
-            else
-                out = "Suspended";
-        }
+            out = "Not Changed";
     }
     else
     {
-        if( ourNearestPlayerToBall.size() > 3 )
+        if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
             out = "Attacking";
-        else
-            out = "Suspended";
+        else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
+            out = "Defending";
     }
 
     return out;
@@ -417,19 +410,22 @@ QList<int> Knowledge::findAttackers()
 
     for(int i=0;i<ourAgents.size();i++)
     {
-        switch (_wm->ourRobot[ourAgents.at(i)].Role)
+        if( _wm->ourRobot[ourAgents.at(i)].isValid )
         {
-        case AgentRole::AttackerMid:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerLeft:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerRight:
-            output.append(ourAgents.at(i));
-            break;
-        default:
-            break;
+            switch (_wm->ourRobot[ourAgents.at(i)].Role)
+            {
+            case AgentRole::AttackerMid:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerLeft:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerRight:
+                output.append(ourAgents.at(i));
+                break;
+            default:
+                break;
+            }
         }
     }
     return output;
@@ -607,33 +603,33 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
     double DistErr;
     double BallDir = _wm->ball.vel.loc.dir().radian();
 
-   if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-80)<BallDir && (-KickDir.dir().radian()+80)>BallDir)
-   {
-       KickPos.pos.dir = BallDir-M_PI;
-       if (KickPos.pos.dir > M_PI) KickPos.pos.dir -= 2 * M_PI;
-       if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
+    if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-80)<BallDir && (-KickDir.dir().radian()+80)>BallDir)
+    {
+        KickPos.pos.dir = BallDir-M_PI;
+        if (KickPos.pos.dir > M_PI) KickPos.pos.dir -= 2 * M_PI;
+        if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
 
-       KickPos.pos.loc = ballLoc ;
-       qDebug()<<"BallDir"<<BallDir;
+        KickPos.pos.loc = ballLoc ;
+        qDebug()<<"BallDir"<<BallDir;
     }
-       else
-       {
-           //possession point >>navigation : ON
-           KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*2);
-           KickPos.useNav = true ;
+    else
+    {
+        //possession point >>navigation : ON
+        KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*2);
+        KickPos.useNav = true ;
 
-           KickPos.pos.dir = KickDir.dir().radian();
-           KickPos.pos.loc = ballLoc - KickDir;
+        KickPos.pos.dir = KickDir.dir().radian();
+        KickPos.pos.loc = ballLoc - KickDir;
 
-           //possession point check
-           DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
-           if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+        //possession point check
+        DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
+        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
-           DistErr = (KickPos.pos.loc - robotPos.loc).length();
-           if(DirErr < 15 && DistErr < BALL_RADIUS*2) kickPermission = true;
-           if(DirErr > 19 && DistErr > BALL_RADIUS*3) kickPermission = false;
+        DistErr = (KickPos.pos.loc - robotPos.loc).length();
+        if(DirErr < 15 && DistErr < BALL_RADIUS*2) kickPermission = true;
+        if(DirErr > 19 && DistErr > BALL_RADIUS*3) kickPermission = false;
 
-       }
+    }
 
 
 

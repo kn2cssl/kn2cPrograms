@@ -74,7 +74,9 @@ void PlayGameOn::setTactics(int index)
 void PlayGameOn::pressing(int ballOwner)
 {
     QList<int> oppPlayers = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-    oppPlayers.removeFirst();
+    int oppBallTracker = findOppReciever();
+    if( oppBallTracker != -1 )
+        oppPlayers.removeOne(oppBallTracker);
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
     QList<int> ourPlayers = wm->kn->findAttackers();
@@ -147,6 +149,42 @@ int PlayGameOn::findBallOwner()
         while( !ours.isEmpty() )
             wm->ourRobot[ours.takeFirst()].Status = AgentStatus::Idle;
 
+    }
+
+    return ownerIndex;
+}
+
+int PlayGameOn::findOppReciever()
+{
+    int ownerIndex = -1;
+
+    QList<int> opps = wm->kn->ActiveOppAgents();
+    opps.removeOne(wm->ref_goalie_opp);
+
+    QList<double> distance2Prediction;
+
+    if( wm->ball.isValid )
+    {
+        for(int i=0;i<opps.size();i++)
+        {
+            Vector2D predictedPos = wm->kn->PredictDestination(wm->oppRobot[opps.at(i)].pos.loc, wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
+            double distance = (predictedPos - wm->oppRobot[opps.at(i)].pos.loc).length();
+            distance2Prediction.append(distance);
+        }
+
+        int min_i = -1;
+        double min_d = 35000000;
+
+        for(int i=0;i<distance2Prediction.size();i++)
+        {
+            if( distance2Prediction.at(i) <= min_d )
+            {
+                min_d = distance2Prediction.at(i);
+                min_i = opps.at(i);
+            }
+        }
+
+        ownerIndex = min_i;
     }
 
     return ownerIndex;
@@ -267,7 +305,11 @@ void PlayGameOn::initRole()
 
 void PlayGameOn::coach()
 {
-    QString game_status = wm->kn->gameStatus();
+    QString new_status = wm->kn->gameStatus();
+
+    if( new_status != "Not Changed" )
+        game_status = new_status;
+
     int ballOwner = findBallOwner();
 
     Position goaliePos,leftDefPos,rightDefPos;
