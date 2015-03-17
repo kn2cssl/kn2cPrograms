@@ -148,7 +148,7 @@ RobotCommand TacticDefender::getCommand()
 
         rc.maxSpeed = 2;
 
-        rc.useNav = true;
+        rc.useNav = false;
         rc.isBallObs = true;
         rc.isKickObs = true;
 

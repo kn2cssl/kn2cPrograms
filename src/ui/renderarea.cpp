@@ -54,6 +54,16 @@ void RenderArea::paintEvent(QPaintEvent *)
 
     // Draw Target lines !! MOHSEN
 
+    QPoint pnt;
+    QPoint Pball;
+    Pball.setX(_sc->wm->ball.pos.loc.x/WORLD_SCALE);
+    Pball.setY(-_sc->wm->ball.pos.loc.y/WORLD_SCALE);
+    pnt.setX(Field::ourGoalPost_L.x/WORLD_SCALE); pnt.setY(Field::ourGoalPost_L.y/WORLD_SCALE);
+    painter.drawLine(pnt,Pball);
+
+    pnt.setX(Field::ourGoalPost_R.x/WORLD_SCALE); pnt.setY(Field::ourGoalPost_R.y/WORLD_SCALE);
+    painter.drawLine(pnt,Pball);
+
     if( _sc->wm->showChances )
     {
         QPoint Pball;
