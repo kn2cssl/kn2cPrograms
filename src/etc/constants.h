@@ -14,6 +14,7 @@
 
 #define DangerDist 500
 
+#define our_speed 2
 
 // rules constants
 #define ALLOW_NEAR_BALL_RANGE 600

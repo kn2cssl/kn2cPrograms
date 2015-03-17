@@ -28,5 +28,5 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
     for(int i=0; i<6; i++)
         mark_coef[i] = 0;
 
-    oppLevel = Level::Beginner;
+    oppLevel_fk = Level::Beginner;
 }

@@ -50,7 +50,7 @@ void PlayFreeKickOur::execute()
 
         for(int i=0; i<fk.size(); i++)
         {
-            int p = fk[i]->enterCondition(wm->oppLevel);
+            int p = fk[i]->enterCondition(wm->oppLevel_fk);
             if(p > max_p)
             {
                 max_i = i;
