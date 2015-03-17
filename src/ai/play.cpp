@@ -64,13 +64,25 @@ void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &le
     }
     else
     {
+        Player1 = Find_OppRobot_BallOwner();
         Deffence_Geometry_making();
+
+        if(!BallOwner_Finded)// NIST dar ekhtiare kesi  >> Ref2b(ball)
+        {
+            Ref_2Deff_Ball();
+        }
+
+        else if(BallOwner_Finded)
+        {
+            Ref_2Deff_Player(Player1);
+        }
+
 
         left.loc = Left_loc;
         right.loc = Right_loc;
         left.dir =(wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
         right.dir=(wm->ourRobot[RightID].pos.loc - Field::ourGoalPost_R).dir().radian();
-//        UseNav = false ;
+        //        UseNav = false ;
         //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
         //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
 
@@ -81,53 +93,23 @@ void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &le
     }
 }
 
-Position Play::Ref_1Deff_Player(Position p)
+
+//===========================================================================================
+
+void Play::Ref_2Deff_Player(Position p)
 {
-
-}
-
-void Play::Deffence_Geometry_making()
-{
-    Find_OppRobot_BallOwner();
-
-
-    Ball_2_Left_Goal.assign(wm->ball.pos.loc,Field::ourGoalPost_L);
-    Ball_2_Right_Goal.assign(wm->ball.pos.loc,Field::ourGoalPost_R);
-    double Deffence_Rad=1000;
-    Vector2D B2GC=(Field::ourGoalCenter-wm->ball.pos.loc);
-    double Dist_Ball_2_Goal=B2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
-    //    qDebug() << "Dis Ball2Goal" << Dist_Ball_2_Goal<<" ,  Deffence_Rad" << Deffence_Rad;
-
-    double Dist_2_Deffence;
-    if(Dist_Ball_2_Goal>Deffence_Rad) Dist_2_Deffence=Dist_Ball_2_Goal-Deffence_Rad;
-    else Dist_2_Deffence=-100;
-
-
-
-    Vector2D B2LG=(Field::ourGoalPost_L - wm->ball.pos.loc);
-    Vector2D B2RG=(Field::ourGoalPost_R - wm->ball.pos.loc);
-    double ang = (B2RG.dir().radian()-B2LG.dir().radian());
-    if(!BallOwner_Finded)// NIST dar ekhtiare kesi  >> Ref2b(ball)
+    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D B2OT(wm->ball.pos.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
+    Vector2D intersect_Point = L2R.intersection(B2OT);
+    qDebug() << intersect_Point.x << " , " << intersect_Point.y;
+    qDebug() << Field::ourGoalPost_R.y << " , " << Field::ourGoalPost_L.y ;
+    if((intersect_Point.y > Field::ourGoalPost_R.y-100) && (intersect_Point.y < Field::ourGoalPost_L.y+100))
     {
-        //=========== 1st ====================================================
-        //        double L_ang = B2LG.dir().radian()+0.15*ang;
-        //        double R_ang = B2RG.dir().radian()-0.15*ang;
-        //        //        qDebug() << "L_ang" << L_ang << " , R_ang" << R_ang;
-        //        Vector2D B2LD,B2RD; // Ball to Left/Right Deffence
-        //        B2LD.setPolar(Dist_2_Deffence,AngleDeg::rad2deg(L_ang));
-        //        B2RD.setPolar(Dist_2_Deffence,AngleDeg::rad2deg(R_ang));
-        //        Right_loc=wm->ball.pos.loc-B2RD;
-        //        Left_loc=wm->ball.pos.loc-B2LD;
-        //======================End 1st Mode=================================
-
-        //=========================2nd=======================================
-        Vector2D B2DC=B2GC; // Defining Ball 2 Center Of Deffence
-        B2DC.setLength(Dist_2_Deffence);
-        Vector2D Deffence_center=wm->ball.pos.loc+B2DC;
-        double Wall_length=2*Dist_2_Deffence*tan(ang/2); // length of Deffence Wall which fully protected goal
-//        if(Dist_2_Deffence<700 && Dist_2_Deffence > 0) Wall_length = 300 ;
-        Vector2D Wall=B2GC;
-        Wall.setLength(Wall_length); Wall.rotate(90);
+        Vector2D B2DC = Deffence_center - wm->ball.pos.loc;
+        double Rot_ang = (Player1.dir - B2DC.dir().radian());
+        B2DC.rotate(AngleDeg::rad2deg(Rot_ang*0.8));
+        Deffence_center = wm->ball.pos.loc + B2DC ;
 
         Left_loc = Wall;
         Left_loc.setLength(Wall_length/3);
@@ -137,13 +119,66 @@ void Play::Deffence_Geometry_making()
         Right_loc.setLength(Wall_length/3);
         if(Dist_2_Deffence<700) Right_loc.setLength(90) ;
         Right_loc = Deffence_center+Right_loc;
-        //======================End 2nd Mode=================================
     }
+    else Ref_2Deff_Ball();
+}
 
-    else if(BallOwner_Finded)
-    {
-        qDebug() << " FIIIIIIIIIIIIIIIIIIIIIIIIInded !!! " ;
-    }
+//===========================================================================================
+
+void Play::Ref_2Deff_Ball()
+{
+    Left_loc = Wall;
+    Left_loc.setLength(Wall_length/3);
+    if(Dist_2_Deffence<700) Left_loc.setLength(90) ;
+    Left_loc = Deffence_center-Left_loc;
+    Right_loc = Wall;
+    Right_loc.setLength(Wall_length/3);
+    if(Dist_2_Deffence<700) Right_loc.setLength(90) ;
+    Right_loc = Deffence_center+Right_loc;
+}
+
+void Play::Deffence_Geometry_making()
+{
+
+    double Deffence_Rad=1100;
+    Vector2D B2GC=(Field::ourGoalCenter-wm->ball.pos.loc);
+    double Dist_Ball_2_Goal=B2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
+    //    qDebug() << "Dis Ball2Goal" << Dist_Ball_2_Goal<<" ,  Deffence_Rad" << Deffence_Rad;
+
+    if(Dist_Ball_2_Goal>Deffence_Rad) Dist_2_Deffence=Dist_Ball_2_Goal-Deffence_Rad;
+    else Dist_2_Deffence=-100;
+
+
+
+    Vector2D B2LG=(Field::ourGoalPost_L - wm->ball.pos.loc);
+    Vector2D B2RG=(Field::ourGoalPost_R - wm->ball.pos.loc);
+    double ang = (B2RG.dir().radian()-B2LG.dir().radian());
+
+    //=========== 1st ====================================================
+    //        double L_ang = B2LG.dir().radian()+0.15*ang;
+    //        double R_ang = B2RG.dir().radian()-0.15*ang;
+    //        //        qDebug() << "L_ang" << L_ang << " , R_ang" << R_ang;
+    //        Vector2D B2LD,B2RD; // Ball to Left/Right Deffence
+    //        B2LD.setPolar(Dist_2_Deffence,AngleDeg::rad2deg(L_ang));
+    //        B2RD.setPolar(Dist_2_Deffence,AngleDeg::rad2deg(R_ang));
+    //        Right_loc=wm->ball.pos.loc-B2RD;
+    //        Left_loc=wm->ball.pos.loc-B2LD;
+    //======================End 1st Mode=================================
+
+    //=========================2nd=======================================
+    Vector2D B2DC=B2GC; // Defining Ball 2 Center Of Deffence
+    B2DC.setLength(Dist_2_Deffence);
+    Deffence_center=wm->ball.pos.loc+B2DC;
+    Wall_length=2*Dist_2_Deffence*tan(ang/2); // length of Deffence Wall which fully protected goal
+    //        if(Dist_2_Deffence<700 && Dist_2_Deffence > 0) Wall_length = 300 ;
+    Wall=B2GC;
+    Wall.setLength(Wall_length); Wall.rotate(90);
+
+
+    //======================End 2nd Mode=================================
+
+
+
 
 
 

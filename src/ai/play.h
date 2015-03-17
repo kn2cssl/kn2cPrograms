@@ -35,10 +35,19 @@ protected:
 private:
     QString name;
 
-    Position Ref_1Deff_Player(Position p);
-    void Deffence_Geometry_making();
+    void Ref_2Deff_Player(Position p);
+    void Ref_2Deff_Ball();
+
+
     Segment2D Ball_2_Left_Goal,Ball_2_Right_Goal;
-    Vector2D alaki1,alaki2,Intersect_Right,Intersect_Left,Right_loc,Left_loc;
+    Vector2D alaki1,alaki2,Intersect_Right,Intersect_Left;
+
+    Position Player1;
+
+    void Deffence_Geometry_making();
+    Vector2D Right_loc,Left_loc,Deffence_center,Wall;
+    double Wall_length,Dist_2_Deffence;
+
     Position Find_OppRobot_BallOwner();
     bool BallOwner_Finded;
 
