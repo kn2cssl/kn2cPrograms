@@ -121,9 +121,11 @@ void PlayStop::setTactics(int index)
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
+        tDefenderLeft->resetBooleans();
         break;
     case AgentRole::DefenderRight:
         tactics[index] = tDefenderRight;
+        tDefenderRight->resetBooleans();
         break;
     case AgentRole::AttackerMid:
         tactics[index] = tStopMid;

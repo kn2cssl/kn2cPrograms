@@ -50,6 +50,8 @@ public:
 
     QString gameStatus();
 
+    int findOppReciever();
+
     QList<int> findAttackers();
     QList<int> findOurObstacles();
 

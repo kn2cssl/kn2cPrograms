@@ -380,27 +380,70 @@ QString Knowledge::gameStatus()
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
     QList<int> oppNearestPlayerToBall = findNearestOppositeTo(_wm->ball.pos.loc);
 
-    if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
+    if( oppNearestPlayerToBall.size() != 0)
     {
-        double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-        double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+        if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
+        {
+            double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+            double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
 
-        if( ourDistance2Ball - oppDistance2Ball > 300 )
-            out = "Attacking";
-        else if( oppDistance2Ball - ourDistance2Ball > 300 )
-            out = "Defending";
+            if( ourDistance2Ball - oppDistance2Ball > 300 )
+                out = "Attacking";
+            else if( oppDistance2Ball - ourDistance2Ball > 300 )
+                out = "Defending";
+            else
+                out = "Not Changed";
+        }
         else
-            out = "Not Changed";
+        {
+            if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
+                out = "Attacking";
+            else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
+                out = "Defending";
+        }
     }
     else
     {
-        if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
-            out = "Attacking";
-        else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
-            out = "Defending";
+        out = "Attacking";
     }
 
     return out;
+}
+
+int Knowledge::findOppReciever()
+{
+    int ownerIndex = -1;
+
+    QList<int> opps = ActiveOppAgents();
+    opps.removeOne(_wm->ref_goalie_opp);
+
+    QList<double> distance2Prediction;
+
+    if( _wm->ball.isValid )
+    {
+        for(int i=0;i<opps.size();i++)
+        {
+            Vector2D predictedPos = _wm->kn->PredictDestination(_wm->oppRobot[opps.at(i)].pos.loc, _wm->ball.pos.loc,_wm->opp_vel,_wm->ball.vel.loc);
+            double distance = (predictedPos - _wm->oppRobot[opps.at(i)].pos.loc).length();
+            distance2Prediction.append(distance);
+        }
+
+        int min_i = -1;
+        double min_d = 35000000;
+
+        for(int i=0;i<distance2Prediction.size();i++)
+        {
+            if( distance2Prediction.at(i) <= min_d )
+            {
+                min_d = distance2Prediction.at(i);
+                min_i = opps.at(i);
+            }
+        }
+
+        ownerIndex = min_i;
+    }
+
+    return ownerIndex;
 }
 
 QList<int> Knowledge::findAttackers()
@@ -610,7 +653,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
         if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
 
         KickPos.pos.loc = ballLoc ;
-        qDebug()<<"BallDir"<<BallDir;
     }
     else
     {
@@ -676,10 +718,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
         }
         //##kick distance and angel limits
-    }
-    else
-    {
-        qDebug()<<"B";
     }
 
     if(shoot_sensor)//shooting with sensor or without it
