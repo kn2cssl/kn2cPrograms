@@ -35,14 +35,16 @@ protected:
 private:
     QString name;
 
+    void Player_filter(Position Player);
+    double last_dir;//,dir;
+
     void Ref_2Deff_Player(Position p);
     void Ref_2Deff_Ball();
     void Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID);
     void Ref_1Deff_Ball(int Left_ID,int Right_ID,int Mid_ID);
-
-
-    Segment2D Ball_2_Left_Goal,Ball_2_Right_Goal;
-    Vector2D alaki1,alaki2,Intersect_Right,Intersect_Left;
+    void Ref_2Deff_Loc(Vector2D loc);
+    void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID);
+    void Danger_Player_Direction(Position p,bool &Dangerous);
 
     Position Player1;
 

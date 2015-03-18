@@ -51,7 +51,7 @@ void PlayStop::initRole()
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {
     case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 2:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
@@ -142,7 +142,15 @@ void PlayStop::setTactics(int index)
 void PlayStop::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    int leftID = -1, rightID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    zonePositions(leftID,rightID,-1,goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
 
