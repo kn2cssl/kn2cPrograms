@@ -50,9 +50,7 @@ void freeKick2::execute()
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
     if(!rolesIsInit)
-    {
         initRole();
-    }
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));

@@ -132,6 +132,11 @@ void freeKick_base::zonePositions(int leftID, int RightID, Position &goalie, Pos
     }
 }
 
+void freeKick_base::resetValues()
+{
+    this->rolesIsInit = false;
+}
+
 void freeKick_base::initRole()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
@@ -144,10 +149,6 @@ void freeKick_base::initRole()
     case 2:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
-
-        //--------------for TAGHI test---------------------------------------
-        //wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        //-------------------------------------------------------------------
         break;
     case 3:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
