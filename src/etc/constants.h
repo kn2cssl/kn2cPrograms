@@ -14,6 +14,7 @@
 
 #define DangerDist 500
 
+#define our_speed 2
 
 // rules constants
 #define ALLOW_NEAR_BALL_RANGE 600
@@ -72,6 +73,8 @@ const Vector2D ourDefPost_R(MinX, -975);
 
 const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
 
+const double defenderPermittedRegion = 0.6*MaxX;
+
 // Opps.
 const Vector2D oppGoalCenter(MaxX, 0);
 const Vector2D oppGoalPost_L(MaxX, 350);
@@ -79,8 +82,6 @@ const Vector2D oppGoalPost_R(MaxX, -350);
 const Vector2D oppGoalCC_L(MaxX, 175);
 const Vector2D oppGoalCC_R(MaxX, -175);
 const Vector2D oppGoalPenaltySpot(MaxX-750,0);
-
-
 
 const Vector2D ourPenaltyParallelLineCenter(oppGoalPenaltySpot.x-500,0);
 const Vector2D oppPenaltyParallelLineCenter(ourGoalCenter.x+750+600,0);

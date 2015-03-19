@@ -36,6 +36,7 @@ void freeKick5::setPositions()
     zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tGolie->setIdlePosition(goaliePos);
 
     Position pos;
 

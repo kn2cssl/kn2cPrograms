@@ -26,7 +26,6 @@ RobotCommand TacticAttacker::getCommand()
 
         tANDp target = findTarget();
         OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
-        qDebug()<<wm->ball.vel.loc.length();
 
         if( p.readyToShoot )
         {

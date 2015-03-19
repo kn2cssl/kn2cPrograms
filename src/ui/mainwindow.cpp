@@ -355,12 +355,14 @@ void MainWindow::timer_timeout()
     sc->wm->pos_coef[5] = ui->spnPosC5->value();
     ui->txtPosC5->setText(QString::number(sc->wm->pos_coef[5]));
 
-    if( ui->oppIsBeginner->isChecked() )
-        sc->wm->oppLevel = Level::Beginner;
-    if( ui->oppIsAmatuer->isChecked() )
-        sc->wm->oppLevel = Level::Amatuer;
-    if( ui->oppIsProfessional->isChecked() )
-        sc->wm->oppLevel = Level::Profesional;
+    if( ui->oppFKIsBeginner->isChecked() )
+        sc->wm->oppLevel_fk = Level::Beginner;
+    if( ui->oppFKIsAmatuer->isChecked() )
+        sc->wm->oppLevel_fk = Level::Amatuer;
+    if( ui->oppFKIsProfessional->isChecked() )
+        sc->wm->oppLevel_fk = Level::Profesional;
+
+    sc->wm->opp_vel = ui->opp_vel_lineedit->text().toDouble();
 
     //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();

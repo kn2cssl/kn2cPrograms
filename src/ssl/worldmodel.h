@@ -43,7 +43,8 @@ public:
     Knowledge *kn;
 
     //----Input Data----------
-    Level oppLevel;
+    Level oppLevel_fk;
+    double opp_vel;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;

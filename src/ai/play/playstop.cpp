@@ -121,9 +121,11 @@ void PlayStop::setTactics(int index)
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
+        tDefenderLeft->resetBooleans();
         break;
     case AgentRole::DefenderRight:
         tactics[index] = tDefenderRight;
+        tDefenderRight->resetBooleans();
         break;
     case AgentRole::AttackerMid:
         tactics[index] = tStopMid;
@@ -153,6 +155,7 @@ void PlayStop::setPositions()
     zonePositions(leftID,rightID,-1,goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tGolie->setIdlePosition(goaliePos);
 
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {

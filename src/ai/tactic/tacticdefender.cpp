@@ -3,6 +3,8 @@
 TacticDefender::TacticDefender(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticDefender", worldmodel, parent)
 {
+    reach2Ball = false;
+    goANDget = false;
 }
 
 RobotCommand TacticDefender::getCommand()
@@ -17,20 +19,125 @@ RobotCommand TacticDefender::getCommand()
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-        tANDp target = findTarget();
 
-        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
-
-        if( p.readyToShoot )
+        int opposite = wm->kn->findOppReciever();
+        Vector2D opp_v;
+        double oppDistance;
+        if( opposite != -1)
         {
-            rc.kickspeedx = detectKickSpeed(target.pos);
+            opp_v = wm->kn->PredictDestination(wm->oppRobot[opposite].pos.loc,
+                wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
+            oppDistance = (opp_v - wm->oppRobot[opposite].pos.loc).length();
         }
+        else
+            oppDistance = 3500000;
 
-        rc.fin_pos = p.pos;
-        rc.useNav = p.useNav;
-        rc.isBallObs = true;
-        rc.isKickObs = true;
+        double ourDistance = (v - wm->ourRobot[this->id].pos.loc).length();
 
+        if( (oppDistance - ourDistance > 400) || goANDget )
+        {
+            goANDget = true;
+            Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
+                    wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
+            Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
+            Circle2D cir(wm->ball.pos.loc, 60);
+            Vector2D first,second,main,chipPoint;
+            cir.intersection(line,&first,&second);
+            if( first.x < wm->ball.pos.loc.x)
+            {
+                main = first;
+                chipPoint = second;
+            }
+            else
+            {
+                main = second;
+                chipPoint = first;
+            }
+
+//            qDebug()<<"Main : "<<main.x<<" , "<<main.y;
+//            qDebug()<<"Chip : "<<chipPoint.x<<" , "<<chipPoint.y;
+            if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,main,150) || reach2Ball )
+            {
+                reach2Ball = true;
+                tANDp target = findTarget();
+                if( fabs(target.pos.dir().degree()-AngleDeg::rad2deg(wm->ourRobot[this->id].pos.dir)) < 15 )
+                {
+                    qDebug()<<"a little diff in deg , kick it to goal";
+                    OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+
+                    if( p.readyToShoot )
+                    {
+                        rc.kickspeedx = detectKickSpeed(target.pos);
+                    }
+                    rc.fin_pos = p.pos;
+                    rc.useNav = p.useNav;
+                    rc.isBallObs = true;
+                    rc.isKickObs = true;
+                }
+                else
+                {
+                    Circle2D dangerCir(wm->ourRobot[this->id].pos.loc,1000);
+                    QList<int> opps = wm->kn->ActiveOppAgents();
+                    bool inDangerousPosition = false;
+                    for(int i=0;i<opps.size();i++)
+                    {
+                        if ( dangerCir.contains(wm->oppRobot[opps.at(i)].pos.loc) )
+                        {
+                            inDangerousPosition = true;
+                            break;
+                        }
+                    }
+
+                    if( inDangerousPosition )
+                    {
+                        //qDebug()<<"in a dangerous position , chip the ball";
+                        OperatingPosition p = wm->kn->AdjustKickPointB(wm->ball.pos.loc,chipPoint,wm->ourRobot[this->id].pos);
+
+                        if( p.readyToShoot )
+                        {
+                            rc.kickspeedz = 255;//detectKickSpeed(target.pos);
+                            qDebug()<<"Chippppppppppp";
+                        }
+                        rc.fin_pos = p.pos;
+                        rc.useNav = p.useNav;
+                        rc.isBallObs = true;
+                        rc.isKickObs = true;
+                    }
+                    else
+                    {
+                        //qDebug()<<"not dangerous position";
+                        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+
+                        if( p.readyToShoot )
+                        {
+                            rc.kickspeedx = detectKickSpeed(target.pos);
+                        }
+                        rc.fin_pos = p.pos;
+                        rc.useNav = p.useNav;
+                        rc.isBallObs = true;
+                        rc.isKickObs = true;
+                    }
+                }
+
+            }
+            else
+            {
+                //qDebug()<<"else";
+                rc.fin_pos.loc = main;
+                rc.fin_pos.dir = (main - wm->ourRobot[this->id].pos.loc).dir().radian();
+                rc.useNav = true;
+                rc.isBallObs = true;
+                rc.isKickObs = true;
+            }
+        }
+        else
+        {
+           // qDebug()<<"dangerous distance from opp , don't go";
+            rc.fin_pos = idlePosition;
+            rc.useNav = false;
+            rc.isBallObs = true;
+            rc.isKickObs = true;
+        }
     }
     else if(wm->ourRobot[this->id].Status == AgentStatus::RecievingPass)
     {
@@ -181,4 +288,10 @@ void TacticDefender::setIdlePosition(Position pos)
 void TacticDefender::setIdlePosition(Vector2D pos)
 {
     this->idlePosition.loc = pos;
+}
+
+void TacticDefender::resetBooleans()
+{
+    this->goANDget = false;
+    this->reach2Ball = false;
 }
