@@ -45,14 +45,18 @@ private:
     void Ref_2Deff_Loc(Vector2D loc);
     void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID);
     void Danger_Player_Direction(Position p,bool &Dangerous);
+    bool Ball_Toward_Goal();
 
     Position Player1;
+    Position Player2;
 
     void Deffence_Geometry_making();
     Vector2D Right_loc,Left_loc,Deffence_center,Wall;
     double Wall_length,Dist_2_Deffence;
 
     Position Find_OppRobot_BallOwner();
+    Position Find_Player2(Position Player1);
+
     bool BallOwner_Finded;
 
 };
