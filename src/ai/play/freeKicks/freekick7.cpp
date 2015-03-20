@@ -159,7 +159,7 @@ void freeKick7::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     if( state == 2)

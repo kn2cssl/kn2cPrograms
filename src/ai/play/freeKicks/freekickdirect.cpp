@@ -61,7 +61,7 @@ void freeKickDirect::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     for(int i=0;i<activeAgents.size();i++)
