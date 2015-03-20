@@ -14,6 +14,7 @@ public:
 
 private:
     void setPositions();
+    bool checkPositions(Position leftPos,Position rightPos);
 
 };
 
