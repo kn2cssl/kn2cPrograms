@@ -40,24 +40,28 @@ private:
 
     void Ref_2Deff_Player(Position p);
     void Ref_2Deff_Ball();
+    void Ref_2Deff_Player2(Position p,Vector2D &Left_2,Vector2D &Right_2,Vector2D &Deff_center);
     void Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID);
     void Ref_1Deff_Ball(int Left_ID,int Right_ID,int Mid_ID);
+    void Ref_1Deff_Player2(Position p,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
     void Ref_2Deff_Loc(Vector2D loc);
-    void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID);
-    void Danger_Player_Direction(Position p,bool &Dangerous);
+    void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
+    bool Danger_Player_Direction(Position p);
     bool Ball_Toward_Goal();
 
-    Position Player1;
-    Position Player2;
+    Position Player1,Player2;
 
     void Deffence_Geometry_making();
     Vector2D Right_loc,Left_loc,Deffence_center,Wall;
     double Wall_length,Dist_2_Deffence;
 
-    Position Find_OppRobot_BallOwner();
-    Position Find_Player2(Position Player1);
+    bool Find_OppRobot_BallOwner();
+    bool Find_Pass_Receiver(Position Player1);
 
-    bool BallOwner_Finded;
+    int Find_Dyno_Deffence(int Left_ID,int Right_ID,Vector2D Deff_center);
+    Vector2D Find_Deff_center(Vector2D loc);
+
+    bool BallOwner_Finded,Player2_Finded;
 
 };
 
