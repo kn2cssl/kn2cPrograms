@@ -4,7 +4,6 @@ PlayPenaltyOpp::PlayPenaltyOpp(WorldModel *worldmodel, QObject *parent) :
     Play("PlayPenaltyOpp", worldmodel, parent)
 {
     tGoalie=new TacticGoalie(wm);
-    tDefenderMid=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
     tAttackerMid = new TacticAttacker(wm);
@@ -25,9 +24,6 @@ void PlayPenaltyOpp::setTactics(int index)
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGoalie;
-        break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
@@ -52,7 +48,7 @@ void PlayPenaltyOpp::setTactics(int index)
 void PlayPenaltyOpp::setPositions()
 {
     Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),-1,goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
     tGoalie->setIdlePosition(goaliePos);
@@ -77,7 +73,7 @@ void PlayPenaltyOpp::initRole()
     switch (activeAgents.length()) {
 
     case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
         break;
     case 2:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;

@@ -19,7 +19,6 @@ private:
     TacticAttacker* tAttackerRight;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
 
     virtual void initRole();
     void setTactics(int index);

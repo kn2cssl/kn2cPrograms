@@ -19,7 +19,6 @@ private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
     TacticAttacker* tAttackerMid;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;

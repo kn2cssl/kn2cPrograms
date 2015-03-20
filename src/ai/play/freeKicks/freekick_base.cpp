@@ -13,7 +13,6 @@ freeKick_base::freeKick_base(WorldModel *worldmodel, QObject *parent)
 
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
-    tDefenderMid = new TacticDefender(wm);
 
     tAttackerLeft = new TacticAttacker(wm);
     tAttackerMid = new TacticAttacker(wm);
@@ -30,8 +29,6 @@ void freeKick_base::zonePositions(int leftID, int RightID, Position &goalie, Pos
 {
     if( wm->cmgs.theirPenaltyKick() )
     {
-        //        center.loc = Field::oppPenaltyParallelLineCenter;
-
         right.loc = Field::oppPenaltyParallelLineCenter;
         right.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
 
@@ -178,9 +175,6 @@ void freeKick_base::setTactics(int index)
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGolie;
-        break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
