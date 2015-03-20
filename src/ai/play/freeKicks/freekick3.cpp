@@ -10,26 +10,21 @@ freeKick3::freeKick3(WorldModel *wm, QObject *parent) :
 
 int freeKick3::enterCondition(Level level)
 {
-//    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-//                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
-//         ||
-//         wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
-//                              , Vector2D(Field::MaxX,Field::MinY)))
-//            && (wm->kn->CountActiveAgents() == 6) )
-//    {
-//        if(wm->gs_last != wm->gs)
-//        {
-//            rolesIsInit = false;
-//            state = 0;
-//        }
+    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
+                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
+         ||
+         wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+                              , Vector2D(Field::MaxX,Field::MinY)))
+            && (wm->kn->CountActiveAgents() == 6) )
+    {
 
-//        if( level == this->oppLevel)
-//            return 600;
-//        else
-//            return 300;
-//    }
+        if( level == this->oppLevel)
+            return 600;
+        else
+            return 300;
+    }
 
-    return 2000000;
+    return 0;
 }
 
 void freeKick3::setPositions(QList<int> our)
@@ -169,14 +164,10 @@ void freeKick3::execute()
 
     tAttackerMid->waitTimerStart(true);
 
-    if(state != 0)
+    if(state > 2)
     {
+        tAttackerMid->isKicker();
         activeAgents.removeOne(tAttackerMid->getID());
-        if(wm->cmgs.ourIndirectKick())
-        {
-            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-            activeAgents.removeOne(recieverID);
-        }
     }
 
     while(activeAgents.size() > 0)
