@@ -155,6 +155,12 @@ void freeKick7::initRolesB(int AttackerLeft, int DefenderLeft)
     tDefenderLeft->setID(AttackerLeft);
 }
 
+void freeKick7::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKick7::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();

@@ -25,6 +25,12 @@ int freeKick1::enterCondition(Level level)
     return 0;
 }
 
+void freeKick1::resetValues()
+{
+    this->firstTimeInitial = false;
+    this->rolesIsInit = false;
+}
+
 void freeKick1::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;

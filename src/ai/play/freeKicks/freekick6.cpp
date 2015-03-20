@@ -140,6 +140,12 @@ bool freeKick6::checkAttackersDistance()
     return left&right;
 }
 
+void freeKick6::resetValues()
+{
+    this->state = 0;
+    this->rolesIsInit = false;
+}
+
 void freeKick6::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();

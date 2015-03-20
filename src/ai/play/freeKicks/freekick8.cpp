@@ -52,6 +52,12 @@ void freeKick8::setPositions()
     }
 }
 
+void freeKick8::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKick8::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();

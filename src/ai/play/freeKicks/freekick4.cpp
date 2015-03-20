@@ -145,6 +145,12 @@ void freeKick4::setPositions(QList<int> our)
     }
 }
 
+void freeKick4::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKick4::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();

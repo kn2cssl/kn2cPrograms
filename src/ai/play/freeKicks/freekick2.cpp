@@ -66,6 +66,11 @@ bool freeKick2::checkPositions(Position leftPos, Position rightPos)
     return leftCheck & rightCheck;
 }
 
+void freeKick2::resetValues()
+{
+    rolesIsInit = false;
+}
+
 void freeKick2::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
