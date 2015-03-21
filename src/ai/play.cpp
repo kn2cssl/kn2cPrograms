@@ -63,7 +63,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     }
     else
     {
-        qDebug() << "LEFT ID : " << leftID << ", Mid ID : " << MidID <<", RIGHT ID : " << RightID ;
+        //        qDebug() << "LEFT ID : " << leftID << ", Mid ID : " << MidID <<", RIGHT ID : " << RightID ;
         BallOwner_Finded = Find_OppRobot_BallOwner();
         if(BallOwner_Finded) Player_filter(Player1);
         Deffence_Geometry_making();
@@ -75,41 +75,62 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
         {
             if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
             {
+                bool Is_AnyOther_Dangerous = false ;
+                Is_AnyOther_Dangerous = Find_AnyOther_Opp_Dangerous();
+                if(Is_AnyOther_Dangerous)
+                {
+                    // Player1 Is Ready To Give A Pass To Player2
 
-                Ref_2Deff_Ball(); // !!!!! Will Complete
+                    Vector2D Dyno_right,Dyno_left,Deff_center;
+                    //                        bool Is_left;
+                    //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
+                    Deff_center = Find_Deff_center(Player2.loc);
+                    int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
+                    //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
+                    Ref_2Deff_Player(Player1);
+
+                    if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
+                    {
+                        Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
+                        Left_loc = Average_Positioning(Left_loc , Dyno_left);
+                    }
+                    else
+                    {
+                        Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
+                        Right_loc = Average_Positioning(Dyno_right , Right_loc);
+                    }
+                }
+                else Ref_2Deff_Ball(); // !!!!! Will Complete
             }
-
             else //(BallOwner_Finded)
             {
                 bool Is_Danger_Player=false;
-                Is_Danger_Player = Danger_Player_Direction(Player1);
+                Is_Danger_Player = Danger_Player_Direction(Player1,150);
                 if(Is_Danger_Player) Ref_2Deff_Player(Player1);
                 else // The Ball Owner Player Is Not Toward Our Goal
                 {
                     bool Is_anyone_recieve_pass = Find_Pass_Receiver(Player1);
-                    if(Is_anyone_recieve_pass)// Roo be Baazikone digar ast
+                    if(Is_anyone_recieve_pass)
                     {
-                        qDebug() << " A Player Will Recieve The Pass From Player 1";
-                        Vector2D Left2,Right2,Deff_center;
+                        // Player1 Is Ready To Give A Pass To Player2
+
+                        Vector2D Dyno_right,Dyno_left,Deff_center;
                         //                        bool Is_left;
-//                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
+                        //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
                         Deff_center = Find_Deff_center(Player2.loc);
                         int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
-                        bool Is_Player2_Dangerous = Danger_Player_Direction(Player2);
                         //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
                         Ref_2Deff_Player(Player1);
 
-                        if(Dyno_Id == leftID) // left Deffence Must Go
+                        if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
                         {
-                            Left_loc=Left2;//.x = (Loc.x+Left_loc.x)/2;
-                            if(!Is_Player2_Dangerous) Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Left_loc);
-                            //                            Left_loc.y = (Loc.y+Left_loc.y)/2;
+                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
+                            Left_loc = Average_Positioning(Left_loc , Dyno_left);
                         }
                         else
                         {
-                            Right_loc=Right2;//.x = (Loc.x+Right_loc.x)/2;
-                            if(!Is_Player2_Dangerous) Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Right_loc);
-                            //                            Right_loc.y = (Loc.y+Right_loc.y)/2;
+                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
+                            Right_loc = Average_Positioning(Dyno_right , Right_loc);
                         }
                     }
                     else // No One Recieve Pass
@@ -129,51 +150,23 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
         {
             if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
             {
-
                 Ref_1Deff_Ball(leftID,RightID,MidID);
             }
             else //(BallOwner_Finded)
             {
                 Ref_1Deff_Player(Player1,leftID,RightID,MidID);
             }
+            // For Let The Second Deffence Come Back
+            if(MidID==RightID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,leftID,Left_loc);
+            else if(MidID==leftID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,RightID,Right_loc);
         }
 
-        //-----------------------------------------------------------------
-        //                if(wm->ourRobot[leftID].isValid)//MidID==-1)
-        //                {
-        //                    if(!BallOwner_Finded)// NIST dar ekhtiare kesi  >> Ref2b(ball)
-        //                        Ref_2Deff_Ball();
-
-        //                    else if(BallOwner_Finded)
-        //                        Ref_2Deff_Player(Player1);
-
-
-        //                }
-        //                if(!wm->ourRobot[leftID].isValid)//MidID!=-1)
-        //                {
-        //                    if(!BallOwner_Finded)
-        //                    {
-        //                        Ref_1Deff_Ball(leftID,RightID,RightID);//mid Id
-        //                        //                qDebug() << "RIGHT        ID : " << RightID;
-        //                    }
-        //                    else if(BallOwner_Finded)
-        //                    {
-        //                        Ref_1Deff_Player(Player1,leftID,RightID,RightID);// Mid Id
-        //                        //                qDebug() << "Right ID : " << RightID ;
-        //                    }
-        //                }
-
-        //        Ref_1Deff_Loc(wm->oppRobot[4].pos.loc,leftID,RightID,RightID);
-        //        qDebug() << "Left ID " << leftID;
-        //        qDebug() << Left_loc.x;
-
-        //        if(BallOwner_Finded) Find_Pass_Receiver(Player1);
         left.loc = Left_loc;
         right.loc = Right_loc;
         left.dir =(wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
         right.dir=(wm->ourRobot[RightID].pos.loc - Field::ourGoalPost_R).dir().radian();
-                qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
-                qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
+        //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
+        //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
     }
 }
 
@@ -203,7 +196,6 @@ void Play::Ref_2Deff_Player(Position p)
     {
         if(p.dir < -M_PI/2 || p.dir > M_PI/2)
         {
-            //            qDebug() << " Opponent Robot Is Dangerous ! ";
             Vector2D B2DC = Deffence_center - wm->ball.pos.loc;
             double Rot_ang = (p.dir - B2DC.dir().radian());
             if(Rot_ang>M_PI) Rot_ang-=2*M_PI;
@@ -240,16 +232,13 @@ void Play::Ref_2Deff_Ball()
 //===========================================================================================
 void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Vector2D &Deff_center)
 {
-    qDebug() << " Counting Player 2" ;
-    //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
     Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
-    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
-    qDebug() << Field::ourGoalPost_R.y << " , " << Field::ourGoalPost_L.y ;
+    //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
+    //    qDebug() << Field::ourGoalPost_R.y << " , " << Field::ourGoalPost_L.y ;
     if((intersect_Point.y > Field::ourGoalPost_R.y-100) && (intersect_Point.y < Field::ourGoalPost_L.y+100))
     {
-        qDebug() << " Player 2 Is Aim To Our Goal " ;
         if(p.dir < -M_PI/2 || p.dir > M_PI/2)
         {
             // --------  Defining New Deffence Center ---------------
@@ -269,10 +258,7 @@ void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Ve
             Vector2D P2DC = P2GC; // Defining Player 2 Center Of Deffence
             P2DC.setLength(New_Dist_2_Deffence);
             //            New_Deffence_center = wm->ball.pos.loc+B2DC;
-            // -----------------------------------------------------
 
-            //            qDebug() << " Opponent Robot Is Dangerous ! ";
-            //            B2DC = New_Deffence_center - wm->ball.pos.loc;
             double Rot_ang = (p.dir - P2DC.dir().radian());
             if(Rot_ang>M_PI) Rot_ang-=2*M_PI;
             else if(Rot_ang<-M_PI) Rot_ang+=2*M_PI;
@@ -280,7 +266,6 @@ void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Ve
             P2DC.rotate(AngleDeg::rad2deg(Rot_ang*0.8));
             New_Deffence_center = p.loc + P2DC ;
             Deff_center = New_Deffence_center;
-//            qDebug() << " NEW D Center Player2 : " << New_Deffence_center.x << "," << New_Deffence_center.y ;
 
             double New_Wall_length;
             New_Wall_length=2*New_Dist_2_Deffence*tan(ang/2);
@@ -317,7 +302,6 @@ void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
     else if(intersect_Point.y > Field::ourGoalPost_L.y+100) intersect_Point.y = Field::ourGoalPost_L.y+100;
     if(p.dir < -M_PI/2 || p.dir > M_PI/2)
     {
-        //            qDebug() << " Opponent Robot Is Dangerous ! ";
         Vector2D P2DC = Deffence_center - p.loc;
         double Rot_ang = (p.dir - P2DC.dir().radian());
         if(Rot_ang>M_PI) Rot_ang-=2*M_PI;
@@ -332,7 +316,6 @@ void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
             Left_loc.setLength((Wall_length/4));
             if(Dist_2_Deffence<700) Left_loc.setLength(90) ;
             Left_loc = Deffence_center-Left_loc;
-            //        qDebug() << "left : " << Left_loc.x;
         }
         else if(Mid_ID==Right_ID)
         {
@@ -343,7 +326,7 @@ void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
         }
         else
         {
-            qDebug() << "!!!!!!! No Point For Deffence Selected !!!!!!! " ;
+            qDebug() << " !!!!!!!!!!!!!!!! PLEAAAAAAAAASE DEBUG ME 2!!!!!!!!!!!!!!!!";
             Left_loc =Vector2D(0,0);
             Right_loc=Vector2D(0,0);
         }
@@ -351,8 +334,7 @@ void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
     }
     else
     {
-        Ref_2Deff_Ball();
-        qDebug() << " !!!!!!!!!!!!!!!! PLEAAAAAAAAASE DEBUG ME 2!!!!!!!!!!!!!!!!";
+        Ref_1Deff_Ball(Left_ID,Right_ID,Mid_ID);
     }
 }
 //===========================================================================================
@@ -413,16 +395,9 @@ void Play::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int Mid_ID, 
         P2DC.setLength(New_Dist_2_Deffence);
         //            New_Deffence_center = wm->ball.pos.loc+B2DC;
         // -----------------------------------------------------
-
-        //            qDebug() << " Opponent Robot Is Dangerous ! ";
-        //            B2DC = New_Deffence_center - wm->ball.pos.loc;
         double Rot_ang = (p.dir - P2DC.dir().radian());
         if(Rot_ang>M_PI) Rot_ang-=2*M_PI;
         else if(Rot_ang<-M_PI) Rot_ang+=2*M_PI;
-
-
-        //            qDebug() << " Opponent Robot Is Dangerous ! ";
-
         P2DC.rotate(AngleDeg::rad2deg(Rot_ang*0.75));
         New_Deffence_center = p.loc + P2DC ;
 
@@ -532,35 +507,37 @@ void Play::Ref_1Deff_Loc(Vector2D loc, int Left_ID, int Right_ID, int Mid_ID, Ve
     {
         qDebug() << "!!!!!!! No Point For Deffence Selected !!!!!!! " ;
         Loc =Vector2D(0,0);
-//        Right_loc=Vector2D(0,0);
+        //        Right_loc=Vector2D(0,0);
     }
 
 
 }
 //===========================================================================================
-bool Play::Danger_Player_Direction(Position p)
+bool Play::Danger_Player_Direction(Position p, int thr)
 {
     bool is_dangerous=false;
     Vector2D Intersect_Point;
-    //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
     Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
-    Line2D B2OT(wm->ball.pos.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
-    Intersect_Point = L2R.intersection(B2OT);
-    if((Intersect_Point.y > Field::ourGoalPost_R.y-100) && (Intersect_Point.y < Field::ourGoalPost_L.y+100))
+    Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
+    Intersect_Point = L2R.intersection(P2OT);
+    if((Intersect_Point.y > Field::ourGoalPost_R.y-thr) && (Intersect_Point.y < Field::ourGoalPost_L.y+thr))
     {
-        if(p.dir < -M_PI/2 || p.dir > M_PI/2)
-        {
-            is_dangerous = true;//Dangerous = true;
-        }
+        if(p.dir < -M_PI/2 || p.dir > M_PI/2)  is_dangerous = true;
 
     }
+    if(wm->ball.vel.loc.length() > 0.5)
+    {
+        is_dangerous = false ;
+        qDebug() << " !! CHECK Danger Player !! " ;
+    }
+
     return is_dangerous;
 }
 //===========================================================================================
 bool Play::Ball_Toward_Goal()
 {
     bool To_Goal=false;
-    if(wm->ball.vel.loc.length()>0.3)
+    if(wm->ball.vel.loc.length()>0.4)
     {
 
         Vector2D Intersect_Point;
@@ -570,7 +547,7 @@ bool Play::Ball_Toward_Goal()
         Intersect_Point = L2R.intersection(B2T);
         if((Intersect_Point.y > Field::ourGoalPost_R.y-150) && (Intersect_Point.y < Field::ourGoalPost_L.y+150))
         {
-            qDebug() << " OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOy !!";
+            //            qDebug() << " OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOy !!";
             if(wm->ball.vel.dir < -M_PI/2 || wm->ball.vel.dir > M_PI/2)
             {
 
@@ -600,22 +577,8 @@ void Play::Deffence_Geometry_making()
     B2DC.setLength(Dist_2_Deffence);
     Deffence_center=wm->ball.pos.loc+B2DC;
     Wall_length=2*Dist_2_Deffence*tan(ang/2); // length of Deffence Wall which fully protected goal
-    //        if(Dist_2_Deffence<700 && Dist_2_Deffence > 0) Wall_length = 300 ;
     Wall=B2GC;
     Wall.setLength(Wall_length); Wall.rotate(90);
-
-
-    //======================End 2nd Mode=================================
-
-
-
-
-
-
-    //    qDebug() << "Dist Deff" << Dist_2_Deffence;
-    //    qDebug() << "Deff_Length" << Deffence_Length << "Tan " << tan(ang/2) << "Ang" << ang*180/3.14;
-
-
 }
 //===========================================================================================
 bool Play::Find_OppRobot_BallOwner()
@@ -636,18 +599,14 @@ bool Play::Find_OppRobot_BallOwner()
     if(ans!=-1 && num<2 && mindist < 250) // Just One Player Can Own The Ball
     {
         BallOwner_Finded=true;
-        qDebug() << " Opponent Robot Number Has Owned The Ball: " << ans ;
+        //        qDebug() << " Opponent Robot Number Has Owned The Ball: " << ans ;
         Player1 = wm->oppRobot[ans].pos;
-        return true;//wm->oppRobot[ans].pos;
+        return true;
     }
 
     else
     {
-        //        Position Nosolution;
-        //        Nosolution.loc=Vector2D(-1,-1);
-        //        Nosolution.dir=-1;
-        //        BallOwner_Finded=false;
-        return false;//Nosolution;
+        return false;
     }
 
 }
@@ -655,7 +614,7 @@ bool Play::Find_OppRobot_BallOwner()
 bool Play::Find_Pass_Receiver(Position Player1)
 {
     bool finded=false;
-    Ray2D R2T(Player1.loc,AngleDeg::deg2rad(Player1.dir)); // Robot To Target
+    //    Ray2D R2T(Player1.loc,AngleDeg::deg2rad(Player1.dir)); // Robot To Target
     double P1_Dir=Player1.dir,min_Diff_ang=100;
     int ans=-1;//,num=0;
     Vector2D P1_P2 = Vector2D(0,0);
@@ -669,27 +628,94 @@ bool Play::Find_Pass_Receiver(Position Player1)
         if(Dif_ang > M_PI) Dif_ang -= 2*M_PI;
         else if(Dif_ang < -M_PI) Dif_ang += 2*M_PI;
         Dif_ang=abs(Dif_ang);
-        //        qDebug()<< " Dif Ang : " << AngleDeg::rad2deg(Dif_ang);
         if(Dif_ang<min_Diff_ang)
         {
             min_Diff_ang=Dif_ang;
             ans=jj;
         }
     }
-    if(min_Diff_ang > AngleDeg::deg2rad(30))
+    if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() > 0.4 )
     {
-        qDebug() << "Pass Receiver Not Finded !! ";
-        //        return false ;
+        qDebug() << "!! Check The Pass Reciever !! ";
+        return false ;
         //        ans=0; // Please Do Not Force To Close
     }
 
     else
     {
-        qDebug() << " Opponent Robot " << ans << " Will Get Pass ! " ;
+        //        qDebug() << " Opponent Robot " << ans << " Will Get Pass ! " ;
         Player2 = wm->oppRobot[ans].pos ;
         finded = true ;
     }
     return finded;//wm->oppRobot[ans].pos;
+}
+//===========================================================================================
+bool Play::Find_AnyOther_Opp_Dangerous()
+{
+//    bool finded=false;
+//    double min_d = 35000000,min_a = 100;
+    int min_i = -1;
+//    Vector2D predictedPos;
+    double BallVell_Dir = wm->ball.vel.loc.dir().radian();
+    double min_Diff_ang=100;
+    if( wm->ball.isValid && wm->ball.vel.loc.length() > 0.5)
+    {
+        //        for(int i=0;i<PLAYERS_MAX_NUM;i++)
+        //        {
+        //            if(!wm->oppRobot[i].isValid) continue;
+        //            predictedPos = wm->kn->PredictDestination(wm->oppRobot[i].pos.loc, wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
+        //            double distance = (predictedPos - wm->oppRobot[i].pos.loc).length();
+
+        //            if( distance < min_d )
+        //            {
+        //                min_d = distance;
+        //                min_i = i;
+        //            }
+
+        //        }
+
+        Vector2D B_P2 = Vector2D(0,0);
+        for(int jj=0;jj<PLAYERS_MAX_NUM;jj++)
+        {
+            if(!wm->oppRobot[jj].isValid) continue;
+            B_P2 = (wm->oppRobot[jj].pos.loc - wm->ball.pos.loc);
+            double Dif_ang;
+            Dif_ang = (B_P2.dir().radian()-BallVell_Dir);
+            if(Dif_ang > M_PI) Dif_ang -= 2*M_PI;
+            else if(Dif_ang < -M_PI) Dif_ang += 2*M_PI;
+            Dif_ang=abs(Dif_ang);
+            if(Dif_ang<min_Diff_ang)
+            {
+                min_Diff_ang=Dif_ang;
+                min_i = jj;
+            }
+        }
+
+
+        //    Position p2 = wm->oppRobot[min_i].pos;
+
+        //    double Ball2Player = (p2.loc - wm->ball.pos.loc).dir().radian();
+        //    double diff_ang=BallVell_Dir - Ball2Player;
+        //    if(diff_ang > M_PI) diff_ang-=2*M_PI;
+        //    else if(diff_ang < -M_PI) diff_ang+=2*M_PI;
+        //    diff_ang = fabs(diff_ang);
+        //    qDebug() << " Check Any Other Dangerous ! ";
+        //    if(min_d < 4000 && (diff_ang < AngleDeg::deg2rad(20)))
+        qDebug() << " Min_Diff_ang : " << AngleDeg::rad2deg(min_Diff_ang);
+        if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() < 0.4 )
+        {
+            qDebug() << "!! Check Any Other Dangerous !! ";
+            return false ;
+        }
+        else
+        {
+            Player2 = wm->oppRobot[min_i].pos;
+            qDebug() << " Player # " << min_i << " Is Dangerous " ;
+            return true;
+        }
+    }
+    else return false;
+
 }
 //===========================================================================================
 int Play::Find_Dyno_Deffence(int Left_ID, int Right_ID, Vector2D Deff_center)
@@ -715,6 +741,19 @@ Vector2D Play::Find_Deff_center(Vector2D loc)
     L2DC.setLength(Dist_2_Deffence_loc);
     Deffence_center_loc = loc + L2DC;
     return Deffence_center_loc;
+}
+//===========================================================================================
+Vector2D Play::Average_Positioning(Vector2D l1, Vector2D l2)
+{
+    Vector2D V1 = l1 - Field::ourGoalCenter ;
+    Vector2D V2 = l2 - Field::ourGoalCenter ;
+    double D_ang = (V1.dir().radian()-V2.dir().radian());
+    if(D_ang > M_PI) D_ang-=2*M_PI;
+    else if(D_ang < -M_PI) D_ang+=2*M_PI;
+    Vector2D Average;
+    Average = V2.rotate(AngleDeg::rad2deg(D_ang/2));
+    Average = Field::ourGoalCenter + Average ;
+    return Average;
 }
 
 
