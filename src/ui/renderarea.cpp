@@ -13,6 +13,7 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_astarResult = new QBrush(QColor::fromRgb(250,50,55),Qt::SolidPattern);
     brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
     brush_goals = new QBrush(QColor::fromRgb(0,255,0),Qt::SolidPattern);
+    brush_debug = new QBrush(QColor::fromRgb(255,0,0),Qt::SolidPattern);
     _timer.start(40);
     connect(&_timer,SIGNAL(timeout()), this, SLOT(refresh()));
 }
@@ -181,6 +182,43 @@ void RenderArea::paintEvent(QPaintEvent *)
         }
     }
 
+    //Drawing debug points
+    if(_sc->wm->showDebug)
+    {
+        if(_sc->wm->debug_type == 1)
+        {
+            for(int i=0;i<_sc->wm->debug_pos.size();i++)
+            {
+                QPoint point(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
+                painter.setPen(QColor::fromRgb(255,0,0));
+                painter.setBrush(*brush_debug);
+                painter.drawEllipse(point,BALL_R,BALL_R);
+            }
+        }
+        else if(_sc->wm->debug_type == 2)
+        {
+            for(int i=0;i<_sc->wm->debug_pos.size()-1;i++)
+            {
+                QPoint first(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
+                QPoint second(_sc->wm->debug_pos.at(i+1).x/WORLD_SCALE,-_sc->wm->debug_pos.at(i+1).y/WORLD_SCALE);
+                painter.setPen(QColor::fromRgb(255,0,0));
+                painter.setBrush(*brush_debug);
+
+                painter.drawEllipse(first,BALL_R,BALL_R);
+                painter.drawEllipse(second,BALL_R,BALL_R);
+                painter.drawLine(first,second);
+            }
+
+            QPoint first(_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).x/WORLD_SCALE, -_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).y/WORLD_SCALE);
+            QPoint second(_sc->wm->debug_pos.at(0).x/WORLD_SCALE,-_sc->wm->debug_pos.at(0).y/WORLD_SCALE);
+            painter.setPen(QColor::fromRgb(255,0,0));
+            painter.setBrush(*brush_debug);
+
+            painter.drawEllipse(first,BALL_R,BALL_R);
+            painter.drawEllipse(second,BALL_R,BALL_R);
+            painter.drawLine(first,second);
+        }
+    }
     //    if(_sc->wm->selected.size()!=0)
     //    {
     //        QPoint first(_sc->wm->selected.at(0).x/WORLD_SCALE , -_sc->wm->selected.at(0).y/WORLD_SCALE);

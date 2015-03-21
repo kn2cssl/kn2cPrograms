@@ -65,6 +65,10 @@ public:
     tANDp max_TANDPis;
     bool showChances;
 
+    bool showDebug;
+    QList<Vector2D> debug_pos;
+    int debug_type;
+
     //---UDP 2 Matlab
     bool sendUDP;
     int indexOfUDP;
