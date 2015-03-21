@@ -12,7 +12,7 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_astarNode = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
     brush_astarResult = new QBrush(QColor::fromRgb(250,50,55),Qt::SolidPattern);
     brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
-    brush_goals = new QBrush(QColor::fromRgb(0,255,0),Qt::SolidPattern);
+    brush_goals = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
     brush_debug = new QBrush(QColor::fromRgb(255,0,0),Qt::SolidPattern);
     _timer.start(40);
     connect(&_timer,SIGNAL(timeout()), this, SLOT(refresh()));
@@ -42,19 +42,27 @@ void RenderArea::paintEvent(QPaintEvent *)
 
     painter.translate(CENTER_X,CENTER_Y);
 
-    //Draw Goals
-    QPoint our_left(Field::ourGoalPost_L.x /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
-    QPoint our_right(Field::ourGoalPost_R.x/WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
+    //Draw Our Goal
+    QPoint our_left1(Field::ourGoalPost_L.x /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
+    QPoint our_left2( (Field::ourGoalPost_L.x - Field::GoalDeep) /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
+    QPoint our_right1(Field::ourGoalPost_R.x/WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
+    QPoint our_right2( (Field::ourGoalPost_R.x - Field::GoalDeep) /WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
-    painter.drawLine(our_left,our_right);
+    painter.drawLine(our_left2,our_right2);
+    painter.drawLine(our_left1,our_left2);
+    painter.drawLine(our_right1,our_right2);
 
-    QPoint opp_left(Field::oppGoalPost_L.x /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
-    QPoint opp_right(Field::oppGoalPost_R.x/WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
+    //Draw Opp Goal
+    QPoint opp_left1(Field::oppGoalPost_L.x /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
+    QPoint opp_left2( (Field::oppGoalPost_L.x + Field::GoalDeep) /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
+    QPoint opp_right1(Field::oppGoalPost_R.x/WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
+    QPoint opp_right2( (Field::oppGoalPost_R.x + Field::GoalDeep) /WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
-    painter.drawLine(opp_left,opp_right);
+    painter.drawLine(opp_left2,opp_right2);
+    painter.drawLine(opp_left1,opp_left2);
+    painter.drawLine(opp_right1,opp_right2);
 
     // Draw Target lines !! MOHSEN
-
     if( _sc->wm->showChances )
     {
         QPoint Pball;
@@ -62,7 +70,7 @@ void RenderArea::paintEvent(QPaintEvent *)
         Pball.setY(-_sc->wm->ball.pos.loc.y/WORLD_SCALE);
 
         //painter.setBrush(*brush_ball);
-        if(_sc->wm->ball.isValid /*&& _sc->wm->TANDPis.size() > 0*/ )
+        if(_sc->wm->ball.isValid && _sc->wm->TANDPis.size() > 0 )
         {
             for(int i=0;i<_sc->wm->TANDPis.size();i++)
             {
