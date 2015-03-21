@@ -32,6 +32,7 @@ public:
     explicit WorldModel(OutputBuffer *outputBuffer);
     double time;
     Ball ball;
+    TeamColorType ourColor;
     Agent ourRobot[PLAYERS_MAX_NUM];
     Robot oppRobot[PLAYERS_MAX_NUM];
     GameStateType gs;
