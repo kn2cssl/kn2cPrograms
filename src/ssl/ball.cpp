@@ -37,14 +37,13 @@ void Ball::seenAt(vector<Position> p, double t, int c)
 
      if (camera_mem == ans.camera  || camera_mem ==2 )
      {
-         if((pos.loc - ans.pos.loc).length() < 540 || camera_mem ==2)
+         if((pos.loc - ans.pos.loc).length() < 10*(ans.time-time) || camera_mem ==2)
          {
              camera = ans.camera;
              time = ans.time;
              pos = ans.pos;
              vel_calc();
              isValid = true ;
-
              camera_mem = camera ;
              camera_timeout = 0;
          }
