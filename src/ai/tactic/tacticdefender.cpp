@@ -26,7 +26,7 @@ RobotCommand TacticDefender::getCommand()
         if( opposite != -1)
         {
             opp_v = wm->kn->PredictDestination(wm->oppRobot[opposite].pos.loc,
-                wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
+                                               wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
             oppDistance = (opp_v - wm->oppRobot[opposite].pos.loc).length();
         }
         else
@@ -54,8 +54,6 @@ RobotCommand TacticDefender::getCommand()
                 chipPoint = first;
             }
 
-//            qDebug()<<"Main : "<<main.x<<" , "<<main.y;
-//            qDebug()<<"Chip : "<<chipPoint.x<<" , "<<chipPoint.y;
             if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,main,150) || reach2Ball )
             {
                 reach2Ball = true;
@@ -77,7 +75,7 @@ RobotCommand TacticDefender::getCommand()
                 else
                 {
                     Circle2D dangerCir(wm->ourRobot[this->id].pos.loc,1000);
-                    QList<int> opps = wm->kn->ActiveOppAgents();
+                    QList<int> opps = wm->kn->findNearestOppositeTo(wm->ourRobot[this->id].pos.loc);
                     bool inDangerousPosition = false;
                     for(int i=0;i<opps.size();i++)
                     {
@@ -90,14 +88,26 @@ RobotCommand TacticDefender::getCommand()
 
                     if( inDangerousPosition )
                     {
-                        //qDebug()<<"in a dangerous position , chip the ball";
+//                        qDebug()<<"in a dangerous position , chip the ball";
                         OperatingPosition p = wm->kn->AdjustKickPointB(wm->ball.pos.loc,chipPoint,wm->ourRobot[this->id].pos);
 
-                        if( p.readyToShoot )
+                        Ray2D chipDir(wm->ourRobot[this->id].pos.loc,chipPoint);
+                        bool chipIsSuitable = true;
+                        for(int i=0;i<opps.size();i++)
+                        {
+                            if ( chipDir.inRightDir(wm->oppRobot[opps.at(i)].pos.loc,30) )
+                            {
+                                chipIsSuitable = false;
+                                break;
+                            }
+                        }
+
+                        if( p.readyToShoot && chipIsSuitable )
                         {
                             rc.kickspeedz = 255;//detectKickSpeed(target.pos);
                             qDebug()<<"Chippppppppppp";
                         }
+
                         rc.fin_pos = p.pos;
                         rc.useNav = p.useNav;
                         rc.isBallObs = true;
@@ -132,7 +142,7 @@ RobotCommand TacticDefender::getCommand()
         }
         else
         {
-           // qDebug()<<"dangerous distance from opp , don't go";
+            // qDebug()<<"dangerous distance from opp , don't go";
             rc.fin_pos = idlePosition;
             rc.useNav = false;
             rc.isBallObs = true;
