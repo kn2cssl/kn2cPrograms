@@ -44,7 +44,6 @@ void Ball::seenAt(vector<Position> p, double t, int c)
              pos = ans.pos;
              vel_calc();
              isValid = true ;
-
              camera_mem = camera ;
              camera_timeout = 0;
          }

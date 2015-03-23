@@ -210,7 +210,7 @@ bool Knowledge::IsInsideNearArea(Vector2D pos)
 {
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.6*Field::MinX,0.7*Field::MaxY))
             ||
-           IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
+            IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
@@ -264,7 +264,7 @@ Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, d
     // No solution.
     else
     {
-        qDebug() << "Prediction: No solution.";
+        //qDebug() << "Prediction: No solution.";
         return targetPos;//Vector2D::INVALIDATED;
     }
 
@@ -273,7 +273,7 @@ Vector2D Knowledge::PredictDestination(Vector2D sourcePos, Vector2D targetPos, d
     // No solution.
     if(tf < 0)
     {
-        qDebug() << "Prediction: No solution.";
+        //qDebug() << "Prediction: No solution.";
         return targetPos;   //Vector2D(0,0); //INVALIDATED;
     }
 
@@ -524,7 +524,7 @@ double Knowledge::scoringChance(Vector2D loc)
     int dist_Clearance = 30 ; // 3 cm for opp Robot Reaction displacement
     for(int jj=-10;jj<11;jj++)
     {
-        Vector2D Point;
+        Vector2D Point; // 20 Points Are On OppGoal Line And Each Has a Chance To goal
         Point.x = Field::oppGoalCenter.x;
         Point.y = Field::oppGoalCenter.y + jj*(Field::oppGoalPost_L.y/10);
         tANDp tp;
@@ -657,8 +657,9 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
     double DirErr;
     double DistErr;
     double BallDir = _wm->ball.vel.loc.dir().radian();
+    double DAngel = AngleDeg ::deg2rad(80);
 
-    if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-80)<BallDir && (-KickDir.dir().radian()+80)>BallDir)
+    if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-DAngel)<BallDir && (-KickDir.dir().radian()+DAngel)>BallDir)
     {
         KickPos.pos.dir = BallDir-M_PI;
         if (KickPos.pos.dir > M_PI) KickPos.pos.dir -= 2 * M_PI;
@@ -685,13 +686,9 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
     }
 
-
-
-
     if(kickPermission)
     {
         Vector2D ball_vel_change;
-
 
         ball_vel_change =_wm->ball.vel.loc - last_ball_vell;
         last_ball_vell = _wm->ball.vel.loc ;
@@ -741,8 +738,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
         KickPos.kickSpeed=255;
     }
 
-
     return KickPos;
 }
-
 

@@ -5,6 +5,11 @@
 #include "robotcommand.h"
 #include "worldmodel.h"
 
+#define SHOOT 0
+#define AIM 1
+#define DEFEND 2
+#define RESET 0
+
 class Tactic : public QObject
 {
     Q_OBJECT
@@ -17,6 +22,17 @@ public:
     tANDp findTarget();
     void setPlayerToKeep(int index);
     float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
+
+    OperatingPosition BallControl(Vector2D Target , int Prob ,  int ID , double maxSpeed, int Task=0 );
+
+private:
+    Vector2D last_ball_vell;
+    QTime f10s;//reset:check
+    bool kickPermission;//reset:check
+    int sensorFault = 0;//reset:check
+    Vector2D ballDisplacement={0,0};//reset:check
+    int startProbability=0;//reset:check
+    bool timer_reset=false;
 
 protected:
     WorldModel *wm;
