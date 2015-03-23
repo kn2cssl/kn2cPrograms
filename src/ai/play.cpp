@@ -39,7 +39,7 @@ bool Play::conditionChanged()
     return out;
 }
 
-void Play::zonePositions(int leftID, int RightID, Position &goalie, Position &left, Position &right)
+void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, Position &right)
 {
     goalie.loc = Vector2D(Field::MinX,0);
 
