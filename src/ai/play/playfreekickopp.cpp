@@ -30,7 +30,7 @@ int PlayFreeKickOpp::enterCondition()
             rolesIsInit = false;
             go2ThePositions = false;
 
-            waitTimer->start(500);
+            waitTimer->start(250);
         }
         //        else
         //        {
@@ -90,15 +90,33 @@ void PlayFreeKickOpp::initRole()
 void PlayFreeKickOpp::pressing()
 {
     QList<int> oppPlayers = wm->kn->ActiveOppAgents();
+    QList<int> oppInSecure;
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
     QList<int> ourPlayers = wm->kn->findAttackers();
-
-    for(int i=0;i<oppPlayers.size();i++)
+    int counter = 0;
+    while( counter < oppPlayers.size() )
     {
-        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppPlayers.at(i)].pos.loc,wm->ball.pos.loc) )
-            oppPlayers.removeAt(i);
+        if( wm->kn->IsInsideSecureArea(wm->oppRobot[oppPlayers.at(counter)].pos.loc,wm->ball.pos.loc))
+        {
+                oppInSecure.append(oppPlayers.at(counter));
+                oppPlayers.removeAt(counter);
+        }
+        else
+            counter++;
     }
+
+    counter = 0;
+    while( counter < oppPlayers.size() )
+    {
+        if( wm->kn->IsInsideFarArea(wm->oppRobot[oppPlayers.at(counter)].pos.loc) )
+            oppPlayers.removeAt(counter);
+        else
+            counter++;
+    }
+
+    if( oppInSecure.size() == 1 )
+        oppPlayers.append(oppInSecure.first() );
 
     Marking defence;
     defence.setWorldModel(wm);
@@ -120,11 +138,11 @@ void PlayFreeKickOpp::pressing()
 
     wm->marking = m2m;
 
-    if( wm->cmgs.theirDirectKick() )
-    {
+//    if( wm->cmgs.theirDirectKick() )
+//    {
         wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
         wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
-    }
+//    }
 }
 
 void PlayFreeKickOpp::setTactics(int index)
@@ -161,43 +179,48 @@ void PlayFreeKickOpp::setPositions()
     tDefenderRight->setIdlePosition(rightDefPos);
     tGolie->setIdlePosition(goaliePos);
 
-    Vector2D finalPos;
-    double m;
-    double alfa,alfa2;
-    m=-(Field::ourGoalCenter.y-wm->ball.pos.loc.y)/(Field::ourGoalCenter.x-wm->ball.pos.loc.x);
-    alfa=atan(m);
+    Vector2D finalPos,notImportant,leftPos,rightPos;
 
-    if(alfa>75.0*3.14/180)
+    Circle2D robotCircle(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+    Segment2D line2Goal(wm->ball.pos.loc,Field::ourGoalCenter);
+    robotCircle.intersection(line2Goal,&finalPos,&notImportant);
+
+    Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+    robotCircle.intersection(secondCircle,&leftPos,&rightPos);
+
+    if( !wm->kn->IsInsideField(leftPos) )
     {
-        alfa=120.0*3.14/180;
+        leftPos = finalPos;
+        finalPos = rightPos;
+
+        Vector2D leftPos2,rightPos2;
+        Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+        robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
+
+        if( leftPos.dist(leftPos2) < leftPos.dist(rightPos2) )
+            rightPos = rightPos2;
+        else
+            rightPos = leftPos2;
+
+    }
+    else if( !wm->kn->IsInsideField(rightPos) )
+    {
+        rightPos = finalPos;
+        finalPos = leftPos;
+
+        Vector2D leftPos2,rightPos2;
+        Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
+        robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
+
+        if( rightPos.dist(leftPos2) < rightPos.dist(rightPos2) )
+            leftPos = rightPos2;
+        else
+            leftPos = leftPos2;
     }
 
-    if(alfa<-75.0*3.14/180)
-    {
-        alfa=-120.0*3.14/180;
-    }
-
-    Position pos;
-
-    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa);
-    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa);
-    pos.loc = finalPos;
-    pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
-    tAttackerMid->setIdlePosition(pos);
-
-    alfa2= alfa + AngleDeg::PI/10;
-    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa2);
-    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa2);
-    pos.loc = finalPos;
-    pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
-    tAttackerRight->setIdlePosition(pos);
-
-    alfa2 = alfa - AngleDeg::PI/10;
-    finalPos.x=wm->ball.pos.loc.x-ALLOW_NEAR_BALL_RANGE*cos(alfa2);
-    finalPos.y=wm->ball.pos.loc.y+ALLOW_NEAR_BALL_RANGE*sin(alfa2);
-    pos.loc = finalPos;
-    pos.dir = (wm->ball.pos.loc - finalPos).dir().radian();
-    tAttackerLeft->setIdlePosition(pos);
+    tAttackerLeft->setIdlePosition(leftPos);
+    tAttackerMid->setIdlePosition(finalPos);
+    tAttackerRight->setIdlePosition(rightPos);
 }
 
 void PlayFreeKickOpp::setPlayer2Keep(int ourR, int oppR)

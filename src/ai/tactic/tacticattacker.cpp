@@ -97,10 +97,11 @@ RobotCommand TacticAttacker::getCommand()
             {
                 Vector2D fstInt,secInt;
                 Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
-                //                Line2D connectedLine(wm->ball.pos.loc,final.loc);
-                Line2D connectedLine(wm->oppRobot[playerToKeep].pos.loc,Field::ourGoalCenter);
+
+                Line2D connectedLine(wm->ball.pos.loc,Field::ourGoalCenter);
                 int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
 
+                rc.fin_pos.dir = (wm->oppRobot[playerToKeep].pos.loc - Field::ourGoalCenter).dir().radian();
                 if( numberOfIntersections == 2 )
                 {
                     if( (fstInt-final.loc).length() > (secInt-final.loc).length() )
@@ -315,7 +316,7 @@ int TacticAttacker::findBestPlayerForPass()
     int index = -1;
     double min = 10000;
 
-    QList<int> ourAgents = wm->kn->ActiveAgents();
+    QList<int> ourAgents = wm->kn->findAttackers();
     QList<int> freeAgents , busyAgents;
 
     while( !ourAgents.isEmpty() )
@@ -429,6 +430,7 @@ void TacticAttacker::youHavePermissionForKick()
     everyOneInTheirPos = true;
     if( findReciever )
     {
+        qDebug()<<"findBestPlayerForPass : "<<findBestPlayerForPass();
         receiverPos = wm->ourRobot[findBestPlayerForPass()].pos.loc;
     }
 }

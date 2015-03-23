@@ -201,6 +201,16 @@ bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRad
              (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
 }
 
+bool Knowledge::IsInsideFarArea(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(0.33*Field::MaxX,Field::MaxY), Vector2D(Field::MaxX,Field::MinY));
+}
+
+bool Knowledge::IsInsideNearArea(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.33*Field::MinX,Field::MinY));
+}
+
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
 {
     return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R,

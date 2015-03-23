@@ -28,6 +28,8 @@ public:
     bool IsInsideCircle(Vector2D pos,Vector2D center,double radios);
     bool IsInsideField(Vector2D pos);
     bool IsInsideOurField(Vector2D pos);
+    bool IsInsideFarArea(Vector2D pos);
+    bool IsInsideNearArea(Vector2D pos);
 
     bool IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset);
     bool IsInsideGolieArea(Vector2D pos);
