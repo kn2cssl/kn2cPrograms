@@ -57,10 +57,11 @@ tANDp Tactic::findTarget()
     if (!wm->ball.isValid) return out;
     wm->TANDPis.clear();
 
-    int prob=100;
-    int dist_Clearance = 30 ; // 3 cm for opp Robot Reaction displacement
+
+    int dist_Clearance = 00 ; // 3 cm for opp Robot Reaction displacement
     for(int jj=-10;jj<11;jj++)
     {
+        int prob=100;
         Vector2D Point;
         Point.x = Field::oppGoalCenter.x;
         Point.y = Field::oppGoalCenter.y + jj*(Field::oppGoalPost_L.y/10);
@@ -71,12 +72,12 @@ tANDp Tactic::findTarget()
         {
             if(wm->oppRobot[ii].isValid)
             {
-                if(wm->oppRobot[ii].pos.loc.x > wm->ball.pos.loc.x)
+                if(wm->oppRobot[ii].pos.loc.x > wm->ball.pos.loc.x-500)
                 {
                     Segment2D ball2Point(wm->ball.pos.loc,Point);
                     double dist2R = ball2Point.dist(wm->oppRobot[ii].pos.loc);
                     if (dist2R < (ROBOT_RADIUS + BALL_RADIUS + dist_Clearance) ) prob=0;
-                    else if (dist2R < 400 ) prob = dist2R/4;
+                    else if (dist2R < 1000 ) prob = dist2R/10;
                     else prob = 100;
                     if(prob < min_prob) min_prob = prob;
                 }

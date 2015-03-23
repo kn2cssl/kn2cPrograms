@@ -46,7 +46,7 @@ public:
     bool agentIsFree(int index);
     bool isOccupied(Vector2D input);
 
-    bool kickPermission;
+
 
     QString gameStatus();
 
@@ -57,7 +57,16 @@ public:
     double oppScoringChance(Vector2D loc);
 
     OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
+    OperatingPosition BallControl(Vector2D Target , int Prob ,  int ID , double maxSpeed, int Task=0 );
+
     Vector2D last_ball_vell;
+    QTime f10s;//reset:check
+    bool kickPermission;//reset:check
+    int sensorFault = 0;//reset:check
+    Vector2D ballDisplacement={0,0};//reset:check
+    int startProbability=0;//reset:check
+    bool timer_reset=false;
+
 
 private:
     WorldModel* _wm;

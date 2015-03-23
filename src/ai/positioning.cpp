@@ -62,7 +62,7 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
             int j = i+1;
             while ( j < candiates.size() )
             {
-                if((candiates.at(i) - candiates.at(j)).length() < 100 )
+                if((candiates.at(i) - candiates.at(j)).length() < 500 )
                 {
                     Vector2D tmp = (candiates.at(i) + candiates.at(j))/2;
 
