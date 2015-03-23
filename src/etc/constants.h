@@ -75,7 +75,7 @@ const Vector2D ourDefPost_R(MinX, -975);
 
 const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
 
-const double defenderPermittedRegion = 0.6*MaxX;
+const double defenderPermittedRegion = 0.7*MaxX;
 
 // Opps.
 const Vector2D oppGoalCenter(MaxX, 0);

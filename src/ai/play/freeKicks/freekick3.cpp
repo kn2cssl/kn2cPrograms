@@ -130,6 +130,7 @@ void freeKick3::setPositions(QList<int> our)
                 tAttackerRight->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerMid:
+                tAttackerMid->isKicker();
                 tAttackerMid->setIdlePosition(wm->ourRobot[our.at(i)].pos);
                 tAttackerMid->youHavePermissionForKick();
                 break;
@@ -156,22 +157,14 @@ void freeKick3::execute()
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
 
-    setPositions(activeAgents);
-
-    int recieverID = tAttackerLeft->getID();
-
     tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
-
     tAttackerMid->waitTimerStart(true);
 
+    setPositions(activeAgents);
+
     if(state > 2)
-    {
-        tAttackerMid->isKicker();
         activeAgents.removeOne(tAttackerMid->getID());
-    }
 
     while(activeAgents.size() > 0)
-    {
         wm->ourRobot[activeAgents.takeFirst()].Status = AgentStatus::Idle;
-    }
 }

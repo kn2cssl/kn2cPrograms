@@ -340,24 +340,24 @@ int TacticAttacker::findBestPlayerForPass()
             }
         }
     }
-    if( index == -1 )
-    {
-        while ( !busyAgents.isEmpty() )
-        {
-            int i = busyAgents.takeFirst();
-            if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
-            {
-                if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
-                {
-                    min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
-                    index = i;
-                }
-            }
-        }
+//    if( index == -1 )
+//    {
+//        while ( !busyAgents.isEmpty() )
+//        {
+//            int i = busyAgents.takeFirst();
+//            if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
+//            {
+//                if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
+//                {
+//                    min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
+//                    index = i;
+//                }
+//            }
+//        }
 
-        return index;
-    }
-    else
+//        return index;
+//    }
+//    else
         return index;
 }
 
@@ -430,8 +430,9 @@ void TacticAttacker::youHavePermissionForKick()
     everyOneInTheirPos = true;
     if( findReciever )
     {
-        qDebug()<<"findBestPlayerForPass : "<<findBestPlayerForPass();
-        receiverPos = wm->ourRobot[findBestPlayerForPass()].pos.loc;
+        int indexOfReciever = findBestPlayerForPass();
+        if( indexOfReciever != -1 )
+            receiverPos = wm->ourRobot[indexOfReciever].pos.loc;
     }
 }
 

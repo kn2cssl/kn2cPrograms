@@ -6,6 +6,10 @@ freeKick4::freeKick4(WorldModel *wm, QObject *parent) :
     state = 0;
     this->freeKickRegion = fkRegion::RightRegion;
     this->oppLevel = Level::Amatuer;
+
+    tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
+
+    tAttackerMid->waitTimerStart(true);
 }
 
 int freeKick4::enterCondition(Level level)
@@ -17,12 +21,6 @@ int freeKick4::enterCondition(Level level)
                               , Vector2D(Field::MaxX,Field::MinY)))
             && (wm->kn->CountActiveAgents() == 6) )
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-            state = 0;
-        }
-
         if( level == this->oppLevel)
             return 600;
         else
@@ -135,6 +133,7 @@ void freeKick4::setPositions(QList<int> our)
                 tAttackerRight->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerMid:
+                tAttackerMid->isKicker();
                 tAttackerMid->setIdlePosition(wm->ourRobot[our.at(i)].pos);
                 tAttackerMid->youHavePermissionForKick();
                 break;
@@ -161,23 +160,13 @@ void freeKick4::execute()
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
 
-    setPositions(activeAgents);
-
-    int recieverID = tAttackerLeft->getID();
-
     tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
-
     tAttackerMid->waitTimerStart(true);
 
+    setPositions(activeAgents);
+
     if(state != 0)
-    {
         activeAgents.removeOne(tAttackerMid->getID());
-        if(wm->cmgs.ourIndirectKick())
-        {
-            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-            activeAgents.removeOne(recieverID);
-        }
-    }
 
     while(activeAgents.size() > 0)
     {

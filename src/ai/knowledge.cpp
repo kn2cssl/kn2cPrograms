@@ -208,7 +208,9 @@ bool Knowledge::IsInsideFarArea(Vector2D pos)
 
 bool Knowledge::IsInsideNearArea(Vector2D pos)
 {
-    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.33*Field::MinX,Field::MinY));
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.6*Field::MinX,0.7*Field::MaxY))
+            ||
+           IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
