@@ -13,7 +13,6 @@ freeKick_base::freeKick_base(WorldModel *worldmodel, QObject *parent)
 
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
-    tDefenderMid = new TacticDefender(wm);
 
     tAttackerLeft = new TacticAttacker(wm);
     tAttackerMid = new TacticAttacker(wm);
@@ -30,8 +29,6 @@ void freeKick_base::zonePositions(int leftID, int RightID, Position &goalie, Pos
 {
     if( wm->cmgs.theirPenaltyKick() )
     {
-        //        center.loc = Field::oppPenaltyParallelLineCenter;
-
         right.loc = Field::oppPenaltyParallelLineCenter;
         right.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
 
@@ -139,15 +136,11 @@ void freeKick_base::initRole()
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
     switch (activeAgents.length()) {
     case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
         break;
     case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
-
-        //--------------for TAGHI test---------------------------------------
-        //wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        //-------------------------------------------------------------------
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 3:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
@@ -177,9 +170,6 @@ void freeKick_base::setTactics(int index)
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGolie;
-        break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;

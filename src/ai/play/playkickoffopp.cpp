@@ -5,7 +5,6 @@ PlayKickoffOpp::PlayKickoffOpp(WorldModel *worldmodel, QObject *parent) :
 {
     tGolie=new TacticGoalie(wm);
 
-    tDefenderMid=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
 
@@ -33,8 +32,8 @@ void PlayKickoffOpp::initRole()
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
         break;
     case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 3:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
@@ -74,9 +73,6 @@ void PlayKickoffOpp::setTactics(int index)
     case AgentRole::Golie:
         tactics[index] = tGolie;
         break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
-        break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
         break;
@@ -100,7 +96,7 @@ void PlayKickoffOpp::setTactics(int index)
 void PlayKickoffOpp::setPositions()
 {
     Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),-1,goaliePos,leftDefPos,rightDefPos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
     tGolie->setIdlePosition(goaliePos);

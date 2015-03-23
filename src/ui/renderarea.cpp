@@ -12,7 +12,8 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_astarNode = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
     brush_astarResult = new QBrush(QColor::fromRgb(250,50,55),Qt::SolidPattern);
     brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
-    brush_goals = new QBrush(QColor::fromRgb(0,255,0),Qt::SolidPattern);
+    brush_goals = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
+    brush_debug = new QBrush(QColor::fromRgb(255,0,0),Qt::SolidPattern);
     _timer.start(40);
     connect(&_timer,SIGNAL(timeout()), this, SLOT(refresh()));
 }
@@ -41,29 +42,27 @@ void RenderArea::paintEvent(QPaintEvent *)
 
     painter.translate(CENTER_X,CENTER_Y);
 
-    //Draw Goals
-    QPoint our_left(Field::ourGoalPost_L.x /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
-    QPoint our_right(Field::ourGoalPost_R.x/WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
+    //Draw Our Goal
+    QPoint our_left1(Field::ourGoalPost_L.x /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
+    QPoint our_left2( (Field::ourGoalPost_L.x - Field::GoalDeep) /WORLD_SCALE, -Field::ourGoalPost_L.y/WORLD_SCALE);
+    QPoint our_right1(Field::ourGoalPost_R.x/WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
+    QPoint our_right2( (Field::ourGoalPost_R.x - Field::GoalDeep) /WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
-    painter.drawLine(our_left,our_right);
+    painter.drawLine(our_left2,our_right2);
+    painter.drawLine(our_left1,our_left2);
+    painter.drawLine(our_right1,our_right2);
 
-    QPoint opp_left(Field::oppGoalPost_L.x /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
-    QPoint opp_right(Field::oppGoalPost_R.x/WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
+    //Draw Opp Goal
+    QPoint opp_left1(Field::oppGoalPost_L.x /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
+    QPoint opp_left2( (Field::oppGoalPost_L.x + Field::GoalDeep) /WORLD_SCALE, -Field::oppGoalPost_L.y/WORLD_SCALE);
+    QPoint opp_right1(Field::oppGoalPost_R.x/WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
+    QPoint opp_right2( (Field::oppGoalPost_R.x + Field::GoalDeep) /WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
-    painter.drawLine(opp_left,opp_right);
+    painter.drawLine(opp_left2,opp_right2);
+    painter.drawLine(opp_left1,opp_left2);
+    painter.drawLine(opp_right1,opp_right2);
 
     // Draw Target lines !! MOHSEN
-
-    QPoint pnt;
-    QPoint Pball;
-    Pball.setX(_sc->wm->ball.pos.loc.x/WORLD_SCALE);
-    Pball.setY(-_sc->wm->ball.pos.loc.y/WORLD_SCALE);
-    pnt.setX(Field::ourGoalPost_L.x/WORLD_SCALE); pnt.setY(Field::ourGoalPost_L.y/WORLD_SCALE);
-    painter.drawLine(pnt,Pball);
-
-    pnt.setX(Field::ourGoalPost_R.x/WORLD_SCALE); pnt.setY(Field::ourGoalPost_R.y/WORLD_SCALE);
-    painter.drawLine(pnt,Pball);
-
     if( _sc->wm->showChances )
     {
         QPoint Pball;
@@ -71,7 +70,7 @@ void RenderArea::paintEvent(QPaintEvent *)
         Pball.setY(-_sc->wm->ball.pos.loc.y/WORLD_SCALE);
 
         //painter.setBrush(*brush_ball);
-        if(_sc->wm->ball.isValid /*&& _sc->wm->TANDPis.size() > 0*/ )
+        if(_sc->wm->ball.isValid && _sc->wm->TANDPis.size() > 0 )
         {
             for(int i=0;i<_sc->wm->TANDPis.size();i++)
             {
@@ -94,21 +93,42 @@ void RenderArea::paintEvent(QPaintEvent *)
     // Draw Robots
     painter.setPen(QColor::fromRgb(0,0,0));
 
-    painter.setBrush(*brush_yrobot);
-    for(int i=0;i<12;i++)
-        if(_sc->wm->oppRobot[i].isValid)
-        {
-            painter.drawChord(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->oppRobot[i].pos.dir));
-            painter.drawText(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
-        }
+    if( _sc->wm->ourColor == TeamColorType::COLOR_BLUE )
+    {
+        painter.setBrush(*brush_yrobot);
+        for(int i=0;i<12;i++)
+            if(_sc->wm->oppRobot[i].isValid)
+            {
+                painter.drawChord(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->oppRobot[i].pos.dir));
+                painter.drawText(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
+            }
 
-    painter.setBrush(*brush_brobot);
-    for(int i=0;i<12;i++)
-        if(_sc->wm->ourRobot[i].isValid)
-        {
-            painter.drawChord(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->ourRobot[i].pos.dir));
-            painter.drawText(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
-        }
+        painter.setBrush(*brush_brobot);
+        for(int i=0;i<12;i++)
+            if(_sc->wm->ourRobot[i].isValid)
+            {
+                painter.drawChord(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->ourRobot[i].pos.dir));
+                painter.drawText(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
+            }
+    }
+    else
+    {
+        painter.setBrush(*brush_yrobot);
+        for(int i=0;i<12;i++)
+            if(_sc->wm->ourRobot[i].isValid)
+            {
+                painter.drawChord(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->ourRobot[i].pos.dir));
+                painter.drawText(_sc->wm->ourRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->ourRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
+            }
+
+        painter.setBrush(*brush_brobot);
+        for(int i=0;i<12;i++)
+            if(_sc->wm->oppRobot[i].isValid)
+            {
+                painter.drawChord(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,ANGLE_TO_CHORD(_sc->wm->oppRobot[i].pos.dir));
+                painter.drawText(_sc->wm->oppRobot[i].pos.loc.x/WORLD_SCALE-ROBOT_R,-_sc->wm->oppRobot[i].pos.loc.y/WORLD_SCALE-ROBOT_R,ROBOT_D,ROBOT_D,Qt::AlignCenter,QString::number(i));
+            }
+    }
 
     // Draw Ball
     if(_sc->wm->ball.isValid)
@@ -170,16 +190,53 @@ void RenderArea::paintEvent(QPaintEvent *)
         }
     }
 
-//    if(_sc->wm->selected.size()!=0)
-//    {
-//        QPoint first(_sc->wm->selected.at(0).x/WORLD_SCALE , -_sc->wm->selected.at(0).y/WORLD_SCALE);
-//        QPoint second(_sc->wm->selected.at(1).x/WORLD_SCALE , -_sc->wm->selected.at(1).y/WORLD_SCALE);
-//        QPoint third(_sc->wm->selected.at(2).x/WORLD_SCALE , -_sc->wm->selected.at(2).y/WORLD_SCALE);
+    //Drawing debug points
+    if(_sc->wm->showDebug)
+    {
+        if(_sc->wm->debug_type == 1)
+        {
+            for(int i=0;i<_sc->wm->debug_pos.size();i++)
+            {
+                QPoint point(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
+                painter.setPen(QColor::fromRgb(255,0,0));
+                painter.setBrush(*brush_debug);
+                painter.drawEllipse(point,BALL_R,BALL_R);
+            }
+        }
+        else if(_sc->wm->debug_type == 2)
+        {
+            for(int i=0;i<_sc->wm->debug_pos.size()-1;i++)
+            {
+                QPoint first(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
+                QPoint second(_sc->wm->debug_pos.at(i+1).x/WORLD_SCALE,-_sc->wm->debug_pos.at(i+1).y/WORLD_SCALE);
+                painter.setPen(QColor::fromRgb(255,0,0));
+                painter.setBrush(*brush_debug);
 
-//        painter.setPen(QColor::fromRgb(50,50,50));
-//        painter.setBrush(*brush_astarResult);
-//        painter.drawLine(first,second);
-//        painter.drawLine(second,third);
-//        painter.drawLine(first,third);
-//    }
+                painter.drawEllipse(first,BALL_R,BALL_R);
+                painter.drawEllipse(second,BALL_R,BALL_R);
+                painter.drawLine(first,second);
+            }
+
+            QPoint first(_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).x/WORLD_SCALE, -_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).y/WORLD_SCALE);
+            QPoint second(_sc->wm->debug_pos.at(0).x/WORLD_SCALE,-_sc->wm->debug_pos.at(0).y/WORLD_SCALE);
+            painter.setPen(QColor::fromRgb(255,0,0));
+            painter.setBrush(*brush_debug);
+
+            painter.drawEllipse(first,BALL_R,BALL_R);
+            painter.drawEllipse(second,BALL_R,BALL_R);
+            painter.drawLine(first,second);
+        }
+    }
+    //    if(_sc->wm->selected.size()!=0)
+    //    {
+    //        QPoint first(_sc->wm->selected.at(0).x/WORLD_SCALE , -_sc->wm->selected.at(0).y/WORLD_SCALE);
+    //        QPoint second(_sc->wm->selected.at(1).x/WORLD_SCALE , -_sc->wm->selected.at(1).y/WORLD_SCALE);
+    //        QPoint third(_sc->wm->selected.at(2).x/WORLD_SCALE , -_sc->wm->selected.at(2).y/WORLD_SCALE);
+
+    //        painter.setPen(QColor::fromRgb(50,50,50));
+    //        painter.setBrush(*brush_astarResult);
+    //        painter.drawLine(first,second);
+    //        painter.drawLine(second,third);
+    //        painter.drawLine(first,third);
+    //    }
 }

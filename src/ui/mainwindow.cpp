@@ -18,6 +18,9 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     QStringList udp_values;
     udp_values << "pos"<<"vel";
     ui->valUDP_comboBox->addItems(udp_values);
+    QStringList output_types;
+    output_types<<"1"<<"2";
+    ui->debug_output_type->addItems(output_types);
     this->on_btnLoadVars_clicked();
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
@@ -375,6 +378,9 @@ void MainWindow::timer_timeout()
     sc->wm->showMarking = ui->show_marking->isChecked();
     sc->wm->showVoronoi = ui->show_voronoi->isChecked();
     sc->wm->showChances = ui->showChances->isChecked();
+
+    sc->wm->showDebug = ui->showDebugs->isChecked();
+    sc->wm->debug_type = ui->debug_output_type->currentText().toInt();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

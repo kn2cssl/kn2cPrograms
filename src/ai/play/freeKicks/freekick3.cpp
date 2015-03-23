@@ -17,11 +17,6 @@ int freeKick3::enterCondition(Level level)
                               , Vector2D(Field::MaxX,Field::MinY)))
             && (wm->kn->CountActiveAgents() == 6) )
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-            state = 0;
-        }
 
         if( level == this->oppLevel)
             return 600;
@@ -145,11 +140,17 @@ void freeKick3::setPositions(QList<int> our)
     }
 }
 
+void freeKick3::resetValues()
+{
+    this->state = 0;
+    this->rolesIsInit = false;
+}
+
 void freeKick3::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     for(int i=0;i<activeAgents.size();i++)
@@ -163,14 +164,10 @@ void freeKick3::execute()
 
     tAttackerMid->waitTimerStart(true);
 
-    if(state != 0)
+    if(state > 2)
     {
+        tAttackerMid->isKicker();
         activeAgents.removeOne(tAttackerMid->getID());
-        if(wm->cmgs.ourIndirectKick())
-        {
-            wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
-            activeAgents.removeOne(recieverID);
-        }
     }
 
     while(activeAgents.size() > 0)

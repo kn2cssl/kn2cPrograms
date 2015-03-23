@@ -10,6 +10,7 @@ public:
     explicit freeKick7(WorldModel *wm ,QObject *parent = 0);
     virtual int enterCondition(Level level);
     virtual void execute();
+    virtual void resetValues();
 
 private:
     void setPositions(QList<int> our);

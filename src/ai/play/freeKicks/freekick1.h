@@ -9,6 +9,7 @@ public:
     explicit freeKick1(WorldModel *worldmodel, QObject *parent = 0);
     virtual void execute();
     virtual int enterCondition(Level level);
+    virtual void resetValues();
 
 private:
     void setPositions();

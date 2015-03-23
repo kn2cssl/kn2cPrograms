@@ -225,7 +225,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
         if( wayIsClear )
         {
-            rc.kickspeedx = 4;//255;// detectKickSpeed(goal);
+            rc.kickspeedx = 155;// detectKickSpeed(goal);
             qDebug()<<"Kickk...";
         }
         else
@@ -427,6 +427,10 @@ void TacticAttacker::setIdlePosition(Vector2D pos)
 void TacticAttacker::youHavePermissionForKick()
 {
     everyOneInTheirPos = true;
+    if( findReciever )
+    {
+        receiverPos = wm->ourRobot[findBestPlayerForPass()].pos.loc;
+    }
 }
 
 bool TacticAttacker::isFree(int index)

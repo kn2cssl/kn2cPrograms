@@ -57,11 +57,17 @@ void freeKickDirect::setPositions()
     }
 }
 
+void freeKickDirect::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKickDirect::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     for(int i=0;i<activeAgents.size();i++)

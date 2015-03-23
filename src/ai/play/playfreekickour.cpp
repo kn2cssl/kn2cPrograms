@@ -43,6 +43,11 @@ void PlayFreeKickOur::execute()
 {
     if( !freeKickSelected )
     {
+        for(int i=0;i<fk.size();i++)
+        {
+            freeKick_base* tmp = fk.at(i);
+            tmp->resetValues();
+        }
         QList<freeKick_base*> candidates;
 
         int max_i = 0;

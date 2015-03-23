@@ -18,10 +18,12 @@ private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
     TacticStop* tStopMid;
     TacticStop* tStopLeft;
     TacticStop* tStopRight;
+
+    int leftChecker;
+    int rightChecker;
 
     virtual void initRole();
     void setTactics(int index);

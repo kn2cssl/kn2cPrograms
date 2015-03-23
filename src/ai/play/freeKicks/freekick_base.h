@@ -22,6 +22,7 @@ public:
     Tactic* getTactic(int id);
     virtual int enterCondition(Level level) = 0;
     void zonePositions(int leftID,int RightID,Position& goalie,Position& left,Position& right);
+    virtual void resetValues() = 0;
 
 protected:
     void initRole();
@@ -39,7 +40,6 @@ protected:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
     TacticAttacker* tAttackerMid;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;

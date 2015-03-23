@@ -25,6 +25,12 @@ int freeKick1::enterCondition(Level level)
     return 0;
 }
 
+void freeKick1::resetValues()
+{
+    this->firstTimeInitial = false;
+    this->rolesIsInit = false;
+}
+
 void freeKick1::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;
@@ -42,10 +48,8 @@ void freeKick1::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
-    {
+//    if(!rolesIsInit)
         initRole();
-    }
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
