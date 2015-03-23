@@ -38,6 +38,8 @@ const double MinX = -3025;
 const double MaxY = 2025;
 const double MinY = -2025;
 
+const double GoalDeep = 180;
+
 const Vector2D upperLeftCorner(MinX + 125, MaxY - 125);
 const Vector2D upperRightCorner(MaxX - 125, MaxY - 125);
 const Vector2D bottomLeftCorner(MinX + 125, MinY + 125);
