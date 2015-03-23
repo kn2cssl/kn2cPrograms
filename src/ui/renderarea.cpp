@@ -205,10 +205,22 @@ void RenderArea::paintEvent(QPaintEvent *)
         }
         else if(_sc->wm->debug_type == 2)
         {
-            for(int i=0;i<_sc->wm->debug_pos.size()-1;i++)
+            if( _sc->wm->debug_pos.size() > 0)
             {
-                QPoint first(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
-                QPoint second(_sc->wm->debug_pos.at(i+1).x/WORLD_SCALE,-_sc->wm->debug_pos.at(i+1).y/WORLD_SCALE);
+                for(int i=0;i<_sc->wm->debug_pos.size()-1;i++)
+                {
+                    QPoint first(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
+                    QPoint second(_sc->wm->debug_pos.at(i+1).x/WORLD_SCALE,-_sc->wm->debug_pos.at(i+1).y/WORLD_SCALE);
+                    painter.setPen(QColor::fromRgb(255,0,0));
+                    painter.setBrush(*brush_debug);
+
+                    painter.drawEllipse(first,BALL_R,BALL_R);
+                    painter.drawEllipse(second,BALL_R,BALL_R);
+                    painter.drawLine(first,second);
+                }
+
+                QPoint first(_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).x/WORLD_SCALE, -_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).y/WORLD_SCALE);
+                QPoint second(_sc->wm->debug_pos.at(0).x/WORLD_SCALE,-_sc->wm->debug_pos.at(0).y/WORLD_SCALE);
                 painter.setPen(QColor::fromRgb(255,0,0));
                 painter.setBrush(*brush_debug);
 
@@ -216,15 +228,6 @@ void RenderArea::paintEvent(QPaintEvent *)
                 painter.drawEllipse(second,BALL_R,BALL_R);
                 painter.drawLine(first,second);
             }
-
-            QPoint first(_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).x/WORLD_SCALE, -_sc->wm->debug_pos.at(_sc->wm->debug_pos.size()-1).y/WORLD_SCALE);
-            QPoint second(_sc->wm->debug_pos.at(0).x/WORLD_SCALE,-_sc->wm->debug_pos.at(0).y/WORLD_SCALE);
-            painter.setPen(QColor::fromRgb(255,0,0));
-            painter.setBrush(*brush_debug);
-
-            painter.drawEllipse(first,BALL_R,BALL_R);
-            painter.drawEllipse(second,BALL_R,BALL_R);
-            painter.drawLine(first,second);
         }
     }
     //    if(_sc->wm->selected.size()!=0)
