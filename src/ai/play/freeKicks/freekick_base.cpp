@@ -27,6 +27,8 @@ Tactic *freeKick_base::getTactic(int id)
 
 void freeKick_base::zonePositions(int leftID, int RightID, Position &goalie, Position &left, Position &right)
 {
+    goalie.loc = Field::ourGoalCenter;
+
     if( wm->cmgs.theirPenaltyKick() )
     {
         right.loc = Field::oppPenaltyParallelLineCenter;
