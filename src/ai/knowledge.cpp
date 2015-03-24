@@ -400,9 +400,9 @@ QString Knowledge::gameStatus()
             double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
 
             if( ourDistance2Ball - oppDistance2Ball > 300 )
-                out = "Attacking";
-            else if( oppDistance2Ball - ourDistance2Ball > 300 )
                 out = "Defending";
+            else if( oppDistance2Ball - ourDistance2Ball > 300 )
+                out = "Attacking";
             else
                 out = "Not Changed";
         }
@@ -418,7 +418,6 @@ QString Knowledge::gameStatus()
     {
         out = "Attacking";
     }
-
     return out;
 }
 
