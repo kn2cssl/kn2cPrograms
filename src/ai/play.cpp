@@ -41,6 +41,8 @@ bool Play::conditionChanged()
 
 void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, Position &right)
 {
+    goalie.loc = Field::ourGoalCenter;
+
     if( wm->cmgs.theirPenaltyKick() )
     {
         right.loc = Field::oppPenaltyParallelLineCenter;
@@ -816,13 +818,13 @@ bool Play::Find_AnyOther_Opp_Dangerous()
         //        qDebug() << " Min_Diff_ang : " << AngleDeg::rad2deg(min_Diff_ang);
         if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() < 0.4 )
         {
-            qDebug() << "!! Check Any Other Dangerous !! ";
+//            qDebug() << "!! Check Any Other Dangerous !! ";
             return false ;
         }
         else
         {
             Player2 = wm->oppRobot[min_i].pos;
-            qDebug() << " Player # " << min_i << " Is Dangerous " ;
+//            qDebug() << " Player # " << min_i << " Is Dangerous " ;
             return true;
         }
     }
