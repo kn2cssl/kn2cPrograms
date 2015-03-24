@@ -22,9 +22,6 @@ private:
     TacticStop* tStopLeft;
     TacticStop* tStopRight;
 
-    int leftChecker;
-    int rightChecker;
-
     virtual void initRole();
     void setTactics(int index);
     void setPositions();

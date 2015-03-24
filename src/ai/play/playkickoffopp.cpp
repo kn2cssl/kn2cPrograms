@@ -95,11 +95,42 @@ void PlayKickoffOpp::setTactics(int index)
 
 void PlayKickoffOpp::setPositions()
 {
-    Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),-1,goaliePos,leftDefPos,rightDefPos);
+    Position leftDefPos,rightDefPos,goaliePos;
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     QList<int> opps = wm->kn->ActiveOppAgents();
     opps.removeOne(wm->ref_goalie_opp);

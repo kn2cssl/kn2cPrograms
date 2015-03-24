@@ -60,7 +60,7 @@ RobotCommand TacticDefender::getCommand()
                 tANDp target = findTarget();
                 if( fabs(target.pos.dir().degree()-AngleDeg::rad2deg(wm->ourRobot[this->id].pos.dir)) < 15 )
                 {
-                    qDebug()<<"a little diff in deg , kick it to goal";
+//                    qDebug()<<"a little diff in deg , kick it to goal";
                     OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
 
                     if( p.readyToShoot )
@@ -265,7 +265,7 @@ RobotCommand TacticDefender::getCommand()
 
         rc.maxSpeed = 2;
 
-        rc.useNav = true;
+        rc.useNav = false;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
