@@ -1,13 +1,14 @@
-#include "freekick9.h"
+#include "freekick11.h"
 
-freeKick9::freeKick9(WorldModel *wm, QObject *parent) :
+freeKick11::freeKick11(WorldModel *wm, QObject *parent) :
     freeKick_base(wm ,parent)
 {
-    this->freeKickRegion = fkRegion::LeftRegion;
-    this->oppLevel = Level::Beginner;
+    state = 0;
+    this->freeKickRegion = fkRegion::RightRegion;
+    this->oppLevel = Level::Amatuer;
 }
 
-int freeKick9::enterCondition(Level level)
+int freeKick11::enterCondition(Level level)
 {
     if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
                               , Vector2D(Field::MaxX,0.33*Field::MaxY))
@@ -25,7 +26,7 @@ int freeKick9::enterCondition(Level level)
     return 0;
 }
 
-void freeKick9::setPositions(QList<int> our)
+void freeKick11::setPositions(QList<int> our)
 {
     Position leftDefPos,rightDefPos,goaliePos;
     zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
@@ -41,12 +42,12 @@ void freeKick9::setPositions(QList<int> our)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(Field::MaxX -1400 ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
+                pos.loc = Vector2D(0.3*Field::MaxX, sign(wm->ball.pos.loc.y)*0.5*Field::MaxY);
                 pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerRight:
-                pos.loc = Vector2D(Field::MaxX -1400 ,-sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
+                pos.loc = Vector2D(0.3*Field::MaxX, 0);
                 pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);
                 break;
@@ -58,31 +59,30 @@ void freeKick9::setPositions(QList<int> our)
             }
 
             if( (wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc
-                                      , Vector2D(Field::MaxX -1400 ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y),50))
+                                      , Vector2D(0.3*Field::MaxX, sign(wm->ball.pos.loc.y)*0.5*Field::MaxY),100))
                     &&
                     (wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc
-                                          , Vector2D(Field::MaxX -1400 ,-sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y),50)) )
+                                          , Vector2D(0.3*Field::MaxX, 0),100)) )
                 state = 1;
         }
         else if(state == 1)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
-
-                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX*0.2 ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y), 200))
-                    state = 2;
-
-                pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
+                pos.loc = Vector2D(0.3*Field::MaxX, 0 - 300);
+                pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
+
+                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX, 0 - 300), 400) )
+                    state = 2;
                 break;
             case AgentRole::AttackerRight:
-                pos.loc = Vector2D(Field::MaxX -1400 ,-sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
+                pos.loc = Vector2D(0.3*Field::MaxX, 0);
                 pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerMid:
-                tAttackerMid->setIdlePosition(wm->ourRobot[our.at(i)].pos);
+                tAttackerMid->setIdlePosition(Vector2D(wm->ball.pos.loc.x-200,wm->ball.pos.loc.y));
                 break;
             default:
                 break;
@@ -92,21 +92,20 @@ void freeKick9::setPositions(QList<int> our)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
-                pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
+                pos.loc = Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*0.7*Field::MaxY);
+                pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
+
+                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*0.7*Field::MaxY), 1000))
+                    state = 3;
                 break;
             case AgentRole::AttackerRight:
-                pos.loc = Vector2D(0.2*Field::MaxX ,-sign(wm->ball.pos.loc.y)*0.8*Field::MaxY);
-
-                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(0.2*Field::MaxX ,-sign(wm->ball.pos.loc.y)*0.8*Field::MaxY),200))
-                    state = 3;
-
-                pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerRight->getID()].pos.loc).dir().radian();
+                pos.loc = Vector2D(0.3*Field::MaxX, 0);
+                pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerMid:
-                tAttackerMid->setIdlePosition(wm->ourRobot[our.at(i)].pos);
+                tAttackerMid->setIdlePosition(Vector2D(wm->ball.pos.loc.x-200,wm->ball.pos.loc.y));
                 break;
             default:
                 break;
@@ -116,13 +115,13 @@ void freeKick9::setPositions(QList<int> our)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
-                pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
+                pos.loc = Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*0.7*Field::MaxY);
+                pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerRight:
-                pos.loc = Vector2D(0.2*Field::MaxX ,-sign(wm->ball.pos.loc.y)*0.8*Field::MaxY);
-                pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerRight->getID()].pos.loc).dir().radian();
+                pos.loc = Vector2D(0.3*Field::MaxX, 0);
+                pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);
                 break;
             case AgentRole::AttackerMid:
@@ -137,35 +136,29 @@ void freeKick9::setPositions(QList<int> our)
     }
 }
 
-void freeKick9::resetValues()
+void freeKick11::resetValues()
 {
     this->rolesIsInit = false;
     this->state = 0;
 }
 
-void freeKick9::execute()
+void freeKick11::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-//    if(!rolesIsInit)
-        initRole();
+    //    if(!rolesIsInit)
+    initRole();
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
 
-    defaultPos = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
-    tAttackerMid->isKicker(defaultPos);
+    tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
     tAttackerMid->waitTimerStart(true);
 
     setPositions(activeAgents);
 
-    if(state > 1)
+    if(state > 2)
         activeAgents.removeOne(tAttackerMid->getID());
-
-    wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::RecievingPass;
-    activeAgents.removeOne(tAttackerLeft->getID());
-    wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::RecievingPass;
-    activeAgents.removeOne(tAttackerRight->getID());
 
     while(activeAgents.size() > 0)
     {

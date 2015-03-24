@@ -1,14 +1,16 @@
-#ifndef FREEKICK9_H
-#define FREEKICK9_H
+#ifndef FREEKICK11_H
+#define FREEKICK11_H
 
 #include "freekick_base.h"
-#include "positioning.h"
 
-class freeKick9 : public freeKick_base
+/*
+ * freeKIck naghesss
+ * */
+class freeKick11 : public freeKick_base
 {
     Q_OBJECT
 public:
-    explicit freeKick9(WorldModel *wm ,QObject *parent = 0);
+    explicit freeKick11(WorldModel *wm ,QObject *parent = 0);
     virtual int enterCondition(Level level);
     virtual void execute();
     virtual void resetValues();
@@ -16,7 +18,6 @@ public:
 private:
     void setPositions(QList<int> our);
     int state;
-    Vector2D defaultPos;
 };
 
-#endif // FREEKICK9_H
+#endif // FREEKICK11_H

@@ -10,6 +10,9 @@
 #include "freekick6.h"
 #include "freekick7.h"
 #include "freekick8.h"
+#include "freekick9.h"
+#include "freekick11.h"
+
 #include "freekickdirect.h"
 
 #endif // FREEKICKS_H

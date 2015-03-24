@@ -177,7 +177,9 @@ SOURCES +=	main.cpp \
     ai/play/freeKicks/freekick7.cpp \
     ai/play/freeKicks/freekick8.cpp \
     ai/play/freeKicks/freekickdirect.cpp \
-    ai/play/freeKicks/freekick9.cpp
+    ai/play/freeKicks/freekick9.cpp \
+    ai/play/freeKicks/freekick10.cpp \
+    ai/play/freeKicks/freekick11.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -290,7 +292,9 @@ HEADERS  += \
     ai/play/freeKicks/freekick7.h \
     ai/play/freeKicks/freekick8.h \
     ai/play/freeKicks/freekickdirect.h \
-    ai/play/freeKicks/freekick9.h
+    ai/play/freeKicks/freekick9.h \
+    ai/play/freeKicks/freekick10.h \
+    ai/play/freeKicks/freekick11.h
 
 FORMS    +=	ui/mainwindow.ui
 

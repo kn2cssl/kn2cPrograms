@@ -6,10 +6,6 @@ freeKick4::freeKick4(WorldModel *wm, QObject *parent) :
     state = 0;
     this->freeKickRegion = fkRegion::RightRegion;
     this->oppLevel = Level::Amatuer;
-
-    tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
-
-    tAttackerMid->waitTimerStart(true);
 }
 
 int freeKick4::enterCondition(Level level)
