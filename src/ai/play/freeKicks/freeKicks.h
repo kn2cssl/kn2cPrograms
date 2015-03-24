@@ -11,6 +11,7 @@
 #include "freekick7.h"
 #include "freekick8.h"
 #include "freekick9.h"
+#include "freekick10.h"
 #include "freekick11.h"
 
 #include "freekickdirect.h"

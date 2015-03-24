@@ -18,6 +18,7 @@ public:
 private:
     void setPositions(QList<int> our);
     int state;
+    int counter;
 };
 
 #endif // FREEKICK10_H
