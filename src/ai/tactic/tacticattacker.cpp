@@ -25,13 +25,12 @@ RobotCommand TacticAttacker::getCommand()
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
 
         tANDp target = findTarget();
-        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+        OperatingPosition p = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 
         if( p.readyToShoot )
         {
             rc.kickspeedx = p.kickSpeed;
-            qDebug()<<"KKKKKKKKKKIIIIIIIIIIIIIIIIIIICKKKKKKKKKKKKKKKKKKKK";
-       }
+        }
 
         rc.maxSpeed = 2;
         rc.fin_pos = p.pos;

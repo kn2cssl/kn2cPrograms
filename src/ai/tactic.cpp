@@ -51,7 +51,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     OP.readyToShoot = false;
 
     Vector2D BallPredict = wm->kn->PredictDestination(wm->ourRobot[ID].pos.loc,
-                                              wm->ball.pos.loc,maxSpeed,wm->ball.vel.loc);
+                                                      wm->ball.pos.loc,maxSpeed,wm->ball.vel.loc);
     if(wm->ball.vel.loc.length()<.1) BallPredict = wm->ball.pos.loc;
 
     Vector2D  TargetDir= (Target - BallPredict);
@@ -149,9 +149,18 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
             ballDisplacement=BallLoc;
         }
         if((ballDisplacement-BallLoc).length()>LongDribleDistance)
+        {
+            qDebug()<<"dribblingFault1000mm";
             dribblingFault1000mm = true;
+            kickPermission=false;
+        }
         if((ballDisplacement-BallLoc).length()>LargeDisplacement)
+        {
             dribblingFault50mm = true;
+            qDebug()<<"dribblingFault50mm";
+            kickPermission=false;
+        }
+
         ////////////////////////////////////////////////////////////
         if(startProbability<Prob)
         {
@@ -186,7 +195,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         DistErr = (OP.pos.loc - RobotPos.loc).length();
 
 
-        if(DirErr < 3 && DistErr < 2*ROBOT_RADIUS)
+        if(DirErr < 2 && DistErr < 2*ROBOT_RADIUS)
         {
             OP.readyToShoot = true;
             shoot_sensor = true;
@@ -201,15 +210,15 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         if(DirErr < 4 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS)//sensor fault checking
         {
             sensorFault++;
-            qDebug()<<"ShootSensorFault:"<<ID;
+            qDebug()<<"ShootSensorFault:"<<ID<<"n:"<<sensorFault;
         }
 
         if((DirErr < 1 && robotBallDist < ROBOT_RADIUS)
-                || sensorFault>4
-                || (probShoot && wm->cmgs.gameOn() && DirErr < 15 && robotBallDist < 1.2*ROBOT_RADIUS)
+                || ((sensorFault>4)
+                ||  probShoot && wm->cmgs.gameOn()
                 || (dribblingFault1000mm && wm->cmgs.gameOn())
                 || (dribblingFault50mm && !wm->cmgs.gameOn())
-                )
+                ) && DirErr < 3 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS/2)
         {
             sensorFault=0;
             OP.readyToShoot = true;
