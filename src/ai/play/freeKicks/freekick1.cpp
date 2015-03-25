@@ -81,13 +81,13 @@ bool freeKick1::checkDistances()
 {
     bool leftInPos = true , rightInPos = true;
 
-    if( wm->ourRobot[tAttackerLeft->getID()].isValid )
+    if( wm->ourRobot[tAttackerLeft->getID()].isValid && tAttackerLeft->getID() != -1)
     {
         if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
             leftInPos = false;
     }
 
-    if( wm->ourRobot[tAttackerRight->getID()].isValid )
+    if( wm->ourRobot[tAttackerRight->getID()].isValid && tAttackerRight->getID() != -1)
     {
         if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
             rightInPos = false;

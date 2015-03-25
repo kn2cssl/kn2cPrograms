@@ -82,13 +82,13 @@ void freeKick2::setPositions()
 bool freeKick2::checkPositions(Position leftPos, Position rightPos)
 {
     bool leftCheck = true , rightCheck = true;
-    if( wm->ourRobot[tAttackerLeft->getID()].isValid )
+    if( wm->ourRobot[tAttackerLeft->getID()].isValid && tAttackerLeft->getID() != -1)
     {
         if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, leftPos.loc,150) )
             leftCheck = false;
     }
 
-    if( wm->ourRobot[tAttackerRight->getID()].isValid )
+    if( wm->ourRobot[tAttackerRight->getID()].isValid && tAttackerRight->getID() != -1)
     {
         if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, rightPos.loc,150) )
             rightCheck = false;
