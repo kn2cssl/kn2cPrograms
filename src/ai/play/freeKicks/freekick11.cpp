@@ -100,11 +100,11 @@ void freeKick11::setPositions(QList<int> our)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(0.3*Field::MaxX, 0 - 300);
+                pos.loc = Vector2D(0.3*Field::MaxX - 500, 0);
                 pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
 
-                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX, 0 - 300), 400) )
+                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX-500, 0),500)  )
                     state = 2;
                 break;
             case AgentRole::AttackerRight:
@@ -127,7 +127,7 @@ void freeKick11::setPositions(QList<int> our)
                 pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
 
-                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*0.7*Field::MaxY), 1000))
+                if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*0.7*Field::MaxY), 1600))
                     state = 3;
                 break;
             case AgentRole::AttackerRight:

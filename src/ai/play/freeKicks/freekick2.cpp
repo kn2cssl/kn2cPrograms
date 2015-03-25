@@ -104,6 +104,8 @@ void freeKick2::resetValues()
 
 void freeKick2::execute()
 {
+    qDebug()<<"freeKick2";
+
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
 //    if(!rolesIsInit)
