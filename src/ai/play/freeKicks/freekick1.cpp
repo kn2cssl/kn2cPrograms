@@ -27,7 +27,6 @@ int freeKick1::enterCondition(Level level)
 
 void freeKick1::resetValues()
 {
-    this->firstTimeInitial = false;
     this->rolesIsInit = false;
 }
 
@@ -73,6 +72,28 @@ void freeKick1::setPositions()
     tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
     tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
     tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
+
+    if( checkDistances() )
+        tAttackerMid->youHavePermissionForKick();
+}
+
+bool freeKick1::checkDistances()
+{
+    bool leftInPos = true , rightInPos = true;
+
+    if( wm->ourRobot[tAttackerLeft->getID()].isValid )
+    {
+        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
+            leftInPos = false;
+    }
+
+    if( wm->ourRobot[tAttackerRight->getID()].isValid )
+    {
+        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
+            rightInPos = false;
+    }
+
+    return rightInPos & leftInPos;
 }
 
 void freeKick1::execute()
@@ -88,12 +109,6 @@ void freeKick1::execute()
     setPositions();
 
     tAttackerMid->isKicker();
-
-    if(!freeKickStart)
-    {
-        tAttackerMid->waitTimerStart(false);
-        freeKickStart = true;
-    }
 
     activeAgents.removeOne(tAttackerMid->getID());
     if(wm->cmgs.ourIndirectKick())

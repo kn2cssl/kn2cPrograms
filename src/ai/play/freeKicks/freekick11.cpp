@@ -184,7 +184,6 @@ void freeKick11::execute()
         setTactics(activeAgents.at(i));
 
     tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
-    tAttackerMid->waitTimerStart(true);
 
     setPositions(activeAgents);
 

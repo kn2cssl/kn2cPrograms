@@ -186,7 +186,6 @@ void freeKick9::execute()
 
     defaultPos = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
     tAttackerMid->isKicker(defaultPos);
-    tAttackerMid->waitTimerStart(true);
 
     setPositions(activeAgents);
 

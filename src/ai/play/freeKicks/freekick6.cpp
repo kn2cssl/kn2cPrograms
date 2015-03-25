@@ -193,7 +193,6 @@ void freeKick6::execute()
 
     target = Field::oppGoalCenter;
     tAttackerMid->isChiper(target);
-    tAttackerMid->waitTimerStart(true);
 
     if(state > 1)
     {

@@ -187,7 +187,6 @@ void freeKick5::execute()
 
     target = Vector2D(wm->ball.pos.loc.x-2000,-wm->ball.pos.loc.y);
     tAttackerMid->isKicker(target);
-    tAttackerMid->waitTimerStart(true);
 
     if(state > 1)
     {

@@ -13,7 +13,7 @@ public:
 
 private:
     void setPositions();
-    bool firstTimeInitial;
+    bool checkDistances();
 };
 
 #endif // FREEKICK1_H

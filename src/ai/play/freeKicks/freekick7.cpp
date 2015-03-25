@@ -210,7 +210,6 @@ void freeKick7::execute()
     int recieverID;
 
     tAttackerMid->isKicker(Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY));
-    tAttackerMid->waitTimerStart(true);
 
     if(state > 1)
     {
