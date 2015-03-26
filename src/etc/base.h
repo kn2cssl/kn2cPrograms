@@ -18,7 +18,11 @@ enum CameraConfigType
     CAMERA_NONE = 0,
     CAMERA_0 = 1,
     CAMERA_1 = 2,
-    CAMERA_BOTH = 4
+    CAMERA_2 = 3,
+    CAMERA_3 = 4,
+    CAMERA_BOTH_L = 5,
+    CAMERA_BOTH_H = 6,
+    CAMERA_ALL = 7
 };
 
 enum GameModeType

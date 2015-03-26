@@ -27,6 +27,8 @@ private:
     CameraConfigType _camera;
     FPSCounter _fpscam0;
     FPSCounter _fpscam1;
+    FPSCounter _fpscam2;
+    FPSCounter _fpscam3;
     WorldModel *_wm;
 
     void parse(SSL_DetectionFrame &pck);

@@ -7,6 +7,8 @@ SSLVision::SSLVision(QString ip, int port, TeamColorType color, TeamSideType sid
     _camera(camera),
     _fpscam0(parent),
     _fpscam1(parent),
+    _fpscam2(parent),
+    _fpscam3(parent),
     _wm(wm)
 {
     _time.start();
@@ -25,6 +27,8 @@ int SSLVision::getFPS(int c)
 {
     if(c == 0) return _fpscam0.FPS();
     if(c == 1) return _fpscam1.FPS();
+    if(c == 2) return _fpscam2.FPS();
+    if(c == 3) return _fpscam3.FPS();
     return 0;
 }
 
@@ -51,16 +55,30 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
     int cid = pck.camera_id();
     if(cid == 0) _fpscam0.Pulse();
     if(cid == 1) _fpscam1.Pulse();
+    if(cid == 2) _fpscam2.Pulse();
+    if(cid == 3) _fpscam3.Pulse();
 
     switch(_camera)
     {
-    case CAMERA_BOTH:
+    case CAMERA_ALL:
         break;
     case CAMERA_0:
-        if (cid==1) return;
+        if (cid==1 || cid==2 || cid==3) return;
         break;
     case CAMERA_1:
-        if (cid==0) return;
+        if (cid==0 || cid==2 || cid==3) return;
+        break;
+    case CAMERA_2:
+        if (cid==0 || cid==1 || cid==3) return;
+        break;
+    case CAMERA_3:
+        if (cid==0 || cid==1 || cid==2) return;
+        break;
+    case CAMERA_BOTH_L:
+        if (cid==3 || cid==2) return;
+        break;
+    case CAMERA_BOTH_H:
+        if (cid==0 || cid==1) return;
         break;
     case CAMERA_NONE:
     default:
