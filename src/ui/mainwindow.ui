@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>799</width>
-    <height>692</height>
+    <width>1003</width>
+    <height>791</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -51,8 +51,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>771</width>
-          <height>611</height>
+          <width>971</width>
+          <height>691</height>
          </rect>
         </property>
         <property name="currentIndex">
@@ -65,10 +65,10 @@
          <widget class="QWidget" name="gridLayoutWidget">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>10</y>
-            <width>751</width>
-            <height>551</height>
+            <x>4</x>
+            <y>3</y>
+            <width>951</width>
+            <height>651</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridRender"/>
@@ -2050,7 +2050,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>799</width>
+     <width>1003</width>
      <height>20</height>
     </rect>
    </property>

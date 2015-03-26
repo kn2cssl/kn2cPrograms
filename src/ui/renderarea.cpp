@@ -4,7 +4,7 @@ RenderArea::RenderArea(Soccer* sc) :
     QWidget()
 {
     _sc = sc;
-    brush_field = new QBrush(QPixmap(":/resources/images/Field.jpg"));
+    brush_field = new QBrush(QPixmap(":/resources/images/Field2.jpg"));
     brush_ball = new QBrush(QColor::fromRgb(255,200,0),Qt::SolidPattern);
     brush_yrobot = new QBrush(QColor::fromRgb(255,255,0),Qt::SolidPattern);
     brush_brobot = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
@@ -35,10 +35,10 @@ void RenderArea::paintEvent(QPaintEvent *)
 
     // Draw Field
     painter.setBrush(*brush_field);
-    painter.drawRect(0,0,740,540);
+    painter.drawRect(0,0,953,637);
 
     // FPS
-    painter.drawText(20,20,QString::number(_fps.FPS()));
+    painter.drawText(15,15,QString::number(_fps.FPS()));
 
     painter.translate(CENTER_X,CENTER_Y);
 

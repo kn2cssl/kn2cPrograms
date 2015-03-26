@@ -10,8 +10,8 @@
 #define Pi 3.141592653589793238
 
 #define WORLD_SCALE 10
-#define CENTER_X 370
-#define CENTER_Y 270
+#define CENTER_X 476
+#define CENTER_Y 319
 
 #define ROBOT_R 9
 #define ROBOT_D 18

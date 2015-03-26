@@ -5,8 +5,8 @@
 
 // global constants
 #define PLAYERS_MAX_NUM 12
-#define FIELD_MAX_X     3275
-#define FIELD_MAX_Y     2275
+#define FIELD_MAX_X     4750
+#define FIELD_MAX_Y     3250
 #define BALL_RADIUS     22
 #define ROBOT_RADIUS    90.0
 
@@ -20,7 +20,7 @@
 #define ALLOW_NEAR_BALL_RANGE 600
 
 // Vision constants
-#define CAMERA_NUM      2
+#define CAMERA_NUM      4
 #define VOBJ_MAX_NUM    5
 #define MIN_CONF        0.1
 #define VISION_TIMEDOUT 1000.0
@@ -33,10 +33,10 @@
 
 namespace Field
 {
-const double MaxX = 3025;
-const double MinX = -3025;
-const double MaxY = 2025;
-const double MinY = -2025;
+const double MaxX = 4500;
+const double MinX = -4500;
+const double MaxY = 3000;
+const double MinY = -3000;
 
 const double GoalDeep = 180;
 
@@ -53,25 +53,21 @@ const Line2D upLine(Vector2D(MinX, MaxY), Vector2D(MaxX, MaxY));
 const Line2D bottomLine(Vector2D(MinX, MinY), Vector2D(MaxX, MinY));
 
 const double centerCircle_R = 500;
-const double goalCircle_R = 800;
+const double goalCircle_R = 1000;
 const double goalCircleEX_R = 600 + 3*ROBOT_RADIUS + 20;
 const double goalCircleDEF_R = goalCircleEX_R + 400;
 
 // Ours.
 const Vector2D ourGoalCenter(MinX, 0);
-const Vector2D ourGoalPost_L(MinX, 350);
-const Vector2D ourGoalPost_R(MinX, -350);
-const double defenceLineLinear = 350;
-const Vector2D defenceLineLinear_L(MinX, 175);
-const Vector2D defenceLineLinear_R(MinX, -175);
-const Vector2D ourPenaltySpot(MinX+750,0);
+const Vector2D ourGoalPost_L(MinX, 500);
+const Vector2D ourGoalPost_R(MinX, -500);
+const double defenceLineLinear = 500;
+const Vector2D defenceLineLinear_L(MinX, 250);
+const Vector2D defenceLineLinear_R(MinX, -250);
+const Vector2D ourPenaltySpot(MinX+1000,0);
 
-const Line2D attackerMidLine(Vector2D(MinX,0),Vector2D(MaxX,0));
-const Line2D attackerLeftLine(Vector2D(MinX,(0.667*MaxY)),Vector2D(MaxX,(0.667*MaxY)));
-const Line2D attackerRightLine(Vector2D(MinX,(0.667*MinY)),Vector2D(MaxX,(0.667*MinY)));
-
-const Vector2D ourDefPost_L(MinX, 975);
-const Vector2D ourDefPost_R(MinX, -975);
+const Vector2D ourDefPost_L(MinX, 1300);
+const Vector2D ourDefPost_R(MinX, -1300);
 
 const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
 
@@ -79,11 +75,11 @@ const double defenderPermittedRegion = 0.7*MaxX;
 
 // Opps.
 const Vector2D oppGoalCenter(MaxX, 0);
-const Vector2D oppGoalPost_L(MaxX, 350);
-const Vector2D oppGoalPost_R(MaxX, -350);
-const Vector2D oppGoalCC_L(MaxX, 175);
-const Vector2D oppGoalCC_R(MaxX, -175);
-const Vector2D oppGoalPenaltySpot(MaxX-750,0);
+const Vector2D oppGoalPost_L(MaxX, 500);
+const Vector2D oppGoalPost_R(MaxX, -500);
+const Vector2D oppGoalCC_L(MaxX, 250);
+const Vector2D oppGoalCC_R(MaxX, -250);
+const Vector2D oppGoalPenaltySpot(MaxX-1000,0);
 
 const Vector2D ourPenaltyParallelLineCenter(oppGoalPenaltySpot.x-500,0);
 const Vector2D oppPenaltyParallelLineCenter(ourGoalCenter.x+750+600,0);
