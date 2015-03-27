@@ -192,6 +192,11 @@ bool Knowledge::IsInsideOurField(Vector2D pos)
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0,Field::MinY));
 }
 
+bool Knowledge::IsInsideOppField(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(0,Field::MaxY), Vector2D(Field::MaxX,Field::MinY));
+}
+
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
 {
     double x = pos.x - goalLeftX;
@@ -211,6 +216,11 @@ bool Knowledge::IsInsideNearArea(Vector2D pos)
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.6*Field::MinX,0.7*Field::MaxY))
             ||
             IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
+}
+
+bool Knowledge::IsNearOurGoal(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.25*Field::MinX,Field::MinY));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
