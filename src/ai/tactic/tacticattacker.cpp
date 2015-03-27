@@ -5,9 +5,6 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticAttacker", worldmodel, parent)
 {
     everyOneInTheirPos = false;
-
-    waitTimer = new QTimer();
-    connect(waitTimer,SIGNAL(timeout()),this,SLOT(dontWait()));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -135,7 +132,7 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.fin_pos = idlePosition;
 
-        rc.maxSpeed = 1;
+        rc.maxSpeed = 2;
 
         rc.useNav = true;
         rc.isBallObs = true;
@@ -201,39 +198,41 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
     Vector2D target = receiverPos;
     Vector2D goal(target.x,target.y);
 
-    OperatingPosition kickPoint = wm->kn->AdjustKickPointB(wm->ball.pos.loc,goal,wm->ourRobot[this->id].pos);
+    OperatingPosition kickPoint = BallControl(goal,100,this->id,rc.maxSpeed);
 
     rc.fin_pos = kickPoint.pos;
     rc.useNav = kickPoint.useNav;
+    qDebug()<<"readyToShoot : "<<kickPoint.readyToShoot<<"   , everyOneInTheirPos : "<<everyOneInTheirPos;
 
     if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        Line2D ball2Target(wm->ball.pos.loc,goal);
+        rc.kickspeedx = 150;//kickPoint.kickSpeed;
+//        Line2D ball2Target(wm->ball.pos.loc,goal);
 
-        QList<int> activeOpp = wm->kn->ActiveOppAgents();
-        bool wayIsClear = true;
+//        QList<int> activeOpp = wm->kn->ActiveOppAgents();
+//        bool wayIsClear = true;
 
-        for(int i=0;i<activeOpp.size();i++)
-        {
-            double distance = ball2Target.dist(wm->oppRobot[activeOpp.at(i)].pos.loc);
-            if( distance < ROBOT_RADIUS+BALL_RADIUS )
-            {
-                wayIsClear = false;
-                break;
-            }
-        }
+//        for(int i=0;i<activeOpp.size();i++)
+//        {
+//            double distance = ball2Target.dist(wm->oppRobot[activeOpp.at(i)].pos.loc);
+//            if( distance < ROBOT_RADIUS+BALL_RADIUS )
+//            {
+//                wayIsClear = false;
+//                break;
+//            }
+//        }
 
-        if( wayIsClear )
-        {
-            rc.kickspeedx = 155;// detectKickSpeed(goal);
-            qDebug()<<"Kickk...";
-        }
-        else
-        {
-            rc.kickspeedx = 3;//255;// detectKickSpeed(goal);
-            rc.kickspeedz = 3;
-            qDebug()<<"CHIP...";
-        }
+//        if( wayIsClear )
+//        {
+//            rc.kickspeedx = 255;// detectKickSpeed(goal);
+//            qDebug()<<"Kickk...";
+//        }
+//        else
+//        {
+//            rc.kickspeedx = 3;//255;// detectKickSpeed(goal);
+//            rc.kickspeedz = 3;
+//            qDebug()<<"CHIP...";
+//        }
 
     }
 
@@ -393,15 +392,6 @@ void TacticAttacker::isChiper(Vector2D pos)
     this->receiverPos = pos;
 }
 
-void TacticAttacker::waitTimerStart(bool onMyCommand)
-{
-    if(!onMyCommand)
-    {
-        everyOneInTheirPos = false;
-        waitTimer->start(1500);
-    }
-}
-
 void TacticAttacker::setGameOnPositions(Position pos)
 {
     setIdlePosition(pos);
@@ -453,12 +443,4 @@ bool TacticAttacker::isFree(int index)
             break;
     }
     return isFree;
-}
-
-void TacticAttacker::dontWait()
-{
-    everyOneInTheirPos = true;
-    if( findReciever )
-        receiverPos = wm->ourRobot[findBestPlayerForPass()].pos.loc;
-    waitTimer->stop();
 }

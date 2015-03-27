@@ -13,6 +13,8 @@ PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
     tAttackerLeft = new TacticAttacker(wm);
     tAttackerMid = new TacticAttacker(wm);
     tAttackerRight = new TacticAttacker(wm);
+
+    game_status = "Attacking";
 }
 
 int PlayGameOn::enterCondition()
@@ -75,7 +77,7 @@ void PlayGameOn::pressing(int ballOwner)
 {
     QList<int> oppPlayers = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
     int oppBallTracker = findOppReciever();
-    if( oppBallTracker != -1 )
+    if( oppBallTracker != -1 && !isDefender(ballOwner))
         oppPlayers.removeOne(oppBallTracker);
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
@@ -104,11 +106,11 @@ int PlayGameOn::findBallOwner()
 
     if( wm->ball.isValid)
     {
-        Circle2D indexCir(Field::ourGoalCenter, Field::defenderPermittedRegion);
+//        Circle2D indexCir(Field::ourGoalCenter, Field::defenderPermittedRegion);
 
-        if( !indexCir.contains(wm->ball.pos.loc) )
-            candidates = wm->kn->findAttackers();
-        else
+//        if( !indexCir.contains(wm->ball.pos.loc) )
+//            candidates = wm->kn->findAttackers();
+//        else
             candidates = wm->kn->ActiveAgents();
 
         ours.removeOne(wm->ref_goalie_our);
@@ -137,14 +139,44 @@ int PlayGameOn::findBallOwner()
 
         int min_i = -1;
         double min_d = 35000000;
+        QList<int> sameDistances;
 
         for(int i=0;i<distance2Prediction.size();i++)
         {
-            if( distance2Prediction.at(i) <= min_d )
+            qDebug()<<"Distance "<<candidates.at(i)<<" is "<<distance2Prediction.at(i);
+            if( min_d - distance2Prediction.at(i) > 100 )
             {
                 min_d = distance2Prediction.at(i);
                 min_i = candidates.at(i);
+                sameDistances.clear();
+                sameDistances.append(candidates.at(i));
             }
+            else if( fabs(distance2Prediction.at(i)-min_d) < 35 )
+            {
+                sameDistances.append(candidates.at(i));
+            }
+        }
+
+        for(int i=0;i<sameDistances.size();i++)
+            qDebug()<<"same size : "<<sameDistances.at(i);
+        qDebug()<<"===========";
+
+        if( sameDistances.size() > 1 )
+        {
+            int min_i_s = -1;
+            double min_degree = 35000000;
+
+            for(int i=0;i<sameDistances.size();i++)
+            {
+                double r2b = fabs((wm->ball.pos.loc - wm->ourRobot[sameDistances.at(i)].pos.loc).dir().radian());
+                if( r2b < min_degree )
+                {
+                    min_degree = r2b;
+                    min_i_s = sameDistances.at(i);
+                }
+            }
+
+            min_i = min_i_s;
         }
 
         if(min_i != -1)
@@ -158,6 +190,7 @@ int PlayGameOn::findBallOwner()
 
     }
 
+    qDebug()<<"selected : "<<ownerIndex;
     return ownerIndex;
 }
 
@@ -406,6 +439,27 @@ bool PlayGameOn::roleIsValid(AgentRole role)
         return false;
 
     return true;
+}
+
+bool PlayGameOn::isDefender(int index)
+{
+    bool out = false;
+    switch (wm->ourRobot[index].Role)
+    {
+    case AgentRole::DefenderLeft:
+        out = true;
+        break;
+    case AgentRole::DefenderRight:
+        out = true;
+        break;
+    case AgentRole::DefenderMid:
+        out = true;
+        break;
+    default:
+        break;
+    }
+
+    return out;
 }
 
 void PlayGameOn::execute()
