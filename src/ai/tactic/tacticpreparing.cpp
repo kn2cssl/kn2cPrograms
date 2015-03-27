@@ -20,16 +20,17 @@ RobotCommand TacticPreparing::getCommand()
 
         if(wm->ball.pos.loc.x > 0 && wm->ball.pos.loc.x < Field::MaxX/2)
         {
-            rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,Field::oppGoalCenter);
-            rc.useNav = true;
+            tANDp target = findTarget();
+            //OperatingPosition kick = BallControl(target.pos, target.prob, this->id, 0.5);
+            OperatingPosition kick = wm->kn->AdjustKickPointB(wm->ball.pos.loc,target.pos,wm->ourRobot[this->id].pos);
+            rc.fin_pos = kick.pos;
+            rc.useNav = kick.useNav;
 
-            if( (wm->ourRobot[this->id].pos.loc-wm->ball.pos.loc).length() < 175 )
-                rc.useNav = false;
-            Position Temp;
-            Temp.loc = wm->ourRobot[this->id].pos.loc + wm->ourRobot[this->id].vel.loc * 0.015 ;
-            if( wm->kn->CanKick(wm->ourRobot[this->id].pos,wm->ball.pos.loc) )
+            qDebug()<<"rc.useNav : "<< kick.useNav;
+
+            if( kick.readyToShoot )
             {
-                rc.kickspeedx = 250;
+                rc.kickspeedx = 200;
                 kickIt = true;
             }
         }

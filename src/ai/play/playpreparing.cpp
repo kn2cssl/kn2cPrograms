@@ -11,7 +11,7 @@ PlayPreparing::PlayPreparing(WorldModel *worldmodel, QObject *parent) :
 
 int PlayPreparing::enterCondition()
 {
-    return 0;
+    return 250000000;
 }
 
 void PlayPreparing::initRole()
