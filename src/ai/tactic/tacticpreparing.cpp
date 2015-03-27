@@ -30,7 +30,7 @@ RobotCommand TacticPreparing::getCommand()
 
             if( kick.readyToShoot )
             {
-                rc.kickspeedx = 200;
+                rc.kickspeedx = 201;
                 kickIt = true;
             }
         }
