@@ -95,7 +95,6 @@ void PlayKickoffOpp::setTactics(int index)
 
 void PlayKickoffOpp::setPositions()
 {
-    qDebug()<<"======================";
     Position leftDefPos,rightDefPos,goaliePos;
     int leftID = -1, rightID = -1 , midID = -1;
 
@@ -186,7 +185,6 @@ void PlayKickoffOpp::setPositions()
             Vector2D interSection = tmp.intersection(fixedLine);
             if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
             {
-                qDebug()<<"indexOfOpp for Left : "<<indexOfOpp;
                 Position pos;
                 pos.loc = interSection;
                 pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
@@ -222,7 +220,6 @@ void PlayKickoffOpp::setPositions()
             Vector2D interSection = tmp.intersection(fixedLine);
             if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
             {
-                qDebug()<<"indexOfOpp for Right : "<<indexOfOpp;
                 Position pos;
                 pos.loc = interSection;
                 pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
