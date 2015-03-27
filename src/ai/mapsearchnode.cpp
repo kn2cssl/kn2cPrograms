@@ -148,7 +148,7 @@ QList<Circle2D> MapSearchNode::getObsCircle()
     QList<Circle2D> result;
 
     double b_rad = ROBOT_RADIUS + BALL_RADIUS;
-    double r_rad = ROBOT_RADIUS * 2 ;
+    double r_rad = ROBOT_RADIUS * 2;
 
 
     if(isBallObs && wm->ball.isValid)

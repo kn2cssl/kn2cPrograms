@@ -25,27 +25,83 @@ int freeKick1::enterCondition(Level level)
     return 0;
 }
 
+void freeKick1::resetValues()
+{
+    this->rolesIsInit = false;
+}
+
 void freeKick1::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
     tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
     tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
+
+    if( checkDistances() )
+        tAttackerMid->youHavePermissionForKick();
+}
+
+bool freeKick1::checkDistances()
+{
+    bool leftInPos = true , rightInPos = true;
+
+    if( wm->ourRobot[tAttackerLeft->getID()].isValid && tAttackerLeft->getID() != -1)
+    {
+        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
+            leftInPos = false;
+    }
+
+    if( wm->ourRobot[tAttackerRight->getID()].isValid && tAttackerRight->getID() != -1)
+    {
+        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
+            rightInPos = false;
+    }
+
+    return rightInPos & leftInPos;
 }
 
 void freeKick1::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
-    {
+//    if(!rolesIsInit)
         initRole();
-    }
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
@@ -53,12 +109,6 @@ void freeKick1::execute()
     setPositions();
 
     tAttackerMid->isKicker();
-
-    if(!freeKickStart)
-    {
-        tAttackerMid->waitTimerStart(false);
-        freeKickStart = true;
-    }
 
     activeAgents.removeOne(tAttackerMid->getID());
     if(wm->cmgs.ourIndirectKick())

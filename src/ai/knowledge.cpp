@@ -1,11 +1,5 @@
 #include "knowledge.h"
 #include "worldmodel.h"
-#define SHOOT 0
-#define AIM 1
-#define DEFEND 2
-
-#define RESET 0
-
 
 Knowledge::Knowledge(WorldModel *wm, QObject *parent) :
     QObject(parent),
@@ -198,6 +192,11 @@ bool Knowledge::IsInsideOurField(Vector2D pos)
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0,Field::MinY));
 }
 
+bool Knowledge::IsInsideOppField(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(0,Field::MaxY), Vector2D(Field::MaxX,Field::MinY));
+}
+
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
 {
     double x = pos.x - goalLeftX;
@@ -205,6 +204,23 @@ bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRad
 
     return ( (pos-ccl).length() <= goalRadius || (pos-ccr).length() <= goalRadius ||
              (x >= 0 && x <= goalRadius && fabs(pos.y) <= goalCcOffset / 2));
+}
+
+bool Knowledge::IsInsideFarArea(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(0.33*Field::MaxX,Field::MaxY), Vector2D(Field::MaxX,Field::MinY));
+}
+
+bool Knowledge::IsInsideNearArea(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.6*Field::MinX,0.7*Field::MaxY))
+            ||
+            IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
+}
+
+bool Knowledge::IsNearOurGoal(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.25*Field::MinX,Field::MinY));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
@@ -352,13 +368,13 @@ bool Knowledge::agentIsFree(int index)
     return isFree;
 }
 
-bool Knowledge::isOccupied(Vector2D input)
+bool Knowledge::isOccupied(int id, Vector2D input)
 {
     for(int i = 0;i<PLAYERS_MAX_NUM;i++)
     {
         if(_wm->ourRobot[i].isValid)
         {
-            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100 && ( id != i) )
             {
                 return true;
             }
@@ -386,34 +402,69 @@ QString Knowledge::gameStatus()
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
     QList<int> oppNearestPlayerToBall = findNearestOppositeTo(_wm->ball.pos.loc);
 
-    if( oppNearestPlayerToBall.size() > 3 )
+    if( oppNearestPlayerToBall.size() != 0)
     {
-        double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-        double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-
-        if( ourDistance2Ball > 500 && oppDistance2Ball > 500 )
+        if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
         {
-            out = "Suspended";
+            double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+            double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+
+            if( ourDistance2Ball - oppDistance2Ball > 300 )
+                out = "Defending";
+            else if( oppDistance2Ball - ourDistance2Ball > 300 )
+                out = "Attacking";
+            else
+                out = "Not Changed";
         }
         else
         {
-            if( ourDistance2Ball-oppDistance2Ball > 0 )
-                out = "Defending";
-            else if( ourDistance2Ball-oppDistance2Ball < 0 )
+            if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
                 out = "Attacking";
-            else
-                out = "Suspended";
+            else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
+                out = "Defending";
         }
     }
     else
     {
-        if( ourNearestPlayerToBall.size() > 3 )
-            out = "Attacking";
-        else
-            out = "Suspended";
+        out = "Attacking";
+    }
+    return out;
+}
+
+int Knowledge::findOppReciever()
+{
+    int ownerIndex = -1;
+
+    QList<int> opps = ActiveOppAgents();
+    opps.removeOne(_wm->ref_goalie_opp);
+
+    QList<double> distance2Prediction;
+
+    if( _wm->ball.isValid )
+    {
+        for(int i=0;i<opps.size();i++)
+        {
+            Vector2D predictedPos = _wm->kn->PredictDestination(_wm->oppRobot[opps.at(i)].pos.loc, _wm->ball.pos.loc,_wm->opp_vel,_wm->ball.vel.loc);
+            double distance = (predictedPos - _wm->oppRobot[opps.at(i)].pos.loc).length();
+            distance2Prediction.append(distance);
+        }
+
+        int min_i = -1;
+        double min_d = 35000000;
+
+        for(int i=0;i<distance2Prediction.size();i++)
+        {
+            if( distance2Prediction.at(i) <= min_d )
+            {
+                min_d = distance2Prediction.at(i);
+                min_i = opps.at(i);
+            }
+        }
+
+        ownerIndex = min_i;
     }
 
-    return out;
+    return ownerIndex;
 }
 
 QList<int> Knowledge::findAttackers()
@@ -423,19 +474,22 @@ QList<int> Knowledge::findAttackers()
 
     for(int i=0;i<ourAgents.size();i++)
     {
-        switch (_wm->ourRobot[ourAgents.at(i)].Role)
+        if( _wm->ourRobot[ourAgents.at(i)].isValid )
         {
-        case AgentRole::AttackerMid:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerLeft:
-            output.append(ourAgents.at(i));
-            break;
-        case AgentRole::AttackerRight:
-            output.append(ourAgents.at(i));
-            break;
-        default:
-            break;
+            switch (_wm->ourRobot[ourAgents.at(i)].Role)
+            {
+            case AgentRole::AttackerMid:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerLeft:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerRight:
+                output.append(ourAgents.at(i));
+                break;
+            default:
+                break;
+            }
         }
     }
     return output;
@@ -621,7 +675,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
         if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
 
         KickPos.pos.loc = ballLoc ;
-        qDebug()<<"BallDir"<<BallDir;
     }
     else
     {
@@ -642,13 +695,9 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
     }
 
-
-
-
     if(kickPermission)
     {
         Vector2D ball_vel_change;
-
 
         ball_vel_change =_wm->ball.vel.loc - last_ball_vell;
         last_ball_vell = _wm->ball.vel.loc ;
@@ -689,7 +738,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
         //##kick distance and angel limits
     }
 
-
     if(shoot_sensor)//shooting with sensor or without it
     {
         KickPos.kickSpeed=256;
@@ -699,213 +747,5 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
         KickPos.kickSpeed=255;
     }
 
-
     return KickPos;
 }
-
-
-OperatingPosition Knowledge::BallControl(Vector2D Target , int Prob , int ID , double maxSpeed, int Task )
-{
-    /////////////////////////////////variables
-
-    OperatingPosition OP;
-    OP.useNav = true ;
-    OP.kickSpeed = 0;
-    OP.readyToShoot = false;
-
-    Vector2D BallPredict = PredictDestination(_wm->ourRobot[ID].pos.loc,
-                                              _wm->ball.pos.loc,maxSpeed,_wm->ball.vel.loc);
-    if(_wm->ball.vel.loc.length()<.1) BallPredict=_wm->ball.pos.loc;
-
-    Vector2D  TargetDir= (Target - BallPredict);
-    Vector2D ball_vel_diff;
-    bool dribblingFault1000mm = false;
-    bool dribblingFault50mm = false;
-    bool shoot_sensor = true;
-    bool probShoot=false;
-    double LargeDisplacement = 40;                                        //Large displacement of ball witch will result in fault in restarts states
-    double LargeSpeedChange = 0.04;
-    double LongDribleDistance = 980;
-    double attackAngel = AngleDeg ::deg2rad(160);
-    double robotBallDist = (_wm->ball.pos.loc - _wm->ourRobot[ID].pos.loc).length();
-    double robotBallAngele = fabs((_wm->ball.pos.loc - _wm->ourRobot[ID].pos.loc).dir().radian());
-    double possessionAngel = AngleDeg ::deg2rad(15);
-    double chanceProbLimitForShoot=0.1     ;                            //percentage of probability decrese in which robot kicks the ball even if there is large err in aming ball
-    double DirErr;
-    double DistErr;
-    double BallDir = _wm->ball.vel.loc.dir().radian();                      //ball moving direction
-    Vector2D BallLoc = _wm->ball.pos.loc;
-    double BallHS = .2;                                                     //ball speed limit for stoping it
-    double DAngel = AngleDeg ::deg2rad(80);                                 //Deviation angel witch when it is passed ,ball shuold be stoped
-    Position RobotPos = _wm->ourRobot[ID].pos;
-    if(timer_reset==false)
-    {
-        f10s.restart();
-        timer_reset=true;
-    }
-
-    //////////////////////////////////////////
-
-    //////////////////////////////////////////Seize
-    int SeizeMode=0;
-
-    if(_wm->ball.vel.loc.length()>BallHS
-            && (TargetDir.dir().radian()-DAngel)<BallDir
-            && (-TargetDir.dir().radian()+DAngel)>BallDir
-            && _wm->cmgs.gameOn())                       //stop the  ball
-    {
-        OP.pos.dir = (BallLoc - RobotPos.loc).dir().radian();//(BallDir)-M_PI;//
-        if (OP.pos.dir > M_PI) OP.pos.dir -= 2 * M_PI;
-        if (OP.pos.dir < -M_PI) OP.pos.dir += 2 * M_PI;
-        qDebug()<<"StopingBall";
-        OP.pos.loc = BallPredict ;
-        SeizeMode=1;
-    }
-    else                                                 //Seizing ball
-    {
-        //            double moveDir = (RobotPos.loc - BallPredict).dir().radian();
-        //            DirErr = moveDir - TargetDir.dir().radian();
-        //            if (DirErr > M_PI) DirErr -= 2 * M_PI;
-        //            if (DirErr < -M_PI) DirErr += 2 * M_PI;
-        //if(fabs(DirErr)>attackAngel)                                    //Seize and attack the ball
-            //this stage has not been developed
-//        {
-//        }
-            //possession point >>navigation : ON
-            TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*2);
-
-            OP.pos.dir = TargetDir.dir().radian();
-            OP.pos.loc = BallPredict - TargetDir;
-
-            //possession point check
-            DirErr = AngleDeg::rad2deg(fabs(OP.pos.dir  - RobotPos.dir));
-            if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
-
-            DistErr = (OP.pos.loc - RobotPos.loc).length();
-            if(DirErr < 10 && DistErr < BALL_RADIUS*2 && _wm->cmgs.gameOn()) kickPermission = true;
-            if(DirErr < 10 && DistErr < BALL_RADIUS ) kickPermission = true;
-
-            if(DirErr > 19 && DistErr > BALL_RADIUS*3
-                    && (robotBallDist>ROBOT_RADIUS+BALL_RADIUS
-                        && robotBallAngele>possessionAngel ))
-            {
-                kickPermission = false;//reset
-                sensorFault = 0;//reset
-                startProbability = RESET;//reset
-                ballDisplacement = {0,0} ;//reset
-            }
-
-
-       // qDebug()<<robotBallDist<<ROBOT_RADIUS+BALL_RADIUS<<robotBallAngele<<possessionAngel;
-
-    }
-    ///////////////////////////////////////////////
-
-    /////////////////////////////////////////Action
-
-    ////#kick Action
-    if(kickPermission)
-    {
-        ////////////////////////////////////////////////////////////
-        if(ballDisplacement==Vector2D(0,0))
-        {
-            ballDisplacement=BallLoc;
-        }
-        if((ballDisplacement-BallLoc).length()>LongDribleDistance)
-            dribblingFault1000mm = true;
-        if((ballDisplacement-BallLoc).length()>LargeDisplacement)
-            dribblingFault50mm = true;
-        ////////////////////////////////////////////////////////////
-        if(startProbability<Prob)
-        {
-            startProbability=Prob;
-        }
-
-
-        if(startProbability-Prob>startProbability*chanceProbLimitForShoot)
-        {
-            probShoot = true;
-           qDebug()<<"ProbabilityShoot";
-        }
-
-        ////////////////////////////////////////////////////////////
-        ball_vel_diff =_wm->ball.vel.loc - last_ball_vell;
-        last_ball_vell = _wm->ball.vel.loc ;
-        //qDebug()<<f10s.elapsed();
-
-        //control point >>navigation : OFF
-
-        if(_wm->cmgs.gameOn() || Task == SHOOT)
-            TargetDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
-        else if(Task == AIM)
-            TargetDir.setLength( ROBOT_RADIUS+ BALL_RADIUS*2);
-        OP.useNav = false ;
-        OP.pos.dir = TargetDir.dir().radian();
-        OP.pos.loc = BallPredict - TargetDir;
-
-        DirErr = AngleDeg::rad2deg(fabs(OP.pos.dir  - RobotPos.dir));
-        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
-
-        DistErr = (OP.pos.loc - RobotPos.loc).length();
-
-
-            if(DirErr < 3 && DistErr < 2*ROBOT_RADIUS)
-            {
-                OP.readyToShoot = true;
-                shoot_sensor = true;
-                qDebug()<<"SensorShoot";
-            }
-            else
-            {
-                OP.readyToShoot = false;
-            }
-
-
-            if(DirErr < 4 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS)//sensor fault checking
-            {
-                sensorFault++;
-                qDebug()<<"ShootSensorFault:"<<ID;
-            }
-
-        if((DirErr < 1 && robotBallDist < ROBOT_RADIUS)
-                || sensorFault>4
-                || (probShoot && _wm->cmgs.gameOn() && DirErr < 15 && robotBallDist < 1.2*ROBOT_RADIUS)
-                || (dribblingFault1000mm && _wm->cmgs.gameOn())
-                || (dribblingFault50mm && !_wm->cmgs.gameOn())
-                )
-        {
-            sensorFault=0;
-            OP.readyToShoot = true;
-            timer_reset=false;
-            shoot_sensor = false;
-            qDebug()<<"NONSensorShoot";
-        }
-    }
-    else
-        sensorFault=0;
-    ////##kick Action
-
-    ///////////////////////////////////////////////
-
-    if(shoot_sensor)//shooting with sensor or without it
-    {
-        OP.kickSpeed=256;
-    }
-    else
-    {
-        OP.kickSpeed=255;
-    }
-
-    if(!_wm->ball.isValid)
-         OP.kickSpeed=0;
-
-
-
-    return OP;
-
-
-
-
-}
-
-

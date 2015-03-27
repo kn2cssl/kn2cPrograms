@@ -17,6 +17,7 @@ public:
     void setTactics(int index);
     void pressing(int ballOwner);
     int findBallOwner();
+    int findOppReciever();
     void setPlayer2Keep(int ourR,int oppR);
     QList<AgentRegion> freeRegions();
 
@@ -24,15 +25,17 @@ private:
     TacticGoalie*   tGolie;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
-    TacticDefender* tDefenderMid;
     TacticAttacker* tAttackerLeft;
     TacticAttacker* tAttackerRight;
     TacticAttacker* tAttackerMid;
+
+    QString game_status;
 
     virtual void initRole();
     void coach();
     void setGameOnPos(int ourR,Vector2D loc);
     bool roleIsValid(AgentRole role);
+    bool isDefender(int index);
 };
 
 #endif // PLAYGAMEON_H

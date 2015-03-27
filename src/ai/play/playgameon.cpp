@@ -9,23 +9,28 @@ PlayGameOn::PlayGameOn(WorldModel *worldmodel, QObject *parent) :
 
     tDefenderLeft = new TacticDefender(wm);
     tDefenderRight = new TacticDefender(wm);
-    tDefenderMid = new TacticDefender(wm);
 
     tAttackerLeft = new TacticAttacker(wm);
     tAttackerMid = new TacticAttacker(wm);
     tAttackerRight = new TacticAttacker(wm);
+
+    game_status = "Attacking";
 }
 
 int PlayGameOn::enterCondition()
 {
     if( wm->cmgs.gameOn() )
     {
-        if(rolesIsInit)
-            rolesIsInit = conditionChanged();
+        //        if( rolesIsInit )
+        //            rolesIsInit = conditionChanged();
         return 100;
     }
     else
+    {
+        tDefenderLeft->resetBooleans();
+        tDefenderRight->resetBooleans();
         return 0;
+    }
     return 0;
 }
 
@@ -34,9 +39,6 @@ void PlayGameOn::setTactics(int index)
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
         tactics[index] = tGolie;
-        break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
@@ -74,7 +76,9 @@ void PlayGameOn::setTactics(int index)
 void PlayGameOn::pressing(int ballOwner)
 {
     QList<int> oppPlayers = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-    oppPlayers.removeFirst();
+    int oppBallTracker = findOppReciever();
+    if( oppBallTracker != -1 && !isDefender(ballOwner))
+        oppPlayers.removeOne(oppBallTracker);
     oppPlayers.removeOne(wm->ref_goalie_opp);
 
     QList<int> ourPlayers = wm->kn->findAttackers();
@@ -97,45 +101,82 @@ void PlayGameOn::pressing(int ballOwner)
 int PlayGameOn::findBallOwner()
 {
     int ownerIndex;
-
-    QList<int> ours = wm->kn->ActiveAgents();
-    ours.removeOne(wm->ref_goalie_our);
-
+    QList<int> candidates , ours = wm->kn->ActiveAgents();
     QList<double> distance2Prediction;
 
     if( wm->ball.isValid)
     {
-        for(int i=0;i<ours.size();i++)
+//        Circle2D indexCir(Field::ourGoalCenter, Field::defenderPermittedRegion);
+
+//        if( !indexCir.contains(wm->ball.pos.loc) )
+//            candidates = wm->kn->findAttackers();
+//        else
+            candidates = wm->kn->ActiveAgents();
+
+        ours.removeOne(wm->ref_goalie_our);
+        candidates.removeOne(wm->ref_goalie_our);
+
+        for(int i=0;i<candidates.size();i++)
         {
             Vector2D predictedPos;
-            if( (wm->ourRobot[ours.at(i)].Role == AgentRole::AttackerMid)
+            if( (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerMid)
                     ||
-                    (wm->ourRobot[ours.at(i)].Role == AgentRole::AttackerLeft)
+                    (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerLeft)
                     ||
-                    (wm->ourRobot[ours.at(i)].Role == AgentRole::AttackerRight)  )
+                    (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerRight)  )
             {
-                predictedPos = wm->kn->PredictDestination(wm->ourRobot[ours.at(i)].pos.loc, wm->ball.pos.loc,2,wm->ball.vel.loc);
-                double distance = (predictedPos - wm->ourRobot[ours.at(i)].pos.loc).length();
+                predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,2,wm->ball.vel.loc);
+                double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
                 distance2Prediction.append(distance);
             }
             else
             {
-                predictedPos = wm->kn->PredictDestination(wm->ourRobot[ours.at(i)].pos.loc, wm->ball.pos.loc,1,wm->ball.vel.loc);
-                double distance = (predictedPos - wm->ourRobot[ours.at(i)].pos.loc).length();
+                predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,1,wm->ball.vel.loc);
+                double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
                 distance2Prediction.append(distance);
             }
         }
 
         int min_i = -1;
         double min_d = 35000000;
+        QList<int> sameDistances;
 
         for(int i=0;i<distance2Prediction.size();i++)
         {
-            if( distance2Prediction.at(i) <= min_d )
+            qDebug()<<"Distance "<<candidates.at(i)<<" is "<<distance2Prediction.at(i);
+            if( min_d - distance2Prediction.at(i) > 100 )
             {
                 min_d = distance2Prediction.at(i);
-                min_i = ours.at(i);
+                min_i = candidates.at(i);
+                sameDistances.clear();
+                sameDistances.append(candidates.at(i));
             }
+            else if( fabs(distance2Prediction.at(i)-min_d) < 35 )
+            {
+                sameDistances.append(candidates.at(i));
+            }
+        }
+
+        for(int i=0;i<sameDistances.size();i++)
+            qDebug()<<"same size : "<<sameDistances.at(i);
+        qDebug()<<"===========";
+
+        if( sameDistances.size() > 1 )
+        {
+            int min_i_s = -1;
+            double min_degree = 35000000;
+
+            for(int i=0;i<sameDistances.size();i++)
+            {
+                double r2b = fabs((wm->ball.pos.loc - wm->ourRobot[sameDistances.at(i)].pos.loc).dir().radian());
+                if( r2b < min_degree )
+                {
+                    min_degree = r2b;
+                    min_i_s = sameDistances.at(i);
+                }
+            }
+
+            min_i = min_i_s;
         }
 
         if(min_i != -1)
@@ -147,6 +188,43 @@ int PlayGameOn::findBallOwner()
         while( !ours.isEmpty() )
             wm->ourRobot[ours.takeFirst()].Status = AgentStatus::Idle;
 
+    }
+
+    qDebug()<<"selected : "<<ownerIndex;
+    return ownerIndex;
+}
+
+int PlayGameOn::findOppReciever()
+{
+    int ownerIndex = -1;
+
+    QList<int> opps = wm->kn->ActiveOppAgents();
+    opps.removeOne(wm->ref_goalie_opp);
+
+    QList<double> distance2Prediction;
+
+    if( wm->ball.isValid )
+    {
+        for(int i=0;i<opps.size();i++)
+        {
+            Vector2D predictedPos = wm->kn->PredictDestination(wm->oppRobot[opps.at(i)].pos.loc, wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
+            double distance = (predictedPos - wm->oppRobot[opps.at(i)].pos.loc).length();
+            distance2Prediction.append(distance);
+        }
+
+        int min_i = -1;
+        double min_d = 35000000;
+
+        for(int i=0;i<distance2Prediction.size();i++)
+        {
+            if( distance2Prediction.at(i) <= min_d )
+            {
+                min_d = distance2Prediction.at(i);
+                min_i = opps.at(i);
+            }
+        }
+
+        ownerIndex = min_i;
     }
 
     return ownerIndex;
@@ -197,6 +275,7 @@ void PlayGameOn::initRole()
     wm->marking.clear();
 
     QList<int> activeAgents=wm->kn->ActiveAgents();
+    QList<int> attackers;
     numberOfPlayers = activeAgents.size();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
@@ -216,10 +295,49 @@ void PlayGameOn::initRole()
             activeAgents.removeAt(i);
         }
     }
+    int counter = 0;
+    while( counter < activeAgents.size() )
+    {
+        if( roleIsValid(wm->ourRobot[activeAgents.at(counter)].Role) )
+        {
+            roles.removeOne(wm->ourRobot[activeAgents.at(counter)].Role);
+            activeAgents.removeAt(counter);
+        }
+        else
+            counter++;
+    }
+
+    attackers = wm->kn->findAttackers();
 
     for(int i=0;i<activeAgents.size();i++)
     {
         wm->ourRobot[activeAgents.at(i)].Role = roles.takeFirst();
+    }
+
+    if( roles.contains(AgentRole::DefenderLeft) )
+    {
+        for(int i=0;i<attackers.size();i++)
+        {
+            if(wm->ourRobot[attackers.at(i)].Status != AgentStatus::FollowingBall )
+            {
+                wm->ourRobot[attackers.at(i)].Role = AgentRole::DefenderLeft;
+                attackers.removeAt(i);
+                break;
+            }
+        }
+    }
+
+    if( roles.contains(AgentRole::DefenderRight) )
+    {
+        for(int i=0;i<attackers.size();i++)
+        {
+            if(wm->ourRobot[attackers.at(i)].Status != AgentStatus::FollowingBall )
+            {
+                wm->ourRobot[attackers.at(i)].Role = AgentRole::DefenderRight;
+                attackers.removeAt(i);
+                break;
+            }
+        }
     }
 
     rolesIsInit = true;
@@ -227,14 +345,49 @@ void PlayGameOn::initRole()
 
 void PlayGameOn::coach()
 {
-    QString game_status = wm->kn->gameStatus();
+    QString new_status = wm->kn->gameStatus();
+
+    if( new_status != "Not Changed" )
+        game_status = new_status;
+
     int ballOwner = findBallOwner();
 
-    Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    Position leftDefPos,rightDefPos,goaliePos;
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     if( game_status == "Defending" )
     {
@@ -288,12 +441,32 @@ bool PlayGameOn::roleIsValid(AgentRole role)
     return true;
 }
 
+bool PlayGameOn::isDefender(int index)
+{
+    bool out = false;
+    switch (wm->ourRobot[index].Role)
+    {
+    case AgentRole::DefenderLeft:
+        out = true;
+        break;
+    case AgentRole::DefenderRight:
+        out = true;
+        break;
+    case AgentRole::DefenderMid:
+        out = true;
+        break;
+    default:
+        break;
+    }
+
+    return out;
+}
+
 void PlayGameOn::execute()
 {
     QList<int> activeAgents = wm->kn->ActiveAgents();
 
-    if( !rolesIsInit )
-        initRole();
+    initRole();
 
     coach();
 

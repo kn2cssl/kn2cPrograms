@@ -20,10 +20,41 @@ int freeKickDirect::enterCondition(Level level)
 void freeKickDirect::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     Position pos;
 
@@ -57,11 +88,17 @@ void freeKickDirect::setPositions()
     }
 }
 
+void freeKickDirect::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKickDirect::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     for(int i=0;i<activeAgents.size();i++)
@@ -71,7 +108,6 @@ void freeKickDirect::execute()
 
     target = Field::oppGoalCenter;
     tAttackerMid->isKicker(target);
-    tAttackerMid->waitTimerStart(true);
     tAttackerMid->youHavePermissionForKick();
     activeAgents.removeOne(tAttackerMid->getID());
 

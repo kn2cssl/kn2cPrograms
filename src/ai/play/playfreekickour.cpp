@@ -12,6 +12,10 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     fk.append(new freeKick6(wm));
     fk.append(new freeKick7(wm));
     fk.append(new freeKick8(wm));
+    fk.append(new freeKick9(wm));
+//    fk.append(new freeKick10(wm));
+    fk.append(new freeKick11(wm));
+    fk.append(new freeKick47(wm));
     fk.append(new freeKickDirect(wm));
 }
 int PlayFreeKickOur::enterCondition()
@@ -43,6 +47,11 @@ void PlayFreeKickOur::execute()
 {
     if( !freeKickSelected )
     {
+        for(int i=0;i<fk.size();i++)
+        {
+            freeKick_base* tmp = fk.at(i);
+            tmp->resetValues();
+        }
         QList<freeKick_base*> candidates;
 
         int max_i = 0;
@@ -50,7 +59,7 @@ void PlayFreeKickOur::execute()
 
         for(int i=0; i<fk.size(); i++)
         {
-            int p = fk[i]->enterCondition(wm->oppLevel);
+            int p = fk[i]->enterCondition(wm->oppLevel_fk);
             if(p > max_p)
             {
                 max_i = i;

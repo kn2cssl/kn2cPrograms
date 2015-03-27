@@ -32,6 +32,7 @@ public:
     explicit WorldModel(OutputBuffer *outputBuffer);
     double time;
     Ball ball;
+    TeamColorType ourColor;
     Agent ourRobot[PLAYERS_MAX_NUM];
     Robot oppRobot[PLAYERS_MAX_NUM];
     GameStateType gs;
@@ -43,7 +44,8 @@ public:
     Knowledge *kn;
 
     //----Input Data----------
-    Level oppLevel;
+    Level oppLevel_fk;
+    double opp_vel;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
@@ -62,6 +64,10 @@ public:
     QList<tANDp> TANDPis;
     tANDp max_TANDPis;
     bool showChances;
+
+    bool showDebug;
+    QList<Vector2D> debug_pos;
+    int debug_type;
 
     //---UDP 2 Matlab
     bool sendUDP;

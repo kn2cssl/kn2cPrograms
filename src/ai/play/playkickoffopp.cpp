@@ -5,7 +5,6 @@ PlayKickoffOpp::PlayKickoffOpp(WorldModel *worldmodel, QObject *parent) :
 {
     tGolie=new TacticGoalie(wm);
 
-    tDefenderMid=new TacticDefender(wm);
     tDefenderLeft=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
 
@@ -33,8 +32,8 @@ void PlayKickoffOpp::initRole()
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
         break;
     case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderMid;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 3:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
@@ -74,9 +73,6 @@ void PlayKickoffOpp::setTactics(int index)
     case AgentRole::Golie:
         tactics[index] = tGolie;
         break;
-    case AgentRole::DefenderMid:
-        tactics[index] = tDefenderMid;
-        break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
         break;
@@ -99,20 +95,55 @@ void PlayKickoffOpp::setTactics(int index)
 
 void PlayKickoffOpp::setPositions()
 {
-    Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    Position leftDefPos,rightDefPos,goaliePos;
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     QList<int> opps = wm->kn->ActiveOppAgents();
     opps.removeOne(wm->ref_goalie_opp);
+    QList<int> nearest2Ball = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
+    if( nearest2Ball.size() != 0)
+        opps.removeOne(nearest2Ball.at(0));
 
     QList<int> nearest;
     int i = 0;
     Line2D toCenter(Vector2D(0,0),ALLOW_NEAR_BALL_RANGE);
     Circle2D cir;
-    Vector2D first,second,main,leftPos,rightPos;
+    Vector2D first,second,main;
+    Position leftPos,rightPos;
     int numberOfIntersection;
 
     toCenter.assign(wm->ball.pos.loc , Field::ourGoalCenter);
@@ -131,65 +162,77 @@ void PlayKickoffOpp::setPositions()
     tAttackerMid->setIdlePosition(main);
 
     Circle2D secondCircle(main,(2.5)*ROBOT_RADIUS);
-    cir.intersection(secondCircle,&leftPos,&rightPos);
+    cir.intersection(secondCircle,&leftPos.loc,&rightPos.loc);
 
-    nearest.clear();
-    nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MaxY/2));
-
-    while( i<nearest.size() )
+    if( tAttackerLeft->getID() != -1)
     {
-        if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                /*||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
-            nearest.removeAt(i);
-        else
-            i++;
-    }
-
-    if( !nearest.isEmpty() )
-    {
-        Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
-        Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
-        Vector2D interSection = tmp.intersection(fixedLine);
-        if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+        nearest.clear();
+        i = 0;
+        nearest = wm->kn->findNearestOppositeTo(opps,Vector2D(0,Field::MinY/2));
+        while( i<nearest.size() )
         {
-            Position pos;
-            pos.loc = interSection;
-            pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-            tAttackerRight->setIdlePosition(pos);
+            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000*/)
+                nearest.removeAt(i);
+            else
+                i++;
         }
-        else
-            tAttackerRight->setIdlePosition(leftPos);
-    }
-    else
-        tAttackerRight->setIdlePosition(leftPos);
-
-    nearest.clear();
-    nearest = wm->kn->findNearestOppositeTo(Vector2D(0,Field::MinY/2));
-    while( i<nearest.size() )
-    {
-        if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                /*||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000*/)
-            nearest.removeAt(i);
-        else
-            i++;
-    }
-    if( !nearest.isEmpty() )
-    {
-        Line2D tmp(wm->oppRobot[nearest.at(0)].pos.loc,Field::ourGoalCenter);
-        Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
-        Vector2D interSection = tmp.intersection(fixedLine);
-        if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+        while( !nearest.isEmpty() )
         {
-            Position pos;
-            pos.loc = interSection;
-            pos.dir = (wm->oppRobot[nearest.at(0)].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-            tAttackerLeft->setIdlePosition(pos);
+            int indexOfOpp = nearest.takeFirst();
+            Line2D tmp(wm->oppRobot[indexOfOpp].pos.loc,Field::ourGoalCenter);
+            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+            Vector2D interSection = tmp.intersection(fixedLine);
+            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+            {
+                Position pos;
+                pos.loc = interSection;
+                pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                if( !wm->kn->isOccupied(tAttackerLeft->getID(), pos.loc) )
+                {
+                    rightPos = pos;
+                    opps.removeOne(indexOfOpp);
+                    break;
+                }
+            }
         }
-        else
-            tAttackerLeft->setIdlePosition(rightPos);
-    }
-    else
         tAttackerLeft->setIdlePosition(rightPos);
+    }
+
+    if( tAttackerRight->getID() != -1)
+    {
+        nearest.clear();
+        nearest = wm->kn->findNearestOppositeTo(opps,Vector2D(0,Field::MaxY/2));
+        i = 0;
+        while( i<nearest.size() )
+        {
+            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
+                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
+                nearest.removeAt(i);
+            else
+                i++;
+        }
+        while( !nearest.isEmpty() )
+        {
+            int indexOfOpp = nearest.takeFirst();
+            Line2D tmp(wm->oppRobot[indexOfOpp].pos.loc,Field::ourGoalCenter);
+            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
+            Vector2D interSection = tmp.intersection(fixedLine);
+            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
+            {
+                Position pos;
+                pos.loc = interSection;
+                pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
+                if( !wm->kn->isOccupied(tAttackerRight->getID(), pos.loc) )
+                {
+                    leftPos = pos;
+                    opps.removeOne(indexOfOpp);
+                    break;
+                }
+            }
+        }
+        tAttackerRight->setIdlePosition(leftPos);
+    }
 }
 
 void PlayKickoffOpp::execute()

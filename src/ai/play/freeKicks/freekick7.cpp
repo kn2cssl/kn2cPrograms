@@ -35,10 +35,41 @@ int freeKick7::enterCondition(Level level)
 void freeKick7::setPositions(QList<int> our)
 {
     Position leftDefPos,rightDefPos,goaliePos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),goaliePos,leftDefPos,rightDefPos);
+    int leftID = -1, rightID = -1 , midID = -1;
+
+    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+        leftID = tDefenderLeft->getID();
+
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+        rightID = tDefenderRight->getID();
+
+    if( leftChecker > 100 || leftID == -1 )
+        midID = rightID;
+
+    if( rightChecker > 100  || rightID == -1)
+        midID = leftID;
+
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+
+    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
-    tGolie->setIdlePosition(goaliePos);
+
+    if( leftID != -1)
+    {
+        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+            leftChecker++;
+        else
+            leftChecker = 0;
+    }
+
+    if( rightID != -1)
+    {
+        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+            rightChecker++;
+        else
+            rightChecker = 0;
+    }
 
     Position pos;
 
@@ -155,11 +186,17 @@ void freeKick7::initRolesB(int AttackerLeft, int DefenderLeft)
     tDefenderLeft->setID(AttackerLeft);
 }
 
+void freeKick7::resetValues()
+{
+    this->rolesIsInit = false;
+    this->state = 0;
+}
+
 void freeKick7::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-    if(!rolesIsInit)
+//    if(!rolesIsInit)
         initRole();
 
     if( state == 2)
@@ -173,7 +210,6 @@ void freeKick7::execute()
     int recieverID;
 
     tAttackerMid->isKicker(Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY));
-    tAttackerMid->waitTimerStart(true);
 
     if(state > 1)
     {

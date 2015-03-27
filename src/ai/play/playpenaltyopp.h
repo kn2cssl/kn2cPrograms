@@ -17,7 +17,6 @@ private:
     void setPositions();
 
 private:
-    TacticDefender* tDefenderMid;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticGoalie* tGoalie;

@@ -201,6 +201,52 @@
            <string>Show Goal Chances</string>
           </property>
          </widget>
+         <widget class="QCheckBox" name="showDebugs">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>280</y>
+            <width>231</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Debug Points</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_42">
+          <property name="geometry">
+           <rect>
+            <x>260</x>
+            <y>276</y>
+            <width>111</width>
+            <height>40</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Output Type :</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="debug_output_type">
+          <property name="geometry">
+           <rect>
+            <x>380</x>
+            <y>287</y>
+            <width>79</width>
+            <height>23</height>
+           </rect>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_4">
          <attribute name="title">
@@ -849,7 +895,7 @@
            <rect>
             <x>10</x>
             <y>20</y>
-            <width>131</width>
+            <width>281</width>
             <height>41</height>
            </rect>
           </property>
@@ -859,10 +905,10 @@
            </font>
           </property>
           <property name="text">
-           <string>Team Level :</string>
+           <string>Team Level on FreeKicks :</string>
           </property>
          </widget>
-         <widget class="QCheckBox" name="oppIsBeginner">
+         <widget class="QCheckBox" name="oppFKIsBeginner">
           <property name="geometry">
            <rect>
             <x>90</x>
@@ -875,7 +921,7 @@
            <string>Beginner</string>
           </property>
          </widget>
-         <widget class="QCheckBox" name="oppIsProfessional">
+         <widget class="QCheckBox" name="oppFKIsProfessional">
           <property name="geometry">
            <rect>
             <x>90</x>
@@ -888,7 +934,7 @@
            <string>Professional</string>
           </property>
          </widget>
-         <widget class="QCheckBox" name="oppIsAmatuer">
+         <widget class="QCheckBox" name="oppFKIsAmatuer">
           <property name="geometry">
            <rect>
             <x>90</x>
@@ -899,6 +945,42 @@
           </property>
           <property name="text">
            <string>Amatuer</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_41">
+          <property name="geometry">
+           <rect>
+            <x>13</x>
+            <y>160</y>
+            <width>251</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Team Velocity :</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="opp_vel_lineedit">
+          <property name="geometry">
+           <rect>
+            <x>170</x>
+            <y>170</y>
+            <width>71</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>2</string>
           </property>
          </widget>
         </widget>

@@ -17,7 +17,6 @@ private:
 
 private:
     TacticPenaltyKicker* penaltyKicker;
-    TacticDefender* tDefenderMid;
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
     TacticGoalie* tGoalie;
