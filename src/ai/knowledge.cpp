@@ -368,13 +368,13 @@ bool Knowledge::agentIsFree(int index)
     return isFree;
 }
 
-bool Knowledge::isOccupied(Vector2D input)
+bool Knowledge::isOccupied(int id, Vector2D input)
 {
     for(int i = 0;i<PLAYERS_MAX_NUM;i++)
     {
         if(_wm->ourRobot[i].isValid)
         {
-            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100 && ( id != i) )
             {
                 return true;
             }
@@ -749,4 +749,3 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
     return KickPos;
 }
-

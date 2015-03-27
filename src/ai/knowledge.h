@@ -48,7 +48,7 @@ public:
     bool ReachedToPos(Vector2D current, Vector2D desired, double distThreshold);
 
     bool agentIsFree(int index);
-    bool isOccupied(Vector2D input);
+    bool isOccupied(int id, Vector2D input);
 
 
 
