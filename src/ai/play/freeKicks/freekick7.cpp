@@ -17,12 +17,6 @@ int freeKick7::enterCondition(Level level)
                                , Vector2D(Field::MaxX,Field::MinY)))
             && (wm->kn->CountActiveAgents() == 6)  )
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-            state = 0;
-        }
-
         if( level == this->oppLevel)
             return 600;
         else
@@ -79,7 +73,7 @@ void freeKick7::setPositions(QList<int> our)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
             case AgentRole::AttackerLeft:
-                pos.loc = Vector2D(sign(wm->ball.pos.loc.x)*0.66*Field::MaxX ,sign(wm->ball.pos.loc.y)*200);
+                pos.loc = Vector2D(sign(wm->ball.pos.loc.x)*0.6*Field::MaxX ,sign(wm->ball.pos.loc.y)*200);
                 pos.dir = 0;
                 tAttackerLeft->setIdlePosition(pos);
                 break;
@@ -157,7 +151,7 @@ void freeKick7::setPositions(QList<int> our)
 bool freeKick7::zeroCheckAttackersDistance()
 {
     if( (wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc
-                              , Vector2D(sign(wm->ball.pos.loc.x)*0.66*Field::MaxX ,sign(wm->ball.pos.loc.y)*200),50))
+                              , Vector2D(sign(wm->ball.pos.loc.x)*0.6*Field::MaxX ,sign(wm->ball.pos.loc.y)*200),50))
             &&
             ( wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc
                                    , Vector2D(0.6*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY),1000)))

@@ -5,6 +5,8 @@ freeKick6::freeKick6(WorldModel *wm, QObject *parent) :
 {
     this->freeKickRegion = fkRegion::LeftRegion;
     this->oppLevel = Level::Amatuer;
+    rolesIsInit = false;
+    state = 0;
 }
 
 int freeKick6::enterCondition(Level level)
@@ -16,12 +18,6 @@ int freeKick6::enterCondition(Level level)
                                  , Vector2D(0.33*Field::MinX,Field::MinY))
             )
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-            state = 0;
-        }
-
         if( level == this->oppLevel)
             return 600;
         else
@@ -113,7 +109,7 @@ void freeKick6::setPositions()
     {
         switch (wm->ourRobot[ourPlayers.at(i)].Role) {
         case AgentRole::DefenderLeft:
-            if( state == 1)
+            if( state != 0)
             {
                 Vector2D first,second,final;
                 Line2D t2t(wm->ball.pos.loc, Field::oppGoalCenter);

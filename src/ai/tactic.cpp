@@ -74,6 +74,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     double BallDir = wm->ball.vel.loc.dir().radian();                      //ball moving direction
     Vector2D BallLoc = wm->ball.pos.loc;
     double BallHS = .4;                                                     //ball speed limit for stoping it
+
     double DAngel = AngleDeg ::deg2rad(80);                                 //Deviation angel witch when it is passed ,ball shuold be stoped
     Position RobotPos = wm->ourRobot[ID].pos;
     if(timer_reset==false)
@@ -109,9 +110,8 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         //this stage has not been developed
         //        {
         //        }
-        //possession point >>navigation : ON
-        TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*3);
 
+        TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*3);
         OP.pos.dir = TargetDir.dir().radian();
         OP.pos.loc = BallPredict - TargetDir;
 
@@ -131,7 +131,6 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
             startProbability = RESET;//reset
             ballDisplacement = {0,0} ;//reset
         }
-
     }
     ///////////////////////////////////////////////
 
@@ -227,7 +226,6 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
                 timer_reset=false ;
                 shoot_sensor = false ;
                 qDebug()<<"NONSensorShoot";
-
 
         }
     }
