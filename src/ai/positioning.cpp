@@ -287,6 +287,15 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
                 numberOfPoints++;
         }
 
+        numberOfPoints = 0;
+        while( numberOfPoints < candiates.size() )
+        {
+            if( wm->kn->IsInsideSecureArea(candiates.at(numberOfPoints), wm->ball.pos.loc) )
+                candiates.removeAt(numberOfPoints);
+            else
+                numberOfPoints++;
+        }
+
         if( candiates.size() < ours.size() && !static_points.isEmpty() )
             opp_pos.push_back(static_points.takeFirst());
         else
