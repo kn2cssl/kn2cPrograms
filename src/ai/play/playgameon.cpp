@@ -100,7 +100,7 @@ void PlayGameOn::pressing(int ballOwner)
 
 int PlayGameOn::findBallOwner()
 {
-    int ownerIndex;
+    int ownerIndex = -1;
     QList<int> candidates , ours = wm->kn->ActiveAgents();
     QList<double> distance2Prediction;
 
@@ -464,6 +464,8 @@ bool PlayGameOn::isDefender(int index)
 
 void PlayGameOn::execute()
 {
+    wm->passPoints.clear();
+
     QList<int> activeAgents = wm->kn->ActiveAgents();
 
     initRole();

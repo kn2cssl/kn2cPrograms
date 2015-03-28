@@ -40,6 +40,7 @@ private:
     Position idlePosition;
     bool pastMidPoint; // FreeKick
 
+    double maxDistance;
 protected:
     bool canKick;
 };

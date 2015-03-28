@@ -393,6 +393,8 @@ void MainWindow::timer_timeout()
 
     sc->wm->showDebug = ui->showDebugs->isChecked();
     sc->wm->debug_type = ui->debug_output_type->currentText().toInt();
+
+    sc->wm->showPasses = ui->showPass->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

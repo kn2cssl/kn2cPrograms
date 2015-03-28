@@ -29,7 +29,7 @@ public:
 private:
     Soccer* _sc;
     QBrush *brush_field ,*brush_goals, *brush_ball, *brush_yrobot,*brush_brobot,*brush_test,
-    *brush_astarNode, *brush_astarResult ,*brush_marking ,*brush_debug;
+    *brush_astarNode, *brush_astarResult ,*brush_marking ,*brush_debug , *brush_pass;
     QTimer _timer;
     FPSCounter _fps;
 

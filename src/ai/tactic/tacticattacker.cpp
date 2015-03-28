@@ -5,6 +5,7 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticAttacker", worldmodel, parent)
 {
     everyOneInTheirPos = false;
+    maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -196,7 +197,27 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
     rc.maxSpeed = 0.5;
 
     Vector2D target = receiverPos;
-    Vector2D goal(target.x,target.y);
+
+    Line2D b2g(target,Field::oppGoalCenter);
+    Circle2D cir(target,300);
+    Vector2D goal,first,second;
+    int numOfPoints = cir.intersection(b2g,&first,&second);
+    if( numOfPoints == 2)
+    {
+        if( first.x > target.x )
+            goal = first;
+        else if( second.x > target.x )
+            goal = second;
+        else
+            goal = target;
+    }
+    else if( numOfPoints == 1)
+        goal = first;
+    else
+        goal = target;
+
+    wm->passPoints.clear();
+    wm->passPoints.push_back(goal);
 
     OperatingPosition kickPoint = BallControl(goal,100,this->id,rc.maxSpeed);
 
@@ -301,8 +322,8 @@ RobotCommand TacticAttacker::ChipTheBallIndirect()
 
     if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        rc.kickspeedz = 3;// detectKickSpeed(goal);
-        rc.kickspeedx = 3;
+        rc.kickspeedz = 2;// detectKickSpeed(goal);
+        rc.kickspeedx = 2;
         qDebug()<<"Chip...";
     }
 
@@ -311,10 +332,9 @@ RobotCommand TacticAttacker::ChipTheBallIndirect()
 
 int TacticAttacker::findBestPlayerForPass()
 {
-    int index = -1;
-    double min = 10000;
-
     QList<int> ourAgents = wm->kn->findAttackers();
+    ourAgents.removeOne(this->id);
+
     QList<int> freeAgents , busyAgents;
 
     while( !ourAgents.isEmpty() )
@@ -326,37 +346,31 @@ int TacticAttacker::findBestPlayerForPass()
             busyAgents.append(index);
     }
 
-    while ( !freeAgents.isEmpty() )
+    QList<double> weights;
+    for(int i=0;i<freeAgents.size();i++)
     {
-        int i = freeAgents.takeFirst();
-        if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
+        double weight = -1000000;
+        if( wm->ourRobot[freeAgents.at(i)].isValid )
         {
-            if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
-            {
-                min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
-                index = i;
-            }
+            double dist = 1 - ((wm->ball.pos.loc - wm->ourRobot[freeAgents.at(i)].pos.loc).length()/maxDistance);
+            double prob = wm->kn->scoringChance(wm->ourRobot[freeAgents.at(i)].pos.loc) / 100;
+            weight = (20 * prob) + (10*dist);
+        }
+        weights.append(weight);
+    }
+
+    int index = -1;
+    double max = -10000;
+    for(int i=0;i<weights.size();i++)
+    {
+        if( max < weights.at(i) )
+        {
+            max = weights.at(i);
+            index = freeAgents.at(i);
         }
     }
-//    if( index == -1 )
-//    {
-//        while ( !busyAgents.isEmpty() )
-//        {
-//            int i = busyAgents.takeFirst();
-//            if(wm->ourRobot[i].isValid && this->id != i && i != wm->ref_goalie_our)
-//            {
-//                if(wm->ball.pos.loc.dist(wm->ourRobot[i].pos.loc) < min)
-//                {
-//                    min = wm->ourRobot[id].pos.loc.dist(wm->ourRobot[i].pos.loc);
-//                    index = i;
-//                }
-//            }
-//        }
 
-//        return index;
-//    }
-//    else
-        return index;
+    return index;
 }
 
 void TacticAttacker::isKicker()
@@ -428,7 +442,6 @@ void TacticAttacker::youHavePermissionForKick()
 bool TacticAttacker::isFree(int index)
 {
     QList<int> oppAgents = wm->kn->ActiveOppAgents();
-    bool isFree = true;
 
     while( !oppAgents.isEmpty() )
     {
@@ -436,11 +449,8 @@ bool TacticAttacker::isFree(int index)
         if( (wm->ourRobot[index].pos.loc-wm->oppRobot[indexOPP].pos.loc).length() < DangerDist &&
                 fabs((wm->ourRobot[index].vel.loc - wm->oppRobot[indexOPP].vel.loc).length())<0.3 )
         {
-            isFree = false;
+            return false;
         }
-
-        if(!isFree)
-            break;
     }
-    return isFree;
+    return true;
 }

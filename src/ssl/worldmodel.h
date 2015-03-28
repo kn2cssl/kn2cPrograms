@@ -71,6 +71,9 @@ public:
     QList<Vector2D> debug_pos;
     int debug_type;
 
+    bool showPasses;
+    QList<Vector2D> passPoints;
+
     //---UDP 2 Matlab
     bool sendUDP;
     int indexOfUDP;

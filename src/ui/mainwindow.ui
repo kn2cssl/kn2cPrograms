@@ -247,6 +247,24 @@
            </rect>
           </property>
          </widget>
+         <widget class="QCheckBox" name="showPass">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>336</y>
+            <width>211</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Pass Points</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_4">
          <attribute name="title">

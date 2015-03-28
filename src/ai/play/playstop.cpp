@@ -269,6 +269,8 @@ void PlayStop::setPositions()
 
 void PlayStop::execute()
 {
+    wm->passPoints.clear();
+
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
     for(int i=0;i<activeAgents.size();i++)

@@ -14,6 +14,7 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
     brush_goals = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
     brush_debug = new QBrush(QColor::fromRgb(255,0,0),Qt::SolidPattern);
+    brush_pass = new QBrush(QColor::fromRgb(125,125,0),Qt::SolidPattern);
     _timer.start(40);
     connect(&_timer,SIGNAL(timeout()), this, SLOT(refresh()));
 }
@@ -162,6 +163,7 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.drawEllipse(QPoint(point.x/WORLD_SCALE,-point.y/WORLD_SCALE),NODE,NODE);
         }
     }
+
     //Draw Marking
     if( _sc->wm->showMarking )
     {
@@ -177,6 +179,7 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.drawLine(our,opp);
         }
     }
+
     //Drawing Voronoi
     if(_sc->wm->showVoronoi)
     {
@@ -188,6 +191,20 @@ void RenderArea::paintEvent(QPaintEvent *)
             painter.setBrush(*brush_astarResult);
             painter.drawLine(first,second);
         }
+    }
+
+    //Draw Pass Points
+    if(_sc->wm->showPasses && (_sc->wm->passPoints.size() > 0) )
+    {
+        QPoint passTarget(_sc->wm->passPoints.at(0).x/WORLD_SCALE, -_sc->wm->passPoints.at(0).y/WORLD_SCALE);
+        QPoint ball(_sc->wm->ball.pos.loc.x/WORLD_SCALE, -_sc->wm->ball.pos.loc.y/WORLD_SCALE);
+        painter.setPen(QColor::fromRgb(125,125,0));
+        painter.setBrush(*brush_pass);
+        painter.drawLine(passTarget,ball);
+
+        painter.setPen(QColor::fromRgb(125,125,0));
+        painter.setBrush(*brush_pass);
+        painter.drawEllipse(passTarget,BALL_R,BALL_R);
     }
 
     //Drawing debug points
