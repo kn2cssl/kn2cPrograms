@@ -13,12 +13,14 @@ Controller::Controller(QObject *parent) :
 
     timer.start();
 
+
     err0 = {0,0};
     err1 = {0,0};
     u1 = {0,0};
     derived0 = {0,0};
     derived1 = {0,0};
     integral = {0,0};
+    last_setpoint = {0,0};
 
     wu1 = 0;
     wu1_last = 0;
@@ -57,6 +59,18 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     /******************************Linear Speed Controller************************************/
     err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
 
+
+    ///!
+//    if((ci.mid_pos.loc - last_setpoint ).length() > 30)
+//    {
+////            qDebug() <<"L"<<err1.length()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length();
+////             qDebug() <<"D"<<err1.dir().radian()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).dir().radian();
+////        err1 = err1 + (ci.mid_pos.loc - last_setpoint ) *0.009;
+//        err1.setLength((err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length());
+//    }
+//    last_setpoint = ci.mid_pos.loc;
+    //!!
+
     double kp;
     double ki;
     double kd;
@@ -64,15 +78,18 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     float err = err1.length();
 
 
+
+
     if(err > 1.5)
     {
         kp = fabs(err1.length());
-        //ki = 1;
+        ki = 1;
         kd = .01;
         //integral = integral + err1*AI_TIMER/1000.0 ;
     }
     else /*if(err > .04)*/
     {
+        integral.scale(0);
         if(ci.fin_pos.loc == ci.mid_pos.loc)
         {
             kp = fabs(err1.length())+2.9;
@@ -96,7 +113,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         LinearSpeed.setLength(ci.maxSpeed);
     }
 
-    out << err1.y <<" "<< LinearSpeed.x <<" "<< LinearSpeed.y << endl;
     Vector2D RotLinearSpeed=LinearSpeed;
     LinearSpeed_past = LinearSpeed ;
     /*************************************Rotation ctrl**********************/
@@ -110,18 +126,18 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     double werr = fabs(werr1);
 
 
-    wki=.003*fabs(werr0);
+    wki=0.003*fabs(werr0);
     wintegral = wintegral + werr1*AI_TIMER;
 
-    wkp=0;
+    wkp=0.3;
     wkd=0;
-    if(werr<.3)
+    if(werr<.3 + 10*fabs(ci.cur_vel.dir))
     {
          wintegral=0;
         //wintegral = wintegral - 3*werr1*AI_TIMER;
 
         wkp=0.4;
-        wkd=0.004;
+        wkd=0.003;
     }
 
 

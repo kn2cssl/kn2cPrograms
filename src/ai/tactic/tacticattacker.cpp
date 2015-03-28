@@ -206,7 +206,7 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
     if(  kickPoint.readyToShoot && everyOneInTheirPos)
     {
-        rc.kickspeedx = 150;//kickPoint.kickSpeed;
+        rc.kickspeedx = kickPoint.kickSpeed;
 //        Line2D ball2Target(wm->ball.pos.loc,goal);
 
 //        QList<int> activeOpp = wm->kn->ActiveOppAgents();

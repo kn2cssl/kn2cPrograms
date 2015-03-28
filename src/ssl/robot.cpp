@@ -42,7 +42,6 @@ void Robot::seenAt(vector<Position> p, double t, int c)
              pos = ans.pos;
              vel_calc();
              isValid = true ;
-
              camera_mem = camera ;
              camera_timeout = 0;
          }
@@ -54,9 +53,7 @@ void Robot::seenAt(vector<Position> p, double t, int c)
      }
      else
      {
-         camera_mem = 2;
+         camera_timeout++;
          if(camera_timeout >8) camera_mem = 2;
      }
-
 }
-
