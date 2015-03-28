@@ -365,7 +365,19 @@ void MainWindow::timer_timeout()
     if( ui->oppFKIsProfessional->isChecked() )
         sc->wm->oppLevel_fk = Level::Profesional;
 
-    sc->wm->opp_vel = ui->opp_vel_lineedit->text().toDouble();
+    sc->wm->select_fk[0] = ui->fk0_checkBox->isChecked();
+    sc->wm->select_fk[1] = ui->fk1_checkBox->isChecked();
+    sc->wm->select_fk[2] = ui->fk2_checkBox->isChecked();
+    sc->wm->select_fk[3] = ui->fk3_checkBox->isChecked();
+    sc->wm->select_fk[4] = ui->fk4_checkBox->isChecked();
+    sc->wm->select_fk[5] = ui->fk5_checkBox->isChecked();
+    sc->wm->select_fk[6] = ui->fk6_checkBox->isChecked();
+    sc->wm->select_fk[7] = ui->fk7_checkBox->isChecked();
+    sc->wm->select_fk[8] = ui->fk8_checkBox->isChecked();
+    sc->wm->select_fk[9] = ui->fk9_checkBox->isChecked();
+    sc->wm->select_fk[10] = ui->fk10_checkBox->isChecked();
+    sc->wm->select_fk[11] = ui->fk11_checkBox->isChecked();
+    sc->wm->select_fk[12] = ui->fk47_checkBox->isChecked();
 
     //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
