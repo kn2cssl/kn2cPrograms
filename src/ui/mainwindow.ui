@@ -913,7 +913,7 @@
            <rect>
             <x>360</x>
             <y>70</y>
-            <width>81</width>
+            <width>131</width>
             <height>21</height>
            </rect>
           </property>
@@ -926,7 +926,7 @@
            <rect>
             <x>360</x>
             <y>130</y>
-            <width>101</width>
+            <width>131</width>
             <height>21</height>
            </rect>
           </property>
@@ -939,7 +939,7 @@
            <rect>
             <x>360</x>
             <y>100</y>
-            <width>85</width>
+            <width>121</width>
             <height>21</height>
            </rect>
           </property>
@@ -1163,7 +1163,7 @@
          </widget>
          <widget class="QCheckBox" name="fk10_checkBox">
           <property name="enabled">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="geometry">
            <rect>
@@ -1175,6 +1175,9 @@
           </property>
           <property name="text">
            <string>FreeKick10</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk11_checkBox">

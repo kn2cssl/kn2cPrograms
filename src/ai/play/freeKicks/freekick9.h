@@ -15,6 +15,7 @@ public:
 
 private:
     void setPositions(QList<int> our);
+    bool state0_checkDist();
     int state;
     Vector2D defaultPos;
 };
