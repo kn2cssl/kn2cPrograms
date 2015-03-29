@@ -133,8 +133,7 @@ void freeKick10::setPositions(QList<int> our)
         else if(state == 3)
         {
             switch (wm->ourRobot[our.at(i)].Role) {
-            case AgentRole::AttackerLeft:
-                tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX*0.25,sign(wm->ball.pos.loc.y)*0.7*Field::MaxY));
+            case AgentRole::AttackerLeft:tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX*0.25,sign(wm->ball.pos.loc.y)*0.7*Field::MaxY));
                 break;
             case AgentRole::AttackerRight:
                 tAttackerRight->setIdlePosition(Vector2D(Field::MaxX*0.25,-sign(wm->ball.pos.loc.y)*0.7*Field::MaxY));
@@ -183,8 +182,8 @@ void freeKick10::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-//    if(!rolesIsInit)
-        initRole();
+    //    if(!rolesIsInit)
+    initRole();
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
@@ -199,11 +198,11 @@ void freeKick10::execute()
     if( state == 2)
         counter++;
 
-//    wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::RecievingPass;
-//    activeAgents.removeOne(tAttackerLeft->getID());
+    //    wm->ourRobot[tAttackerLeft->getID()].Status = AgentStatus::RecievingPass;
+    //    activeAgents.removeOne(tAttackerLeft->getID());
 
-//    wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::RecievingPass;
-//    activeAgents.removeOne(tAttackerRight->getID());
+    //    wm->ourRobot[tAttackerRight->getID()].Status = AgentStatus::RecievingPass;
+    //    activeAgents.removeOne(tAttackerRight->getID());
 
     while(activeAgents.size() > 0)
     {

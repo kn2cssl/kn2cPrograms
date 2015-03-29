@@ -84,9 +84,9 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
 
     for(int i=0; i<obs.size(); i++)
     {
-        //Circle2D obs_circle=obs.at(i);
+        Circle2D obs_circle=obs.at(i);
         int    p_count = 6;
-        double p_dist  = 2*ROBOT_RADIUS+BALL_RADIUS; //obs_circle.radius();
+        double p_dist  = obs_circle.radius();//2*ROBOT_RADIUS+BALL_RADIUS; //
 
         for(int j=0; j<p_count; j++)
         {

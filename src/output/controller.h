@@ -30,6 +30,7 @@ private:
     Vector2D u1;
     Vector2D derived0,derived1;
     Vector2D integral;
+    Vector2D last_setpoint ;
     //kamin
     Vector2D LinearSpeed;
     Vector2D LinearSpeed_past;

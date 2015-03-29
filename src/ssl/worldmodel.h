@@ -46,8 +46,7 @@ public:
 
     //----Input Data----------
     Level oppLevel_fk;
-    double opp_vel;
-    bool select_fk[NUMBEROFFREEKICKS];
+    double opp_vel;bool select_fk[NUMBEROFFREEKICKS];
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;

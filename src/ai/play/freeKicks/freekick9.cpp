@@ -88,7 +88,6 @@ void freeKick9::setPositions(QList<int> our)
             default:
                 break;
             }
-
             if( state0_checkDist() )
                 state = 1;
         }
@@ -104,7 +103,6 @@ void freeKick9::setPositions(QList<int> our)
                 pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
                 tAttackerLeft->setIdlePosition(pos);
                 break;
-            case AgentRole::AttackerRight:
                 pos.loc = Vector2D(Field::MaxX -1600 ,-sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
                 pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);

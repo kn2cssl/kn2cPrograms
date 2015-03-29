@@ -18,6 +18,7 @@ struct OperatingPosition
 {
     Position pos;
     bool useNav;
+    bool ballIsObstacle;
     bool readyToShoot;
     float kickSpeed;
     OperatingPosition()

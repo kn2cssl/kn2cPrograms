@@ -365,6 +365,8 @@ void MainWindow::timer_timeout()
     if( ui->oppFKIsProfessional->isChecked() )
         sc->wm->oppLevel_fk = Level::Profesional;
 
+    sc->wm->opp_vel = ui->opp_vel_lineedit->text().toDouble();
+
     sc->wm->select_fk[0] = ui->fk0_checkBox->isChecked();
     sc->wm->select_fk[1] = ui->fk1_checkBox->isChecked();
     sc->wm->select_fk[2] = ui->fk2_checkBox->isChecked();

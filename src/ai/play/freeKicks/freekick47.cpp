@@ -200,7 +200,7 @@ void freeKick47::setPositions(QList<int> our)
                 if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc
                                          ,Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY)
                                          , 400))
-                        state = 5;
+                    state = 5;
                 break;
             case AgentRole::AttackerMid:
                 tAttackerMid->setIdlePosition(Vector2D(wm->ball.pos.loc.x-200,wm->ball.pos.loc.y));
@@ -251,11 +251,11 @@ void freeKick47::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-//    if(!rolesIsInit)
-        initRole();
+    //    if(!rolesIsInit)
+    initRole();
 
-        if( state  > 3)
-            initRolesB(AttackerRight,DefenderLeft);
+    if( state  > 3)
+        initRolesB(AttackerRight,DefenderLeft);
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
