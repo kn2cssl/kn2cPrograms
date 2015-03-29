@@ -153,9 +153,9 @@ void PlayStop::setPositions()
 
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
-        tStopLeft->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalPost_L.y+200));
-        tStopRight->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalPost_R.y-200));
-        tStopMid->setStopPosition(Vector2D(Field::MinX/2,Field::ourGoalCenter.y));
+        tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
+        tStopRight->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
+        tStopMid->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
     }
     else if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
     {

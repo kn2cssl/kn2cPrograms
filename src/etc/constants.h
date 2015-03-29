@@ -12,7 +12,7 @@
 
 #define NUMOFDEFENDERS 2
 
-#define DangerDist 500
+#define DangerDist 300
 
 #define our_speed 2
 
@@ -55,7 +55,7 @@ const Line2D bottomLine(Vector2D(MinX, MinY), Vector2D(MaxX, MinY));
 const double centerCircle_R = 500;
 const double goalCircle_R = 1000;
 const double goalCircleEX_R = 600 + 3*ROBOT_RADIUS + 20;
-const double goalCircleDEF_R = goalCircleEX_R + 400;
+const double goalCircleDEF_R = goalCircle_R + centerCircle_R/2 + 200;
 
 // Ours.
 const Vector2D ourGoalCenter(MinX, 0);

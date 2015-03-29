@@ -53,10 +53,10 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     }
     else if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && (!wm->cmgs.canKickBall()) )
     {
-        right.loc.x = Field::ourGoalCenter.x + 800;
+        right.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
         right.loc.y = Field::ourGoalCenter.y - 350;
 
-        left.loc.x = Field::ourGoalCenter.x + 800;
+        left.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
         left.loc.y = Field::ourGoalCenter.y + 350;
     }
     else
@@ -253,7 +253,7 @@ void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Ve
         if(p.dir < -M_PI/2 || p.dir > M_PI/2)
         {
             // --------  Defining New Deffence Center ---------------
-            double Deffence_Rad=1100;
+            double Deffence_Rad=Field::goalCircleDEF_R;
             Vector2D P2GC=(Field::ourGoalCenter-p.loc);
             double Dist_Ball_2_Goal=P2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
             double New_Dist_2_Deffence;
@@ -451,7 +451,7 @@ void Play::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int Mid_ID, 
     if(p.dir < -M_PI/2 || p.dir > M_PI/2)
     {
 
-        double Deffence_Rad=1100;
+        double Deffence_Rad=Field::goalCircleDEF_R;
         Vector2D P2GC=(Field::ourGoalCenter-p.loc);
         double Dist_Ball_2_Goal=P2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
         double New_Dist_2_Deffence;
@@ -521,7 +521,7 @@ void Play::Ref_1Deff_Moving_Ball(int Left_ID,int Right_ID,int Mid_ID)
         {
             Goalie_loc = intersect_Point ;
             // --------  Defining New Deffence Center ---------------
-            double Deffence_Rad=1100;
+            double Deffence_Rad=Field::goalCircleDEF_R;
             Vector2D B2GC=(Field::ourGoalCenter-wm->ball.pos.loc);
             double Dist_Ball_2_Goal=B2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
             double New_Dist_2_Deffence;
@@ -553,7 +553,7 @@ void Play::Ref_2Deff_Loc(Vector2D loc) // ball2goal >> loc2goal
 {
     double Dist_2_Deffence_loc,Wall_length_Loc;
     Vector2D Deffence_center_loc,Wall_Loc;
-    double Deffence_Rad=1100;
+    double Deffence_Rad=Field::goalCircleDEF_R;
     Vector2D L2GC=(Field::ourGoalCenter-loc);
     double Dist_Loc_2_Goal=L2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
 
@@ -586,7 +586,7 @@ void Play::Ref_1Deff_Loc(Vector2D loc, int Left_ID, int Right_ID, int Mid_ID, Ve
 {
     double Dist_2_Deffence_loc,Wall_length_Loc;
     Vector2D Deffence_center_loc,Wall_Loc;
-    double Deffence_Rad=1100;
+    double Deffence_Rad=Field::goalCircleDEF_R;
     Vector2D L2GC=(Field::ourGoalCenter-loc);
     double Dist_Loc_2_Goal=L2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
 
@@ -676,7 +676,7 @@ bool Play::Ball_Toward_Goal()
 void Play::Deffence_Geometry_making()
 {
 
-    double Deffence_Rad=1100;
+    double Deffence_Rad = Field::goalCircleDEF_R;
     Vector2D B2GC=(Field::ourGoalCenter-wm->ball.pos.loc);
     double Dist_Ball_2_Goal=B2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
 
@@ -908,7 +908,7 @@ Vector2D Play::Find_Deff_center(Vector2D loc)
 {
     double Dist_2_Deffence_loc;
     Vector2D Deffence_center_loc;
-    double Deffence_Rad=1100;
+    double Deffence_Rad=Field::goalCircleDEF_R;
     Vector2D L2GC=(Field::ourGoalCenter-loc);
     double Dist_Loc_2_Goal=L2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
 

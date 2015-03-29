@@ -269,8 +269,7 @@ RobotCommand TacticDefender::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
 
-        if( wm->gs == STATE_Stop )
-            return rc;
+        return rc;
 
     }
 
