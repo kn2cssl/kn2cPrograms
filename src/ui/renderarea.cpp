@@ -12,7 +12,7 @@ RenderArea::RenderArea(Soccer* sc) :
     brush_astarNode = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);
     brush_astarResult = new QBrush(QColor::fromRgb(250,50,55),Qt::SolidPattern);
     brush_marking = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
-    brush_goals = new QBrush(QColor::fromRgb(0,0,0),Qt::SolidPattern);
+    brush_goals = new QBrush(QColor::fromRgb(255,255,255),Qt::SolidPattern);
     brush_debug = new QBrush(QColor::fromRgb(255,0,0),Qt::SolidPattern);
     brush_pass = new QBrush(QColor::fromRgb(125,125,0),Qt::SolidPattern);
     _timer.start(40);
@@ -49,6 +49,7 @@ void RenderArea::paintEvent(QPaintEvent *)
     QPoint our_right1(Field::ourGoalPost_R.x/WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
     QPoint our_right2( (Field::ourGoalPost_R.x - Field::GoalDeep) /WORLD_SCALE , -Field::ourGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
+    painter.setPen(QColor::fromRgb(255,255,255));
     painter.drawLine(our_left2,our_right2);
     painter.drawLine(our_left1,our_left2);
     painter.drawLine(our_right1,our_right2);
@@ -59,6 +60,7 @@ void RenderArea::paintEvent(QPaintEvent *)
     QPoint opp_right1(Field::oppGoalPost_R.x/WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
     QPoint opp_right2( (Field::oppGoalPost_R.x + Field::GoalDeep) /WORLD_SCALE , -Field::oppGoalPost_R.y/WORLD_SCALE);
     painter.setBrush(*brush_goals);
+    painter.setPen(QColor::fromRgb(255,255,255));
     painter.drawLine(opp_left2,opp_right2);
     painter.drawLine(opp_left1,opp_left2);
     painter.drawLine(opp_right1,opp_right2);

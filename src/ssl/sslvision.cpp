@@ -75,10 +75,10 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
         if (cid==0 || cid==1 || cid==2) return;
         break;
     case CAMERA_BOTH_L:
-        if (cid==3 || cid==2) return;
+        if (cid==3 || cid==0) return;
         break;
-    case CAMERA_BOTH_H:
-        if (cid==0 || cid==1) return;
+    case CAMERA_BOTH_R:
+        if (cid==2 || cid==1) return;
         break;
     case CAMERA_NONE:
     default:
@@ -100,7 +100,8 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
     {
         auto b = pck.balls(i);
         if(b.has_confidence() && b.has_x() && b.has_y())
-            if(b.confidence() > MIN_CONF && fabs(b.x()) < FIELD_MAX_X && fabs(b.y()) < FIELD_MAX_Y)
+            //if(b.confidence() > MIN_CONF && fabs(b.x()) < FIELD_MAX_X && fabs(b.y()) < FIELD_MAX_Y)
+            if(b.confidence() > MIN_CONF && (fabs(b.x()) < FIELD_MAX_X && fabs(b.x()) > 500) && fabs(b.y()) < FIELD_MAX_Y)
             {
                 Position tp;
                 tp.loc = Vector2D(b.x()*ourSide, b.y()*ourSide);
