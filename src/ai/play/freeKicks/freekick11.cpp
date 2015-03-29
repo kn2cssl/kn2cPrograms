@@ -10,11 +10,11 @@ freeKick11::freeKick11(WorldModel *wm, QObject *parent) :
 
 int freeKick11::enterCondition(Level level)
 {
-    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
-         ||
-         wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
-                              , Vector2D(Field::MaxX,Field::MinY)))
+    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+                             , Vector2D(Field::MaxX,0.82*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
+                                 , Vector2D(Field::MaxX,Field::MinY))
             && (wm->kn->CountActiveAgents() == 6) )
     {
         if( level == this->oppLevel)

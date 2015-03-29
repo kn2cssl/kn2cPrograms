@@ -10,10 +10,10 @@ freeKick1::freeKick1(WorldModel *worldmodel, QObject *parent) :
 
 int freeKick1::enterCondition(Level level)
 {
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                             , Vector2D(Field::MaxX,0.33*Field::MaxY))
+    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+                             , Vector2D(Field::MaxX,0.82*Field::MaxY))
             ||
-            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
                                  , Vector2D(Field::MaxX,Field::MinY)))
     {
         if( level == this->oppLevel)

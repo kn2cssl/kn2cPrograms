@@ -9,7 +9,10 @@ freeKick8::freeKick8(WorldModel *wm, QObject *parent) :
 
 int freeKick8::enterCondition(Level level)
 {
-    return 200;
+    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(Field::MinX,0.82*Field::MaxY), Vector2D(Field::MaxX, 0.82*Field::MinY)))
+        return 600;
+
+    return 300;
 }
 
 void freeKick8::setPositions()

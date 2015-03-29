@@ -10,11 +10,11 @@ freeKick9::freeKick9(WorldModel *wm, QObject *parent) :
 
 int freeKick9::enterCondition(Level level)
 {
-    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,Field::MaxY)
-                              , Vector2D(Field::MaxX,0.33*Field::MaxY))
-         ||
-         wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MaxX,0.33*Field::MinY)
-                              , Vector2D(Field::MaxX,Field::MinY)))
+    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+                             , Vector2D(Field::MaxX,0.82*Field::MaxY))
+            ||
+            wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
+                                 , Vector2D(Field::MaxX,Field::MinY))
             && (wm->kn->CountActiveAgents() == 6) )
     {
         if( level == this->oppLevel)
@@ -103,6 +103,7 @@ void freeKick9::setPositions(QList<int> our)
                 pos.dir = (Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
                 tAttackerLeft->setIdlePosition(pos);
                 break;
+            case AgentRole::AttackerRight:
                 pos.loc = Vector2D(Field::MaxX -1600 ,-sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
                 pos.dir = 0;
                 tAttackerRight->setIdlePosition(pos);
