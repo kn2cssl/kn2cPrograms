@@ -5,6 +5,8 @@ freeKick5::freeKick5(WorldModel *wm, QObject *parent) :
 {
     this->freeKickRegion = fkRegion::CenterRegion;
     this->oppLevel = Level::Amatuer;
+    state = 0;
+    rolesIsInit = false;
 }
 
 int freeKick5::enterCondition(Level level)
@@ -15,12 +17,6 @@ int freeKick5::enterCondition(Level level)
             wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.33*Field::MinX,0.33*Field::MinY)
                                          , Vector2D(0.33*Field::MaxX,Field::MinY)))
     {
-        if(wm->gs_last != wm->gs)
-        {
-            rolesIsInit = false;
-            state = 0;
-        }
-
         if( level == this->oppLevel)
             return 600;
         else

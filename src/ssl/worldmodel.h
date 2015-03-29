@@ -1,6 +1,7 @@
 #ifndef WORLDMODEL_H
 #define WORLDMODEL_H
 
+#define NUMBEROFFREEKICKS 13
 #include <QList>
 #include <QDebug>
 #include "constants.h"
@@ -46,6 +47,7 @@ public:
     //----Input Data----------
     Level oppLevel_fk;
     double opp_vel;
+    bool select_fk[NUMBEROFFREEKICKS];
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
@@ -68,6 +70,9 @@ public:
     bool showDebug;
     QList<Vector2D> debug_pos;
     int debug_type;
+
+    bool showPasses;
+    QList<Vector2D> passPoints;
 
     //---UDP 2 Matlab
     bool sendUDP;

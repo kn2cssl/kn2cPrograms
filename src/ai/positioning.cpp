@@ -102,7 +102,6 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
         wm->selected.append(p3);
 
         numberOfPoints = 0;
-
         while( numberOfPoints < candiates.size() )
         {
             if( criticalTri.contains(candiates.at(numberOfPoints)) )
@@ -110,6 +109,16 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
             else
                 numberOfPoints++;
         }
+
+        numberOfPoints = 0;
+        while( numberOfPoints < candiates.size() )
+        {
+            if( wm->kn->IsNearOurGoal(candiates.at(numberOfPoints)) )
+                candiates.removeAt(numberOfPoints);
+            else
+                numberOfPoints++;
+        }
+
 
         if( candiates.size() < ours.size() && !static_points.isEmpty() )
             opp_pos.push_back(static_points.takeFirst());
@@ -261,10 +270,27 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
         wm->selected.append(p3);
 
         numberOfPoints = 0;
-
         while( numberOfPoints < candiates.size() )
         {
             if( criticalTri.contains(candiates.at(numberOfPoints)) )
+                candiates.removeAt(numberOfPoints);
+            else
+                numberOfPoints++;
+        }
+
+        numberOfPoints = 0;
+        while( numberOfPoints < candiates.size() )
+        {
+            if( wm->kn->IsNearOurGoal(candiates.at(numberOfPoints)) )
+                candiates.removeAt(numberOfPoints);
+            else
+                numberOfPoints++;
+        }
+
+        numberOfPoints = 0;
+        while( numberOfPoints < candiates.size() )
+        {
+            if( wm->kn->IsInsideSecureArea(candiates.at(numberOfPoints), wm->ball.pos.loc) )
                 candiates.removeAt(numberOfPoints);
             else
                 numberOfPoints++;

@@ -28,8 +28,10 @@ public:
     bool IsInsideCircle(Vector2D pos,Vector2D center,double radios);
     bool IsInsideField(Vector2D pos);
     bool IsInsideOurField(Vector2D pos);
+    bool IsInsideOppField(Vector2D pos);
     bool IsInsideFarArea(Vector2D pos);
     bool IsInsideNearArea(Vector2D pos);
+    bool IsNearOurGoal(Vector2D pos);
 
     bool IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset);
     bool IsInsideGolieArea(Vector2D pos);
@@ -46,7 +48,7 @@ public:
     bool ReachedToPos(Vector2D current, Vector2D desired, double distThreshold);
 
     bool agentIsFree(int index);
-    bool isOccupied(Vector2D input);
+    bool isOccupied(int id, Vector2D input);
 
 
 

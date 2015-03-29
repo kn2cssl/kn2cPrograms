@@ -35,6 +35,7 @@ private:
     void coach();
     void setGameOnPos(int ourR,Vector2D loc);
     bool roleIsValid(AgentRole role);
+    bool isDefender(int index);
 };
 
 #endif // PLAYGAMEON_H

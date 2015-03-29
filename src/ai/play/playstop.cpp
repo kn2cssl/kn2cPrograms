@@ -254,7 +254,7 @@ void PlayStop::setPositions()
                         0.5*(wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+wm->ourRobot[tDefenderRight->getID()].pos.loc.y)
                         );
                 tStopLeft->setStopPosition(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
-                tStopMid->setStopPosition(finalPos);
+                tStopMid->setStopPosition(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
                 tStopRight->setStopPosition(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
             }
         }
@@ -269,6 +269,8 @@ void PlayStop::setPositions()
 
 void PlayStop::execute()
 {
+    wm->passPoints.clear();
+
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
     for(int i=0;i<activeAgents.size();i++)

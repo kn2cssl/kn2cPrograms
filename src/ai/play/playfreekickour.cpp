@@ -3,20 +3,6 @@ PlayFreeKickOur::PlayFreeKickOur(WorldModel *worldmodel, QObject *parent) :
     Play("PlayFreeKickOur", worldmodel, parent)
 {
     freeKickSelected = false;
-
-    fk.append(new freeKick1(wm));
-    fk.append(new freeKick2(wm));
-    fk.append(new freeKick3(wm));
-    fk.append(new freeKick4(wm));
-    fk.append(new freeKick5(wm));
-    fk.append(new freeKick6(wm));
-    fk.append(new freeKick7(wm));
-    fk.append(new freeKick8(wm));
-    fk.append(new freeKick9(wm));
-//    fk.append(new freeKick10(wm));
-    fk.append(new freeKick11(wm));
-    fk.append(new freeKick47(wm));
-    fk.append(new freeKickDirect(wm));
 }
 int PlayFreeKickOur::enterCondition()
 {
@@ -47,15 +33,51 @@ void PlayFreeKickOur::execute()
 {
     if( !freeKickSelected )
     {
-        for(int i=0;i<fk.size();i++)
-        {
-            freeKick_base* tmp = fk.at(i);
-            tmp->resetValues();
-        }
         QList<freeKick_base*> candidates;
 
         int max_i = 0;
         int max_p = 0;
+
+        fk.clear();
+
+        if( wm->select_fk[0] )
+            fk.append(new freeKickDirect(wm));
+
+        if( wm->select_fk[1] )
+            fk.append(new freeKick1(wm));
+
+        if( wm->select_fk[2] )
+            fk.append(new freeKick2(wm));
+
+        if( wm->select_fk[3] )
+            fk.append(new freeKick3(wm));
+
+        if( wm->select_fk[4] )
+            fk.append(new freeKick4(wm));
+
+        if( wm->select_fk[5] )
+            fk.append(new freeKick5(wm));
+
+        if( wm->select_fk[6] )
+            fk.append(new freeKick6(wm));
+
+        if( wm->select_fk[7] )
+            fk.append(new freeKick7(wm));
+
+        if( wm->select_fk[8] )
+            fk.append(new freeKick8(wm));
+
+        if( wm->select_fk[9] )
+            fk.append(new freeKick9(wm));
+
+        if( wm->select_fk[10] )
+            fk.append(new freeKick10(wm));
+
+        if( wm->select_fk[11] )
+            fk.append(new freeKick11(wm));
+
+        if( wm->select_fk[NUMBEROFFREEKICKS-1] )
+            fk.append(new freeKick47(wm));
 
         for(int i=0; i<fk.size(); i++)
         {

@@ -83,13 +83,12 @@ void PlayPenaltyOpp::initRole()
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-
         break;
     case 4:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
         break;
     case 5:
         wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;

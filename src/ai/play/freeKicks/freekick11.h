@@ -3,9 +3,6 @@
 
 #include "freekick_base.h"
 
-/*
- * freeKIck naghesss
- * */
 class freeKick11 : public freeKick_base
 {
     Q_OBJECT

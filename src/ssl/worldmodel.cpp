@@ -29,4 +29,7 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
         mark_coef[i] = 0;
 
     oppLevel_fk = Level::Beginner;
+
+    for(int i=0;i<NUMBEROFFREEKICKS;i++)
+        select_fk[i] = false;
 }

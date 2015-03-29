@@ -247,6 +247,24 @@
            </rect>
           </property>
          </widget>
+         <widget class="QCheckBox" name="showPass">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>336</y>
+            <width>211</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Pass Points</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_4">
          <attribute name="title">
@@ -888,12 +906,12 @@
         </widget>
         <widget class="QWidget" name="tab_5">
          <attribute name="title">
-          <string>Opposite Team</string>
+          <string>Input</string>
          </attribute>
          <widget class="QLabel" name="label_40">
           <property name="geometry">
            <rect>
-            <x>10</x>
+            <x>350</x>
             <y>20</y>
             <width>281</width>
             <height>41</height>
@@ -911,9 +929,9 @@
          <widget class="QCheckBox" name="oppFKIsBeginner">
           <property name="geometry">
            <rect>
-            <x>90</x>
-            <y>60</y>
-            <width>201</width>
+            <x>360</x>
+            <y>70</y>
+            <width>131</width>
             <height>21</height>
            </rect>
           </property>
@@ -924,9 +942,9 @@
          <widget class="QCheckBox" name="oppFKIsProfessional">
           <property name="geometry">
            <rect>
-            <x>90</x>
-            <y>120</y>
-            <width>141</width>
+            <x>360</x>
+            <y>130</y>
+            <width>131</width>
             <height>21</height>
            </rect>
           </property>
@@ -937,9 +955,9 @@
          <widget class="QCheckBox" name="oppFKIsAmatuer">
           <property name="geometry">
            <rect>
-            <x>90</x>
-            <y>90</y>
-            <width>85</width>
+            <x>360</x>
+            <y>100</y>
+            <width>121</width>
             <height>21</height>
            </rect>
           </property>
@@ -950,8 +968,8 @@
          <widget class="QLabel" name="label_41">
           <property name="geometry">
            <rect>
-            <x>13</x>
-            <y>160</y>
+            <x>363</x>
+            <y>190</y>
             <width>251</width>
             <height>41</height>
            </rect>
@@ -968,8 +986,8 @@
          <widget class="QLineEdit" name="opp_vel_lineedit">
           <property name="geometry">
            <rect>
-            <x>170</x>
-            <y>170</y>
+            <x>520</x>
+            <y>200</y>
             <width>71</width>
             <height>23</height>
            </rect>
@@ -981,6 +999,235 @@
           </property>
           <property name="text">
            <string>2</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_55">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>30</y>
+            <width>201</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Select FreeKicks : </string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk0_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>80</y>
+            <width>131</width>
+            <height>21</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Direct FreeKick</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk1_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>100</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick1</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk2_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>41</x>
+            <y>125</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick2</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk3_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>41</x>
+            <y>150</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick3</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk4_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>174</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick4</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk5_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>41</x>
+            <y>199</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick5</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk6_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>223</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick6</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk7_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>247</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick7</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk8_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>271</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick8</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk9_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>295</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick9</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk10_checkBox">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>319</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick10</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk11_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>343</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick11</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="fk47_checkBox">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>366</y>
+            <width>121</width>
+            <height>30</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>FreeKick47</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>

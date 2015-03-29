@@ -192,6 +192,11 @@ bool Knowledge::IsInsideOurField(Vector2D pos)
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0,Field::MinY));
 }
 
+bool Knowledge::IsInsideOppField(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(0,Field::MaxY), Vector2D(Field::MaxX,Field::MinY));
+}
+
 bool Knowledge::IsInsideGoalShape(Vector2D pos, double goalLeftX, double goalRadius, double goalCcOffset)
 {
     double x = pos.x - goalLeftX;
@@ -211,6 +216,11 @@ bool Knowledge::IsInsideNearArea(Vector2D pos)
     return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.6*Field::MinX,0.7*Field::MaxY))
             ||
             IsInsideRect(pos, Vector2D(Field::MinX,0.7*Field::MinY), Vector2D(0.6*Field::MinX,Field::MinY));
+}
+
+bool Knowledge::IsNearOurGoal(Vector2D pos)
+{
+    return IsInsideRect(pos, Vector2D(Field::MinX,Field::MaxY), Vector2D(0.25*Field::MinX,Field::MinY));
 }
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
@@ -358,13 +368,13 @@ bool Knowledge::agentIsFree(int index)
     return isFree;
 }
 
-bool Knowledge::isOccupied(Vector2D input)
+bool Knowledge::isOccupied(int id, Vector2D input)
 {
     for(int i = 0;i<PLAYERS_MAX_NUM;i++)
     {
         if(_wm->ourRobot[i].isValid)
         {
-            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100)
+            if( (_wm->ourRobot[i].pos.loc - input).length() < ROBOT_RADIUS+100 && ( id != i) )
             {
                 return true;
             }
@@ -739,4 +749,3 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
     return KickPos;
 }
-
