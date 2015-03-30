@@ -13,7 +13,7 @@ RobotCommand TacticStop::getCommand()
     rc.fin_pos.loc = position;
     rc.fin_pos.dir = (wm->ball.pos.loc - position).dir().radian();
 
-    rc.maxSpeed=1;
+    rc.maxSpeed = 1.5;
 
     rc.useNav=true;
     rc.isBallObs=true;

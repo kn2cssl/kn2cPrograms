@@ -159,25 +159,19 @@ void PlayStop::setPositions()
     }
     else if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
     {
-        Vector2D candidate60_1, candidate60_2, candidate30_1, candidate30_2, main60, main30;
-        Circle2D cir(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
-        Line2D sixty(Field::defenceLineLinear_L,AngleDeg(60));
-        cir.intersection(sixty,&candidate60_1,&candidate60_2);
-        if( wm->kn->IsInsideField(candidate60_1) )
-            main60 = candidate60_1;
-        else
-            main60 = candidate60_2;
+        Vector2D candidateL_1, candidateL_2, mainL;
 
-        Line2D thirty(Field::defenceLineLinear_L,AngleDeg(30));
-        cir.intersection(thirty,&candidate30_1,&candidate30_2);
-        if( wm->kn->IsInsideField(candidate30_1) )
-            main30 = candidate30_1;
+        Circle2D cir_l(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
+        Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(30));
+        cir_l.intersection(thirty_l,&candidateL_1,&candidateL_2);
+        if( wm->kn->IsInsideField(candidateL_1) && !wm->kn->IsInsideGolieArea(candidateL_1) )
+            mainL = candidateL_1;
         else
-            main30 = candidate30_2;
+            mainL = candidateL_2;
 
-        tStopLeft->setStopPosition(Vector2D(main30.x,-sign(wm->ball.pos.loc.y)*main30.y));
+        tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
         tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-        tStopRight->setStopPosition(Vector2D(main60.x,-sign(wm->ball.pos.loc.y)*main60.y));
+        tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
     }
     else
     {
