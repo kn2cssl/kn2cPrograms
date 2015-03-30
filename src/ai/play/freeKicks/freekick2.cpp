@@ -117,6 +117,7 @@ void freeKick2::execute()
     setPositions();
 
     tAttackerMid->isKicker();
+    tAttackerMid->setFreeKickType(kickType::FreeKick2);
 
     activeAgents.removeOne(tAttackerMid->getID());
     while(activeAgents.size() > 0)

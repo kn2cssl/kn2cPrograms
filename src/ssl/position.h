@@ -20,7 +20,7 @@ struct OperatingPosition
     bool useNav;
     bool ballIsObstacle;
     bool readyToShoot;
-    float kickSpeed;
+    bool shootSensor;
     OperatingPosition()
     {
         useNav=true;

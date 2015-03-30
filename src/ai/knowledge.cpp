@@ -402,7 +402,7 @@ QString Knowledge::gameStatus()
     QList<int> ourNearestPlayerToBall = findNearestTo(_wm->ball.pos.loc);
     QList<int> oppNearestPlayerToBall = findNearestOppositeTo(_wm->ball.pos.loc);
 
-    if( oppNearestPlayerToBall.size() != 0)
+    if( oppNearestPlayerToBall.size() != 0 && ourNearestPlayerToBall.size() > 0 )
     {
         if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
         {
@@ -736,15 +736,6 @@ OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target,
 
         }
         //##kick distance and angel limits
-    }
-
-    if(shoot_sensor)//shooting with sensor or without it
-    {
-        KickPos.kickSpeed=256;
-    }
-    else
-    {
-        KickPos.kickSpeed=255;
     }
 
     return KickPos;

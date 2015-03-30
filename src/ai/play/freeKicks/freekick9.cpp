@@ -10,11 +10,11 @@ freeKick9::freeKick9(WorldModel *wm, QObject *parent) :
 
 int freeKick9::enterCondition(Level level)
 {
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
                              , Vector2D(Field::MaxX,0.82*Field::MaxY))
             ||
             wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
-                                 , Vector2D(Field::MaxX,Field::MinY))
+                                 , Vector2D(Field::MaxX,Field::MinY)))
             && (wm->kn->CountActiveAgents() == 6) )
     {
         if( level == this->oppLevel)
@@ -204,6 +204,7 @@ void freeKick9::execute()
 
     defaultPos = Vector2D(0.2*Field::MaxX ,sign(wm->ball.pos.loc.y)*Field::oppGoalCC_L.y);
     tAttackerMid->isKicker(defaultPos);
+    tAttackerMid->setFreeKickType(kickType::FreeKick9);
 
     setPositions(activeAgents);
 

@@ -10,11 +10,11 @@ freeKick3::freeKick3(WorldModel *wm, QObject *parent) :
 
 int freeKick3::enterCondition(Level level)
 {
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+    if( (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
                              , Vector2D(Field::MaxX,0.82*Field::MaxY))
             ||
             wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
-                                 , Vector2D(Field::MaxX,Field::MinY))
+                                 , Vector2D(Field::MaxX,Field::MinY)))
             && (wm->kn->CountActiveAgents() == 6) )
     {
 
@@ -189,6 +189,7 @@ void freeKick3::execute()
         setTactics(activeAgents.at(i));
 
     tAttackerMid->isKicker(Vector2D(0.4*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.8)*Field::MaxY));
+    tAttackerMid->setFreeKickType(kickType::FreeKick3);
 
     setPositions(activeAgents);
 

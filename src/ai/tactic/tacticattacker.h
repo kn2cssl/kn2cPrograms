@@ -30,6 +30,8 @@ public:
 
     void youHavePermissionForKick();
 
+    void setFreeKickType(kickType type);
+
     bool everyOneInTheirPos;
 
 private:
@@ -39,7 +41,7 @@ private:
     bool findReciever;
     Position idlePosition;
     bool pastMidPoint; // FreeKick
-
+    kickType freeKickType;
     double maxDistance;
 protected:
     bool canKick;

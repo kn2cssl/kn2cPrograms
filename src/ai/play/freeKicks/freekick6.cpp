@@ -189,6 +189,7 @@ void freeKick6::execute()
 
     target = Field::oppGoalCenter;
     tAttackerMid->isChiper(target);
+    tAttackerMid->setFreeKickType(kickType::FreeKick6);
 
     if(state > 1)
     {

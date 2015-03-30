@@ -34,7 +34,7 @@ RobotCommand TacticDefender::getCommand()
 
         double ourDistance = (v - wm->ourRobot[this->id].pos.loc).length();
 
-        if( (oppDistance - ourDistance > 400) || goANDget )
+        if( (oppDistance - ourDistance > 1000) || goANDget )
         {
             goANDget = true;
             Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
@@ -61,11 +61,11 @@ RobotCommand TacticDefender::getCommand()
                 if( fabs(target.pos.dir().degree()-AngleDeg::rad2deg(wm->ourRobot[this->id].pos.dir)) < 15 )
                 {
 //                    qDebug()<<"a little diff in deg , kick it to goal";
-                    OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+                    OperatingPosition p = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 
                     if( p.readyToShoot )
                     {
-                        rc.kickspeedx = detectKickSpeed(target.pos);
+                        rc.kickspeedx = detectKickSpeed(kickType::Shoot, p.shootSensor);
                     }
                     rc.fin_pos = p.pos;
                     rc.useNav = p.useNav;
@@ -89,7 +89,7 @@ RobotCommand TacticDefender::getCommand()
                     if( inDangerousPosition )
                     {
 //                        qDebug()<<"in a dangerous position , chip the ball";
-                        OperatingPosition p = wm->kn->AdjustKickPointB(wm->ball.pos.loc,chipPoint,wm->ourRobot[this->id].pos);
+                        OperatingPosition p = BallControl(chipPoint, 100, this->id, rc.maxSpeed);
 
                         Ray2D chipDir(wm->ourRobot[this->id].pos.loc,chipPoint);
                         bool chipIsSuitable = true;
@@ -104,7 +104,7 @@ RobotCommand TacticDefender::getCommand()
 
                         if( p.readyToShoot && chipIsSuitable )
                         {
-                            rc.kickspeedz = 255;//detectKickSpeed(target.pos);
+                            rc.kickspeedz = detectChipSpeed(p.shootSensor);
                             qDebug()<<"Chippppppppppp";
                         }
 
@@ -116,11 +116,11 @@ RobotCommand TacticDefender::getCommand()
                     else
                     {
                         //qDebug()<<"not dangerous position";
-                        OperatingPosition p = wm->kn->AdjustKickPointB(v, target.pos,wm->ourRobot[this->id].pos);
+                        OperatingPosition p = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 
                         if( p.readyToShoot )
                         {
-                            rc.kickspeedx = detectKickSpeed(target.pos);
+                            rc.kickspeedx = detectKickSpeed(kickType::Shoot, p.shootSensor);
                         }
                         rc.fin_pos = p.pos;
                         rc.useNav = p.useNav;

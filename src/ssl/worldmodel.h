@@ -27,6 +27,24 @@ enum Level
     Profesional
 };
 
+enum kickType
+{
+    Shoot,
+    FreeKick1,
+    FreeKick2,
+    FreeKick3,
+    FreeKick4,
+    FreeKick5,
+    FreeKick6,
+    FreeKick7,
+    FreeKick8,
+    FreeKick9,
+    FreeKick10,
+    FreeKick11,
+    FreeKick12,
+    FreeKick47
+};
+
 class WorldModel
 {
 public:

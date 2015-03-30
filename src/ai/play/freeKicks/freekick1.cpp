@@ -109,6 +109,7 @@ void freeKick1::execute()
     setPositions();
 
     tAttackerMid->isKicker();
+    tAttackerMid->setFreeKickType(kickType::FreeKick1);
 
     activeAgents.removeOne(tAttackerMid->getID());
     if(wm->cmgs.ourIndirectKick())
