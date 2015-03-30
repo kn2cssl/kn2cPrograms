@@ -11,14 +11,18 @@ RobotCommand TacticPenaltyKicker::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    if(wm->cmgs.canKickBall())
+    rc.maxSpeed=0.75;
+    rc.useNav=false;
+
+    if( wm->cmgs.canKickBall() )
     {
-        Position kickPoint = wm->kn->AdjustKickPoint(wm->ball.pos.loc,Field::oppGoalCenter);
-        rc.fin_pos = kickPoint;
-        if(wm->kn->CanKick(wm->ourRobot[this->id].pos,wm->ball.pos.loc))
-        {
-            rc.kickspeedx = detectKickSpeed(Field::oppGoalCenter);
-        }
+        tANDp target = findTarget();
+        OperatingPosition kickPoint = BallControl(target.pos, target.prob, this->id, rc.maxSpeed );
+        rc.fin_pos = kickPoint.pos;
+        if( kickPoint.readyToShoot )
+            rc.kickspeedx = detectKickSpeed(kickType::Shoot,kickPoint.shootSensor);
+
+        rc.useNav = kickPoint.useNav;
     }
     else
     {
@@ -26,8 +30,7 @@ RobotCommand TacticPenaltyKicker::getCommand()
         penaltyPoint.x = penaltyPoint.x -200;
         rc.fin_pos.loc = penaltyPoint;
     }
-    rc.maxSpeed=0.75;
-    rc.useNav=false;
+
     rc.isBallObs=true;
     rc.isKickObs=true;
 

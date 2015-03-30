@@ -13,6 +13,7 @@ RobotCommand TacticPreparing::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
+    rc.maxSpeed = 0.5;
     if( kickPermision )
     {
         rc.fin_pos.loc = Vector2D(0,0);
@@ -21,16 +22,13 @@ RobotCommand TacticPreparing::getCommand()
         if(wm->ball.pos.loc.x > 0 && wm->ball.pos.loc.x < Field::MaxX/2)
         {
             tANDp target = findTarget();
-            //OperatingPosition kick = BallControl(target.pos, target.prob, this->id, 0.5);
-            OperatingPosition kick = wm->kn->AdjustKickPointB(wm->ball.pos.loc,target.pos,wm->ourRobot[this->id].pos);
+            OperatingPosition kick = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
             rc.fin_pos = kick.pos;
             rc.useNav = kick.useNav;
 
-            qDebug()<<"rc.useNav : "<< kick.useNav;
-
             if( kick.readyToShoot )
             {
-                rc.kickspeedx = 201;
+                rc.kickspeedx = detectKickSpeed(kickType::Shoot, kick.shootSensor);
                 kickIt = true;
             }
         }
@@ -40,7 +38,6 @@ RobotCommand TacticPreparing::getCommand()
         rc.fin_pos = queuePos;
     }
 
-    rc.maxSpeed = 0.5;
     rc.isBallObs = true;
     rc.isKickObs = true;
 
