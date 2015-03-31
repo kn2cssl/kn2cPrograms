@@ -15,7 +15,7 @@ public:
     virtual Tactic* getTactic(int id);
     virtual int enterCondition() = 0;
     bool conditionChanged();
-    void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left,Position& right);
+    void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left, bool& leftNav,Position& right, bool& rightNav);
 
 protected:
     WorldModel *wm;
@@ -48,6 +48,8 @@ private:
     void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
     bool Danger_Player_Direction(Position p , int thr);
     bool Ball_Toward_Goal();
+    bool hasPositionForGoalie(Vector2D midOfDef);
+    Position goaliePosition(Vector2D midOfDef);
 
     Position Player1,Player2;
 

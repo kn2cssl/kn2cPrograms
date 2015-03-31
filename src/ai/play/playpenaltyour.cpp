@@ -49,6 +49,7 @@ void PlayPenaltyOur::setPositions()
 {
     Position leftDefPos,rightDefPos,goaliePos;
     int leftID = -1, rightID = -1 , midID = -1;
+    bool leftNav, rightNav;
 
     if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
         leftID = tDefenderLeft->getID();
@@ -62,11 +63,13 @@ void PlayPenaltyOur::setPositions()
     if( rightChecker > 100  || rightID == -1)
         midID = leftID;
 
-    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
 
     tGoalie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderLeft->setUseNav(leftNav);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tDefenderRight->setUseNav(rightNav);
 
     if( leftID != -1)
     {

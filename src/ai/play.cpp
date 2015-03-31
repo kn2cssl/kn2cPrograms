@@ -39,7 +39,7 @@ bool Play::conditionChanged()
     return out;
 }
 
-void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, Position &right)
+void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, bool& leftNav, Position &right, bool& rightNav)
 {
     goalie.loc = Field::ourGoalCenter;
 
@@ -47,23 +47,28 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     {
         right.loc = Field::oppPenaltyParallelLineCenter;
         right.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
+        rightNav = false;
 
         left.loc.x = Field::oppPenaltyParallelLineCenter.x;
         left.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.5);
+        leftNav = false;
     }
     else if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && (!wm->cmgs.canKickBall()) )
     {
         right.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
         right.loc.y = Field::ourGoalCenter.y - 350;
+        rightNav = true;
 
         left.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
         left.loc.y = Field::ourGoalCenter.y + 350;
+        leftNav = true;
     }
     else
     {
-        //        Left_loc=Vector2D(0,0);
-        //        Right_loc=Vector2D(0,0);
-//        qDebug() << "LEFT ID : " << leftID << ", Mid ID : " << MidID <<", RIGHT ID : " << RightID ;
+        Vector2D secondPointForGoalie;
+
+        bool need2newPoints = false;
+
         BallOwner_Finded = Find_OppRobot_BallOwner();
         if(BallOwner_Finded) Player_filter(Player1);
         Deffence_Geometry_making();
@@ -74,8 +79,11 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
         if(!Ball_IS_Toward_Goal)
         {
+            leftNav = true; rightNav = true;
             if(Two_Deffence) // Two Deffences Are Available
             {
+                secondPointForGoalie = ( wm->ourRobot[leftID].pos.loc + wm->ourRobot[RightID].pos.loc)/2;
+                need2newPoints = !hasPositionForGoalie(secondPointForGoalie);
                 if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
                 {
                     bool Is_AnyOther_Dangerous = false ;
@@ -146,6 +154,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
             }
             else // One Deffence !
             {
+                secondPointForGoalie = Find_MostDangerous_Goal_Point();
+
                 if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
                 {
                     Ref_1Deff_Ball(leftID,RightID,MidID);
@@ -158,26 +168,47 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 if(MidID==RightID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,leftID,Left_loc);
                 else if(MidID==leftID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,RightID,Right_loc);
             }
-            Goalie_loc = Find_MostDangerous_Goal_Point();
-//            qDebug() << " Goalie : ( " << Goalie_loc.x << "," << Goalie_loc.y << ")";
+            //            Goalie_loc = Find_MostDangerous_Goal_Point();
+            //            qDebug() << " Goalie : ( " << Goalie_loc.x << "," << Goalie_loc.y << ")";
             //            goalie.loc = Danger_point ;
         }
         else // Ball Is Moving To Our Goal
         {
+            qDebug()<<"Moving to our goal";
+            Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,Field::MinY));
+            Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
+            Vector2D intersect_Point = L2R.intersection(BV2T);
+
+            secondPointForGoalie = intersect_Point;
+
+            rightNav = false; leftNav = false;
             if(Two_Deffence) Ref_2Deff_Moving_Ball();
             else Ref_1Deff_Moving_Ball(leftID,RightID,MidID);
         }
 
         //        Ref_2Deff_Moving_Ball();
-        Goalie_loc.y = (Field::ourGoalCenter.y + 2*Goalie_loc.y)/3; //
-        goalie.loc = Goalie_loc ;
+        //                Goalie_loc.y = (Field::ourGoalCenter.y + 2*Goalie_loc.y)/3; //
+        //                Goalie_loc.x += 200;
+        //                goalie.loc = Goalie_loc ;
         left.loc = Left_loc;
-        right.loc = Right_loc;
-        goalie.dir = (wm->ball.pos.loc - wm->ourRobot[wm->ref_goalie_our].pos.loc).dir().radian() ;
         left.dir = (wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
+        right.loc = Right_loc;
         right.dir = (wm->ourRobot[RightID].pos.loc - Field::ourGoalPost_R).dir().radian();
-//        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
-//        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
+
+        if( (left.loc-wm->ball.pos.loc).length() < 400)
+            leftNav = false;
+        if( (right.loc-wm->ball.pos.loc).length() < 400)
+            rightNav = false;
+
+        //Goal Keeper Positions
+        //        qDebug()<<"secondPointForGoalie : "<<secondPointForGoalie.x<<" , "<<secondPointForGoalie.y;
+        if( need2newPoints )
+            secondPointForGoalie = (right.loc + left.loc)/2;
+
+        goalie = goaliePosition(secondPointForGoalie);
+
+        //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
+        //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
     }
 }
 
@@ -197,7 +228,6 @@ void Play::Player_filter(Position Player)
 //===========================================================================================
 void Play::Ref_2Deff_Player(Position p)
 {
-    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
     Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
     Line2D B2OT(wm->ball.pos.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(B2OT);
@@ -207,12 +237,13 @@ void Play::Ref_2Deff_Player(Position p)
     {
         if(p.dir < -M_PI/2 || p.dir > M_PI/2)
         {
+            intersect_Point = intersect_Point - Vector2D(0,intersect_Point.y/2);
             Vector2D B2DC = Deffence_center - wm->ball.pos.loc;
             double Rot_ang = (p.dir - B2DC.dir().radian());
             if(Rot_ang>M_PI) Rot_ang-=2*M_PI;
             else if(Rot_ang<-M_PI) Rot_ang+=2*M_PI;
 
-            B2DC.rotate(AngleDeg::rad2deg(Rot_ang*0.8));
+            B2DC.rotate(AngleDeg::rad2deg(Rot_ang*0.2));
             Deffence_center = wm->ball.pos.loc + B2DC ;
 
             Left_loc = Wall;
@@ -315,7 +346,7 @@ void Play::Ref_2Deff_Moving_Ball()
         {
             // --------  Defining New Deffence Center ---------------
             Goalie_loc = intersect_Point ;
-            double Deffence_Rad=1100;
+            double Deffence_Rad=Field::goalCircleDEF_R;
             Vector2D B2GC=(Field::ourGoalCenter-wm->ball.pos.loc);
             double Dist_Ball_2_Goal=B2GC.length();//wm->ball.pos.loc-Field::ourGoalCenter).length();
             double New_Dist_2_Deffence;
@@ -672,6 +703,153 @@ bool Play::Ball_Toward_Goal()
     }
     return To_Goal;
 }
+
+bool Play::hasPositionForGoalie(Vector2D midOfDef)
+{
+    bool output = false;
+
+    if( wm->ball.isValid )
+    {
+        int picOfCir = 500;
+        int marginFromGoalPost = 300;
+
+        double halfOfGoal = (Field::ourGoalPost_L.y-Field::ourGoalPost_R.y)/2;
+
+        Circle2D goalCir(Vector2D(Field::MinX-halfOfGoal-marginFromGoalPost+picOfCir, 0), halfOfGoal + marginFromGoalPost);
+        Line2D ball2DefCenter(midOfDef, wm->ball.pos.loc);
+        Vector2D first, second, main;
+        int numOfPoints = goalCir.intersection(ball2DefCenter, &first, &second);
+
+        bool pointFounded = false;
+
+        if( numOfPoints == 2)
+        {
+            if( wm->kn->IsInsideField(first) && wm->kn->IsInsideField(second))
+            {
+                double f2b = ( wm->ball.pos.loc - first).length();
+                double s2b = ( wm->ball.pos.loc - second).length();
+                if( s2b > f2b)
+                    main = first;
+                else
+                    main = second;
+
+                pointFounded = true;
+            }
+            else
+            {
+                if( wm->kn->IsInsideField(first) )
+                {
+                    main = first;
+                    pointFounded = true;
+                }
+                else if( wm->kn->IsInsideField(second) )
+                {
+                    main = second;
+                    pointFounded = true;
+                }
+            }
+        }
+        else if( numOfPoints == 1)
+        {
+            if( wm->kn->IsInsideField(first) )
+            {
+                main = first;
+                pointFounded = true;
+            }
+        }
+        output = pointFounded;
+    }
+
+    return output;
+}
+
+Position Play::goaliePosition(Vector2D midOfDef)
+{
+    Position output;
+
+    if( wm->ball.isValid )
+    {
+        int picOfCir = 500;
+        int marginFromGoalPost = 300;
+
+        double halfOfGoal = (Field::ourGoalPost_L.y-Field::ourGoalPost_R.y)/2;
+
+        Circle2D goalCir(Vector2D(Field::MinX-halfOfGoal-marginFromGoalPost+picOfCir, 0), halfOfGoal + marginFromGoalPost);
+        Line2D ball2DefCenter(midOfDef, wm->ball.pos.loc);
+        Vector2D first, second, main;
+        int numOfPoints = goalCir.intersection(ball2DefCenter, &first, &second);
+
+        bool pointFounded = false;
+
+        if( numOfPoints == 2)
+        {
+            if( wm->kn->IsInsideField(first) && wm->kn->IsInsideField(second))
+            {
+                double f2b = ( wm->ball.pos.loc - first).length();
+                double s2b = ( wm->ball.pos.loc - second).length();
+                if( s2b > f2b)
+                    main = first;
+                else
+                    main = second;
+
+                pointFounded = true;
+            }
+            else
+            {
+                if( wm->kn->IsInsideField(first) )
+                {
+                    main = first;
+                    pointFounded = true;
+                }
+                else if( wm->kn->IsInsideField(second) )
+                {
+                    main = second;
+                    pointFounded = true;
+                }
+            }
+        }
+        else if( numOfPoints == 1)
+        {
+            if( wm->kn->IsInsideField(first) )
+            {
+                main = first;
+                pointFounded = true;
+            }
+        }
+
+        if( !pointFounded )
+        {
+            Line2D ball2OurGoal(Field::ourGoalCenter, wm->ball.pos.loc);
+            Vector2D first2, second2, main2;
+            int numOfPoints2 = goalCir.intersection(ball2OurGoal, &first2, &second2);
+
+            if( numOfPoints2 == 2)
+            {
+                if( wm->kn->IsInsideField(first2) )
+                    main2 = first2;
+                else if( wm->kn->IsInsideField(second2) )
+                    main2 = second2;
+            }
+            else if( numOfPoints2 == 1)
+            {
+                if( wm->kn->IsInsideField(first2) )
+                    main2 = first2;
+            }
+
+            main = main2;
+        }
+
+        output.loc = main;
+        output.dir = (-midOfDef + wm->ball.pos.loc).dir().radian();
+    }
+    else
+    {
+        output.loc = Field::ourGoalCenter;
+    }
+
+    return output;
+
+}
 //===========================================================================================
 void Play::Deffence_Geometry_making()
 {
@@ -772,22 +950,8 @@ bool Play::Find_AnyOther_Opp_Dangerous()
     //    Vector2D predictedPos;
     double BallVell_Dir = wm->ball.vel.loc.dir().radian();
     double min_Diff_ang=100;
-    if( wm->ball.isValid && wm->ball.vel.loc.length() > 0.5)
+    if( wm->ball.isValid && wm->ball.vel.loc.length() > 0.8)
     {
-        //        for(int i=0;i<PLAYERS_MAX_NUM;i++)
-        //        {
-        //            if(!wm->oppRobot[i].isValid) continue;
-        //            predictedPos = wm->kn->PredictDestination(wm->oppRobot[i].pos.loc, wm->ball.pos.loc,wm->opp_vel,wm->ball.vel.loc);
-        //            double distance = (predictedPos - wm->oppRobot[i].pos.loc).length();
-
-        //            if( distance < min_d )
-        //            {
-        //                min_d = distance;
-        //                min_i = i;
-        //            }
-
-        //        }
-
         Vector2D B_P2 = Vector2D(0,0);
         for(int jj=0;jj<PLAYERS_MAX_NUM;jj++)
         {
@@ -805,26 +969,15 @@ bool Play::Find_AnyOther_Opp_Dangerous()
             }
         }
 
-
-        //    Position p2 = wm->oppRobot[min_i].pos;
-
-        //    double Ball2Player = (p2.loc - wm->ball.pos.loc).dir().radian();
-        //    double diff_ang=BallVell_Dir - Ball2Player;
-        //    if(diff_ang > M_PI) diff_ang-=2*M_PI;
-        //    else if(diff_ang < -M_PI) diff_ang+=2*M_PI;
-        //    diff_ang = fabs(diff_ang);
-        //    qDebug() << " Check Any Other Dangerous ! ";
-        //    if(min_d < 4000 && (diff_ang < AngleDeg::deg2rad(20)))
-        //        qDebug() << " Min_Diff_ang : " << AngleDeg::rad2deg(min_Diff_ang);
         if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() < 0.4 )
         {
-//            qDebug() << "!! Check Any Other Dangerous !! ";
+            //            qDebug() << "!! Check Any Other Dangerous !! ";
             return false ;
         }
         else
         {
             Player2 = wm->oppRobot[min_i].pos;
-//            qDebug() << " Player # " << min_i << " Is Dangerous " ;
+            //            qDebug() << " Player # " << min_i << " Is Dangerous " ;
             return true;
         }
     }
@@ -858,7 +1011,7 @@ Vector2D Play::Find_MostDangerous_Goal_Point()
     QList<tANDp> TANDPis;
     int prob=100;
     //    QList<int> our = this->findOurObstacles();
-    for(int jj=-10;jj<11;jj++)
+    for(int jj=-7;jj<8;jj++)
     {
         Vector2D Point;
         Point.x = Field::ourGoalCenter.x;
@@ -874,13 +1027,15 @@ Vector2D Play::Find_MostDangerous_Goal_Point()
                 {
                     Segment2D ball2Point(wm->ball.pos.loc,Point);
                     double dist2R = ball2Point.dist(wm->ourRobot[our.at(ii)].pos.loc);
-                    if (dist2R < 400 ) prob = dist2R/4;
+                    if (dist2R < 600 ) prob = dist2R/6.0;
                     else prob = 100;
                     if(prob < min_prob) min_prob = prob;
                 }
             }
-            if(abs(jj) > 7) min_prob = min_prob-abs(jj);
+            qDebug() << "min Prob "<< jj << " : " << min_prob ;
+            /*if(abs(jj) > 7) */min_prob = min_prob-abs(jj);//*((7.0-abs(jj))/3.0);
             if(min_prob < 0) min_prob = 0 ;
+            qDebug() << "************ min Prob jj after: " << min_prob ;
             if(min_prob == 0) break;
         }
         tp.prob=min_prob;

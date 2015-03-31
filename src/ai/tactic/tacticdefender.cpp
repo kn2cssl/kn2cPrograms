@@ -5,6 +5,7 @@ TacticDefender::TacticDefender(WorldModel *worldmodel, QObject *parent) :
 {
     reach2Ball = false;
     goANDget = false;
+    this->useNav = false;
 }
 
 RobotCommand TacticDefender::getCommand()
@@ -265,7 +266,7 @@ RobotCommand TacticDefender::getCommand()
 
         rc.maxSpeed = 2;
 
-        rc.useNav = false;
+        rc.useNav = this->useNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
@@ -303,4 +304,9 @@ void TacticDefender::resetBooleans()
 {
     this->goANDget = false;
     this->reach2Ball = false;
+}
+
+void TacticDefender::setUseNav(bool input)
+{
+    this->useNav = input;
 }

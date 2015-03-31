@@ -12,11 +12,13 @@ public:
     void setIdlePosition(Position pos);
     void setIdlePosition(Vector2D pos);
     void resetBooleans();
+    void setUseNav(bool input);
 
 private:
     Position idlePosition;
     bool goANDget;
     bool reach2Ball;
+    bool useNav;
 };
 
 #endif // TACTICDEFENDER_H

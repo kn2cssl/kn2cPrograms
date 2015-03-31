@@ -184,7 +184,7 @@ void Knowledge::ClampToRect(Vector2D *pos, Vector2D topLeft, Vector2D bottomRigh
 
 bool Knowledge::IsInsideField(Vector2D pos)
 {
-    return IsInsideRect(pos, Field::upperLeftCorner, Field::bottomRightCorner);
+    return IsInsideRect(pos, Vector2D(Field::MinX, Field::MaxY), Vector2D(Field::MaxX, Field::MinY));
 }
 
 bool Knowledge::IsInsideOurField(Vector2D pos)

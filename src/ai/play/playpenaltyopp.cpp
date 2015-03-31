@@ -48,7 +48,8 @@ void PlayPenaltyOpp::setTactics(int index)
 void PlayPenaltyOpp::setPositions()
 {
     Position goaliePos,leftDefPos,rightDefPos;
-    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),-1,goaliePos,leftDefPos,rightDefPos);
+    bool leftNav, rightNav;
+    zonePositions(tDefenderLeft->getID(),tDefenderRight->getID(),-1,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderRight->setIdlePosition(rightDefPos);
     tGoalie->setIdlePosition(goaliePos);

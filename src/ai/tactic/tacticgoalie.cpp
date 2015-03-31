@@ -32,7 +32,7 @@ RobotCommand TacticGoalie::getCommand()
 
 
     rc.fin_pos = idlePosistion;
-    rc.useNav = true;
+    rc.useNav = false;
     rc.isBallObs = true;
     rc.isKickObs = true;
 
