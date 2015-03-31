@@ -1,4 +1,5 @@
 #include "ball.h"
+#define NO_CAMERA -1
 
 Ball::Ball() :
     MobileObject()
@@ -35,9 +36,9 @@ void Ball::seenAt(vector<Position> p, double t, int c)
      ans.pos.dir = p[min_i].dir;
 
 
-     if (camera_mem == ans.camera  || camera_mem ==2 )
+     if (camera_mem == ans.camera  || camera_mem == NO_CAMERA )
      {
-         if((pos.loc - ans.pos.loc).length() < 540 || camera_mem ==2)
+         if((pos.loc - ans.pos.loc).length() < 540 || camera_mem == NO_CAMERA)
          {
              camera = ans.camera;
              time = ans.time;
@@ -50,12 +51,12 @@ void Ball::seenAt(vector<Position> p, double t, int c)
          else
          {
              camera_timeout++;
-             if(camera_timeout >8) camera_mem = 2;
+             if(camera_timeout >8) camera_mem = NO_CAMERA;
          }
      }
      else
      {
          camera_timeout++;
-         if(camera_timeout >8) camera_mem = 2;
+         if(camera_timeout >8) camera_mem = NO_CAMERA;
      }
 }
