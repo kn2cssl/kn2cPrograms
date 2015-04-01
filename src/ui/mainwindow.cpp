@@ -381,6 +381,8 @@ void MainWindow::timer_timeout()
     sc->wm->select_fk[11] = ui->fk11_checkBox->isChecked();
     sc->wm->select_fk[12] = ui->fk47_checkBox->isChecked();
 
+    sc->wm->freeKickerID = ui->freeKickerID_lineedit->text().toInt();
+
     //---Debuging Tools----------------
     sc->wm->showAstarOut = ui->astar_checkBox->isChecked();
     sc->wm->indexOfAstarRobot = ui->astarIndex_comboBox->currentText().toInt();
@@ -397,6 +399,8 @@ void MainWindow::timer_timeout()
     sc->wm->debug_type = ui->debug_output_type->currentText().toInt();
 
     sc->wm->showPasses = ui->showPass->isChecked();
+
+    sc->wm->showDefenderDebug = ui->showDefence->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

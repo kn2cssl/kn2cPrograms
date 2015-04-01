@@ -265,6 +265,24 @@
            <string>Show Pass Points</string>
           </property>
          </widget>
+         <widget class="QCheckBox" name="showDefence">
+          <property name="geometry">
+           <rect>
+            <x>20</x>
+            <y>391</y>
+            <width>261</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Show Defender Debug</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab_4">
          <attribute name="title">
@@ -913,7 +931,7 @@
            <rect>
             <x>350</x>
             <y>20</y>
-            <width>281</width>
+            <width>331</width>
             <height>41</height>
            </rect>
           </property>
@@ -923,7 +941,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Team Level on FreeKicks :</string>
+           <string>Opp. Team's Level on FreeKicks :</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="oppFKIsBeginner">
@@ -980,13 +998,13 @@
            </font>
           </property>
           <property name="text">
-           <string>Team Velocity :</string>
+           <string>Opp. Team Velocity :</string>
           </property>
          </widget>
          <widget class="QLineEdit" name="opp_vel_lineedit">
           <property name="geometry">
            <rect>
-            <x>520</x>
+            <x>580</x>
             <y>200</y>
             <width>71</width>
             <height>23</height>
@@ -1228,6 +1246,42 @@
           </property>
           <property name="checked">
            <bool>true</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_56">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>260</y>
+            <width>151</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>FreeKicker ID : </string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="freeKickerID_lineedit">
+          <property name="geometry">
+           <rect>
+            <x>580</x>
+            <y>270</y>
+            <width>71</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>3</string>
           </property>
          </widget>
         </widget>

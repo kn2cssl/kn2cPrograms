@@ -227,7 +227,7 @@ void Play::Player_filter(Position Player)
 //===========================================================================================
 void Play::Ref_2Deff_Player(Position p)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D B2OT(wm->ball.pos.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(B2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -273,7 +273,7 @@ void Play::Ref_2Deff_Ball()
 //===========================================================================================
 void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Vector2D &Deff_center)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -333,7 +333,7 @@ void Play::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Ve
 //===========================================================================================
 void Play::Ref_2Deff_Moving_Ball()
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
     Vector2D intersect_Point = L2R.intersection(BV2T);
     intersect_Point.x = intersect_Point.x + 150*sign(intersect_Point.x);
@@ -393,7 +393,7 @@ void Play::Ref_2Deff_Moving_Ball()
 void Play::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
 {
     //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -471,7 +471,7 @@ void Play::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int Mid_ID, 
 {
 
     //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -539,7 +539,7 @@ void Play::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int Mid_ID, 
 //===========================================================================================
 void Play::Ref_1Deff_Moving_Ball(int Left_ID,int Right_ID,int Mid_ID)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
     Vector2D intersect_Point = L2R.intersection(BV2T);
     //    intersect_Point.x = intersect_Point.x + 150*sign(intersect_Point.x);
@@ -662,7 +662,7 @@ bool Play::Danger_Player_Direction(Position p, int thr)
 {
     bool is_dangerous=false;
     Vector2D Intersect_Point;
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
     Intersect_Point = L2R.intersection(P2OT);
     if((Intersect_Point.y > Field::ourGoalPost_R.y-thr) && (Intersect_Point.y < Field::ourGoalPost_L.y+thr))
@@ -686,7 +686,7 @@ bool Play::Ball_Toward_Goal()
     {
         Vector2D Intersect_Point;
         //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-        Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+        Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
         Line2D B2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball to Target
         Intersect_Point = L2R.intersection(B2T);
         if((Intersect_Point.y > Field::ourGoalPost_R.y-200) && (Intersect_Point.y < Field::ourGoalPost_L.y+200))

@@ -64,7 +64,9 @@ public:
 
     //----Input Data----------
     Level oppLevel_fk;
-    double opp_vel;bool select_fk[NUMBEROFFREEKICKS];
+    double opp_vel;
+    bool select_fk[NUMBEROFFREEKICKS];
+    int freeKickerID;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
@@ -90,6 +92,8 @@ public:
 
     bool showPasses;
     QList<Vector2D> passPoints;
+
+    bool showDefenderDebug;
 
     //---UDP 2 Matlab
     bool sendUDP;

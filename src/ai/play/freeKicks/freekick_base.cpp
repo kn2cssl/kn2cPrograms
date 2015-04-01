@@ -212,7 +212,7 @@ void freeKick_base::Player_filter(Position Player)
 //===========================================================================================
 void freeKick_base::Ref_2Deff_Player(Position p)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D B2OT(wm->ball.pos.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(B2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -258,7 +258,7 @@ void freeKick_base::Ref_2Deff_Ball()
 //===========================================================================================
 void freeKick_base::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Right_2, Vector2D &Deff_center)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -318,7 +318,7 @@ void freeKick_base::Ref_2Deff_Player2(Position p, Vector2D &Left_2, Vector2D &Ri
 //===========================================================================================
 void freeKick_base::Ref_2Deff_Moving_Ball()
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
     Vector2D intersect_Point = L2R.intersection(BV2T);
     intersect_Point.x = intersect_Point.x + 150*sign(intersect_Point.x);
@@ -378,7 +378,7 @@ void freeKick_base::Ref_2Deff_Moving_Ball()
 void freeKick_base::Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID)
 {
     //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -456,7 +456,7 @@ void freeKick_base::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int
 {
 
     //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Ball to Opponent Target
     Vector2D intersect_Point = L2R.intersection(P2OT);
     //    qDebug() << "Intersect Point" << intersect_Point.x << " , " << intersect_Point.y;
@@ -524,7 +524,7 @@ void freeKick_base::Ref_1Deff_Player2(Position p, int Left_ID, int Right_ID, int
 //===========================================================================================
 void freeKick_base::Ref_1Deff_Moving_Ball(int Left_ID,int Right_ID,int Mid_ID)
 {
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
     Vector2D intersect_Point = L2R.intersection(BV2T);
     //    intersect_Point.x = intersect_Point.x + 150*sign(intersect_Point.x);
@@ -647,7 +647,7 @@ bool freeKick_base::Danger_Player_Direction(Position p, int thr)
 {
     bool is_dangerous=false;
     Vector2D Intersect_Point;
-    Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+    Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
     Line2D P2OT(p.loc,AngleDeg::rad2deg(p.dir)); //Player to Opponent Target
     Intersect_Point = L2R.intersection(P2OT);
     if((Intersect_Point.y > Field::ourGoalPost_R.y-thr) && (Intersect_Point.y < Field::ourGoalPost_L.y+thr))
@@ -671,7 +671,7 @@ bool freeKick_base::Ball_Toward_Goal()
     {
         Vector2D Intersect_Point;
         //    Segment2D LG2RG(Field::ourGoalPost_L,Field::ourGoalPost_R); // Left Goal to Right Goal
-        Line2D L2R(Vector2D(Field::ourGoalCenter.x,FIELD_MAX_Y),Vector2D(Field::ourGoalCenter.x,-FIELD_MAX_Y));
+        Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,-Field::MaxY));
         Line2D B2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball to Target
         Intersect_Point = L2R.intersection(B2T);
         if((Intersect_Point.y > Field::ourGoalPost_R.y-200) && (Intersect_Point.y < Field::ourGoalPost_L.y+200))
@@ -912,7 +912,7 @@ bool freeKick_base::Find_Pass_Receiver(Position Player1)
     }
     if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() > 0.4 )
     {
-//        qDebug() << "!! Check The Pass Reciever !! ";
+        //        qDebug() << "!! Check The Pass Reciever !! ";
         return false ;
         //        ans=0; // Please Do Not Force To Close
     }
@@ -1080,33 +1080,77 @@ void freeKick_base::initRole()
     QList<int> activeAgents=wm->kn->ActiveAgents();
     activeAgents.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
-    switch (activeAgents.length()) {
-    case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        break;
-    case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        break;
-    case 3:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        break;
-    case 4:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        break;
-    case 5:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        break;
+
+    int freeKickerID = wm->freeKickerID;
+
+    if( wm->ourRobot[freeKickerID].isValid )
+    {
+        switch (activeAgents.length()) {
+        case 1:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            break;
+        case 2:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            break;
+        case 3:
+            wm->ourRobot[freeKickerID].Role = AgentRole::AttackerMid;
+            activeAgents.removeOne(freeKickerID);
+
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            break;
+        case 4:
+            wm->ourRobot[freeKickerID].Role = AgentRole::AttackerMid;
+            activeAgents.removeOne(freeKickerID);
+
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        case 5:
+            wm->ourRobot[freeKickerID].Role = AgentRole::AttackerMid;
+            activeAgents.removeOne(freeKickerID);
+
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        }
     }
+    else
+    {
+        switch (activeAgents.length()) {
+        case 1:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            break;
+        case 2:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            break;
+        case 3:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            break;
+        case 4:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        case 5:
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+            wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
+            break;
+        }
+
+    }
+
     rolesIsInit = true;
     freeKickStart = false;
 }
