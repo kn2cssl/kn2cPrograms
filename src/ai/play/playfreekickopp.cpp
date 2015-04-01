@@ -140,8 +140,8 @@ void PlayFreeKickOpp::pressing()
 
 //    if( wm->cmgs.theirDirectKick() )
 //    {
-        wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
-        wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
+//        wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
+//        wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
 //    }
 }
 
@@ -252,9 +252,49 @@ void PlayFreeKickOpp::setPositions()
             leftPos = leftPos2;
     }
 
-    tAttackerLeft->setIdlePosition(leftPos);
-    tAttackerMid->setIdlePosition(finalPos);
-    tAttackerRight->setIdlePosition(rightPos);
+    QList<Vector2D> pointsForIdle;
+    pointsForIdle.append(finalPos);
+    pointsForIdle.append(rightPos);
+    pointsForIdle.append(leftPos);
+
+    if(tAttackerLeft->getID()!=-1 && wm->ourRobot[tAttackerLeft->getID()].isValid && wm->ourRobot[tAttackerLeft->getID()].Status==AgentStatus::Idle)
+    {
+        for(int i=0;i<pointsForIdle.size();i++)
+        {
+            if(!wm->kn->isOccupied(tAttackerLeft->getID(),pointsForIdle.at(i)))
+            {
+                tAttackerLeft->setIdlePosition(pointsForIdle.at(i));
+                break;
+            }
+        }
+
+    }
+
+    if(tAttackerRight->getID()!=-1 && wm->ourRobot[tAttackerRight->getID()].isValid && wm->ourRobot[tAttackerRight->getID()].Status==AgentStatus::Idle)
+    {
+        for(int i=0;i<pointsForIdle.size();i++)
+        {
+            if(!wm->kn->isOccupied(tAttackerRight->getID(),pointsForIdle.at(i)))
+            {
+                tAttackerRight->setIdlePosition(pointsForIdle.at(i));
+                break;
+            }
+        }
+
+    }
+
+    if(tAttackerMid->getID()!=-1 && wm->ourRobot[tAttackerMid->getID()].isValid && wm->ourRobot[tAttackerMid->getID()].Status==AgentStatus::Idle)
+    {
+        for(int i=0;i<pointsForIdle.size();i++)
+        {
+            if(!wm->kn->isOccupied(tAttackerMid->getID(),pointsForIdle.at(i)))
+            {
+                tAttackerMid->setIdlePosition(pointsForIdle.at(i));
+                break;
+            }
+        }
+
+    }
 }
 
 void PlayFreeKickOpp::setPlayer2Keep(int ourR, int oppR)
