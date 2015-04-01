@@ -36,7 +36,7 @@ RobotCommand TacticGoalie::getCommand()
     //    if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
     //        rc.maxSpeed = 2;
     //    else
-    rc.maxSpeed = 2;
+    rc.maxSpeed = 1;
 
     rc.useNav = false;
     rc.isBallObs = true;
@@ -54,7 +54,11 @@ RobotCommand TacticGoalie::getCommand()
         Circle2D cir(wm->ball.pos.loc, 60);
         Vector2D first,second,chipPoint;
         cir.intersection(line,&first,&second);
-        if( first.x < wm->ball.pos.loc.x)
+
+        double firstDist , secondDist;
+        firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
+        secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
+        if( firstDist < secondDist)
         {
             target = second;
             chipPoint = first;
@@ -64,6 +68,9 @@ RobotCommand TacticGoalie::getCommand()
             target = first;
             chipPoint = second;
         }
+
+        wm->passPoints.clear();
+        wm->passPoints.append(target);
 
         if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,target,120) || reach2Ball )
         {
