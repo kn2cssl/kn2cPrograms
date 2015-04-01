@@ -225,7 +225,7 @@ bool Knowledge::IsNearOurGoal(Vector2D pos)
 
 bool Knowledge::IsInsideGolieArea(Vector2D pos)
 {
-    return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R,
+    return IsInsideGoalShape(pos, Field::ourGoalCenter.x, Field::goalCircle_R+2*BALL_RADIUS,
                              (Field::defenceLineLinear_L-Field::defenceLineLinear_R).length());
 }
 

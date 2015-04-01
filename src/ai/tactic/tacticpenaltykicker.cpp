@@ -26,7 +26,7 @@ RobotCommand TacticPenaltyKicker::getCommand()
     }
     else
     {
-        Vector2D penaltyPoint = Field::oppGoalPenaltySpot;
+        Vector2D penaltyPoint = Field::oppPenaltySpot;
         penaltyPoint.x = penaltyPoint.x -200;
         rc.fin_pos.loc = penaltyPoint;
     }
