@@ -21,7 +21,7 @@ public:
     virtual void execute() = 0;
     Tactic* getTactic(int id);
     virtual int enterCondition(Level level) = 0;
-    void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left,Position& right);
+    void zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, bool& leftNav, Position &right, bool& rightNav);
     virtual void resetValues() = 0;
 
 protected:
@@ -63,6 +63,8 @@ private:
     void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
     bool Danger_Player_Direction(Position p , int thr);
     bool Ball_Toward_Goal();
+    bool hasPositionForGoalie(Vector2D midOfDef);
+    Position goaliePosition(Vector2D midOfDef);
 
     Position Player1,Player2;
 

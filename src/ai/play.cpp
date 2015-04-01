@@ -174,7 +174,6 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
         }
         else // Ball Is Moving To Our Goal
         {
-            qDebug()<<"Moving to our goal";
             Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,Field::MinY));
             Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
             Vector2D intersect_Point = L2R.intersection(BV2T);
@@ -928,7 +927,7 @@ bool Play::Find_Pass_Receiver(Position Player1)
     }
     if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() > 0.4 )
     {
-        qDebug() << "!! Check The Pass Reciever !! ";
+//        qDebug() << "!! Check The Pass Reciever !! ";
         return false ;
         //        ans=0; // Please Do Not Force To Close
     }
