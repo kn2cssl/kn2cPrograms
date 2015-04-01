@@ -52,6 +52,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
         left.loc.x = Field::oppPenaltyParallelLineCenter.x;
         left.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.5);
         leftNav = false;
+
+        goalie = goalieInPenalty();
     }
     else if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && (!wm->cmgs.canKickBall()) )
     {
@@ -847,6 +849,41 @@ Position Play::goaliePosition(Vector2D midOfDef)
     }
 
     return output;
+
+}
+
+Position Play::goalieInPenalty()
+{
+    Position out;
+    out.loc = Field::ourGoalCenter;
+
+    QList<int> nearestOpp = wm->kn->findNearestOppositeTo(Field::ourPenaltySpot);
+
+    if( nearestOpp.size() > 0)
+    {
+        Ray2D oppDir(wm->oppRobot[nearestOpp.at(0)].pos.loc, AngleDeg::rad2deg(wm->oppRobot[nearestOpp.at(0)].pos.dir));
+        Line2D ourGoalLine(Field::ourGoalPost_L, Field::ourGoalPost_R);
+        Segment2D ourGoalMargin(Vector2D(Field::ourGoalPost_L.x, Field::ourGoalPost_L.y+500), Vector2D(Field::ourGoalPost_R.x, Field::ourGoalPost_R.y-500));
+        Segment2D ourGoal(Field::ourGoalPost_L, Field::ourGoalPost_R);
+        Vector2D intersect = oppDir.intersection(ourGoalLine);
+        if( ourGoalMargin.contains(intersect) )
+        {
+            if( ourGoal.contains(intersect))
+                out.loc = (Field::ourGoalCenter*2 + intersect)/3;
+            else
+            {
+                double dist2Left = (intersect - Field::ourGoalPost_L).length();
+                double dist2Right = (intersect - Field::ourGoalPost_R).length();
+
+                if( dist2Left < dist2Right )
+                    out.loc = (Field::ourGoalCenter*2 + Field::ourGoalPost_L)/3;
+                else
+                    out.loc = (Field::ourGoalCenter*2 + Field::ourGoalPost_R)/3;
+            }
+        }
+    }
+
+    return out;
 
 }
 //===========================================================================================

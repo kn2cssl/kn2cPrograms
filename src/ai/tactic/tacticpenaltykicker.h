@@ -9,6 +9,10 @@ class TacticPenaltyKicker:public TacticAttacker
 public:
     explicit TacticPenaltyKicker(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
+    void resetEverything();
+private:
+    bool targetSelected;
+    Vector2D target;
 };
 
 #endif // TACTICPENALTYKICKER_H

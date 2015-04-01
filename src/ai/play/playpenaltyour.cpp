@@ -14,7 +14,12 @@ PlayPenaltyOur::PlayPenaltyOur(WorldModel *worldmodel, QObject *parent) :
 int PlayPenaltyOur::enterCondition()
 {
     if(wm->cmgs.ourPenaltyKick())
+    {
+        if( wm->gs != wm->gs_last )
+            penaltyKicker->resetEverything();
+
         return 100;
+    }
     else
         return 0;
 }

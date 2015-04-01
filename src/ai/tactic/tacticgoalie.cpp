@@ -69,9 +69,6 @@ RobotCommand TacticGoalie::getCommand()
             chipPoint = second;
         }
 
-        wm->passPoints.clear();
-        wm->passPoints.append(target);
-
         if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,target,120) || reach2Ball )
         {
             reach2Ball = true;

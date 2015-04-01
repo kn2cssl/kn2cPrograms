@@ -48,8 +48,10 @@ private:
     void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
     bool Danger_Player_Direction(Position p , int thr);
     bool Ball_Toward_Goal();
+
     bool hasPositionForGoalie(Vector2D midOfDef);
     Position goaliePosition(Vector2D midOfDef);
+    Position goalieInPenalty();
 
     Position Player1,Player2;
 
