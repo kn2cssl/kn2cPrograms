@@ -1032,10 +1032,8 @@ Vector2D Play::Find_MostDangerous_Goal_Point()
                     if(prob < min_prob) min_prob = prob;
                 }
             }
-            qDebug() << "min Prob "<< jj << " : " << min_prob ;
             /*if(abs(jj) > 7) */min_prob = min_prob-abs(jj);//*((7.0-abs(jj))/3.0);
             if(min_prob < 0) min_prob = 0 ;
-            qDebug() << "************ min Prob jj after: " << min_prob ;
             if(min_prob == 0) break;
         }
         tp.prob=min_prob;

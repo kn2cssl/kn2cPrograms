@@ -32,37 +32,92 @@ RobotCommand TacticGoalie::getCommand()
 
 
     rc.fin_pos = idlePosistion;
+
+    //    if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
+    //        rc.maxSpeed = 2;
+    //    else
+    rc.maxSpeed = 2;
+
     rc.useNav = false;
     rc.isBallObs = true;
     rc.isKickObs = true;
 
-    if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && wm->cmgs.canKickBall())
+    bool chipTheBall = true;
+
+    if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && wm->cmgs.canKickBall() && (wm->ball.vel.loc.length() < 0.5) )
     {
         Vector2D target;
-        if(wm->ball.pos.loc.y >= 0)
+
+        Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
+                wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
+        Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
+        Circle2D cir(wm->ball.pos.loc, 60);
+        Vector2D first,second,chipPoint;
+        cir.intersection(line,&first,&second);
+        if( first.x < wm->ball.pos.loc.x)
         {
-            target = target.assign(wm->ball.pos.loc.x,Field::MaxY);
+            target = second;
+            chipPoint = first;
         }
         else
         {
-            target = target.assign(wm->ball.pos.loc.x,Field::MinY);
+            target = first;
+            chipPoint = second;
         }
-        rc.fin_pos = wm->kn->AdjustKickPoint(wm->ball.pos.loc,target);
 
-        if(wm->kn->CanKick(wm->ourRobot[id].pos,wm->ball.pos.loc) )
+        if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,target,120) || reach2Ball )
         {
-            //Maybe Sometimes we have chip...
-            //rc.kickspeedz = 2.5;//50;
-            rc.kickspeedx = 250;
+            reach2Ball = true;
+
+            QList<int> ourPlayers = wm->kn->findNearestTo(wm->ball.pos.loc);
+            ourPlayers.removeOne(this->id);
+
+            Ray2D chipDir(wm->ourRobot[this->id].pos.loc,target);
+
+            for(int i=0;i<ourPlayers.size();i++)
+            {
+                if ( chipDir.inRightDir(wm->ourRobot[ourPlayers.at(i)].pos.loc,30) )
+                {
+                    if( (wm->ourRobot[ourPlayers.at(i)].pos.loc - wm->ball.pos.loc).length() < 500 )
+                    {
+                        chipTheBall = false;
+                        break;
+                    }
+                }
+            }
+
+            if( chipTheBall )
+            {
+                QList<int> oppPlayers = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
+
+                for(int i=0;i<oppPlayers.size();i++)
+                {
+                    if ( chipDir.inRightDir(wm->oppRobot[oppPlayers.at(i)].pos.loc,30) )
+                    {
+                        if( (wm->oppRobot[oppPlayers.at(i)].pos.loc - wm->ball.pos.loc).length() < 500 )
+                        {
+                            chipTheBall = false;
+                            break;
+                        }
+                    }
+                }
+            }
         }
-        rc.useNav = false;
+        else
+            reach2Ball = false;
+
+
+        OperatingPosition kickCommands = BallControl(target, 100, this->id, rc.maxSpeed);
+        rc.fin_pos = kickCommands.pos;
+        rc.useNav = kickCommands.useNav;
+
+        if( kickCommands.readyToShoot && chipTheBall )
+        {
+            rc.kickspeedz = detectChipSpeed(kickCommands.shootSensor);
+            qDebug()<<"chipp...............";
+        }
+
     }
-
-
-    if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
-        rc.maxSpeed = 2;
-    else
-        rc.maxSpeed = 2;//3;
 
     return rc;
 }

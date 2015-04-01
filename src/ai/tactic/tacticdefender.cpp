@@ -6,6 +6,7 @@ TacticDefender::TacticDefender(WorldModel *worldmodel, QObject *parent) :
     reach2Ball = false;
     goANDget = false;
     this->useNav = false;
+    oppPassReciever = -1;
 }
 
 RobotCommand TacticDefender::getCommand()
@@ -22,6 +23,13 @@ RobotCommand TacticDefender::getCommand()
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
 
         int opposite = wm->kn->findOppReciever();
+
+        if( oppPassReciever != opposite )
+        {
+            oppPassReciever = opposite;
+            this->resetBooleans();
+        }
+
         Vector2D opp_v;
         double oppDistance;
         if( opposite != -1)
@@ -143,7 +151,7 @@ RobotCommand TacticDefender::getCommand()
         }
         else
         {
-            // qDebug()<<"dangerous distance from opp , don't go";
+//            qDebug()<<"dangerous distance from opp , don't go";
             rc.fin_pos = idlePosition;
             rc.useNav = false;
             rc.isBallObs = true;

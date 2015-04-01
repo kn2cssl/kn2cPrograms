@@ -19,6 +19,7 @@ private:
     bool goANDget;
     bool reach2Ball;
     bool useNav;
+    int oppPassReciever;
 };
 
 #endif // TACTICDEFENDER_H
