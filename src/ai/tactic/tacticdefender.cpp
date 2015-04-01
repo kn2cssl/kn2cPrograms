@@ -52,7 +52,10 @@ RobotCommand TacticDefender::getCommand()
             Circle2D cir(wm->ball.pos.loc, 60);
             Vector2D first,second,main,chipPoint;
             cir.intersection(line,&first,&second);
-            if( first.x < wm->ball.pos.loc.x)
+            double firstDist , secondDist;
+            firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
+            secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
+            if( firstDist < secondDist)
             {
                 main = first;
                 chipPoint = second;
