@@ -43,7 +43,15 @@ RobotCommand TacticDefender::getCommand()
 
         double ourDistance = (v - wm->ourRobot[this->id].pos.loc).length();
 
-        if( (oppDistance - ourDistance > 1000) || goANDget )
+        Ray2D ballRay(wm->ball.pos.loc, wm->ball.vel.loc.dir());
+        Line2D goalLine(Field::ourGoalPost_L, Field::ourGoalPost_R);
+        Segment2D exactGoal(Vector2D(Field::ourGoalPost_L.x,Field::ourGoalPost_L.y+300), Vector2D(Field::ourGoalPost_R.x,Field::ourGoalPost_R.y-300));
+        Vector2D intersect = ballRay.intersection(goalLine);
+        bool ballTowardUsDangerously = false;
+        if( exactGoal.contains(intersect) && wm->ball.vel.loc.length() > 0.5 )
+            ballTowardUsDangerously = true;
+
+        if( (oppDistance - ourDistance > 1000 || goANDget ) && !ballTowardUsDangerously )
         {
             goANDget = true;
             Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
