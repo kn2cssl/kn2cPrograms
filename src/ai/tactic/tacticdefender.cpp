@@ -296,11 +296,11 @@ RobotCommand TacticDefender::getCommand()
     if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )
     {
         Circle2D attackerCircles(Field::ourGoalCenter , Field::goalCircle_R+300);
-        Line2D robotRay(wm->oppRobot[playerToKeep].pos.loc,wm->ourRobot[this->id].pos.loc);
+        Line2D robotRay(rc.fin_pos.loc,wm->ourRobot[this->id].pos.loc);
         Vector2D firstPoint,secondPoint;
         attackerCircles.intersection(robotRay,&firstPoint,&secondPoint);
 
-        if( (wm->oppRobot[this->id].pos.loc-firstPoint).length() < (wm->oppRobot[this->id].pos.loc-secondPoint).length() )
+        if( (wm->ourRobot[this->id].pos.loc-firstPoint).length() < (wm->ourRobot[this->id].pos.loc-secondPoint).length() )
             rc.fin_pos.loc = firstPoint;
         else
             rc.fin_pos.loc = secondPoint;

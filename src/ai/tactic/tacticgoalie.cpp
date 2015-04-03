@@ -3,6 +3,7 @@
 TacticGoalie::TacticGoalie(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticGoalie", worldmodel, parent)
 {
+    reach2Ball = false;
 }
 
 RobotCommand TacticGoalie::getCommand()
@@ -32,17 +33,11 @@ RobotCommand TacticGoalie::getCommand()
 
 
     rc.fin_pos = idlePosistion;
-
-    //    if( !wm->kn->IsInsideGolieArea(wm->ourRobot[this->id].pos.loc) )
-    //        rc.maxSpeed = 2;
-    //    else
-    rc.maxSpeed = 1;
+    rc.maxSpeed = 2;
 
     rc.useNav = false;
     rc.isBallObs = true;
     rc.isKickObs = true;
-
-    bool chipTheBall = true;
 
     if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && wm->cmgs.canKickBall() && (wm->ball.vel.loc.length() < 0.5) )
     {
@@ -69,7 +64,12 @@ RobotCommand TacticGoalie::getCommand()
             chipPoint = second;
         }
 
-        if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,target,120) || reach2Ball )
+        bool chipTheBall = true;
+
+        rc.fin_pos.loc = chipPoint;
+        rc.fin_pos.dir = (wm->ball.pos.loc - wm->ourRobot[this->id].pos.loc).dir().radian();
+
+        if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,target,150) || reach2Ball )
         {
             reach2Ball = true;
 
@@ -106,21 +106,19 @@ RobotCommand TacticGoalie::getCommand()
                     }
                 }
             }
+
+            OperatingPosition kickCommands = BallControl(target, 100, this->id, rc.maxSpeed);
+            rc.fin_pos = kickCommands.pos;
+            rc.useNav = kickCommands.useNav;
+
+            if( kickCommands.readyToShoot && chipTheBall )
+            {
+                rc.kickspeedz = detectChipSpeed(kickCommands.shootSensor);
+                qDebug()<<"chipp...............";
+            }
         }
         else
             reach2Ball = false;
-
-
-        OperatingPosition kickCommands = BallControl(target, 100, this->id, rc.maxSpeed);
-        rc.fin_pos = kickCommands.pos;
-        rc.useNav = kickCommands.useNav;
-
-        if( kickCommands.readyToShoot && chipTheBall )
-        {
-            rc.kickspeedz = detectChipSpeed(kickCommands.shootSensor);
-            qDebug()<<"chipp...............";
-        }
-
     }
 
     return rc;
