@@ -52,6 +52,5 @@ RobotCommand TacticPenaltyKicker::getCommand()
 
 void TacticPenaltyKicker::resetEverything()
 {
-    qDebug()<<"Everything reseted";
     this->targetSelected = false;
 }

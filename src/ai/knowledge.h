@@ -50,9 +50,7 @@ public:
     bool agentIsFree(int index);
     bool isOccupied(int id, Vector2D input);
 
-
-
-    QString gameStatus();
+    QString gameStatus(QString previousState);
 
     int findOppReciever();
 

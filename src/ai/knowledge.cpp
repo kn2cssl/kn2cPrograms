@@ -395,7 +395,7 @@ bool Knowledge::isOccupied(int id, Vector2D input)
     return false;
 }
 
-QString Knowledge::gameStatus()
+QString Knowledge::gameStatus(QString previousState)
 {
     QString out;
 
@@ -404,24 +404,77 @@ QString Knowledge::gameStatus()
 
     if( oppNearestPlayerToBall.size() != 0 && ourNearestPlayerToBall.size() > 0 )
     {
-        if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
+        if( _wm->defenceMode )
+        {
+            if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
+            {
+                double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+                double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+                double threshould = 0.33*fabs((_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc).length());
+
+                if( _wm->kn->IsInsideOppField(_wm->ball.pos.loc) )
+                {
+                    if( ourDistance2Ball - oppDistance2Ball > threshould )
+                    {
+                        if( threshould > 100)
+                            out = "Defending";
+                        else
+                            out = previousState;
+                    }
+                    else if( oppDistance2Ball - ourDistance2Ball > threshould )
+                    {
+                        if( threshould > 100)
+                            out = "Attacking";
+                        else
+                            out = previousState;
+                    }
+                    else
+                        out = previousState;
+                }
+                else
+                {
+                    if( threshould < 300 )
+                        out = "Defending";
+                    else
+                    {
+                        if( ourDistance2Ball - oppDistance2Ball > threshould )
+                            out = "Defending";
+                        else if( oppDistance2Ball - ourDistance2Ball > threshould )
+                            out = "Attacking";
+                        else
+                            out = previousState;
+                    }
+                }
+            }
+            else
+            {
+                if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
+                    out = "Attacking";
+                else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
+                    out = "Defending";
+            }
+        }
+        else
         {
             double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
             double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
 
-            if( ourDistance2Ball - oppDistance2Ball > 300 )
-                out = "Defending";
-            else if( oppDistance2Ball - ourDistance2Ball > 300 )
-                out = "Attacking";
+            if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
+            {
+                if( ourDistance2Ball - oppDistance2Ball > 300 )
+                    out = "Defending";
+                else if( oppDistance2Ball - ourDistance2Ball > 300 )
+                    out = "Attacking";
+                else
+                    out = previousState;
+            }
             else
-                out = "Not Changed";
-        }
-        else
-        {
-            if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
-                out = "Attacking";
-            else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
-                out = "Defending";
+            {
+                if( ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size() >= 3 )
+                    out = "Attacking";
+                else if( oppNearestPlayerToBall.size() - ourNearestPlayerToBall.size() >= 3 )
+                    out = "Defending";
+            }
         }
     }
     else
