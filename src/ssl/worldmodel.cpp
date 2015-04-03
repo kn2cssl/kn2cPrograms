@@ -32,4 +32,6 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
 
     for(int i=0;i<NUMBEROFFREEKICKS;i++)
         select_fk[i] = false;
+
+    useShootSensor = true;
 }

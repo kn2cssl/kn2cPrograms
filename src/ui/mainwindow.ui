@@ -1199,7 +1199,7 @@
          </widget>
          <widget class="QCheckBox" name="fk10_checkBox">
           <property name="enabled">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="geometry">
            <rect>
@@ -1211,6 +1211,9 @@
           </property>
           <property name="text">
            <string>FreeKick10</string>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
           </property>
           <property name="checked">
            <bool>false</bool>
@@ -1251,7 +1254,7 @@
          <widget class="QLabel" name="label_56">
           <property name="geometry">
            <rect>
-            <x>370</x>
+            <x>360</x>
             <y>260</y>
             <width>151</width>
             <height>41</height>
@@ -1282,6 +1285,27 @@
           </property>
           <property name="text">
            <string>3</string>
+          </property>
+         </widget>
+         <widget class="QCheckBox" name="useShootSensor_chBox">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>330</y>
+            <width>251</width>
+            <height>71</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Use Your Shoot Sensor</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>
