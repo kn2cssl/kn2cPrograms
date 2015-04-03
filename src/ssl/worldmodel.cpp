@@ -34,4 +34,6 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
         select_fk[i] = false;
 
     useShootSensor = true;
+
+    defenceMode = false;
 }

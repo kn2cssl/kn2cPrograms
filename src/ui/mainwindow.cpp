@@ -403,6 +403,8 @@ void MainWindow::timer_timeout()
     sc->wm->showDefenderDebug = ui->showDefence->isChecked();
 
     sc->wm->useShootSensor = ui->useShootSensor_chBox->isChecked();
+
+    sc->wm->defenceMode = ui->defenceMode_chbox->isChecked();
 }
 
 void MainWindow::on_btnSaveVars_clicked()

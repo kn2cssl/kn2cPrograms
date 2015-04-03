@@ -68,6 +68,7 @@ public:
     bool select_fk[NUMBEROFFREEKICKS];
     int freeKickerID;
     bool useShootSensor;
+    bool defenceMode;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;
