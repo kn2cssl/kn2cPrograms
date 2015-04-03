@@ -395,6 +395,27 @@ bool Knowledge::isOccupied(int id, Vector2D input)
     return false;
 }
 
+bool Knowledge::isDefender(int index)
+{
+    bool out = false;
+    switch (_wm->ourRobot[index].Role)
+    {
+    case AgentRole::DefenderLeft:
+        out = true;
+        break;
+    case AgentRole::DefenderRight:
+        out = true;
+        break;
+    case AgentRole::DefenderMid:
+        out = true;
+        break;
+    default:
+        break;
+    }
+
+    return out;
+}
+
 QString Knowledge::gameStatus(QString previousState)
 {
     QString out;
@@ -457,16 +478,52 @@ QString Knowledge::gameStatus(QString previousState)
         else
         {
             double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
+            int ourBallFollower = ourNearestPlayerToBall.at(0);
             double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
-
+            int oppBallFollower = oppNearestPlayerToBall.at(0);
             if( abs(ourNearestPlayerToBall.size() - oppNearestPlayerToBall.size()) < 3 )
             {
-                if( ourDistance2Ball - oppDistance2Ball > 300 )
-                    out = "Defending";
-                else if( oppDistance2Ball - ourDistance2Ball > 300 )
-                    out = "Attacking";
+                if( IsInsideOppField(_wm->ball.pos.loc) )
+                {
+                    if( ourDistance2Ball - oppDistance2Ball > 500 )
+                        out = "Defending";
+                    else if( oppDistance2Ball - ourDistance2Ball > 200 )
+                        out = "Attacking";
+                    else
+                        out = previousState;
+                }
                 else
-                    out = previousState;
+                {
+                    if( !isDefender(ourBallFollower))
+                    {
+                        if( ourDistance2Ball - oppDistance2Ball > 200 )
+                            out = "Defending";
+                        else if( oppDistance2Ball - ourDistance2Ball > 500 )
+                            out = "Attacking";
+                        else
+                            out = previousState;
+                    }
+                    else
+                    {
+                        QList<int> ourAttackers = findAttackers();
+                        double dist2nearestAttacker = (_wm->ourRobot[ourAttackers.at(0)].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+                        double dist2nearestOpposite = (_wm->ourRobot[oppBallFollower].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+
+                        if( dist2nearestAttacker - dist2nearestOpposite > 1000 )
+                            out = "Defending";
+                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 500 && dist2nearestOpposite > 500)
+                            out = "Defending";
+                        else
+                        {
+                            if( ourDistance2Ball - oppDistance2Ball > 200 )
+                                out = "Defending";
+                            else if( oppDistance2Ball - ourDistance2Ball > 500 )
+                                out = "Attacking";
+                            else
+                                out = previousState;
+                        }
+                    }
+                }
             }
             else
             {

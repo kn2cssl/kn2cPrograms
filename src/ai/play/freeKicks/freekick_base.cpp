@@ -658,7 +658,6 @@ bool freeKick_base::Danger_Player_Direction(Position p, int thr)
     if(wm->ball.vel.loc.length() > 0.5)
     {
         is_dangerous = false ;
-        qDebug() << " !! CHECK Danger Player !! " ;
     }
 
     return is_dangerous;
