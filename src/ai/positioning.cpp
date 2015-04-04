@@ -12,6 +12,16 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 
     QList<Vector2D> static_points;
 
+    QList<int> leftRobots , rightRobots;
+
+    for(int i=0;i<ours.size();i++)
+    {
+        if( detectRegion(wm->ourRobot[ours.at(i)].pos.loc) == "left" )
+            leftRobots.append(ours.at(i));
+        else
+            rightRobots.append(ours.at(i));
+    }
+
     static_points.append(Field::oppGoalPost_L);
     static_points.append(Field::oppGoalPost_R);
 
@@ -28,12 +38,14 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
     for(int i=0;i<opp.size();i++)
         opp_pos.append(wm->oppRobot[opp.at(i)].pos.loc);
 
-    QList<Vector2D> candiates;
+    QList<Vector2D> candiates, leftPoints , rightPoints;;
     while( candiates.size() < ours.size() )
     {
         if( !staticIsFinished )
         {
             candiates.clear();
+            leftPoints.clear();
+            rightPoints.clear();
 
             Voronoi_Diagram VD;
             VD.setWorldModel(wm);
@@ -119,8 +131,15 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
                 numberOfPoints++;
         }
 
+        for(int i=0;i<candiates.size();i++)
+        {
+            if( detectRegion(candiates.at(i)) == "left" )
+                leftPoints.append(candiates.at(i));
+            else
+                rightPoints.append(candiates.at(i));
+        }
 
-        if( candiates.size() < ours.size() && !static_points.isEmpty() )
+        if( (rightPoints.size() < rightRobots.size() || leftPoints.size() < leftRobots.size()) && !static_points.isEmpty() )
             opp_pos.push_back(static_points.takeFirst());
         else
         {
@@ -129,47 +148,92 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
         }
     }
 
-    QList<double> F2 = distance2OppGoal(candiates);
-    QList<double> F3 = goalOpportunity(candiates);
-    QList<double> F4 = distance2NearestOpp(candiates);
+    QList<double> F2_left = distance2OppGoal(leftPoints);
+    QList<double> F2_right = distance2OppGoal(rightPoints);
 
-    QList<int> weights;
-    for(int i=0;i<ours.size();i++)
+    QList<double> F3_left = goalOpportunity(leftPoints);
+    QList<double> F3_right = goalOpportunity(rightPoints);
+
+    QList<double> F4_left = distance2NearestOpp(leftPoints);
+    QList<double> F4_right = distance2NearestOpp(rightPoints);
+
+    QList<int> left_weights;
+    for(int i=0;i<leftRobots.size();i++)
     {
-        for(int j=0;j<candiates.size();j++)
+        for(int j=0;j<leftPoints.size();j++)
         {
-            double distance = ( wm->ourRobot[ours.at(i)].pos.loc - candiates.at(j) ).length() / maxDistance;
+            double distance = ( wm->ourRobot[leftRobots.at(i)].pos.loc - leftPoints.at(j) ).length() / maxDistance;
 
             double f2;
             //            if( F2.at(j) < 0.1 )
             //                f2 = F2.at(j);
             //            else
-            f2 = 1-F2.at(j);
+            f2 = 1-F2_left.at(j);
 
             int tmp = (int)( (wm->pos_coef[1]* (1-distance)) + (wm->pos_coef[2]* f2 )
-                    + (wm->pos_coef[3]* F3.at(j)) + (wm->pos_coef[4]* F4.at(j)) );
-            weights.append( tmp );
+                    + (wm->pos_coef[3]* F3_left.at(j)) + (wm->pos_coef[4]* F4_left.at(j)) );
+            left_weights.append( tmp );
         }
     }
 
-    MWBM maximum_matching;
-    QList<int> matching = maximum_matching.run(weights,ours.size(),candiates.size(),isMatched);
+    QList<int> right_weights;
+    for(int i=0;i<rightRobots.size();i++)
+    {
+        for(int j=0;j<rightPoints.size();j++)
+        {
+            double distance = ( wm->ourRobot[rightRobots.at(i)].pos.loc - rightPoints.at(j) ).length() / maxDistance;
+
+            double f2;
+            //            if( F2.at(j) < 0.1 )
+            //                f2 = F2.at(j);
+            //            else
+            f2 = 1-F2_right.at(j);
+
+            int tmp = (int)( (wm->pos_coef[1]* (1-distance)) + (wm->pos_coef[2]* f2 )
+                    + (wm->pos_coef[3]* F3_right.at(j)) + (wm->pos_coef[4]* F4_right.at(j)) );
+            right_weights.append( tmp );
+        }
+    }
+
+    MWBM left_maximum_matching;
+    bool left_isMatched;
+    QList<int> left_matching = left_maximum_matching.run(left_weights,leftRobots.size(),leftPoints.size(),left_isMatched);
+
+    MWBM right_maximum_matching;
+    bool right_isMatched;
+    QList<int> right_matching = right_maximum_matching.run(right_weights,rightRobots.size(),rightPoints.size(),right_isMatched);
 
     QList<Positioning_Struct> out;
 
-    if(isMatched)
+    if(left_isMatched)
     {
-        for(int i=0;i<ours.size();i++)
+        for(int i=0;i<leftRobots.size();i++)
         {
             Positioning_Struct tmp;
-            if( ours.at(i) >=0  && (matching.at(i) - ours.size())>=0 )
+            if( leftRobots.at(i) >=0  && (left_matching.at(i) - leftRobots.size())>=0 )
             {
-                tmp.ourI = ours.at(i);
-                tmp.loc = candiates.at(matching.at(i) - ours.size());
+                tmp.ourI = leftRobots.at(i);
+                tmp.loc = leftPoints.at(left_matching.at(i) - leftRobots.size());
                 out.append(tmp);
             }
         }
     }
+
+    if(right_isMatched)
+    {
+        for(int i=0;i<rightRobots.size();i++)
+        {
+            Positioning_Struct tmp;
+            if( rightRobots.at(i) >=0  && (right_matching.at(i) - rightRobots.size())>=0 )
+            {
+                tmp.ourI = rightRobots.at(i);
+                tmp.loc = rightPoints.at(right_matching.at(i) - rightRobots.size());
+                out.append(tmp);
+            }
+        }
+    }
+
+    isMatched = left_isMatched & right_isMatched;
 
     return out;
 }
@@ -177,6 +241,16 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D target, bool &isMatched)
 {
     staticIsFinished = false;
+
+    QList<int> leftRobots , rightRobots;
+
+    for(int i=0;i<ours.size();i++)
+    {
+        if( detectRegion(wm->ourRobot[ours.at(i)].pos.loc) == "left" )
+            leftRobots.append(ours.at(i));
+        else
+            rightRobots.append(ours.at(i));
+    }
 
     QList<Vector2D> static_points;
 
@@ -196,12 +270,14 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
     for(int i=0;i<opp.size();i++)
         opp_pos.append(wm->oppRobot[opp.at(i)].pos.loc);
 
-    QList<Vector2D> candiates;
+    QList<Vector2D> candiates, leftPoints, rightPoints;
     while( candiates.size() < ours.size() )
     {
         if( !staticIsFinished )
         {
             candiates.clear();
+            leftPoints.clear();
+            rightPoints.clear();
 
             Voronoi_Diagram VD;
             VD.setWorldModel(wm);
@@ -296,7 +372,15 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
                 numberOfPoints++;
         }
 
-        if( candiates.size() < ours.size() && !static_points.isEmpty() )
+        for(int i=0;i<candiates.size();i++)
+        {
+            if( detectRegion(candiates.at(i)) == "left" )
+                leftPoints.append(candiates.at(i));
+            else
+                rightPoints.append(candiates.at(i));
+        }
+
+        if( (rightPoints.size() < rightRobots.size() || leftPoints.size() < leftRobots.size()) && !static_points.isEmpty() )
             opp_pos.push_back(static_points.takeFirst());
         else
         {
@@ -305,47 +389,92 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
         }
     }
 
-    QList<double> F2 = distance2OppGoal(candiates);
-    QList<double> F3 = goalOpportunity(candiates);
-    QList<double> F4 = distance2NearestOpp(candiates);
+    QList<double> F2_left = distance2OppGoal(leftPoints);
+    QList<double> F2_right = distance2OppGoal(rightPoints);
 
-    QList<int> weights;
-    for(int i=0;i<ours.size();i++)
+    QList<double> F3_left = goalOpportunity(leftPoints);
+    QList<double> F3_right = goalOpportunity(rightPoints);
+
+    QList<double> F4_left = distance2NearestOpp(leftPoints);
+    QList<double> F4_right = distance2NearestOpp(rightPoints);
+
+    QList<int> left_weights;
+    for(int i=0;i<leftRobots.size();i++)
     {
-        for(int j=0;j<candiates.size();j++)
+        for(int j=0;j<leftPoints.size();j++)
         {
-            double distance = ( wm->ourRobot[ours.at(i)].pos.loc - candiates.at(j) ).length() / maxDistance;
+            double distance = ( wm->ourRobot[leftRobots.at(i)].pos.loc - leftPoints.at(j) ).length() / maxDistance;
 
             double f2;
             //            if( F2.at(j) < 0.1 )
             //                f2 = F2.at(j);
             //            else
-            f2 = 1-F2.at(j);
+            f2 = 1-F2_left.at(j);
 
             int tmp = (int)( (wm->pos_coef[1]* (1-distance)) + (wm->pos_coef[2]* f2 )
-                    + (wm->pos_coef[3]* F3.at(j)) + (wm->pos_coef[4]* F4.at(j)) );
-            weights.append( tmp );
+                    + (wm->pos_coef[3]* F3_left.at(j)) + (wm->pos_coef[4]* F4_left.at(j)) );
+            left_weights.append( tmp );
         }
     }
 
-    MWBM maximum_matching;
-    QList<int> matching = maximum_matching.run(weights,ours.size(),candiates.size(),isMatched);
+    QList<int> right_weights;
+    for(int i=0;i<rightRobots.size();i++)
+    {
+        for(int j=0;j<rightPoints.size();j++)
+        {
+            double distance = ( wm->ourRobot[rightRobots.at(i)].pos.loc - rightPoints.at(j) ).length() / maxDistance;
+
+            double f2;
+            //            if( F2.at(j) < 0.1 )
+            //                f2 = F2.at(j);
+            //            else
+            f2 = 1-F2_right.at(j);
+
+            int tmp = (int)( (wm->pos_coef[1]* (1-distance)) + (wm->pos_coef[2]* f2 )
+                    + (wm->pos_coef[3]* F3_right.at(j)) + (wm->pos_coef[4]* F4_right.at(j)) );
+            right_weights.append( tmp );
+        }
+    }
+
+    MWBM left_maximum_matching;
+    bool left_isMatched;
+    QList<int> left_matching = left_maximum_matching.run(left_weights,leftRobots.size(),leftPoints.size(),left_isMatched);
+
+    MWBM right_maximum_matching;
+    bool right_isMatched;
+    QList<int> right_matching = right_maximum_matching.run(right_weights,rightRobots.size(),rightPoints.size(),right_isMatched);
 
     QList<Positioning_Struct> out;
 
-    if(isMatched)
+    if(left_isMatched)
     {
-        for(int i=0;i<ours.size();i++)
+        for(int i=0;i<leftRobots.size();i++)
         {
             Positioning_Struct tmp;
-            if( ours.at(i) >=0  && (matching.at(i) - ours.size())>=0 )
+            if( leftRobots.at(i) >=0  && (left_matching.at(i) - leftRobots.size())>=0 )
             {
-                tmp.ourI = ours.at(i);
-                tmp.loc = candiates.at(matching.at(i) - ours.size());
+                tmp.ourI = leftRobots.at(i);
+                tmp.loc = leftPoints.at(left_matching.at(i) - leftRobots.size());
                 out.append(tmp);
             }
         }
     }
+
+    if(right_isMatched)
+    {
+        for(int i=0;i<rightRobots.size();i++)
+        {
+            Positioning_Struct tmp;
+            if( rightRobots.at(i) >=0  && (right_matching.at(i) - rightRobots.size())>=0 )
+            {
+                tmp.ourI = rightRobots.at(i);
+                tmp.loc = rightPoints.at(right_matching.at(i) - rightRobots.size());
+                out.append(tmp);
+            }
+        }
+    }
+
+    isMatched = left_isMatched & right_isMatched;
 
     return out;
 }
@@ -395,4 +524,14 @@ QList<double> Positioning::distance2NearestOpp(QList<Vector2D> candidates)
     }
 
     return out;
+}
+
+QString Positioning::detectRegion(Vector2D loc)
+{
+    Line2D ball2Goal(wm->ball.pos.loc, Field::oppGoalCenter);
+
+    if( ball2Goal.getY(loc.x) > loc.y )
+        return "right";
+    else
+        return "left";
 }

@@ -26,6 +26,7 @@ private:
     QList<double> distance2OppGoal(QList<Vector2D> candidates);
     QList<double> goalOpportunity(QList<Vector2D> candidates);
     QList<double> distance2NearestOpp(QList<Vector2D> candidates);
+    QString detectRegion(Vector2D loc);
 
     WorldModel *wm;
     double maxDistance;
