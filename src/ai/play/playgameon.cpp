@@ -104,7 +104,7 @@ int PlayGameOn::findBallOwner()
     QList<int> candidates , ours = wm->kn->ActiveAgents();
     QList<double> distance2Prediction;
 
-    if( wm->ball.isValid)
+    if( wm->ball.isValid && !wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
         candidates = wm->kn->ActiveAgents();
 

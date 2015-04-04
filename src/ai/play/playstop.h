@@ -13,6 +13,7 @@ public:
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
     bool collisionwithDefenders(Vector2D center,Vector2D left,Vector2D right);
+    bool oneOfDefendersIsInPenalty(Vector2D leftPos, Vector2D midPos, Vector2D rightPos);
 
 private:
     TacticGoalie*   tGolie;

@@ -274,8 +274,8 @@ RobotCommand TacticDefender::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
 
-        return rc;
-
+        if( wm->gs == STATE_Stop )
+            return rc;
     }
 
     if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )
