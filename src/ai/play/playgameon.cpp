@@ -106,12 +106,7 @@ int PlayGameOn::findBallOwner()
 
     if( wm->ball.isValid)
     {
-//        Circle2D indexCir(Field::ourGoalCenter, Field::defenderPermittedRegion);
-
-//        if( !indexCir.contains(wm->ball.pos.loc) )
-//            candidates = wm->kn->findAttackers();
-//        else
-            candidates = wm->kn->ActiveAgents();
+        candidates = wm->kn->ActiveAgents();
 
         ours.removeOne(wm->ref_goalie_our);
         candidates.removeOne(wm->ref_goalie_our);
@@ -143,23 +138,18 @@ int PlayGameOn::findBallOwner()
 
         for(int i=0;i<distance2Prediction.size();i++)
         {
-            qDebug()<<"Distance "<<candidates.at(i)<<" is "<<distance2Prediction.at(i);
-            if( min_d - distance2Prediction.at(i) > 100 )
+            if( min_d - distance2Prediction.at(i) > 2*ROBOT_RADIUS )
             {
                 min_d = distance2Prediction.at(i);
                 min_i = candidates.at(i);
                 sameDistances.clear();
                 sameDistances.append(candidates.at(i));
             }
-            else if( fabs(distance2Prediction.at(i)-min_d) < 35 )
+            else if( fabs(distance2Prediction.at(i)-min_d) < 2*ROBOT_RADIUS )
             {
                 sameDistances.append(candidates.at(i));
             }
         }
-
-        for(int i=0;i<sameDistances.size();i++)
-            qDebug()<<"same size : "<<sameDistances.at(i);
-        qDebug()<<"===========";
 
         if( sameDistances.size() > 1 )
         {
@@ -190,7 +180,6 @@ int PlayGameOn::findBallOwner()
 
     }
 
-    qDebug()<<"selected : "<<ownerIndex;
     return ownerIndex;
 }
 
@@ -311,7 +300,8 @@ void PlayGameOn::initRole()
 
     for(int i=0;i<activeAgents.size();i++)
     {
-        wm->ourRobot[activeAgents.at(i)].Role = roles.takeFirst();
+        if( !roles.isEmpty() )
+            wm->ourRobot[activeAgents.at(i)].Role = roles.takeFirst();
     }
 
     if( roles.contains(AgentRole::DefenderLeft) )
@@ -345,15 +335,13 @@ void PlayGameOn::initRole()
 
 void PlayGameOn::coach()
 {
-    QString new_status = wm->kn->gameStatus();
-
-    if( new_status != "Not Changed" )
-        game_status = new_status;
+    game_status = wm->kn->gameStatus(game_status);
 
     int ballOwner = findBallOwner();
 
     Position leftDefPos,rightDefPos,goaliePos;
     int leftID = -1, rightID = -1 , midID = -1;
+    bool leftNav, rightNav;
 
     if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
         leftID = tDefenderLeft->getID();
@@ -367,11 +355,13 @@ void PlayGameOn::coach()
     if( rightChecker > 100  || rightID == -1)
         midID = leftID;
 
-    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,rightDefPos);
+    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
 
     tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
+    tDefenderLeft->setUseNav(leftNav);
     tDefenderRight->setIdlePosition(rightDefPos);
+    tDefenderRight->setUseNav(rightNav);
 
     if( leftID != -1)
     {
@@ -409,24 +399,28 @@ void PlayGameOn::coach()
             setGameOnPos(positions.at(i).ourI,positions.at(i).loc);
         }
     }
-    else
-    {
-        //findBallOwner();
-    }
 }
 
 void PlayGameOn::setGameOnPos(int ourR, Vector2D loc)
 {
+    Vector2D filteredPos;
+
     switch (wm->ourRobot[ourR].Role)
     {
     case AgentRole::AttackerMid:
-        tAttackerMid->setGameOnPositions(loc);
+        filteredPos = midPrevious + (loc - midPrevious) * (wm->var[7]/1000);
+        tAttackerMid->setGameOnPositions(filteredPos);
+        midPrevious = filteredPos;
         break;
     case AgentRole::AttackerRight:
-        tAttackerRight->setGameOnPositions(loc);
+        filteredPos = rightPrevious + (loc - rightPrevious) * (wm->var[7]/1000);
+        tAttackerRight->setGameOnPositions(filteredPos);
+        rightPrevious = filteredPos;
         break;
     case AgentRole::AttackerLeft:
-        tAttackerLeft->setGameOnPositions(loc);
+        filteredPos = leftPrevious + (loc - leftPrevious) * (wm->var[7]/1000);
+        tAttackerLeft->setGameOnPositions(filteredPos);
+        leftPrevious = filteredPos;
         break;
     default:
         break;

@@ -506,13 +506,16 @@ QString Knowledge::gameStatus(QString previousState)
                     else
                     {
                         QList<int> ourAttackers = findAttackers();
-                        double dist2nearestAttacker = (_wm->ourRobot[ourAttackers.at(0)].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
-                        double dist2nearestOpposite = (_wm->ourRobot[oppBallFollower].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+                        QList<int> nearestAttacker = findNearestTo(ourAttackers, _wm->ourRobot[ourBallFollower].pos.loc);
+                        double dist2nearestAttacker = 350000;
+                        if( nearestAttacker.size() > 0 )
+                            dist2nearestAttacker = (_wm->ourRobot[nearestAttacker.at(0)].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+                        double dist2nearestOpposite = (_wm->oppRobot[oppBallFollower].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
 
-                        if( dist2nearestAttacker - dist2nearestOpposite > 1000 )
+                        if( dist2nearestAttacker - dist2nearestOpposite > 500 )
                             out = "Defending";
-                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 500 && dist2nearestOpposite > 500)
-                            out = "Defending";
+//                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 200 && dist2nearestOpposite > 200)
+//                            out = "Defending";
                         else
                         {
                             if( ourDistance2Ball - oppDistance2Ball > 200 )

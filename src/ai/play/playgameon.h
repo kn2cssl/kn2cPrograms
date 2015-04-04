@@ -31,6 +31,10 @@ private:
 
     QString game_status;
 
+    Vector2D midPrevious;
+    Vector2D rightPrevious;
+    Vector2D leftPrevious;
+
     virtual void initRole();
     void coach();
     void setGameOnPos(int ourR,Vector2D loc);
