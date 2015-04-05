@@ -115,7 +115,7 @@ void PlayFreeKickOpp::pressing()
             counter++;
     }
 
-    if( oppInSecure.size() == 1 )
+    if( oppInSecure.size() == 1 && !wm->defenceMode )
         oppPlayers.append(oppInSecure.first() );
 
     Marking defence;
@@ -138,11 +138,11 @@ void PlayFreeKickOpp::pressing()
 
     wm->marking = m2m;
 
-//    if( wm->cmgs.theirDirectKick() )
-//    {
-//        wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
-//        wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
-//    }
+    if( wm->cmgs.theirDirectKick() && wm->defenceMode)
+    {
+        wm->ourRobot[tDefenderLeft->getID()].Status = AgentStatus::BlockingBall;
+        wm->ourRobot[tDefenderRight->getID()].Status = AgentStatus::BlockingBall;
+    }
 }
 
 void PlayFreeKickOpp::setTactics(int index)
@@ -253,6 +253,22 @@ void PlayFreeKickOpp::setPositions()
     }
 
     QList<Vector2D> pointsForIdle;
+
+    if( wm->defenceMode && wm->cmgs.theirIndirectKick() )
+    {
+        Vector2D candidateL_1, candidateL_2, mainL;
+
+        Circle2D cir_l(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
+        Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(15));
+        cir_l.intersection(thirty_l,&candidateL_1,&candidateL_2);
+        if( wm->kn->IsInsideField(candidateL_1) && !wm->kn->IsInsideGolieArea(candidateL_1) )
+            mainL = candidateL_1;
+        else
+            mainL = candidateL_2;
+
+        pointsForIdle.append(Vector2D(mainL.x, -sign(wm->ball.pos.loc.y)*mainL.y));
+    }
+
     pointsForIdle.append(finalPos);
     pointsForIdle.append(rightPos);
     pointsForIdle.append(leftPos);
