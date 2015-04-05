@@ -34,6 +34,7 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 
     QList<Vector2D> opp_pos;
     QList<int> opp = wm->kn->ActiveOppAgents();
+    opp.removeOne(wm->ref_goalie_opp);
 
     for(int i=0;i<opp.size();i++)
         opp_pos.append(wm->oppRobot[opp.at(i)].pos.loc);

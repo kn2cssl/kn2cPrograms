@@ -844,7 +844,7 @@ Position Play::goaliePosition(Vector2D midOfDef)
         }
 
         output.loc = main;
-        output.dir = (-midOfDef + wm->ball.pos.loc).dir().radian();
+        output.dir = (wm->ball.pos.loc - Field::ourGoalCenter).dir().radian();
     }
     else
     {

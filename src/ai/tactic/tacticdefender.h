@@ -16,7 +16,6 @@ public:
 
 private:
     Position idlePosition;
-    bool goANDget;
     bool reach2Ball;
     bool useNav;
     int oppPassReciever;

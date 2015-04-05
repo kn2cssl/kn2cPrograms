@@ -4,7 +4,6 @@ TacticDefender::TacticDefender(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticDefender", worldmodel, parent)
 {
     reach2Ball = false;
-    goANDget = false;
     this->useNav = false;
     oppPassReciever = -1;
 }
@@ -51,11 +50,8 @@ RobotCommand TacticDefender::getCommand()
         if( exactGoal.contains(intersect) && wm->ball.vel.loc.length() > 0.5 )
             ballTowardUsDangerously = true;
 
-        goANDget = goANDget & !wm->defenceMode;
-
-        if( (oppDistance - ourDistance > 1000 || goANDget ) && !ballTowardUsDangerously )
+       if( (oppDistance - ourDistance > 1000) && !ballTowardUsDangerously )
         {
-            goANDget = true;
             Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                     wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
             Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
@@ -306,7 +302,6 @@ void TacticDefender::setIdlePosition(Vector2D pos)
 
 void TacticDefender::resetBooleans()
 {
-    this->goANDget = false;
     this->reach2Ball = false;
 }
 
