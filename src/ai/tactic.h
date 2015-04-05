@@ -21,8 +21,8 @@ public:
     int getID();
     tANDp findTarget();
     void setPlayerToKeep(int index);
-    float detectKickSpeed(Vector2D dest = Vector2D(0,0) );
-
+    float detectKickSpeed(kickType type, bool shoot_sensor);
+    float detectChipSpeed(bool shoot_sensor);
     OperatingPosition BallControl(Vector2D Target , int Prob ,  int ID , double maxSpeed, int Task=0 );
 
 private:

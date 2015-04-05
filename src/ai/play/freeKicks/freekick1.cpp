@@ -72,8 +72,15 @@ void freeKick1::setPositions()
             rightChecker = 0;
     }
 
-    tAttackerLeft->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200));
-    tAttackerRight->setIdlePosition(Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200));
+    Position tmp;
+    tmp.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200);
+    tmp.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
+    tAttackerLeft->setIdlePosition(tmp);
+
+    tmp.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200);
+    tmp.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerRight->getID()].pos.loc).dir().radian();
+    tAttackerRight->setIdlePosition(tmp);
+
     tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
 
     if( checkDistances() )
