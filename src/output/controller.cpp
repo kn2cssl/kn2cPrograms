@@ -82,10 +82,10 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     if(err > 1.5)
     {
-        kp = fabs(err1.length());
-        ki = 1;
-        kd = .9;
-        //integral = integral + err1*AI_TIMER/1000.0 ;
+        kp = fabs(err1.length())/10;
+        ki = 0.9;
+        kd = .4;
+        integral = integral + err1*AI_TIMER/1000.0 ;
     }
     else /*if(err > .04)*/
     {
@@ -93,6 +93,11 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         if(ci.fin_pos.loc == ci.mid_pos.loc)
         {
             kp = fabs(err1.length())+2.9;
+                if((ci.mid_pos.loc - last_setpoint ).length() > 30)
+                {
+                    ki=.3;
+                }
+                last_setpoint = ci.mid_pos.loc;
         }
         else
         {
@@ -130,14 +135,14 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     wintegral = wintegral + werr1*AI_TIMER;
 
     wkp=0.3;
-    wkd=0;
-    if(werr<.3 + 10*fabs(ci.cur_vel.dir))
+    wkd=1;
+    if(werr<.4 + 100*fabs(ci.cur_vel.dir))
     {
          wintegral=0;
         //wintegral = wintegral - 3*werr1*AI_TIMER;
 
-        wkp=0.4;
-        wkd=0.003;
+        wkp=0.04;
+        wkd=0.3;
     }
 
 
