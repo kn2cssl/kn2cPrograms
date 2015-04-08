@@ -224,8 +224,8 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
         DistErr = (OP.pos.loc - RobotPos.loc).length();
-        if(DirErr < 10 && DistErr < BALL_RADIUS * 4 && wm->cmgs.gameOn()) kickPermission = true;
-        if(DirErr < 9 && DistErr < BALL_RADIUS*2 ) kickPermission = true;
+        if(DirErr < 9 && DistErr < BALL_RADIUS * 4 && wm->cmgs.gameOn()) kickPermission = true;
+        if(DirErr < 8 && DistErr < BALL_RADIUS*2 ) kickPermission = true;
 
         if((robotBallDist>ROBOT_RADIUS + 5*BALL_RADIUS
             && robotBallAngele > possessionAngel ))
@@ -294,7 +294,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         //control point >>navigation : OFF
 
         if(wm->cmgs.gameOn())
-            TargetDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
+            TargetDir.setLength( ROBOT_RADIUS- 2*BALL_RADIUS);
         else
         {
             TargetDir.setLength( ROBOT_RADIUS- BALL_RADIUS/2);
@@ -323,7 +323,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         }
 
 
-        if(DirErr < 4 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS)//sensor fault checking
+        if(DirErr < 8 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS/2)//sensor fault checking
         {
             sensorFault++;
             qDebug()<<"ShootSensorFault:"<<ID<<"n:"<<sensorFault;
@@ -360,7 +360,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     OP.shootSensor = shoot_sensor;
 
             //qDebug()<<"StBall!!!"<<(BallLoc - RobotPos.loc).dir().radian() <<wm->ourRobot[ID].pos.dir <<OP.pos.dir<<ID;
-            qDebug()<<"StBall!!!"<<OP.useNav<<ID;
+            //qDebug()<<"StBall!!!"<<OP.useNav<<ID;
 
     return OP;
 }
@@ -402,17 +402,25 @@ tANDp Tactic::findTarget()
                     Segment2D ball2Point(wm->ball.pos.loc,Point);
                     double dist2R = ball2Point.dist(wm->oppRobot[ii].pos.loc);
                     if (dist2R < (ROBOT_RADIUS + BALL_RADIUS + dist_Clearance) ) prob=0;
-                    else if (dist2R < 1000 ) prob = dist2R/10;
+                    else if (dist2R < 500 )
+                    {
+
+
+                        prob = dist2R/5.0;
+//                        qDebug() << " prob : " << prob ;
+                    }
                     else prob = 100;
                     if(prob < min_prob) min_prob = prob;
                 }
             }
-
-            min_prob=min_prob-abs(jj);
+            min_prob=min_prob-fabs(jj/3.0);
+            if(fabs(jj)>7) min_prob = min_prob*0.9;
             if(min_prob < 0) min_prob=0;
             if(min_prob == 0) break;
         }
+//        qDebug() << " Min : " << min_prob;
         tp.prob=min_prob;
+//        qDebug() << "tp.prob : " << tp.prob;
         wm->TANDPis.push_back(tp);
     }
 

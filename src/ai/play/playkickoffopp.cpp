@@ -180,11 +180,14 @@ void PlayKickoffOpp::setPositions()
                 Position pos;
                 pos.loc = interSection;
                 pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-                if( !wm->kn->isOccupied(tAttackerLeft->getID(), pos.loc) )
+                if( wm->ourRobot[tAttackerLeft->getID()].Role == AgentRole::AttackerLeft)
                 {
-                    rightPos = pos;
-                    opps.removeOne(indexOfOpp);
-                    break;
+                    if( !wm->kn->isOccupied(tAttackerLeft->getID(), pos.loc) )
+                    {
+                        rightPos = pos;
+                        opps.removeOne(indexOfOpp);
+                        break;
+                    }
                 }
             }
         }
@@ -215,11 +218,14 @@ void PlayKickoffOpp::setPositions()
                 Position pos;
                 pos.loc = interSection;
                 pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-                if( !wm->kn->isOccupied(tAttackerRight->getID(), pos.loc) )
+                if( wm->ourRobot[tAttackerRight->getID()].Role == AgentRole::AttackerRight)
                 {
-                    leftPos = pos;
-                    opps.removeOne(indexOfOpp);
-                    break;
+                    if( !wm->kn->isOccupied(tAttackerRight->getID(), pos.loc) )
+                    {
+                        leftPos = pos;
+                        opps.removeOne(indexOfOpp);
+                        break;
+                    }
                 }
             }
         }

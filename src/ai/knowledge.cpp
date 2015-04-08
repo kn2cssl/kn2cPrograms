@@ -432,6 +432,7 @@ QString Knowledge::gameStatus(QString previousState)
                 double ourDistance2Ball = (_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
                 double oppDistance2Ball = (_wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc - _wm->ball.pos.loc).length();
                 double threshould = 0.33*fabs((_wm->ourRobot[ourNearestPlayerToBall.at(0)].pos.loc - _wm->oppRobot[oppNearestPlayerToBall.at(0)].pos.loc).length());
+                int ourBallFollower = ourNearestPlayerToBall.at(0);
 
                 if( _wm->kn->IsInsideOppField(_wm->ball.pos.loc) )
                 {
@@ -454,16 +455,44 @@ QString Knowledge::gameStatus(QString previousState)
                 }
                 else
                 {
-                    if( threshould < 300 )
-                        out = "Defending";
+                    if( !isDefender(ourBallFollower))
+                    {
+                        if( threshould < 100 )
+                            out = "Defending";
+                        else
+                        {
+                            if( ourDistance2Ball - oppDistance2Ball > threshould )
+                                out = "Defending";
+                            else if( oppDistance2Ball - ourDistance2Ball > threshould )
+                                out = "Attacking";
+                            else
+                                out = previousState;
+                        }
+                    }
                     else
                     {
-                        if( ourDistance2Ball - oppDistance2Ball > threshould )
+                        QList<int> ourAttackers = findAttackers();
+                        QList<int> nearestAttacker = findNearestTo(ourAttackers, _wm->ourRobot[ourBallFollower].pos.loc);
+                        double dist2nearestAttacker = 350000;
+                        int oppBallFollower = oppNearestPlayerToBall.at(0);
+
+                        if( nearestAttacker.size() > 0 )
+                            dist2nearestAttacker = (_wm->ourRobot[nearestAttacker.at(0)].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+                        double dist2nearestOpposite = (_wm->oppRobot[oppBallFollower].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
+
+                        if( dist2nearestAttacker - dist2nearestOpposite > 500 )
                             out = "Defending";
-                        else if( oppDistance2Ball - ourDistance2Ball > threshould )
-                            out = "Attacking";
+                        //                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 200 && dist2nearestOpposite > 200)
+                        //                            out = "Defending";
                         else
-                            out = previousState;
+                        {
+                            if( ourDistance2Ball - oppDistance2Ball > 200 )
+                                out = "Defending";
+                            else if( oppDistance2Ball - ourDistance2Ball > 500 )
+                                out = "Attacking";
+                            else
+                                out = previousState;
+                        }
                     }
                 }
             }
@@ -512,10 +541,10 @@ QString Knowledge::gameStatus(QString previousState)
                             dist2nearestAttacker = (_wm->ourRobot[nearestAttacker.at(0)].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
                         double dist2nearestOpposite = (_wm->oppRobot[oppBallFollower].pos.loc - _wm->ourRobot[ourBallFollower].pos.loc).length();
 
-                        if( dist2nearestAttacker - dist2nearestOpposite > 500 )
+                        if( dist2nearestAttacker - dist2nearestOpposite > 1000 )
                             out = "Defending";
-//                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 200 && dist2nearestOpposite > 200)
-//                            out = "Defending";
+                        //                        else if( dist2nearestAttacker > 1.5*dist2nearestOpposite && dist2nearestAttacker > 200 && dist2nearestOpposite > 200)
+                        //                            out = "Defending";
                         else
                         {
                             if( ourDistance2Ball - oppDistance2Ball > 200 )
