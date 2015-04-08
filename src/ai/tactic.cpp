@@ -1,4 +1,5 @@
 #include "tactic.h"
+#define CHIP 3
 
 Tactic::Tactic(QString name, WorldModel *worldmodel, QObject *parent) :
     QObject(parent),
@@ -133,15 +134,15 @@ float Tactic::detectKickSpeed(kickType type , bool shoot_sensor)
 
 float Tactic::detectChipSpeed(bool shoot_sensor)
 {
-    if( shoot_sensor )
-    {
-        if( wm->isSim )
-            return 3;
-        else
-            return 254;
-    }
+//    if( shoot_sensor )
+//    {
+//        if( wm->isSim )
+//            return 3;
+//        else
+//            return 254;
+//    }
 
-    return 0;
+    return 255;
 }
 
 OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double maxSpeed, int Task)
@@ -164,13 +165,13 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     bool shoot_sensor = true;
     bool probShoot=false;
     bool shutNonSensor=false;
-    double LargeDisplacement = 40;                                        //Large displacement of ball witch will result in fault in restarts states
+    double LargeDisplacement = 20;                                        //Large displacement of ball witch will result in fault in restarts states
     double LargeSpeedChange = 0.4;
     double LongDribleDistance = 980;
     double attackAngel = AngleDeg ::deg2rad(160);
     double robotBallDist = (wm->ball.pos.loc - wm->ourRobot[ID].pos.loc).length();
     double robotBallAngele = fabs((wm->ball.pos.loc - wm->ourRobot[ID].pos.loc).dir().radian() - wm->ourRobot[ID].pos.dir);
-    double possessionAngel = AngleDeg ::deg2rad(18);
+    double possessionAngel = AngleDeg ::deg2rad(10);
     double chanceProbLimitForShoot=0.1     ;                            //percentage of probability decrese in which robot kicks the ball even if there is large err in aming ball
     double DirErr;
     double DistErr;
@@ -178,7 +179,9 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     Vector2D BallLoc = wm->ball.pos.loc;
     double BallHS = .8;                                                     //ball speed limit for stoping it
     double FireBall = 2;                                                    //ball speed limit for sniping ;)
-
+    double RobotSight = (wm->ball.pos.loc - wm->ourRobot[ID].pos.loc).dir().radian();
+            if (RobotSight > M_PI) RobotSight -= 2 * M_PI;
+            if (RobotSight < -M_PI) RobotSight += 2 * M_PI;
 
     double DAngel = AngleDeg ::deg2rad(100);                                 //Deviation angel witch when it is passed ,ball shuold be stoped
     Position RobotPos = wm->ourRobot[ID].pos;
@@ -192,60 +195,29 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
 
     //////////////////////////////////////////Seize
 
-    if(wm->ball.vel.loc.length()>BallHS
-            && (TargetDir.dir().radian()-DAngel)<BallDir
-            && (-TargetDir.dir().radian()+DAngel)>BallDir
-            && wm->cmgs.gameOn())                       //stop the  ball
+
+
+    TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*3);
+    OP.pos.dir = TargetDir.dir().radian();//RobotSight;//
+    OP.pos.loc = BallPredict - TargetDir;
+    //qDebug()<<"SeizingBall";
+    //possession point check
+    DirErr = AngleDeg::rad2deg(fabs(OP.pos.dir  - RobotPos.dir));
+    if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+
+    DistErr = (OP.pos.loc - RobotPos.loc).length();
+    if(DirErr < 8 && DistErr < BALL_RADIUS * 4 && wm->cmgs.gameOn()) kickPermission = true;
+    if(DirErr < 7 && DistErr < BALL_RADIUS*2 ) kickPermission = true;
+
+    if((/*robotBallDist>ROBOT_RADIUS + 5*BALL_RADIUS &&*/
+        robotBallAngele > possessionAngel ))
     {
-        OP.pos.dir = (BallLoc - RobotPos.loc).dir().radian();//(BallDir)-M_PI;//
-        if (OP.pos.dir > M_PI) OP.pos.dir -= 2 * M_PI;
-        if (OP.pos.dir < -M_PI) OP.pos.dir += 2 * M_PI;
-        qDebug()<<"StopingBall";
-        OP.pos.loc = BallPredict ;
-        OP.useNav = false;
+        kickPermission = false;//reset
+        sensorFault = 0;//reset
+        startProbability = RESET;//reset
+        ballDisplacement = {0,0} ;//reset
+        qDebug()<<"kickperfalse";
     }
-    else if(wm->ball.vel.loc.length() < FireBall)                                                 //Seizing ball
-    {
-        //            double moveDir = (RobotPos.loc - BallPredict).dir().radian();
-        //            DirErr = moveDir - TargetDir.dir().radian();
-        //            if (DirErr > M_PI) DirErr -= 2 * M_PI;
-        //            if (DirErr < -M_PI) DirErr += 2 * M_PI;
-        //if(fabs(DirErr)>attackAngel)                                    //Seize and attack the ball
-        //this stage has not been developed
-        //        {
-        //        }
-
-        TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*3);
-        OP.pos.dir = TargetDir.dir().radian();
-        OP.pos.loc = BallPredict - TargetDir;
-        qDebug()<<"SeizingBall";
-        //possession point check
-        DirErr = AngleDeg::rad2deg(fabs(OP.pos.dir  - RobotPos.dir));
-        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
-
-        DistErr = (OP.pos.loc - RobotPos.loc).length();
-        if(DirErr < 9 && DistErr < BALL_RADIUS * 4 && wm->cmgs.gameOn()) kickPermission = true;
-        if(DirErr < 8 && DistErr < BALL_RADIUS*2 ) kickPermission = true;
-
-        if((robotBallDist>ROBOT_RADIUS + 5*BALL_RADIUS
-            && robotBallAngele > possessionAngel ))
-        {
-            kickPermission = false;//reset
-            sensorFault = 0;//reset
-            startProbability = RESET;//reset
-            ballDisplacement = {0,0} ;//reset
-            qDebug()<<"kickperfalse";
-        }
-    }
-    else
-    {
-        kickPermission = true;
-        shutNonSensor = true;
-        OP.useNav = false ;// OP.ballIsObstacle = false;
-        OP.pos.dir = TargetDir.dir().radian();
-        OP.pos.loc = BallPredict - TargetDir;
-    }
-
 
 
     ///////////////////////////////////////////////
@@ -266,7 +238,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
             dribblingFault1000mm = true;
             kickPermission=false;
         }
-        if((ballDisplacement-BallLoc).length()>LargeDisplacement)
+        if(((ballDisplacement-BallLoc).length()>LargeDisplacement && !wm->cmgs.gameOn()) || Task== CHIP)
         {
             dribblingFault50mm = true;
             qDebug()<<"dribblingFault50mm";
@@ -293,8 +265,8 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
 
         //control point >>navigation : OFF
 
-        if(wm->cmgs.gameOn())
-            TargetDir.setLength( ROBOT_RADIUS- 2*BALL_RADIUS);
+        if(wm->cmgs.gameOn() || Task == CHIP)
+            TargetDir.setLength( ROBOT_RADIUS- BALL_RADIUS*1.5);
         else
         {
             TargetDir.setLength( ROBOT_RADIUS- BALL_RADIUS/2);
@@ -311,30 +283,30 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
         DistErr = (OP.pos.loc - RobotPos.loc).length();
 
 
-        if((DirErr < 4 && DistErr < 2 * ROBOT_RADIUS) || (shutNonSensor && DirErr < 9 && DistErr < 3 * ROBOT_RADIUS))
-        {
-            OP.readyToShoot = true ;
-            shoot_sensor = true ;
-            qDebug()<<"SensorShoot" ;
-        }
-        else
-        {
-            OP.readyToShoot = false;
-        }
+//        if((DirErr < 4 && DistErr < 2 * ROBOT_RADIUS) || (shutNonSensor && DirErr < 9 && DistErr < 3 * ROBOT_RADIUS))
+//        {
+//            OP.readyToShoot = true ;
+//            shoot_sensor = true ;
+//            qDebug()<<"SensorShoot" ;
+//        }
+//        else
+//        {
+//            OP.readyToShoot = false;
+//        }
 
 
-        if(DirErr < 8 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS/2)//sensor fault checking
+        if(DirErr < 5 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS*2)//sensor fault checking
         {
             sensorFault++;
             qDebug()<<"ShootSensorFault:"<<ID<<"n:"<<sensorFault;
         }
 
         if((DirErr < 2 && robotBallDist < ROBOT_RADIUS)
-                || ((sensorFault>4)
+                || ((sensorFault>10)
                     ||  probShoot && wm->cmgs.gameOn()
                     || (dribblingFault1000mm && wm->cmgs.gameOn())
                     || (dribblingFault50mm && !wm->cmgs.gameOn())
-                    ) && DirErr < 7 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS)
+                    ) && DirErr < 7 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS*2)
         {
 
             sensorFault=0;
@@ -418,9 +390,9 @@ tANDp Tactic::findTarget()
             if(min_prob < 0) min_prob=0;
             if(min_prob == 0) break;
         }
-//        qDebug() << " Min : " << min_prob;
+       // qDebug() << " Min : " << min_prob;
         tp.prob=min_prob;
-//        qDebug() << "tp.prob : " << tp.prob;
+       // qDebug() << "tp.prob : " << tp.prob;
         wm->TANDPis.push_back(tp);
     }
 
