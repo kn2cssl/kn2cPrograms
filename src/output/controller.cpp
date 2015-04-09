@@ -82,9 +82,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     if(err > 1.5)
     {
-        kp = fabs(err1.length())/10;
-        ki = 0.9;
-        kd = .4;
+        kp = fabs(err1.length());
+        ki = 0.01;
+        kd = 1;
         integral = integral + err1*AI_TIMER/1000.0 ;
     }
     else /*if(err > .04)*/
@@ -92,7 +92,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         integral.scale(0);
         if(ci.fin_pos.loc == ci.mid_pos.loc)
         {
-            kp = fabs(err1.length())+2.9;
+            kp = 3-fabs(ci.cur_vel.loc.length());fabs(err1.length())+2.9;////day2//f
                 if((ci.mid_pos.loc - last_setpoint ).length() > 30)
                 {
                     ki=.3;
@@ -103,15 +103,28 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         {
             kp = 4;
         }
-
-        kd = 0.02;
+        kd = 3;
 
     }
+
+
+
 
     derived1 = (ci.cur_vel.loc - derived0)*0.1;
     derived0 = ci.cur_vel.loc;
 
+
+
     LinearSpeed = err1*kp + integral*ki*err - derived1*kd;
+
+
+    ////////////////////////////////////////day2
+    if((ci.mid_pos.loc - last_setpoint).length()>1)
+    {
+        LinearSpeed = LinearSpeed_past + (LinearSpeed - LinearSpeed_past)*0.5;
+        LinearSpeed_past = LinearSpeed ;
+    }
+    ////////////////////////////////////////day2
 
     if(LinearSpeed.length()>ci.maxSpeed)
     {
@@ -131,18 +144,18 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     double werr = fabs(werr1);
 
 
-    wki=0.003*fabs(werr0);
-    wintegral = wintegral + werr1*AI_TIMER;
+    //wki=0.003*fabs(werr0);
+    //wintegral = wintegral + werr1*AI_TIMER;
 
-    wkp=0.3;
+    wkp=1*fabs(werr0);//0.3;
     wkd=1;
-    if(werr<.4 + 100*fabs(ci.cur_vel.dir))
+    if(werr<.3 + 10*fabs(ci.cur_vel.dir))
     {
          wintegral=0;
         //wintegral = wintegral - 3*werr1*AI_TIMER;
 
-        wkp=0.04;
-        wkd=0.3;
+        wkp=0.4;
+        wkd=0.003;
     }
 
 
