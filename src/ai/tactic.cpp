@@ -197,6 +197,28 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
 
 
 
+//    TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*4);
+//    OP.pos.dir = TargetDir.dir().radian();//RobotSight;//
+//    OP.pos.loc = BallPredict - TargetDir;
+//    //qDebug()<<"SeizingBall";
+//    //possession point check
+//    DirErr = AngleDeg::rad2deg(fabs(OP.pos.dir  - RobotPos.dir));
+//    if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
+
+//    DistErr = (OP.pos.loc - RobotPos.loc).length();
+//    if(DirErr < 8 && DistErr < BALL_RADIUS * 5 /*&& wm->cmgs.gameOn()*/) kickPermission = true;
+//    //if(DirErr < 7 && DistErr < BALL_RADIUS*4 ) kickPermission = true;
+
+//    if((robotBallAngele > possessionAngel ||robotBallDist>ROBOT_RADIUS + 5*BALL_RADIUS))//day2
+//    {
+//        kickPermission = false;//reset
+//        sensorFault = 0;//reset
+//        startProbability = RESET;//reset
+//        ballDisplacement = {0,0} ;//reset
+//        qDebug()<<"kickperfalse";
+//    }
+
+
     TargetDir.setLength( ROBOT_RADIUS + BALL_RADIUS*3);
     OP.pos.dir = TargetDir.dir().radian();//RobotSight;//
     OP.pos.loc = BallPredict - TargetDir;
@@ -206,7 +228,7 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
     if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
 
     DistErr = (OP.pos.loc - RobotPos.loc).length();
-    if(DirErr < 8 && DistErr < BALL_RADIUS * 4 && wm->cmgs.gameOn()) kickPermission = true;
+    if(DirErr < 8 && DistErr < BALL_RADIUS * 5 && wm->cmgs.gameOn()) kickPermission = true;
     if(DirErr < 7 && DistErr < BALL_RADIUS*1 ) kickPermission = true;
 
     if((robotBallAngele > possessionAngel ||robotBallDist>ROBOT_RADIUS + 5*BALL_RADIUS))//day2
@@ -302,11 +324,11 @@ OperatingPosition Tactic::BallControl(Vector2D Target, int Prob, int ID, double 
             }
 
             if((DirErr < 2 && robotBallDist < ROBOT_RADIUS)
-                    || ((sensorFault>8)//day2//(sensorFault>10)
-                        ||  probShoot && wm->cmgs.gameOn()
+                    || (((sensorFault>8)//day2//(sensorFault>10)
+                        ||  (probShoot && wm->cmgs.gameOn())
                         || (dribblingFault1000mm && wm->cmgs.gameOn())
                         || (dribblingFault50mm && !wm->cmgs.gameOn())
-                        ) && DirErr < 7 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS)
+                        ) && DirErr < 7 && robotBallDist < ROBOT_RADIUS+BALL_RADIUS))
             {
 
                 sensorFault=0;

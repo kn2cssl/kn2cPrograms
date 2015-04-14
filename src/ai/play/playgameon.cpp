@@ -106,7 +106,10 @@ int PlayGameOn::findBallOwner()
 
     if( wm->ball.isValid && !wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
-        candidates = wm->kn->ActiveAgents();
+        if( wm->defenceMode )
+            candidates = wm->kn->findAttackers();
+        else
+            candidates = wm->kn->ActiveAgents();
 
         ours.removeOne(wm->ref_goalie_our);
         candidates.removeOne(wm->ref_goalie_our);
@@ -138,14 +141,14 @@ int PlayGameOn::findBallOwner()
 
         for(int i=0;i<distance2Prediction.size();i++)
         {
-            if( min_d - distance2Prediction.at(i) > 2*ROBOT_RADIUS )
+            if( min_d - distance2Prediction.at(i) > ROBOT_RADIUS )
             {
                 min_d = distance2Prediction.at(i);
                 min_i = candidates.at(i);
                 sameDistances.clear();
                 sameDistances.append(candidates.at(i));
             }
-            else if( fabs(distance2Prediction.at(i)-min_d) < 2*ROBOT_RADIUS )
+            else if( fabs(distance2Prediction.at(i)-min_d) < ROBOT_RADIUS )
             {
                 sameDistances.append(candidates.at(i));
             }

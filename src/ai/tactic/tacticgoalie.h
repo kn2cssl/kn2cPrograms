@@ -12,6 +12,8 @@ public:
     void setIdlePosition(Position pos);
     void setIdlePosition(Vector2D pos);
 
+    bool isVeryCloseToGoal(Vector2D ballPoint);
+
 private:
     Position idlePosistion;
     bool reach2Ball;

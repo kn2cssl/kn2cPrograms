@@ -10,6 +10,9 @@
 #define BALL_RADIUS     22
 #define ROBOT_RADIUS    90.0
 
+#define PICOFCIR 500;
+#define MARGINFROMGOALPOST 300;
+
 #define NUMOFDEFENDERS 2
 
 #define DangerDist 300

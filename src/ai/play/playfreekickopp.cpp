@@ -30,7 +30,7 @@ int PlayFreeKickOpp::enterCondition()
             rolesIsInit = false;
             go2ThePositions = false;
 
-            waitTimer->start(250);
+            waitTimer->start(10);
         }
         //        else
         //        {
@@ -115,8 +115,8 @@ void PlayFreeKickOpp::pressing()
             counter++;
     }
 
-    if( oppInSecure.size() == 1 && !wm->defenceMode )
-        oppPlayers.append(oppInSecure.first() );
+//    if( wm->cmgs.theirDirectKick() && oppInSecure.size() == 1 )
+//        oppPlayers.append(oppInSecure.first() );
 
     Marking defence;
     defence.setWorldModel(wm);
@@ -254,12 +254,12 @@ void PlayFreeKickOpp::setPositions()
 
     QList<Vector2D> pointsForIdle;
 
-    if( wm->defenceMode && wm->cmgs.theirIndirectKick() )
+    if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
     {
         Vector2D candidateL_1, candidateL_2, mainL;
 
         Circle2D cir_l(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
-        Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(15));
+        Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(0));
         cir_l.intersection(thirty_l,&candidateL_1,&candidateL_2);
         if( wm->kn->IsInsideField(candidateL_1) && !wm->kn->IsInsideGolieArea(candidateL_1) )
             mainL = candidateL_1;
@@ -267,6 +267,10 @@ void PlayFreeKickOpp::setPositions()
             mainL = candidateL_2;
 
         pointsForIdle.append(Vector2D(mainL.x, -sign(wm->ball.pos.loc.y)*mainL.y));
+
+        pointsForIdle.append(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+
+//        pointsForIdle.append(Vector2D(mainL.x, sign(wm->ball.pos.loc.y)*mainL.y));
     }
 
     pointsForIdle.append(finalPos);

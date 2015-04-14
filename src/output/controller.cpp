@@ -59,6 +59,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     /******************************Linear Speed Controller************************************/
     err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
 
+//    if(ci.maxSpeed == 3)
+//        ci.maxSpeed == 4;
+
 
     ///!
 //    if((ci.mid_pos.loc - last_setpoint ).length() > 30)
@@ -84,7 +87,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     {
         kp = fabs(err1.length());
         ki = 0.01;
-        kd = 1;
+        kd = 3;
         integral = integral + err1*AI_TIMER/1000.0 ;
     }
     else /*if(err > .04)*/
@@ -92,7 +95,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         integral.scale(0);
         if(ci.fin_pos.loc == ci.mid_pos.loc)
         {
-            kp = 3-fabs(ci.cur_vel.loc.length());fabs(err1.length())+2.9;////day2//f
+            kp = 5-2*fabs(ci.cur_vel.loc.length());fabs(err1.length())+2.9;////day2//f
                 if((ci.mid_pos.loc - last_setpoint ).length() > 30)
                 {
                     ki=.3;
@@ -118,19 +121,27 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     LinearSpeed = err1*kp + integral*ki*err - derived1*kd;
 
 
-    ////////////////////////////////////////day2
-    if((ci.mid_pos.loc - last_setpoint).length()>1)
+//    ////////////////////////////////////////day2
+    double diff_angel = ci.cur_vel.dir - LinearSpeed.dir().radian();
+    if (diff_angel > M_PI) diff_angel -= 2 * M_PI;
+    if (diff_angel < -M_PI) diff_angel += 2 * M_PI;
+    if(fabs(diff_angel) > M_PI*0.7)
     {
-        LinearSpeed = LinearSpeed_past + (LinearSpeed - LinearSpeed_past)*0.5;
-        LinearSpeed_past = LinearSpeed ;
+        LinearSpeed = LinearSpeed_past + (LinearSpeed - LinearSpeed_past)*0.01;//*50/(ci.mid_pos.loc - last_setpoint).length();
+
+        if(ci.id==8)
+        qDebug()<<"filter"<<(ci.mid_pos.loc - last_setpoint).length();
     }
-    ////////////////////////////////////////day2
+    LinearSpeed_past = LinearSpeed ;
+//    ////////////////////////////////////////day2
 
     if(LinearSpeed.length()>ci.maxSpeed)
     {
         LinearSpeed.setLength(ci.maxSpeed);
     }
 
+    if(ci.id == 8)
+    qDebug()<<LinearSpeed.length();
     Vector2D RotLinearSpeed=LinearSpeed;
     LinearSpeed_past = LinearSpeed ;
     /*************************************Rotation ctrl**********************/

@@ -44,7 +44,7 @@ RobotCommand TacticDefender::getCommand()
 
         Ray2D ballRay(wm->ball.pos.loc, wm->ball.vel.loc.dir());
         Line2D goalLine(Field::ourGoalPost_L, Field::ourGoalPost_R);
-        Segment2D exactGoal(Vector2D(Field::ourGoalPost_L.x,Field::ourGoalPost_L.y+300), Vector2D(Field::ourGoalPost_R.x,Field::ourGoalPost_R.y-300));
+        Segment2D exactGoal(Vector2D(Field::ourGoalPost_L.x,Field::ourGoalPost_L.y+500), Vector2D(Field::ourGoalPost_R.x,Field::ourGoalPost_R.y-500));
         Vector2D intersect = ballRay.intersection(goalLine);
         bool ballTowardUsDangerously = false;
         if( exactGoal.contains(intersect) && wm->ball.vel.loc.length() > 0.5 )
@@ -54,23 +54,29 @@ RobotCommand TacticDefender::getCommand()
         {
             Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                     wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-            Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
-            Circle2D cir(wm->ball.pos.loc, 60);
+//            Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
+//            Circle2D cir(wm->ball.pos.loc, 60);
             Vector2D first,second,main,chipPoint;
-            cir.intersection(line,&first,&second);
-            double firstDist , secondDist;
-            firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
-            secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
-            if( firstDist < secondDist)
-            {
-                main = first;
-                chipPoint = second;
-            }
-            else
-            {
-                main = second;
-                chipPoint = first;
-            }
+//            cir.intersection(line,&first,&second);
+//            double firstDist , secondDist;
+//            firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
+//            secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
+//            if( firstDist < secondDist)
+//            {
+//                main = first;
+//                chipPoint = second;
+//            }
+//            else
+//            {
+//                main = second;
+//                chipPoint = first;
+//            }
+
+            main = ballPredictedPos;
+            main.x = main.x - 200;
+
+            chipPoint = ballPredictedPos;
+            chipPoint.x = chipPoint.x + 200;
 
             rc.fin_pos.loc = main;
 
@@ -106,11 +112,11 @@ RobotCommand TacticDefender::getCommand()
                         }
                     }
 
-                    if( p.readyToShoot && chipIsSuitable )
-                    {
-                        rc.kickspeedz = detectChipSpeed(p.shootSensor);
-                        qDebug()<<"Chippppppppppp";
-                    }
+//                    if( p.readyToShoot && chipIsSuitable )
+//                    {
+//                        rc.kickspeedz = detectChipSpeed(p.shootSensor);
+//                        qDebug()<<"Chippppppppppp";
+//                    }
 
                     rc.fin_pos = p.pos;
                     rc.useNav = p.useNav;
@@ -264,7 +270,7 @@ RobotCommand TacticDefender::getCommand()
     {
         rc.fin_pos = idlePosition;
 
-        rc.maxSpeed = 2;
+        rc.maxSpeed = 3;
 
         rc.useNav = this->useNav;
         rc.isBallObs = true;
@@ -276,15 +282,10 @@ RobotCommand TacticDefender::getCommand()
 
     if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )
     {
-        Circle2D attackerCircles(Field::ourGoalCenter , Field::goalCircle_R+300);
-        Line2D robotRay(rc.fin_pos.loc,wm->ourRobot[this->id].pos.loc);
-        Vector2D firstPoint,secondPoint;
-        attackerCircles.intersection(robotRay,&firstPoint,&secondPoint);
-
-        if( (wm->ourRobot[this->id].pos.loc-firstPoint).length() < (wm->ourRobot[this->id].pos.loc-secondPoint).length() )
-            rc.fin_pos.loc = firstPoint;
-        else
-            rc.fin_pos.loc = secondPoint;
+        Vector2D gc2fp = ( rc.fin_pos.loc - Field::ourGoalCenter);
+        gc2fp.setLength(Field::goalCircleDEF_R);
+        rc.fin_pos.loc = gc2fp + Field::ourGoalCenter;
+        rc.fin_pos.dir = gc2fp.dir().radian();
     }
 
     return rc;

@@ -4,6 +4,8 @@
 #include "tactic.h"
 #include "geom2/shape2d.h"
 
+#define SECURE_DIST 600
+
 class TacticAttacker : public Tactic
 {
     Q_OBJECT

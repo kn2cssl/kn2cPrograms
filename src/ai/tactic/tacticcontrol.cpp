@@ -48,7 +48,7 @@ rc.fin_pos.dir=a.dir().radian();
 // rc.fin_pos.dir=a.dir().radian();
 // rc.fin_pos.loc = wm->ball.pos.loc + b;
 /////////////////////////////////////////////////////////////////////////////////
-rc.maxSpeed=2;
+rc.maxSpeed=4;
 rc.useNav = true;false;
 rc.isBallObs = true;
 rc.isKickObs = true;

@@ -1016,7 +1016,7 @@
            </font>
           </property>
           <property name="text">
-           <string>2</string>
+           <string>3</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_55">
@@ -1081,8 +1081,11 @@
           <property name="text">
            <string>FreeKick2</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk3_checkBox">
@@ -1097,8 +1100,11 @@
           <property name="text">
            <string>FreeKick3</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk4_checkBox">
@@ -1113,8 +1119,11 @@
           <property name="text">
            <string>FreeKick4</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk5_checkBox">
@@ -1129,8 +1138,11 @@
           <property name="text">
            <string>FreeKick5</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk6_checkBox">
@@ -1145,8 +1157,11 @@
           <property name="text">
            <string>FreeKick6</string>
           </property>
-          <property name="checked">
+          <property name="checkable">
            <bool>true</bool>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk7_checkBox">
@@ -1161,8 +1176,11 @@
           <property name="text">
            <string>FreeKick7</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk8_checkBox">
@@ -1177,8 +1195,11 @@
           <property name="text">
            <string>FreeKick8</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk9_checkBox">
@@ -1193,8 +1214,11 @@
           <property name="text">
            <string>FreeKick9</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk10_checkBox">
@@ -1231,8 +1255,11 @@
           <property name="text">
            <string>FreeKick11</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QCheckBox" name="fk47_checkBox">
@@ -1247,8 +1274,11 @@
           <property name="text">
            <string>FreeKick47</string>
           </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
           <property name="checked">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
          <widget class="QLabel" name="label_56">
@@ -1284,7 +1314,7 @@
            </font>
           </property>
           <property name="text">
-           <string>3</string>
+           <string>9</string>
           </property>
          </widget>
          <widget class="QCheckBox" name="useShootSensor_chBox">
@@ -1324,6 +1354,9 @@
           </property>
           <property name="text">
            <string>Defence Until Death</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
           </property>
          </widget>
         </widget>

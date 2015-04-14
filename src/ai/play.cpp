@@ -122,7 +122,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 else //(BallOwner_Finded)
                 {
                     bool Is_Danger_Player=false;
-                    Is_Danger_Player = Danger_Player_Direction(Player1,150);
+                    Is_Danger_Player = Danger_Player_Direction(Player1,200);
                     if(Is_Danger_Player) Ref_2Deff_Player(Player1);
                     else // The Ball Owner Player Is Not Toward Our Goal
                     {
@@ -252,11 +252,11 @@ void Play::Ref_2Deff_Player(Position p)
             Deffence_center = wm->ball.pos.loc + B2DC ;
 
             Left_loc = Wall;
-            Left_loc.setLength(Wall_length/3);
+            Left_loc.setLength(Wall_length/4);// 3
             if(Dist_2_Deffence<700) Left_loc.setLength(90) ;
             Left_loc = Deffence_center-Left_loc;
             Right_loc = Wall;
-            Right_loc.setLength(Wall_length/3);
+            Right_loc.setLength(Wall_length/4);// 3
             if(Dist_2_Deffence<700) Right_loc.setLength(90) ;
             Right_loc = Deffence_center+Right_loc;
         }
@@ -773,8 +773,8 @@ Position Play::goaliePosition(Vector2D midOfDef)
 
     if( wm->ball.isValid )
     {
-        int picOfCir = 500;
-        int marginFromGoalPost = 300;
+        int picOfCir = PICOFCIR;
+        int marginFromGoalPost = MARGINFROMGOALPOST;
 
         double halfOfGoal = (Field::ourGoalPost_L.y-Field::ourGoalPost_R.y)/2;
 
@@ -989,7 +989,7 @@ bool Play::Find_AnyOther_Opp_Dangerous()
     //    Vector2D predictedPos;
     double BallVell_Dir = wm->ball.vel.loc.dir().radian();
     double min_Diff_ang=100;
-    if( wm->ball.isValid && wm->ball.vel.loc.length() > 0.8)
+    if( wm->ball.isValid && wm->ball.vel.loc.length() > 0.5)
     {
         Vector2D B_P2 = Vector2D(0,0);
         for(int jj=0;jj<PLAYERS_MAX_NUM;jj++)
@@ -1008,7 +1008,7 @@ bool Play::Find_AnyOther_Opp_Dangerous()
             }
         }
 
-        if(min_Diff_ang > AngleDeg::deg2rad(20) || wm->ball.vel.loc.length() < 0.4 )
+        if(min_Diff_ang > AngleDeg::deg2rad(30) || wm->ball.vel.loc.length() < 0.4 )
         {
             //            qDebug() << "!! Check Any Other Dangerous !! ";
             return false ;

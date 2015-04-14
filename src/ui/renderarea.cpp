@@ -97,7 +97,8 @@ void RenderArea::paintEvent(QPaintEvent *)
         {
             for(int i=0;i<_sc->wm->TANDPis.size();i++)
             {
-                int tmp= 2.5*_sc->wm->TANDPis.at(i).prob;
+                int tmp= 5.0*_sc->wm->TANDPis.at(i).prob;
+                if(tmp>255) tmp=255;
                 painter.setPen(QColor::fromRgb(0,tmp,tmp));
                 QPoint pnt;
                 pnt.setX(_sc->wm->TANDPis.at(i).pos.x/WORLD_SCALE); pnt.setY(-_sc->wm->TANDPis.at(i).pos.y/WORLD_SCALE);
