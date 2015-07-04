@@ -9,7 +9,6 @@ References
 ========
 
 <b> SSL: </b>  <br>
-http://small-size.informatik.uni-bremen.de/  <br>
 http://robocupssl.cpe.ku.ac.th/  <br>
 http://robocupssl.cpe.ku.ac.th/rules:main  <br>
 
