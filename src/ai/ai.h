@@ -13,7 +13,7 @@ class AI : public QObject
 {
     Q_OBJECT
 public:
-    explicit AI(WorldModel* worldmodel, OutputBuffer* outputbuffer, QObject *parent = 0);
+    explicit AI(WorldModel* worldmodel, QString field_size, OutputBuffer* outputbuffer, QObject *parent = 0);
     FPSCounter fps;
     Play* getCurrentPlay();
     Tactic* getCurrentTactic(int i);

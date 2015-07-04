@@ -12,6 +12,10 @@ Soccer::Soccer(QObject *parent) :
     QString rip = s.Get(gm, "RefIP");
     log += "RefIP : " + rip + "\n";
 
+    field = s.Get("Field","Size");
+    log += "Field Size : "+ field + "\n";
+    qDebug()<<"field : "<<field;
+
     int rport = s.Get(gm, "RefPort").toInt();
     log += "RefPort : " + QString::number(rport) + "\n";
 
@@ -59,7 +63,11 @@ Soccer::Soccer(QObject *parent) :
     wm = new WorldModel(outputbuffer);
     wm->ourColor = tcolor;
     MapSearchNode::wm = wm;
-    sslvision = new SSLVision(vip, vport, tcolor, tside, tcam, wm);
+    if( field == "Double" )
+        sslvision = new SSLVision_Double(vip, vport, tcolor, tside, tcam, wm);
+    else
+        sslvision = new SSLVision_Single(vip, vport, tcolor, tside, tcam, wm);
+
     sslvision->Start();
 
     sslrefbox = 0;
@@ -130,6 +138,6 @@ Soccer::Soccer(QObject *parent) :
     }
 
     // AI
-    ai = new AI(wm, outputbuffer, this);
+    ai = new AI(wm, field,outputbuffer, this);
     ai->Start();
 }

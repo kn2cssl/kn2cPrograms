@@ -2,11 +2,14 @@
 #define CONSTANTS_H
 
 #include "geom.h"
+#include <QString>
 
 // global constants
 #define PLAYERS_MAX_NUM 12
-#define FIELD_MAX_X     4750
-#define FIELD_MAX_Y     3250
+#define FIELD_DOUBLE_MAX_X     4750
+#define FIELD_DOUBLE_MAX_Y     3250
+#define FIELD_SINGLE_MAX_X     3275
+#define FIELD_SINGLE_MAX_Y     2275
 #define BALL_RADIUS     22
 #define ROBOT_RADIUS    90.0
 
@@ -36,72 +39,45 @@
 
 namespace Field
 {
-const double MaxX = 4500;
-const double MinX = -4500;
-const double MaxY = 3000;
-const double MinY = -3000;
+extern double MaxX;
+extern double MinX;
+extern double MaxY;
+extern double MinY;
 
-const double GoalDeep = 180;
+extern double GoalDeep;
 
-const Vector2D upperLeftCorner(MinX + 125, MaxY - 125);
-const Vector2D upperRightCorner(MaxX - 125, MaxY - 125);
-const Vector2D bottomLeftCorner(MinX + 125, MinY + 125);
-const Vector2D bottomRightCorner(MaxX - 125, MinY + 125);
+extern Vector2D upperLeftCorner;
+extern Vector2D upperRightCorner;
+extern Vector2D bottomLeftCorner;
+extern Vector2D bottomRightCorner;
 
-const Line2D leftLine(Vector2D(MinX,MinY), Vector2D(MinX, MaxY));
-const Line2D midLine(Vector2D(0,MinY), Vector2D(0, MaxY));
-const Line2D rightLine(Vector2D(MaxX, MinY), Vector2D(MaxX, MaxY));
+extern Line2D leftLine, midLine, rightLine;
 
-const Line2D upLine(Vector2D(MinX, MaxY), Vector2D(MaxX, MaxY));
-const Line2D bottomLine(Vector2D(MinX, MinY), Vector2D(MaxX, MinY));
+extern Line2D upLine, bottomLine;
 
-const double centerCircle_R = 500;
-const double goalCircle_R = 1000;
-const double goalCircleEX_R = 600 + 3*ROBOT_RADIUS + 20;
-const double goalCircleDEF_R = goalCircle_R + centerCircle_R/2 + 200;
+extern double centerCircle_R, goalCircle_R, goalCircleEX_R, goalCircleDEF_R;
 
 // Ours.
-const Vector2D ourGoalCenter(MinX, 0);
-const Vector2D ourGoalPost_L(MinX, 500);
-const Vector2D ourGoalPost_R(MinX, -500);
-const double defenceLineLinear = 500;
-const Vector2D defenceLineLinear_L(MinX, 250);
-const Vector2D defenceLineLinear_R(MinX, -250);
-const Vector2D ourPenaltySpot(MinX+1000,0);
+extern Vector2D ourGoalCenter, ourGoalPost_L, ourGoalPost_R;
+extern double defenceLineLinear;
+extern Vector2D defenceLineLinear_L, defenceLineLinear_R;
+extern Vector2D ourPenaltySpot;
 
-const Vector2D ourDefPost_L(MinX, 1300);
-const Vector2D ourDefPost_R(MinX, -1300);
+extern Vector2D ourDefPost_L, ourDefPost_R;
 
-const Circle2D ourDefenceCircle(ourGoalCenter,750+(ROBOT_RADIUS*3.25));
+extern Circle2D ourDefenceCircle;
 
-const double defenderPermittedRegion = 0.7*MaxX;
+extern double defenderPermittedRegion;
 
 // Opps.
-const Vector2D oppGoalCenter(MaxX, 0);
-const Vector2D oppGoalPost_L(MaxX, 500);
-const Vector2D oppGoalPost_R(MaxX, -500);
-const Vector2D oppGoalCC_L(MaxX, 250);
-const Vector2D oppGoalCC_R(MaxX, -250);
-const Vector2D oppPenaltySpot(MaxX-1000,0);
+extern Vector2D oppGoalCenter, oppGoalPost_L, oppGoalPost_R;
+extern Vector2D oppGoalCC_L,oppGoalCC_R;
+extern Vector2D oppPenaltySpot;
 
-const Vector2D ourPenaltyParallelLineCenter(oppPenaltySpot.x - 600, 0);
-const Vector2D oppPenaltyParallelLineCenter(ourPenaltySpot.x + 600, 0);
-//const Vector2D oppPenalty_Shoot = new Vector2D(3010, 500);
+extern Vector2D ourPenaltyParallelLineCenter;
+extern Vector2D oppPenaltyParallelLineCenter;
 
-//const Vector2D MidField_R = new Vector2D((-ConstVars.ROBOT_RADIUS)*2.5, -1800);
-//const Vector2D MidField_L = new Vector2D((-ConstVars.ROBOT_RADIUS)*2.5, 1800);
-
-//const Vector2D P1(-2510, 175);
-//const Vector2D P2(-2510, -175);
-
-//public static double BALL_OBSTACLE = ROBOT_RADIUS * 2;
-//public static double PASS_RADIUS = 2000;
-
-//public static double MAX_KICKABLE_DISTANCE = ROBOT_RADIUS + 30;
-//public static double MAX_KICKABLE_ANGLE = 20*System.Math.PI/180;
-
-//public static double HEADING_ANGLE_TRESHOLD = System.Math.PI/3;
-//public static double MAX_AHEAD_OPP_DISTANCE = 200;
+void setup_consts(QString field_size);
 }
 
 #endif // CONSTANTS_H

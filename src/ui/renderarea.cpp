@@ -4,7 +4,21 @@ RenderArea::RenderArea(Soccer* sc) :
     QWidget()
 {
     _sc = sc;
-    brush_field = new QBrush(QPixmap(":/resources/images/Field2.jpg"));
+    QString pic_address;
+    if( sc->field == "Double")
+    {
+        pic_address = ":/resources/images/Field2.jpg";
+        this->CENTER_X = DOUBLE_CENTER_X;
+        this->CENTER_Y = DOUBLE_CENTER_Y;
+    }
+    else
+    {
+        pic_address = ":/resources/images/Field.jpg";
+        this->CENTER_X = SINGLE_CENTER_X;
+        this->CENTER_Y = SINGLE_CENTER_Y;
+    }
+
+    brush_field = new QBrush(QPixmap(pic_address));
     brush_ball = new QBrush(QColor::fromRgb(255,200,0),Qt::SolidPattern);
     brush_yrobot = new QBrush(QColor::fromRgb(255,255,0),Qt::SolidPattern);
     brush_brobot = new QBrush(QColor::fromRgb(50,50,255),Qt::SolidPattern);

@@ -13,7 +13,8 @@
 #include "worldmodel.h"
 #include "sslrefbox.h"
 #include "sslrefboxnew.h"
-#include "sslvision.h"
+#include "sslvision_single.h"
+#include "sslvision_double.h"
 #include "wpacket.h"
 #include "grsim.h"
 #include "outputbuffer.h"
@@ -43,6 +44,7 @@ public:
     Transmitter* transmitter;
     grSim* grsim;
     AI *ai;
+    QString field;
 
 };
 

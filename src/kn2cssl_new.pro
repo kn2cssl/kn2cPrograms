@@ -180,7 +180,10 @@ SOURCES +=	main.cpp \
     ai/play/freeKicks/freekick9.cpp \
     ai/play/freeKicks/freekick10.cpp \
     ai/play/freeKicks/freekick11.cpp \
-    ai/play/freeKicks/freekick47.cpp
+    ai/play/freeKicks/freekick47.cpp \
+    etc/constants.cpp \
+    ssl/sslvision_single.cpp \
+    ssl/sslvision_double.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -296,7 +299,9 @@ HEADERS  += \
     ai/play/freeKicks/freekick9.h \
     ai/play/freeKicks/freekick10.h \
     ai/play/freeKicks/freekick11.h \
-    ai/play/freeKicks/freekick47.h
+    ai/play/freeKicks/freekick47.h \
+    ssl/sslvision_single.h \
+    ssl/sslvision_double.h
 
 FORMS    +=	ui/mainwindow.ui
 

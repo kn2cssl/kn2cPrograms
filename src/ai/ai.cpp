@@ -13,13 +13,15 @@
 #include "play/playtest.h"
 #include "play/playtest2.h"
 
-AI::AI(WorldModel *worldmodel, OutputBuffer *outputbuffer, QObject *parent) :
+AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, QObject *parent) :
     QObject(parent),
     wm(worldmodel),
     outputbuffer(outputbuffer)
 {
     qDebug() << "AI Initialization...";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
+
+    Field::setup_consts(field_size);
 
     udp = new QUdpSocket();
     ip.setAddress("192.168.4.113");

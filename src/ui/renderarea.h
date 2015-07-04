@@ -10,8 +10,10 @@
 #define Pi 3.141592653589793238
 
 #define WORLD_SCALE 10
-#define CENTER_X 476
-#define CENTER_Y 319
+#define DOUBLE_CENTER_X 476
+#define DOUBLE_CENTER_Y 319
+#define SINGLE_CENTER_X 370
+#define SINGLE_CENTER_Y 270
 
 #define ROBOT_R 9
 #define ROBOT_D 18
@@ -32,6 +34,7 @@ private:
     *brush_astarNode, *brush_astarResult ,*brush_marking ,*brush_debug , *brush_pass;
     QTimer _timer;
     FPSCounter _fps;
+    int CENTER_X,CENTER_Y;
 
 signals:
 
