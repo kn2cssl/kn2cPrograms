@@ -4,6 +4,7 @@
 #include <QObject>
 #include "robotcommand.h"
 #include "worldmodel.h"
+#include "Skills.h"
 
 #define SHOOT 0
 #define AIM 1

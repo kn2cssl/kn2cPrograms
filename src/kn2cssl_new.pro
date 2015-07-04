@@ -183,7 +183,10 @@ SOURCES +=	main.cpp \
     ai/play/freeKicks/freekick47.cpp \
     etc/constants.cpp \
     ssl/sslvision_single.cpp \
-    ssl/sslvision_double.cpp
+    ssl/sslvision_double.cpp \
+    ai/skill.cpp \
+    ai/skill/skillkick.cpp \
+    ai/skill/skilltest.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -301,7 +304,11 @@ HEADERS  += \
     ai/play/freeKicks/freekick11.h \
     ai/play/freeKicks/freekick47.h \
     ssl/sslvision_single.h \
-    ssl/sslvision_double.h
+    ssl/sslvision_double.h \
+    ai/skill.h \
+    ai/skill/skillkick.h \
+    ai/Skills.h \
+    ai/skill/skilltest.h
 
 FORMS    +=	ui/mainwindow.ui
 
