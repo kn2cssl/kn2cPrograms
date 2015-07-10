@@ -19,6 +19,3 @@ build-KN2CSSL-*
 tmp/*
 build-*
 bin/*
-
-#Farzad
-src/google/protobuf/*
