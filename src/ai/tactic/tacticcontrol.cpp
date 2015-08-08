@@ -29,7 +29,7 @@ if(!wm->ourRobot[id].isValid) return rc;
 // rc.fin_pos.dir=a.dir().radian();
 /////////////////////////////////////////////////////////////////////////////////
 ////going to center & loking to ball/////////////////////////////////////////////
-rc.fin_pos.loc = {0,0};
+rc.fin_pos.loc ={0,0};//}Field::ourGoalCenter;
 Vector2D a =wm->ball.pos.loc - wm->ourRobot[id].pos.loc;
 rc.fin_pos.dir=a.dir().radian();
 /////////////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ RobotCommand tacticControl::goBehindBall()
 {
 RobotCommand rc;
 canKick=false;
-rc.maxSpeed = 1;
+rc.maxSpeed = 3;
 // int index = findBestPlayerForPass();
 // if(index != -1)
 // {

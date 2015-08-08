@@ -35,6 +35,12 @@ Controller::Controller(QObject *parent) :
     LinearSpeed = {0,0};
     LinearSpeed_past = {0,0};
 
+    sh_timer = new QTimer(this);
+
+    connect(sh_timer, SIGNAL(timeout()),this,SLOT(timer_timout()));
+
+    sh_timer->start(1);
+
 }
 
 ControllerResult Controller::calc(ControllerInput &ci)
@@ -54,10 +60,14 @@ ControllerResult Controller::calc(ControllerInput &ci)
 
 RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 {
+
+
     //double time = timer.elapsed()/1000;
     //timer.restart();
     /******************************Linear Speed Controller************************************/
-    err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
+
+ //    qDebug()<<"VR0"<<ci.cur_vel.loc.r()<<ci.id<<ci.cur_vel.loc.x<<ci.cur_vel.loc.y;
+  err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
 
 //    if(ci.maxSpeed == 3)
 //        ci.maxSpeed == 4;
@@ -74,7 +84,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 //    last_setpoint = ci.mid_pos.loc;
     //!!
 
-    double kp;
+/*    double kp;
     double ki;
     double kd;
 
@@ -83,14 +93,18 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
 
-    if(err > 1.5)
+   if(err > 1.5)
     {
         kp = fabs(err1.length());
         ki = 0.01;
         kd = 3;
         integral = integral + err1*AI_TIMER/1000.0 ;
-    }
-    else /*if(err > .04)*/
+   }
+
+
+
+
+   else    //if(err > .04)
     {
         integral.scale(0);
         if(ci.fin_pos.loc == ci.mid_pos.loc)
@@ -117,11 +131,16 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     derived0 = ci.cur_vel.loc;
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////**
+
+///////////////////////////////////////////////////////////////////////////////////////////////////**
 
     LinearSpeed = err1*kp + integral*ki*err - derived1*kd;
 
 
 //    ////////////////////////////////////////day2
+
+
     double diff_angel = ci.cur_vel.dir - LinearSpeed.dir().radian();
     if (diff_angel > M_PI) diff_angel -= 2 * M_PI;
     if (diff_angel < -M_PI) diff_angel += 2 * M_PI;
@@ -144,8 +163,13 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     qDebug()<<LinearSpeed.length();
     Vector2D RotLinearSpeed=LinearSpeed;
     LinearSpeed_past = LinearSpeed ;
+
+*/
     /*************************************Rotation ctrl**********************/
+
+
     double wkp,wki,wkd,wu1;
+
     double MAXROTATIONSPEED = 2.5,RotationSpeed;
     werr1 = ci.fin_pos.dir - ci.cur_pos.dir ;
 
@@ -186,33 +210,499 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         wu1=MAXROTATIONSPEED*sign(wu1);
     }
 
-    RotationSpeed = wu1;
+    RotationSpeed=wu1;
 
+ /*   if(abs(werr1)< 5)
+    {
+        if(werr1<0)
+        {
+            RotationSpeed =1 ;
+        }
 
+        if(werr1>0)
+        {
+            RotationSpeed =-1 ;
+        }
+    }
+        else
+        {
+            RotationSpeed =0;
+        }
+ */
+
+    Vector2D RotLinearSpeed;
     double alpha = ci.cur_pos.dir ;+atan(RotationSpeed*0.187);
     //alpha is the corrected angel whitch handle the problem
     //of nonlinear relation of rotational movement and linear movement
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*
+
+/*
+    Vector2D delta = ci.mid_pos.loc - ci.cur_pos.loc;
+
+    Vector2D normaldelta =delta.normalizedVector();
+
+    float kp=0.004;
+
+    float alphaa;
+
+    if(normaldelta.x!=0)
+    {
+        alphaa=atan(delta.y/delta.x);
+
+        LinearSpeed.x=(kp*abs(delta.x))*(cos(alphaa)*sign(normaldelta.x));
+        LinearSpeed.y=(kp*abs(delta.y))*(sin(alphaa)*sign(normaldelta.x));
+    }
+
+    if(normaldelta.x==0)
+    {
+        LinearSpeed.x=0;
+        LinearSpeed.y=(ci.maxSpeed*sign(normaldelta.y));
+    }
+
+       qDebug()<<"VR"<<ci.cur_vel.loc.r();
+*/
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+
+    Vector2D ar = ci.mid_pos.loc - ci.cur_pos.loc;
 
 
+ //   delta.setLength(ci.maxSpeed);
+ //   delta.x
+
+    Vector2D normaldelta =delta.normalizedVector();
+
+    float alphaa=atan(delta.y/delta.x);
+
+    float deltax,deltay,tx,ty,last_tx,last_ty;
+
+
+    deltax=abs(delta.x);
+    deltay=abs(delta.y);
+
+
+
+
+    float ar=((1.5*ci.maxSpeed*ci.maxSpeed)/delta.length());
+
+    float distansex=deltax/3;
+    float distansey=deltay/3;
+
+
+
+       if(deltax>2*distansex)//////////////////////////harekate marhaleye avval(tond shavande!!)(dar rastaye x)
+        {
+            tx=tx+0.001;
+            LinearSpeed.x=ax*tx*(cos(alphaa)*sign(normaldelta.x));
+        }
+
+        if(deltax>distansex && deltax<2*distansex)//////////////////////////harekate marhaleye dovvom(yeknavakht!!)(dar rastaye x)
+        {
+             last_tx=tx;
+             LinearSpeed.x=ci.maxSpeed*(cos(alphaa)*sign(normaldelta.x));
+        }
+
+        if(deltax<distansex)//////////////////////////harekate marhaleye sevvom(kond shavande!!)(dar rastaye x)
+        {
+            last_tx=last_tx-0.001;
+            LinearSpeed.x=ax*last_tx*(cos(alphaa)*sign(normaldelta.x));
+        }
+
+        /////////////////////////////////////////////
+
+
+        if(deltay>2*distansey)//////////////////////////harekate marhaleye avval(tond shavande!!)(dar rastaye x)
+        {
+             ty=ty+0.001;
+             LinearSpeed.y=ay*ty*(sin(alphaa)*sign(normaldelta.x));
+        }
+
+
+        if(deltay>distansey && deltay<2*distansey)//////////////////////////harekate marhaleye dovvom(yeknavakht!!)(dar rastaye x)
+        {
+             last_ty=ty;
+             LinearSpeed.y=ci.maxSpeed*(sin(alphaa)*sign(normaldelta.x));
+        }
+
+        if(deltay<distansey)//////////////////////////harekate marhaleye sevvom(kond shavande!!)(dar rastaye x)
+        {
+             last_ty=last_ty-0.001;
+             LinearSpeed.y=ay*last_ty*(sin(alphaa)*sign(normaldelta.x));
+        }
+
+
+
+ qDebug()<<"vx"<<LinearSpeed.x<<"vy"<<LinearSpeed.y;
+
+*/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+        Vector2D delta = ci.mid_pos.loc - ci.cur_pos.loc;
+        Vector2D VR = ci.mid_pos.loc - ci.cur_pos.loc;
+
+        if(err1.length()>0.2)
+        {
+            if(flag)
+            {
+                distanse = delta.length()/3;
+                aR=1.5*(ci.maxSpeed*ci.maxSpeed)/delta.length();
+                flag=0;
+                t=0;
+            }
+
+
+            if(flag==0)
+            {
+                //qDebug()<<"aR"<<1000*aR;
+                if(delta.length()>2*distanse)
+                {
+                    t=t+0.001;
+                    VR.setLength(10000*aR*t);
+                    LinearSpeed.x =VR.x;
+                    LinearSpeed.y =VR.y;
+
+                  //  qDebug()<<"vR1"<<vR.r();
+
+                }
+
+                if(delta.length()>=distanse && delta.length()<=2*distanse)
+                {
+                    VR.setLength(ci.maxSpeed);
+                    LinearSpeed.x =VR.x;
+                    LinearSpeed.y =VR.y;
+                }
+
+                if(delta.length()<distanse)
+                {
+                    t=t-0.001;
+                    VR.setLength(aR*t*10000);
+                    LinearSpeed.x =VR.x;
+                    LinearSpeed.y =VR.y;
+
+                }
+
+            }
+
+               qDebug()<<"VR"<<VR.r()<<"t"<<t;
+
+        }
+
+//        if(err1.length()<0.2)
+//        {
+//                LinearSpeed.x=0;
+//                LinearSpeed.y=0;
+//                flag=1;
+
+//        }
+
+
+
+*/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////**
+/*
+
+    VR.dir()=(ci.mid_pos.loc - ci.cur_pos.loc).dir();
+
+    ts=ci.cur_vel.loc.r()/a;
+
+
+
+    VR.setLength(a+ci.cur_vel.loc.r());
+    LinearSpeed= VR;
+
+
+    if(ci.cur_vel.loc.r()>=ci.maxSpeed && t<ts)
+    {
+        VR.setLength(ci.maxSpeed);
+        LinearSpeed= VR;
+
+    }
+
+    if(t>ts)
+    {
+
+        VR.setLength(ci.cur_vel.loc.r()-a);
+        LinearSpeed= VR;
+    }
+
+    if(err1.length()<0.005)
+    {
+            t=0;
+            LinearSpeed.x=0;
+            LinearSpeed.y=0;
+    }
+
+ */
+
+//    sh_timer->stop();
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+    VR.dir()=(ci.mid_pos.loc - ci.cur_pos.loc).dir();
+
+    ts=ci.maxSpeed/a;
+
+    if(VRP.dir()!=VR.dir())
+    {
+        t1=(ci.maxSpeed-ci.cur_vel.loc.r())/a;
+        t=0;
+    }
+
+    if(t<t1)
+    {
+        flag='1';
+        tss=0;
+    }
+
+    if(t>t1 && tss<ts)
+    {
+        flag='2';
+    }
+
+    if(ts>=tss)
+    {
+        flag='3';
+    }
+
+    if(err1.length()<0.005)
+    {
+            LinearSpeed.x=0;
+            LinearSpeed.y=0;
+    }
+
+    switch(flag)
+    {
+    case '1':
+           VR.setLength(a+ci.cur_vel.loc.r());
+           LinearSpeed= VR;
+           break;
+    case '2':
+           VR.setLength(ci.maxSpeed);
+           LinearSpeed= VR;
+           break;
+    case '3':
+          VR.setLength(ci.cur_vel.loc.r()-a);
+          LinearSpeed= VR;
+          break;
+    case '4':
+          LinearSpeed.x=0;
+          LinearSpeed.y=0;
+          break;
+    }
+
+    VRP.dir()=VR.dir();
+
+            qDebug()<<"vR"<<VR.r();
+
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////**
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////***
+/*
+    //LinearSpeed.setDir((ci.fin_pos.loc-ci.cur_pos.loc).dir());
+LinearSpeed = ci.mid_pos.loc-ci.cur_pos.loc;
+//qDebug()<<"final pos : "<<ci.fin_pos.loc.x<<","<<ci.fin_pos.loc.y;
+//qDebug()<<"cur pos : "<<ci.cur_pos.loc.x<<","<<ci.cur_pos.loc.y;
+
+
+Vector2D deltat=ci.mid_pos.loc-ci.cur_pos.loc;
+
+//qDebug()<<ci.cur_pos.loc.length();
+
+//qDebug()<<"q"<<LinearSpeed.dir().degree()-LinearSpeed_past.dir().degree();
+//qDebug()<<t;
+
+a=0.5;
+
+if(abs((LinearSpeed_past.dir()-LinearSpeed.dir()).degree())>5)
+{
+    t=0;
+    t1=(ci.maxSpeed-ci.cur_vel.loc.r())/a;
+    t3=(ci.maxSpeed/a);
+    delta1=((ci.maxSpeed+(ci.cur_vel.loc.r()/1000))*t1)/2;
+    delta3=(ci.maxSpeed*t3)/2;
+    delta2=(deltat.length()/1000)-(delta1+delta3);
+    t2=(delta2/ci.maxSpeed);
+    tt=t1+t2+t3;
+ //  qDebug()<<"t1"<<t1<<"t2"<<t2<<"t3"<<t3<<"tt"<<tt;
+}
+
+
+if(t<t1  && flag!=2 )//&& ci.cur_vel.loc.length()<=ci.maxSpeed)
+{
+    LinearSpeed.setLength(ci.cur_vel.loc.length()+a);
+   // qDebug()<<"1";
+    flag=1;
+    if(deltat.length()<=(ci.maxSpeed*t3)/2)
+    {
+        flag=2;
+    }
+}
+
+if(flag==1)
+{
+    if(t1<t && t<t1+t2)
+    {
+        LinearSpeed.setLength(ci.maxSpeed);
+     //   qDebug()<<"2";
+    }
+
+    else if(t>t1+t2 && t<tt)
+    {
+        LinearSpeed.setLength(ci.maxSpeed-a);
+   //     qDebug()<<"3";
+    }
+
+    else if(deltat.length()<300)
+    {
+        LinearSpeed.x=0;
+        LinearSpeed.y=0;
+    }
+}
+
+else if(flag==2)
+{
+    LinearSpeed.setLength(ci.cur_vel.loc.length()-a);
+  //  qDebug()<<"4";
+    if(deltat.length()<300)
+    {
+        LinearSpeed.x=0;
+        LinearSpeed.y=0;
+    }
+}
+
+//qDebug()<<"VR"<<ci.cur_vel.loc.r();
+
+LinearSpeed_past=ci.mid_pos.loc-ci.cur_pos.loc;
+//LinearSpeed_past.setDir(LinearSpeed.dir().degree());
+*/
+
+/*
+a=1;
+LinearSpeed = ci.mid_pos.loc-ci.cur_pos.loc;
+Vector2D deltat=ci.mid_pos.loc-ci.cur_pos.loc;
+
+
+if(ci.cur_vel.loc.length()<ci.maxSpeed && flags!=1)
+{
+    flag=1;
+    LinearSpeed.setLength(ci.cur_vel.loc.length()+a);
+    if(deltat.length()<=(ci.maxSpeed*ci.maxSpeed)/2*a)
+    {
+        flag=2;
+    }
+}
+
+if(flag==1 && (flags=1 || ci.cur_vel.loc.length()>=ci.maxSpeed))
+{
+
+    LinearSpeed.setLength(ci.maxSpeed);
+
+    if(deltat.length()<=(ci.maxSpeed*ci.maxSpeed)/2*a)
+    {
+        LinearSpeed.setLength(ci.cur_vel.loc.length()-a);
+        flags=1;
+    }
+
+}
+
+if(flag==2)
+{
+      LinearSpeed.setLength(ci.cur_vel.loc.length()-a);
+      flags=1;
+}
+
+if(deltat.length()<60)
+{
+
+    LinearSpeed.x=0;
+    LinearSpeed.y=0;
+}
+
+qDebug()<<"VR"<<ci.cur_vel.loc.length();
+
+*/
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////****
+
+//a=0.1;
+//qDebug()<<"===============================";
+a1=0.3;
+a2=0.4;
+
+Vector2D delta=ci.mid_pos.loc-ci.cur_pos.loc;
+LinearSpeed.setDir((ci.mid_pos.loc-ci.cur_pos.loc).dir());
+LinearSpeed = ci.mid_pos.loc-ci.cur_pos.loc;
+//qDebug()<<"cur vel in controller : "<<ci.cur_vel.loc.length();
+
+//LinearSpeed.setLength(LinearSpeed.length()/1000);
+
+
+
+    if(delta.length()/1000<=(ci.cur_vel.loc.length()*ci.cur_vel.loc.length())/2*a2)
+    {
+        LinearSpeed.setLength(ci.cur_vel.loc.length()-a2);
+         // qDebug()<<"3";
+    }
+
+    if(delta.length()/1000>(ci.cur_vel.loc.length()*ci.cur_vel.loc.length())/2*a2)
+    {
+        if(ci.cur_vel.loc.length()>=ci.maxSpeed)
+        {
+            LinearSpeed.setLength(ci.maxSpeed);
+           //   qDebug()<<"2";
+        }
+
+       else if(ci.cur_vel.loc.length()<ci.maxSpeed)
+        {
+//            qDebug()<<"before VR"<<LinearSpeed.length();
+//            qDebug()<<"current velllll : "<<ci.cur_vel.loc.length();
+            LinearSpeed.setLength(ci.cur_vel.loc.length()+a1);
+//              qDebug()<<"1";
+//              qDebug()<<"after VR"<<LinearSpeed.length();
+        }
+    }
+
+
+    if(delta.length()<30)
+    {
+        LinearSpeed.x=0;
+        LinearSpeed.y=0;
+    }
+
+//qDebug()<<ci.cur_vel.loc.length();
+//qDebug()<<"Linear Speed : "<<LinearSpeed.length();
+
+ //tabdil mehvarhaye zamin be mehvarhaye robot
+
+    if(ci.cur_vel.loc.length()>ci.maxSpeed)
+    {
+        LinearSpeed.setLength(ci.maxSpeed);
+    }
 
     RotLinearSpeed.x = LinearSpeed.x * cos(alpha) + LinearSpeed.y * sin(alpha);
     RotLinearSpeed.y = -LinearSpeed.x * sin(alpha) + LinearSpeed.y * cos(alpha);
 
     RobotSpeed ans;
 
-    ans.VX = RotLinearSpeed.x;
-    ans.VY = RotLinearSpeed.y;
-    ans.VW = RotationSpeed ;
+    ans.VX =RotLinearSpeed.x;
+    ans.VY =RotLinearSpeed.y;
+    ans.VW =0;//RotationSpeed ;
 
-    if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
+ //qDebug()<<"VR"<<ci.cur_vel.loc.r()<<ci.id<<ci.cur_vel.loc.x<<ci.cur_vel.loc.y;
+ // */if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
 
 
-    if(err1.length()<.02)
-    {
-        ans.VX=0;
-        ans.VY=0;
-    }
+ //   if(err1.length()<1)
+ //   {
+ //       ans.VX=0;
+ //       ans.VY=0;
+ //   }
 
     return ans;
 }
@@ -394,9 +884,9 @@ RobotSpeed Controller::calcRobotSpeed_test(ControllerInput &ci)
     RotationSpeed=0;
     RobotSpeed result;
 
-    result.VX = RotLinearSpeed.x;
-    result.VY = RotLinearSpeed.y;
-    result.VW = RotationSpeed;
+    result.VX =RotLinearSpeed.x;
+    result.VY =RotLinearSpeed.y;
+    result.VW =RotationSpeed;
 
     out << err1.y <<" "<< LinearSpeed.x <<" "<< LinearSpeed.y << endl;
     return result;
@@ -476,4 +966,11 @@ MotorSpeed Controller::calcSimul(RobotSpeed rs)
     result.M3 = -motor[3][0]/100;//*SpeedToRPM;//
 
     return result;
+}
+
+void Controller::timer_timout()
+{
+    //t=t+0.001;
+
+
 }

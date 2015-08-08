@@ -4,6 +4,8 @@
 #include "controller_struct.h"
 #include <fstream>
 #include "QDebug"
+#include <QTimer>
+
 using namespace std;
 
 class Controller : public QObject
@@ -34,13 +36,40 @@ private:
     //kamin
     Vector2D LinearSpeed;
     Vector2D LinearSpeed_past;
+
+
+
     //kamout
+
+//      shahin
+//    float t,ts,t1,tss;
+//    float a=0.05;
+//    QTimer* sh_timer;
+//    char flag;
+
+    //float distanse,aR;
+
+    //float flag=1;
+
+    //float a=0.05,t,t1,t2,t3,tt,delta1,delta2,delta3,deltat,flag=0,flags=0;
+    QTimer* sh_timer;
+
+    float a1=0.1;
+    float a2=0.05;
+
+
     double wu1,wu1_last,wintegral,werr0,werr1;
     double wderived0,wderived1;
 
     int stateCTRL;
 
     ofstream out;
+
+
+private slots:
+    void timer_timout();
+
+
 };
 
 #endif // CONTROLLER_H
