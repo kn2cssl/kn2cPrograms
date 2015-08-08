@@ -15,11 +15,12 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = 0);
     ControllerResult calc(ControllerInput &ci);
+    ControllerResult convert(ControllerInput &ci);
 
 private:
     QTime timer;
 
-    RobotSpeed calcRobotSpeed_main(ControllerInput &ci);
+    SPRobotSpeed calcRobotSpeed_main(ControllerInput &ci);
     RobotSpeed calcRobotSpeed_adjt(ControllerInput &ci);
     RobotSpeed calcRobotSpeed_test(ControllerInput &ci);
 

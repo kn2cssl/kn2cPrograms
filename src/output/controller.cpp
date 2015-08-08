@@ -43,22 +43,55 @@ Controller::Controller(QObject *parent) :
 
 }
 
-ControllerResult Controller::calc(ControllerInput &ci)
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//shahin
+ControllerResult Controller::convert(ControllerInput &ci)//tabdil mehvarhaye zamin be mehvarhaye robot(current condition)
 {
     ControllerResult ctrlresult;
+
+
+    ctrlresult.rsR.VX = ci.cur_vel.loc.x * cos(alpha) + ci.cur_vel.loc.y * sin(alpha);
+    ctrlresult.rsR.VY= -ci.cur_vel.loc.x * sin(alpha) + ci.cur_vel.loc.y * cos(alpha);
+    ctrlresult.rsR.VW=ci.cur_vel.loc.dir();
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    return ctrlresult;
+
+}
+
+
+//shahout
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ControllerResult Controller::calc(ControllerInput &ci)
+{
+    ControllerResult SPctrlresult;
     double time = timer.elapsed();
     timer.restart();
-    ctrlresult.rs = calcRobotSpeed_main(ci);
+//    ctrlresult.rs = calcRobotSpeed_main(ci);
     //ctrlresult.rs = calcRobotSpeed_adjt(ci);
     //ctrlresult.rs = calcRobotSpeed_test(ci);
     //qDebug() << "id" << ci.id << "timer" << time;
 
-    ctrlresult.msR = calcReal(ctrlresult.rs);
-    ctrlresult.msS = calcSimul(ctrlresult.rs);
-    return ctrlresult;
+//    ctrlresult.msR = calcReal(ctrlresult.rs);
+//    ctrlresult.msS = calcSimul(ctrlresult.rs);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //shahin
+    SPctrlresult.SPrsR =  calcRobotSpeed_main(ci);
+    SPctrlresult.SPrsS = calcRobotSpeed_main(ci);
+    //shahout
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    return SPctrlresult;
 }
 
-RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
+SPRobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 {
 
 
@@ -192,7 +225,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         wkp=0.4;
         wkd=0.003;
     }
-
 
 
     //if(ci.id == 3)
@@ -688,11 +720,11 @@ LinearSpeed = ci.mid_pos.loc-ci.cur_pos.loc;
     RotLinearSpeed.x = LinearSpeed.x * cos(alpha) + LinearSpeed.y * sin(alpha);
     RotLinearSpeed.y = -LinearSpeed.x * sin(alpha) + LinearSpeed.y * cos(alpha);
 
-    RobotSpeed ans;
+    SPRobotSpeed ans;
 
-    ans.VX =RotLinearSpeed.x;
-    ans.VY =RotLinearSpeed.y;
-    ans.VW =0;//RotationSpeed ;
+    ans.SPVX = RotLinearSpeed.x;
+    ans.SPVY = RotLinearSpeed.y;
+    ans.SPVW = RotationSpeed;
 
  //qDebug()<<"VR"<<ci.cur_vel.loc.r()<<ci.id<<ci.cur_vel.loc.x<<ci.cur_vel.loc.y;
  // */if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
@@ -929,6 +961,11 @@ MotorSpeed Controller::calcReal(RobotSpeed rs)
     return result;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//shahin
+
+
+//shahout
 MotorSpeed Controller::calcSimul(RobotSpeed rs)
 {
     double motor[4][1],rotate[4][3],speed[3][1];
