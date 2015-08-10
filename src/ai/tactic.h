@@ -26,7 +26,7 @@ public:
     float detectChipSpeed(bool shoot_sensor);
     OperatingPosition BallControl(Vector2D Target , int Prob ,  int ID , double maxSpeed, int Task=0 );
 
-private:
+protected:
     Vector2D last_ball_vell;
     QTime f10s;//reset:check
     bool kickPermission;//reset:check

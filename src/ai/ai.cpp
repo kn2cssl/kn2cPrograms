@@ -12,6 +12,7 @@
 #include "play/playstop.h"
 #include "play/playtest.h"
 #include "play/playtest2.h"
+#include "play/playlearning.h"
 
 AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, QObject *parent) :
     QObject(parent),
@@ -45,6 +46,7 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     plays.append(new PlayPreparing(wm));
     plays.append(new PlayTest(wm));
     plays.append(new PlayTest2(wm));
+    plays.append(new PlayLearning(wm));
 }
 
 void AI::Start()

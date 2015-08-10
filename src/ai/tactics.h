@@ -19,5 +19,6 @@
 #include "tactic/tacticpenaltykicker.h"
 #include "tactic/tacticpreparing.h"
 #include "tactic/tacticcontrol.h"
+#include "tactic/tactickicklearning.h"
 
 #endif // TACTICS_H
