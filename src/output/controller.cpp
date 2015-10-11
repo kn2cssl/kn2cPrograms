@@ -54,98 +54,73 @@ ControllerResult Controller::calc(ControllerInput &ci)
 
 RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 {
-    //double time = timer.elapsed()/1000;
-    //timer.restart();
-    /******************************Linear Speed Controller************************************/
-    err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
-
-//    if(ci.maxSpeed == 3)
-//        ci.maxSpeed == 4;
 
 
-    ///!
-//    if((ci.mid_pos.loc - last_setpoint ).length() > 30)
-//    {
-////            qDebug() <<"L"<<err1.length()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length();
-////             qDebug() <<"D"<<err1.dir().radian()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).dir().radian();
-////        err1 = err1 + (ci.mid_pos.loc - last_setpoint ) *0.009;
-//        err1.setLength((err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length());
-//    }
-//    last_setpoint = ci.mid_pos.loc;
-    //!!
+    /*************************************Linear ctrl**********************/
 
-    double kp;
-    double ki;
-    double kd;
+    //a=0.1;
+    //qDebug()<<"===============================";
+    float a1=0.3;
+    float a2=0.4;
 
-    float err = err1.length();
+    Vector2D delta=ci.mid_pos.loc-ci.cur_pos.loc;
+    LinearSpeed.setDir((ci.mid_pos.loc-ci.cur_pos.loc).dir());
+    LinearSpeed = ci.mid_pos.loc-ci.cur_pos.loc;
+    //qDebug()<<"cur vel in controller : "<<ci.cur_vel.loc.length();
+
+    //LinearSpeed.setLength(LinearSpeed.length()/1000);
 
 
 
-
-    if(err > 1.5)
-    {
-        kp = fabs(err1.length());
-        ki = 0.01;
-        kd = 3;
-        integral = integral + err1*AI_TIMER/1000.0 ;
-    }
-    else /*if(err > .04)*/
-    {
-        integral.scale(0);
-        if(ci.fin_pos.loc == ci.mid_pos.loc)
+        if(delta.length()/1000<=(ci.cur_vel.loc.length()*ci.cur_vel.loc.length())/2*a2)
         {
-            kp = 5-2*fabs(ci.cur_vel.loc.length());fabs(err1.length())+2.9;////day2//f
-                if((ci.mid_pos.loc - last_setpoint ).length() > 30)
-                {
-                    ki=.3;
-                }
-                last_setpoint = ci.mid_pos.loc;
+            LinearSpeed.setLength(ci.cur_vel.loc.length()-a2);
+             // qDebug()<<"3";
         }
-        else
+
+        if(delta.length()/1000>(ci.cur_vel.loc.length()*ci.cur_vel.loc.length())/2*a2)
         {
-            kp = 4;
+            if(ci.cur_vel.loc.length()>=ci.maxSpeed)
+            {
+                LinearSpeed.setLength(ci.maxSpeed);
+               //   qDebug()<<"2";
+            }
+
+           else if(ci.cur_vel.loc.length()<ci.maxSpeed)
+            {
+    //            qDebug()<<"before VR"<<LinearSpeed.length();
+    //            qDebug()<<"current velllll : "<<ci.cur_vel.loc.length();
+                LinearSpeed.setLength(ci.cur_vel.loc.length()+a1);
+    //              qDebug()<<"1";
+    //              qDebug()<<"after VR"<<LinearSpeed.length();
+            }
         }
-        kd = 3;
-
-    }
 
 
+        if(delta.length()<30)
+        {
+            LinearSpeed.x=0;
+            LinearSpeed.y=0;
+        }
+
+    //qDebug()<<ci.cur_vel.loc.length();
+    //qDebug()<<"Linear Speed : "<<LinearSpeed.length();
+
+     //tabdil mehvarhaye zamin be mehvarhaye robot
+
+        if(ci.cur_vel.loc.length()>ci.maxSpeed)
+        {
+            LinearSpeed.setLength(ci.maxSpeed);
+        }
 
 
-    derived1 = (ci.cur_vel.loc - derived0)*0.1;
-    derived0 = ci.cur_vel.loc;
 
 
-
-    LinearSpeed = err1*kp + integral*ki*err - derived1*kd;
-
-
-//    ////////////////////////////////////////day2
-    double diff_angel = ci.cur_vel.dir - LinearSpeed.dir().radian();
-    if (diff_angel > M_PI) diff_angel -= 2 * M_PI;
-    if (diff_angel < -M_PI) diff_angel += 2 * M_PI;
-    if(fabs(diff_angel) > M_PI*0.7)
-    {
-        LinearSpeed = LinearSpeed_past + (LinearSpeed - LinearSpeed_past)*0.01;//*50/(ci.mid_pos.loc - last_setpoint).length();
-
-        if(ci.id==8)
-        qDebug()<<"filter"<<(ci.mid_pos.loc - last_setpoint).length();
-    }
-    LinearSpeed_past = LinearSpeed ;
-//    ////////////////////////////////////////day2
-
-    if(LinearSpeed.length()>ci.maxSpeed)
-    {
-        LinearSpeed.setLength(ci.maxSpeed);
-    }
-
-    if(ci.id == 8)
-    qDebug()<<LinearSpeed.length();
-    Vector2D RotLinearSpeed=LinearSpeed;
-    LinearSpeed_past = LinearSpeed ;
     /*************************************Rotation ctrl**********************/
+
+
     double wkp,wki,wkd,wu1;
+
     double MAXROTATIONSPEED = 2.5,RotationSpeed;
     werr1 = ci.fin_pos.dir - ci.cur_pos.dir ;
 
@@ -170,7 +145,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     }
 
 
-
     //if(ci.id == 3)
     //qDebug()<<werr1<<wintegral;
     werr0=werr0+(werr1-werr0)*0.1;
@@ -186,12 +160,32 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
         wu1=MAXROTATIONSPEED*sign(wu1);
     }
 
-    RotationSpeed = wu1;
+    RotationSpeed=wu1;
 
+ /*   if(abs(werr1)< 5)
+    {
+        if(werr1<0)
+        {
+            RotationSpeed =1 ;
+        }
 
+        if(werr1>0)
+        {
+            RotationSpeed =-1 ;
+        }
+    }
+        else
+        {
+            RotationSpeed =0;
+        }
+ */
+
+    Vector2D RotLinearSpeed;
     double alpha = ci.cur_pos.dir ;+atan(RotationSpeed*0.187);
     //alpha is the corrected angel whitch handle the problem
     //of nonlinear relation of rotational movement and linear movement
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*
 
 
 
@@ -205,14 +199,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     ans.VY = RotLinearSpeed.y;
     ans.VW = RotationSpeed ;
 
-    if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
 
-
-    if(err1.length()<.02)
-    {
-        ans.VX=0;
-        ans.VY=0;
-    }
 
     return ans;
 }
