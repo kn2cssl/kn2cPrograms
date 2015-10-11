@@ -7,7 +7,7 @@ SkillKick::SkillKick(WorldModel* wm, QObject *parent) :
 
 bool SkillKick::execute(RobotCommand &rc)
 {
-
+    qDebug()<<"Kick Per";
 }
 
 void SkillKick::setTarget(const Vector2D &Target)
