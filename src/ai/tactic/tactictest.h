@@ -4,22 +4,13 @@
 #define DangerDist 300
 class TacticTest : public Tactic
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-explicit TacticTest(WorldModel *worldmodel, QObject *parent = 0);
-virtual RobotCommand getCommand();
-RobotCommand goBehindBall();
-int findBestPlayerForPass();
-void setKickerID(int index);
-bool kicked;
+    explicit TacticTest(WorldModel *worldmodel, QObject *parent = 0);
+    virtual RobotCommand getCommand();
+
 private:
-bool canKick;
-bool firstKick;
-double alfa;
-int state;
-QTimer *timer;
-bool isFree(int index);
-private slots:
-void timerEvent();
+    Skill *sTest;
+
 };
 #endif // TACTICTEST_H
