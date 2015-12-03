@@ -162,11 +162,43 @@ void PlayStop::setPositions()
 
     tGolie->setIdlePosition(goaliePos);
 
+    QList<Vector2D> positions = generatePositions();
+
+    Positioning bestPositions;
+    bool isMatched;
+
+    bestPositions.setWorldModel(wm);
+    QList<Positioning_Struct> out = bestPositions.bestPositions(wm->kn->findAttackers(), positions, isMatched);
+
+    for( int i = 0; i < out.size(); i++)
+    {
+        switch (wm->ourRobot[out.at(i).ourI].Role)
+        {
+        case AttackerLeft:
+            tStopLeft->setStopPosition(out.at(i).loc);
+            break;
+        case AttackerRight:
+            tStopRight->setStopPosition(out.at(i).loc);
+            break;
+        case AttackerMid:
+            tStopMid->setStopPosition(out.at(i).loc);
+            break;
+        default:
+            break;
+        }
+    }
+}
+
+QList<Vector2D> PlayStop::generatePositions()
+{
+   //tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
+   QList<Vector2D> out;
+
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
-        tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
-        tStopRight->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
-        tStopMid->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
+        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
+        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
+        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
     }
     else if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
     {
@@ -180,9 +212,9 @@ void PlayStop::setPositions()
         else
             mainL = candidateL_2;
 
-        tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-        tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-        tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
+        out.append(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
+        out.append(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+        out.append(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
     }
     else
     {
@@ -241,9 +273,9 @@ void PlayStop::setPositions()
                 else
                     mainL = candidateL_2;
 
-                tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-                tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-                tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
+                out.append(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
+                out.append(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+                out.append(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
             }
             else
             {
@@ -252,18 +284,20 @@ void PlayStop::setPositions()
                 finalPos = Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x,
                         0.5*(wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+wm->ourRobot[tDefenderRight->getID()].pos.loc.y)
                         );
-                tStopLeft->setStopPosition(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
-                tStopMid->setStopPosition(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
-                tStopRight->setStopPosition(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
+                out.append(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
+                out.append(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
+                out.append(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
             }
         }
         else
         {
-            tStopLeft->setStopPosition(leftPos);
-            tStopMid->setStopPosition(finalPos);
-            tStopRight->setStopPosition(rightPos);
+            out.append(leftPos);
+            out.append(finalPos);
+            out.append(rightPos);
         }
     }
+
+    return out;
 }
 
 void PlayStop::execute()

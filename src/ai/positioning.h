@@ -20,6 +20,7 @@ public:
     Positioning();
     QList<Positioning_Struct> find_positions(QList<int> ours , bool &isMatched);
     QList<Positioning_Struct> kickPositions(QList<int> ours, Vector2D target, bool &isMatched);
+    QList<Positioning_Struct> bestPositions(QList<int> ours, QList<Vector2D> positions, bool &isMatched);
     void setWorldModel(WorldModel *wm);
 
 private:

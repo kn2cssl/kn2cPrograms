@@ -2,6 +2,7 @@
 #define PLAYSTOP_H
 
 #include "play.h"
+#include "positioning.h"
 #include "QDebug"
 
 class PlayStop : public Play
@@ -26,6 +27,7 @@ private:
     virtual void initRole();
     void setTactics(int index);
     void setPositions();
+    QList<Vector2D> generatePositions();
 };
 
 #endif // PLAYSTOP_H

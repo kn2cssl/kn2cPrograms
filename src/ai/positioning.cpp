@@ -524,6 +524,37 @@ QList<Positioning_Struct> Positioning::kickPositions(QList<int> ours, Vector2D t
     return out;
 }
 
+QList<Positioning_Struct> Positioning::bestPositions(QList<int> ours, QList<Vector2D> positions, bool &isMatched)
+{
+    MWBM maximum_matching;
+    QList<int> weights;
+
+    for( int i = 0; i < ours.size(); i++ )
+    {
+        for( int j = 0; j < positions.size(); j++)
+        {
+            int weight = (int)( maxDistance - ( wm->ourRobot[ours.at(i)].pos.loc - positions.at(j) ).length());
+            weights.append(weight);
+        }
+    }
+
+    QList<int> matching = maximum_matching.run(weights,ours.size(),positions.size(),isMatched);
+    QList<Positioning_Struct> output;
+
+    if( isMatched )
+    {
+        for( int i = 0; i < ours.size(); i++)
+        {
+            Positioning_Struct tmp;
+            tmp.ourI = ours.at(i);
+            tmp.loc = positions.at(matching.at(i) - ours.size());
+            output.append(tmp);
+        }
+    }
+
+    return output;
+}
+
 void Positioning::setWorldModel(WorldModel *wm)
 {
     this->wm = wm;
