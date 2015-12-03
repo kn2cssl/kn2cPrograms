@@ -186,7 +186,12 @@ SOURCES +=	main.cpp \
     ssl/sslvision_double.cpp \
     ai/skill.cpp \
     ai/skill/skillkick.cpp \
-    ai/skill/skilltest.cpp
+    ai/skill/skilltest.cpp \
+    ai/learning/hillclimbing.cpp \
+    ai/learning/kick_learning.cpp \
+    ai/learning/policy.cpp \
+    ai/tactic/tactickicklearning.cpp \
+    ai/play/playlearning.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -308,7 +313,12 @@ HEADERS  += \
     ai/skill.h \
     ai/skill/skillkick.h \
     ai/Skills.h \
-    ai/skill/skilltest.h
+    ai/skill/skilltest.h \
+    ai/learning/hillclimbing.h \
+    ai/learning/kick_learning.h \
+    ai/learning/policy.h \
+    ai/tactic/tactickicklearning.h \
+    ai/play/playlearning.h
 
 FORMS    +=	ui/mainwindow.ui
 

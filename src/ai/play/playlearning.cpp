@@ -8,7 +8,7 @@ PlayLearning::PlayLearning(WorldModel *worldmodel, QObject *parent) :
 
 int PlayLearning::enterCondition()
 {
-    return 200000;
+    return 0;
 }
 
 void PlayLearning::initRole()

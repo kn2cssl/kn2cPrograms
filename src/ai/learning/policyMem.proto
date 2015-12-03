@@ -1,0 +1,14 @@
+// Hill Climbing for Kick Memory
+message PolicyMem
+{
+	message PolicyCell
+	{
+		required double finalReward = 1;
+		required bool finalReward_calculated = 2;
+		required int32 numberOfParameters = 3;
+		repeated double rewards = 4;
+		repeated double parameters = 5;
+	}
+  	
+	repeated PolicyCell policies = 1;	
+}

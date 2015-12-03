@@ -24,6 +24,9 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     this->on_btnLoadVars_clicked();
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
+
+    ui->totalPolicies_lcd->display(RAND_POLICY_NUMBER);
+    ui->totalIteration_lcd->display(TOTAL_ITERATIONS);
 }
 
 MainWindow::~MainWindow()
@@ -115,6 +118,16 @@ QString MainWindow::returnStatus(AgentStatus Status)
         out = "Not Set";
     }
     return out;
+}
+
+void MainWindow::disableLearningUi()
+{
+    ui->hillClimbing->setDisabled(true);
+}
+
+void MainWindow::enableLearningUi()
+{
+    ui->hillClimbing->setEnabled(true);
 }
 
 void MainWindow::timer_timeout()
@@ -405,6 +418,24 @@ void MainWindow::timer_timeout()
     sc->wm->useShootSensor = ui->useShootSensor_chBox->isChecked();
 
     sc->wm->defenceMode = ui->defenceMode_chbox->isChecked();
+
+
+    // Machine Learning Ui
+    ui->learningTypelineEdit->setText(sc->wm->ml_type);
+    if( sc->wm->ml_type.isEmpty() )
+    {
+        ui->learningTypelineEdit->setText("Nothing");
+        disableLearningUi();
+    }
+    else
+    {
+        enableLearningUi();
+        //Hill Climbing
+        ui->hillClimbing_status->setText(sc->wm->climbing_status);
+        ui->policyIndex_lcd->display(sc->wm->policy_index);
+        ui->iterationIndex_lcd->display(sc->wm->iteration_index);
+    }
+
 }
 
 void MainWindow::on_btnSaveVars_clicked()
@@ -529,4 +560,19 @@ void MainWindow::on_btnLoadVars_clicked()
     QString var19 = s.Get("vars", "var19");
     ui->txtPosC5->setText(var19);
     ui->spnPosC5->setValue(var19.toInt());
+}
+
+void MainWindow::on_startHillClimbing_button_clicked()
+{
+    sc->wm->climbing_start = true;
+}
+
+void MainWindow::on_savePolicies_button_clicked()
+{
+    sc->wm->save_policies = true;
+}
+
+void MainWindow::on_loadPolicies_button_clicked()
+{
+    sc->wm->load_policies = true;
 }

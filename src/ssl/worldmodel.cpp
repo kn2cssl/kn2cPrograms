@@ -36,4 +36,11 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
     useShootSensor = true;
 
     defenceMode = false;
+
+    climbing_status = "stopped";
+    policy_index = 0;
+    iteration_index = 0;
+    climbing_start = false;
+    save_policies = false;
+    load_policies = false;
 }

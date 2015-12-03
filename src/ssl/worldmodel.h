@@ -110,6 +110,17 @@ public:
 
     double pos_coef[6];
     double mark_coef[6];
+
+    //Machine Learning Parameters
+    QString ml_type;
+    //Hill Climbing
+    QString climbing_status;
+    int policy_index;
+    int iteration_index;
+    bool climbing_start;
+    bool save_policies;
+    bool load_policies;
+    QString addressOfPolicyFile;
 };
 
 #endif // WORLDMODEL_H

@@ -25,10 +25,19 @@ private:
     QString returnRole(AgentRole Role);
     QString returnStatus(AgentStatus Status);
 
+    void disableLearningUi();
+    void enableLearningUi();
+
 private slots:
     void timer_timeout();
     void on_btnSaveVars_clicked();
     void on_btnLoadVars_clicked();
+
+    void on_startHillClimbing_button_clicked();
+
+    void on_savePolicies_button_clicked();
+
+    void on_loadPolicies_button_clicked();
 
 private:
     Ui::MainWindow *ui;
