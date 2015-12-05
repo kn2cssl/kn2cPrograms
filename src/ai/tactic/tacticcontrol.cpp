@@ -29,7 +29,7 @@ if(!wm->ourRobot[id].isValid) return rc;
 // rc.fin_pos.dir=a.dir().radian();
 /////////////////////////////////////////////////////////////////////////////////
 ////going to center & loking to ball/////////////////////////////////////////////
-rc.fin_pos.loc = {0,0};
+rc.fin_pos.loc =wm->ball.pos.loc;
 Vector2D a =wm->ball.pos.loc - wm->ourRobot[id].pos.loc;
 rc.fin_pos.dir=a.dir().radian();
 /////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +48,7 @@ rc.fin_pos.dir=a.dir().radian();
 // rc.fin_pos.dir=a.dir().radian();
 // rc.fin_pos.loc = wm->ball.pos.loc + b;
 /////////////////////////////////////////////////////////////////////////////////
-rc.maxSpeed=4;
+rc.maxSpeed=2;
 rc.useNav = true;false;
 rc.isBallObs = true;
 rc.isKickObs = true;

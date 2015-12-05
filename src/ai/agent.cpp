@@ -34,15 +34,21 @@ void Agent::SendCommand(RobotCommand rc)
 
     // Real Game Packet
     RobotData reRD;
-    reRD.RID = id;
-    reRD.M0  = co.msR.M0;
-    reRD.M1  = co.msR.M1;
-    reRD.M2  = co.msR.M2;
-    reRD.M3  = co.msR.M3;
-    reRD.KCK = (quint8) rc.kickspeedx;
-    reRD.CHP = (quint8) rc.kickspeedz;
-
+    reRD.RID    = id;
+    reRD.Vx_sp  = co.msR.M0;        //co.rs.VX * 1000;
+    reRD.Vy_sp  = co.msR.M1;        //co.rs.VY * 1000;
+    reRD.Wr_sp  = co.msR.M2;        //co.rs.VW * 1000;
+    reRD.Vx     = co.msR.M3;        //wm->ourRobot[id].vel.loc.x * 1000;
+    reRD.Vy     = wm->ourRobot[id].vel.loc.y * 1000;
+    reRD.Wr     = wm->ourRobot[id].vel.dir * 1000;
+    reRD.alpha  = wm->ourRobot[id].pos.dir * 1000;
+    reRD.KICK   =(quint8) rc.kickspeedx;
+    reRD.CHIP   = (quint8) rc.kickspeedz;
+    reRD.SPIN   = 128;//for test
     outputBuffer->wpck.AddRobot(reRD);
+
+
+//   qDebug()<<"kick:"<<rc.kickspeedx;
 
 
     // grSim Packet
@@ -88,4 +94,6 @@ void Agent::Halt()
     grRD.spinner=0;
     outputBuffer->grpck.AddRobot(grRD);
 }
+
+
 

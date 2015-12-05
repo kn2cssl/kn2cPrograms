@@ -9,7 +9,9 @@ RobotCommand TacticTest::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    sTest->execute(rc);
+    sTest->execute(rc, this->id);
+
+
 
     return rc;
 }
