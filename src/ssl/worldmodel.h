@@ -121,6 +121,10 @@ public:
     bool save_policies;
     bool load_policies;
     QString addressOfPolicyFile;
+
+    //Log player parameter
+    QString logCommand;
+    QString gameCommand;
 };
 
 #endif // WORLDMODEL_H

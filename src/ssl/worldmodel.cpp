@@ -43,4 +43,7 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
     climbing_start = false;
     save_policies = false;
     load_policies = false;
+
+    logCommand = "Stop";
+    gameCommand = "Play";
 }

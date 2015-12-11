@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
     if(argc > 1)
         if(strcmp(argv[1], "nogui") == 0)
             gui = false;
-    if(gui) w.show();
+    if(gui) w.showMaximized();
 
     return a.exec();
 }

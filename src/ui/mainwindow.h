@@ -39,6 +39,10 @@ private slots:
 
     void on_loadPolicies_button_clicked();
 
+    void on_playpause_button_clicked();
+
+    void on_stoprecord_button_clicked();
+
 private:
     Ui::MainWindow *ui;
 };

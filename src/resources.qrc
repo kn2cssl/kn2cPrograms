@@ -3,5 +3,9 @@
         <file>resources/images/Field.jpg</file>
         <file>resources/images/logor2.png</file>
         <file>resources/images/Field2.jpg</file>
+        <file>resources/images/pause.png</file>
+        <file>resources/images/play.svg</file>
+        <file>resources/images/stop.svg</file>
+        <file>resources/images/record.png</file>
     </qresource>
 </RCC>

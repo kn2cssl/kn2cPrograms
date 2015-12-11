@@ -27,6 +27,8 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
 
     ui->totalPolicies_lcd->display(RAND_POLICY_NUMBER);
     ui->totalIteration_lcd->display(TOTAL_ITERATIONS);
+
+    //this->setWindowState(Qt::WindowFullScreen);
 }
 
 MainWindow::~MainWindow()
@@ -575,4 +577,35 @@ void MainWindow::on_savePolicies_button_clicked()
 void MainWindow::on_loadPolicies_button_clicked()
 {
     sc->wm->load_policies = true;
+}
+void MainWindow::on_playpause_button_clicked()
+{
+    if( sc->wm->gameCommand == "Pause")
+    {
+        QString pic_address = ":/resources/images/pause.png";
+        ui->playpause_button->setIcon(QIcon(pic_address));
+        sc->wm->gameCommand = "Play";
+    }
+    else if( sc->wm->gameCommand == "Play")
+    {
+        QString pic_address = ":/resources/images/play.svg";
+        ui->playpause_button->setIcon(QIcon(pic_address));
+        sc->wm->gameCommand = "Pause";
+    }
+}
+
+void MainWindow::on_stoprecord_button_clicked()
+{
+    if( sc->wm->logCommand == "Record")
+    {
+        QString pic_address = ":/resources/images/record.png";
+        ui->stoprecord_button->setIcon(QIcon(pic_address));
+        sc->wm->logCommand = "Stop";
+    }
+    else if( sc->wm->logCommand == "Stop")
+    {
+        QString pic_address = ":/resources/images/stop.svg";
+        ui->stoprecord_button->setIcon(QIcon(pic_address));
+        sc->wm->logCommand = "Record";
+    }
 }
