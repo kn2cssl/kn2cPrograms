@@ -45,5 +45,5 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
     load_policies = false;
 
     logCommand = "Stop";
-    gameCommand = "Play";
+    gameCommand = "Pause";
 }

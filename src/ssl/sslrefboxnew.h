@@ -2,7 +2,7 @@
 #define SSLREFBOXNEW_H
 
 #include "sslrefbox.h"
-#include "sslrefbox/messages/referee.pb.h"
+#include "proto/sslrefbox/referee.pb.h"
 
 class SSLRefBoxNew : public SSLRefBox
 {

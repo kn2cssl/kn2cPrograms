@@ -60,9 +60,9 @@
        <widget class="QPushButton" name="stoprecord_button">
         <property name="geometry">
          <rect>
-          <x>4</x>
+          <x>1</x>
           <y>650</y>
-          <width>41</width>
+          <width>31</width>
           <height>31</height>
          </rect>
         </property>
@@ -82,11 +82,14 @@
         </property>
        </widget>
        <widget class="QPushButton" name="playpause_button">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>50</x>
+          <x>33</x>
           <y>650</y>
-          <width>41</width>
+          <width>31</width>
           <height>31</height>
          </rect>
         </property>
@@ -95,7 +98,7 @@
         </property>
         <property name="icon">
          <iconset resource="../resources.qrc">
-          <normaloff>:/resources/images/pause.png</normaloff>:/resources/images/pause.png</iconset>
+          <normaloff>:/resources/images/play.svg</normaloff>:/resources/images/play.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -107,7 +110,7 @@
        <widget class="QSlider" name="horizontalSlider">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>103</x>
           <y>652</y>
           <width>751</width>
           <height>29</height>
@@ -120,7 +123,7 @@
        <widget class="QLabel" name="timeLabel">
         <property name="geometry">
          <rect>
-          <x>870</x>
+          <x>874</x>
           <y>657</y>
           <width>101</width>
           <height>17</height>
@@ -133,6 +136,32 @@
         </property>
         <property name="text">
          <string>00:00 / 00:00</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="openLog_button">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>65</x>
+          <y>650</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/resources/images/execute.png</normaloff>:/resources/images/execute.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>65</width>
+          <height>25</height>
+         </size>
         </property>
        </widget>
       </widget>

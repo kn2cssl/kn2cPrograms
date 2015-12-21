@@ -26,6 +26,12 @@ class Soccer : public QObject
     Q_OBJECT
 public:
     explicit Soccer(QObject *parent = 0);
+    void recordGameLog();
+    void stopGameLog();
+    void playGameLog();
+    void pauseGameLog();
+    void loadGameLog();
+    void loadGameLog(QString address);
 
 //private:
     QString log;
@@ -45,7 +51,6 @@ public:
     grSim* grsim;
     AI *ai;
     QString field;
-
 };
 
 #endif // SOCCER_H

@@ -85,16 +85,9 @@ INCLUDEPATH += grSim
 INCLUDEPATH += ai
 
 SOURCES +=	main.cpp \
-    grSim/grSim_Replacement.pb.cc \
-    grSim/grSim_Packet.pb.cc \
-    grSim/grSim_Commands.pb.cc \
     ssl/sslreceiver.cpp \
     ssl/sslrefbox.cpp \
     ssl/sslvision.cpp \
-    ssl/sslvision/messages/messages_robocup_ssl_wrapper.pb.cc \
-    ssl/sslvision/messages/messages_robocup_ssl_refbox_log.pb.cc \
-    ssl/sslvision/messages/messages_robocup_ssl_geometry.pb.cc \
-    ssl/sslvision/messages/messages_robocup_ssl_detection.pb.cc \
     ui/mainwindow.cpp \
     ui/renderarea.cpp \
     util/fpscounter.cpp \
@@ -150,7 +143,6 @@ SOURCES +=	main.cpp \
     ai/play/playpenaltyour.cpp \
     ai/tactic/tactictestkickprecision.cpp \
     ai/tactic/tactictestfriction.cpp \
-    ssl/sslrefbox/messages/referee.pb.cc \
     ssl/sslrefboxnew.cpp \
     geom2/shape2d.cpp \
     ai/tactic/tacticblocker.cpp \
@@ -191,15 +183,32 @@ SOURCES +=	main.cpp \
     ai/learning/kick_learning.cpp \
     ai/learning/policy.cpp \
     ai/tactic/tactickicklearning.cpp \
-    ai/play/playlearning.cpp
+    ai/play/playlearning.cpp \
+    logplayer/logplayer.cpp \
+    logplayer/vision_logplayer.cpp \
+    logplayer/referee_logplayer.cpp \
+    proto/sslvision/messages_robocup_ssl_detection.pb.cc \
+    proto/sslvision/messages_robocup_ssl_geometry.pb.cc \
+    proto/sslvision/messages_robocup_ssl_geometry_legacy.pb.cc \
+    proto/sslvision/messages_robocup_ssl_refbox_log.pb.cc \
+    proto/sslvision/messages_robocup_ssl_wrapper.pb.cc \
+    proto/sslvision/messages_robocup_ssl_wrapper_legacy.pb.cc \
+    logplayer/ai_logplayer.cpp \
+    proto/grSim/grSim_Commands.pb.cc \
+    proto/grSim/grSim_Packet.pb.cc \
+    proto/grSim/grSim_Replacement.pb.cc \
+    proto/AI/Ball_message.pb.cc \
+    proto/AI/position_message.pb.cc \
+    proto/AI/RobotCommand_message.pb.cc \
+    proto/AI/Robot_message.pb.cc \
+    proto/AI/ssl_log.pb.cc \
+    proto/sslrefbox/referee.pb.cc \
+    proto/sslvision/vision_log.pb.cc
 
 HEADERS  += \
     etc/settings.h \
     etc/constants.h \
     etc/base.h \
-    grSim/grSim_Replacement.pb.h \
-    grSim/grSim_Packet.pb.h \
-    grSim/grSim_Commands.pb.h \
     ssl/worldmodel.h \
     ssl/sslreceiver.h \
     ssl/sslrefbox.h \
@@ -207,10 +216,6 @@ HEADERS  += \
     ssl/sslrefbox/game_state.h \
     ssl/sslrefbox/commands.h \
     ssl/sslvision.h \
-    ssl/sslvision/messages/messages_robocup_ssl_wrapper.pb.h \
-    ssl/sslvision/messages/messages_robocup_ssl_refbox_log.pb.h \
-    ssl/sslvision/messages/messages_robocup_ssl_geometry.pb.h \
-    ssl/sslvision/messages/messages_robocup_ssl_detection.pb.h \
     ui/mainwindow.h \
     ui/renderarea.h \
     util/util.h \
@@ -276,7 +281,6 @@ HEADERS  += \
     ai/play/playpenaltyour.h \
     ai/tactic/tactictestkickprecision.h \
     ai/tactic/tactictestfriction.h \
-    ssl/sslrefbox/messages/referee.pb.h \
     ssl/sslrefboxnew.h \
     geom2/shape2d.h \
     ai/tactic/tacticblocker.h \
@@ -318,7 +322,27 @@ HEADERS  += \
     ai/learning/kick_learning.h \
     ai/learning/policy.h \
     ai/tactic/tactickicklearning.h \
-    ai/play/playlearning.h
+    ai/play/playlearning.h \
+    logplayer/logplayer.h \
+    logplayer/vision_logplayer.h \
+    logplayer/referee_logplayer.h \
+    proto/AI/Ball_message.pb.h \
+    proto/AI/position_message.pb.h \
+    proto/AI/RobotCommand_message.pb.h \
+    proto/AI/Robot_message.pb.h \
+    proto/AI/ssl_log.pb.h \
+    proto/grSim/grSim_Commands.pb.h \
+    proto/grSim/grSim_Packet.pb.h \
+    proto/grSim/grSim_Replacement.pb.h \
+    proto/sslvision/messages_robocup_ssl_detection.pb.h \
+    proto/sslvision/messages_robocup_ssl_geometry.pb.h \
+    proto/sslvision/messages_robocup_ssl_geometry_legacy.pb.h \
+    proto/sslvision/messages_robocup_ssl_refbox_log.pb.h \
+    proto/sslvision/messages_robocup_ssl_wrapper.pb.h \
+    proto/sslvision/messages_robocup_ssl_wrapper_legacy.pb.h \
+    logplayer/ai_logplayer.h \
+    proto/sslrefbox/referee.pb.h \
+    proto/sslvision/vision_log.pb.h
 
 FORMS    +=	ui/mainwindow.ui
 

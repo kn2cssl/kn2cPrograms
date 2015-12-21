@@ -1,0 +1,54 @@
+import "position_message.proto"; 
+import "RobotCommand_message.proto";
+
+message Robot_message
+{
+	enum AgentStatus
+    	{
+		Idle = 1;
+    		Passing = 2;
+    		Kicking = 3;
+    		Chiping = 4;
+    		FollowingBall = 5;
+    		BlockingBall = 6;
+    		BlockingRobot = 7;
+    		RecievingPass = 8;
+    	}
+
+	enum AgentRegion
+    	{
+		Left = 21;
+    		Center = 22;
+    		Right = 23;
+    	}
+
+	enum AgentRole
+    	{
+	    NoRole = 31;
+	    ArcMid = 32;
+	    ArcLeft = 33;
+	    ArcRight = 34;
+	    FixedPositionLeft = 35;
+	    FixedPositionRight = 36;
+	    FixedPositionMid = 37;
+	    AttackerLeft = 38;
+	    AttackerRight = 39;
+	    AttackerMid = 40;
+	    Blocker = 41;
+	    DefenderLeft = 42;
+	    DefenderRight = 43;
+	    DefenderMid = 44;
+	    Golie = 45;
+    	}
+
+	required bool isValid = 1;	
+	
+	required position_message position = 2;
+	required position_message velocity = 3;
+	
+	optional AgentStatus status = 4;
+	optional AgentRole role = 5;
+	optional AgentRegion region = 6;
+
+	optional RobotCommand_message rc = 7;
+}

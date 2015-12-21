@@ -5,7 +5,7 @@
 #include <QUdpSocket>
 #include <QTimer>
 #include "base.h"
-#include "grSim_Packet.pb.h"
+#include "proto/grSim/grSim_Packet.pb.h"
 #include "outputbuffer.h"
 #include "fpscounter.h"
 

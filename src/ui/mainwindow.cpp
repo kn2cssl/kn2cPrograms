@@ -585,6 +585,7 @@ void MainWindow::on_playpause_button_clicked()
         QString pic_address = ":/resources/images/pause.png";
         ui->playpause_button->setIcon(QIcon(pic_address));
         sc->wm->gameCommand = "Play";
+        sc->playGameLog();
     }
     else if( sc->wm->gameCommand == "Play")
     {
@@ -601,11 +602,14 @@ void MainWindow::on_stoprecord_button_clicked()
         QString pic_address = ":/resources/images/record.png";
         ui->stoprecord_button->setIcon(QIcon(pic_address));
         sc->wm->logCommand = "Stop";
+        ui->playpause_button->setEnabled(true);
+        sc->stopGameLog();
     }
     else if( sc->wm->logCommand == "Stop")
     {
         QString pic_address = ":/resources/images/stop.svg";
         ui->stoprecord_button->setIcon(QIcon(pic_address));
         sc->wm->logCommand = "Record";
+        sc->recordGameLog();
     }
 }

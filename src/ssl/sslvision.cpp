@@ -7,8 +7,15 @@ SSLVision::SSLVision(QString ip, int port, TeamColorType color, TeamSideType sid
     _camera(camera),
     _wm(wm)
 {
+    qRegisterMetaType<SSL_WrapperPacket>("SSL_WrapperPacket");
+
     _time.start();
-    connect(this, SIGNAL(newReceivedPacket(QByteArray,QString,int)), this, SLOT(readPendingPacket(QByteArray,QString,int)));
+    connect(this, SIGNAL(newReceivedPacket(QByteArray,QString,int)), this, SLOT(readPendingPacket(QByteArray,QString,int)),Qt::DirectConnection);
+
+    logplayer = new Vision_logPlayer(wm, "test",parent);
+    recordPermission = false;
+
+    connect(logplayer, SIGNAL(dataReady()), this, SLOT(logResponder()));
 
     // Log
     qDebug() << "SSLVision Initialization...";
@@ -17,6 +24,30 @@ SSLVision::SSLVision(QString ip, int port, TeamColorType color, TeamSideType sid
     qDebug() << "Color: " << (color==COLOR_BLUE?"Blue":"Yellow");
     qDebug() << "Side: " << (side==SIDE_RIGHT?"Right":"Left");
     qDebug() << "Camera: " << ((int)camera);
+}
+
+void SSLVision::startRecording()
+{
+    recordPermission = true;
+    logplayer->restartTime();
+}
+
+void SSLVision::stopRecording()
+{
+    recordPermission = false;
+    logplayer->saveLog();
+}
+
+void SSLVision::startPlaying()
+{
+    this->Stop();
+    logplayer->playLog();
+}
+
+void SSLVision::stopPlaying()
+{
+    this->Start();
+   // logplayer->st
 }
 
 void SSLVision::readPendingPacket(QByteArray data, QString ip, int port)
@@ -28,6 +59,22 @@ void SSLVision::readPendingPacket(QByteArray data, QString ip, int port)
     SSL_WrapperPacket packet;
     bool ans=packet.ParseFromArray(data.data(), data.size());
     if(!ans) return;
+    if(packet.has_detection()==false) return;
+    SSL_DetectionFrame pck = packet.detection();
+
+    //Record gameLogs
+    if( recordPermission )
+        logplayer->recordLog(packet);
+
+    // parse detection frame
+    parse(pck);
+}
+
+void SSLVision::logResponder()
+{
+    SSL_WrapperPacket packet = logplayer->returnCurrentPacket();
+
+    if(! packet.IsInitialized() ) return;
     if(packet.has_detection()==false) return;
     SSL_DetectionFrame pck = packet.detection();
 

@@ -141,3 +141,33 @@ Soccer::Soccer(QObject *parent) :
     ai = new AI(wm, field,outputbuffer, this);
     ai->Start();
 }
+
+void Soccer::recordGameLog()
+{
+    sslvision->startRecording();
+}
+
+void Soccer::stopGameLog()
+{
+    sslvision->stopRecording();
+}
+
+void Soccer::playGameLog()
+{
+    sslvision->startPlaying();
+}
+
+void Soccer::pauseGameLog()
+{
+
+}
+
+void Soccer::loadGameLog()
+{
+
+}
+
+void Soccer::loadGameLog(QString address)
+{
+
+}

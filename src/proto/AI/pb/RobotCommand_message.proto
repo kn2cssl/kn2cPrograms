@@ -1,0 +1,16 @@
+import "position_message.proto";
+
+message RobotCommand_message
+{
+	required position_message fin_pos = 1;
+	required position_message fin_vel = 2;
+
+	required float maxSpeed = 3;
+
+	required float kickspeedx = 4;
+	required float kickspeedz = 5;
+
+	required bool useNav = 6;
+	required bool isBallObs = 7;
+	required bool isKickObs = 8;
+}
