@@ -107,14 +107,20 @@
          </size>
         </property>
        </widget>
-       <widget class="QSlider" name="horizontalSlider">
+       <widget class="QSlider" name="timeLine_slider">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="geometry">
          <rect>
-          <x>103</x>
+          <x>137</x>
           <y>652</y>
-          <width>751</width>
+          <width>730</width>
           <height>29</height>
          </rect>
+        </property>
+        <property name="maximum">
+         <number>0</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -138,7 +144,7 @@
          <string>00:00 / 00:00</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="openLog_button">
+       <widget class="QPushButton" name="execLog_button">
         <property name="enabled">
          <bool>false</bool>
         </property>
@@ -160,6 +166,32 @@
         <property name="iconSize">
          <size>
           <width>65</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="openLog_button">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>650</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../resources.qrc">
+          <normaloff>:/resources/images/open.svg</normaloff>:/resources/images/open.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>50</width>
           <height>25</height>
          </size>
         </property>

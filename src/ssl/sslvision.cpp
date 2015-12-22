@@ -47,7 +47,12 @@ void SSLVision::startPlaying()
 void SSLVision::stopPlaying()
 {
     this->Start();
-   // logplayer->st
+    // logplayer->st
+}
+
+void SSLVision::loadPlaying(QString address)
+{
+    logplayer->loadLog(address);
 }
 
 void SSLVision::readPendingPacket(QByteArray data, QString ip, int port)

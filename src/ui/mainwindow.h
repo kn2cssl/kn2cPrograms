@@ -5,6 +5,7 @@
 #include <QTimer>
 #include "soccer.h"
 #include "renderarea.h"
+#include <QFileDialog>
 
 namespace Ui {
     class MainWindow;
@@ -42,6 +43,8 @@ private slots:
     void on_playpause_button_clicked();
 
     void on_stoprecord_button_clicked();
+
+    void on_openLog_button_clicked();
 
 private:
     Ui::MainWindow *ui;

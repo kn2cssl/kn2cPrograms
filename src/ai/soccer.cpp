@@ -169,5 +169,5 @@ void Soccer::loadGameLog()
 
 void Soccer::loadGameLog(QString address)
 {
-
+    sslvision->loadPlaying(address);
 }

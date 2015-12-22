@@ -8,5 +8,6 @@
         <file>resources/images/stop.svg</file>
         <file>resources/images/record.png</file>
         <file>resources/images/execute.png</file>
+        <file>resources/images/open.svg</file>
     </qresource>
 </RCC>

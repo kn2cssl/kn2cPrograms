@@ -592,6 +592,7 @@ void MainWindow::on_playpause_button_clicked()
         QString pic_address = ":/resources/images/play.svg";
         ui->playpause_button->setIcon(QIcon(pic_address));
         sc->wm->gameCommand = "Pause";
+        sc->pauseGameLog();
     }
 }
 
@@ -603,6 +604,7 @@ void MainWindow::on_stoprecord_button_clicked()
         ui->stoprecord_button->setIcon(QIcon(pic_address));
         sc->wm->logCommand = "Stop";
         ui->playpause_button->setEnabled(true);
+        ui->timeLine_slider->setEnabled(true);
         sc->stopGameLog();
     }
     else if( sc->wm->logCommand == "Stop")
@@ -612,4 +614,11 @@ void MainWindow::on_stoprecord_button_clicked()
         sc->wm->logCommand = "Record";
         sc->recordGameLog();
     }
+}
+
+void MainWindow::on_openLog_button_clicked()
+{
+    QString fileAddress = QFileDialog::getOpenFileName(this,tr("Select Your Log File"), "/home", tr("Text Files (*.txt)"));
+    ui->playpause_button->setEnabled(true);
+    sc->loadGameLog(fileAddress);
 }

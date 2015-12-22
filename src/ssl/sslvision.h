@@ -24,7 +24,7 @@ public:
     void stopRecording();
     void startPlaying();
     void stopPlaying();
-    void pausePlaying();
+    void loadPlaying(QString address);
 
 protected:
     QTime _time;

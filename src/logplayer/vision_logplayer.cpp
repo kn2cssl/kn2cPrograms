@@ -93,6 +93,7 @@ bool Vision_logPlayer::saveLog()
     logName.append(QString::number(QDateTime::currentDateTime().time().minute()));
     logName.append(":");
     logName.append(QString::number(QDateTime::currentDateTime().time().second()));
+    logName.append(".txt");
 
     QFile file(logName);
     this->address = logName;
