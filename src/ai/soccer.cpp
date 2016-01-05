@@ -149,6 +149,11 @@ void Soccer::recordGameLog()
 
 void Soccer::stopGameLog()
 {
+    sslvision->stopPlaying();
+}
+
+void Soccer::saveGameLog()
+{
     sslvision->stopRecording();
 }
 
@@ -159,7 +164,7 @@ void Soccer::playGameLog()
 
 void Soccer::pauseGameLog()
 {
-
+    sslvision->pausePlaying();
 }
 
 void Soccer::loadGameLog()
@@ -170,4 +175,13 @@ void Soccer::loadGameLog()
 void Soccer::loadGameLog(QString address)
 {
     sslvision->loadPlaying(address);
+}
+
+int Soccer::logLength()
+{
+    int max;
+
+    max = sslvision->logLength();
+
+    return max;
 }

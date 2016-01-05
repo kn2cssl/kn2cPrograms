@@ -12,6 +12,7 @@ public:
     virtual bool loadLog() = 0;
     virtual bool saveLog() = 0;
    // virtual void recordLog() = 0;
+    virtual int getLength() = 0;
 
 protected:
     int counter;

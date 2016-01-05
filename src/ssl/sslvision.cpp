@@ -41,18 +41,29 @@ void SSLVision::stopRecording()
 void SSLVision::startPlaying()
 {
     this->Stop();
+    logplayer->setPlayPermission(true);
     logplayer->playLog();
 }
 
 void SSLVision::stopPlaying()
 {
     this->Start();
-    // logplayer->st
+    logplayer->setPlayPermission(false);
+}
+
+void SSLVision::pausePlaying()
+{
+    logplayer->setPlayPermission(false);
 }
 
 void SSLVision::loadPlaying(QString address)
 {
     logplayer->loadLog(address);
+}
+
+int SSLVision::logLength()
+{
+    return logplayer->getLength();
 }
 
 void SSLVision::readPendingPacket(QByteArray data, QString ip, int port)
@@ -84,5 +95,5 @@ void SSLVision::logResponder()
     SSL_DetectionFrame pck = packet.detection();
 
     // parse detection frame
-    parse(pck);
+    parseLog(pck);
 }

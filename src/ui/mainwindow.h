@@ -28,6 +28,8 @@ private:
 
     void disableLearningUi();
     void enableLearningUi();
+    QString convertTime2String(int time);
+    void timelineReset();
 
 private slots:
     void timer_timeout();
@@ -46,8 +48,17 @@ private slots:
 
     void on_openLog_button_clicked();
 
+    void on_timeLine_slider_sliderMoved(int position);
+
+    void logTimer_timeout();
+
 private:
     Ui::MainWindow *ui;
+    int logLength;
+    QTimer *logTimer;
+    int counter;
+    QString logPlayer_status;
+    bool logIsPlayed;
 };
 
 #endif // MAINWINDOW_H

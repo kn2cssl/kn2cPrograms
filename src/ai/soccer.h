@@ -28,10 +28,12 @@ public:
     explicit Soccer(QObject *parent = 0);
     void recordGameLog();
     void stopGameLog();
+    void saveGameLog();
     void playGameLog();
     void pauseGameLog();
     void loadGameLog();
     void loadGameLog(QString address);
+    int logLength();
 
 //private:
     QString log;

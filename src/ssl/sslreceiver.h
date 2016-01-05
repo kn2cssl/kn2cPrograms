@@ -13,8 +13,13 @@ public:
     explicit SSLReceiver(QString ip, int port, QObject *parent = 0);
 
 private:
-    QUdpSocket _udpsocket;
+    void udpsocketSetup(QString ip, int port);
+
+    QUdpSocket *udpsocket;
     bool _isStarted;
+    bool socketIsIntialized;
+    QString ip;
+    int port;
 
 signals:
     void newReceivedPacket(QByteArray data, QString ip, int port);

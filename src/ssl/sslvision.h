@@ -24,7 +24,9 @@ public:
     void stopRecording();
     void startPlaying();
     void stopPlaying();
+    void pausePlaying();
     void loadPlaying(QString address);
+    int logLength();
 
 protected:
     QTime _time;
@@ -35,6 +37,7 @@ protected:
     Vision_logPlayer *logplayer;
 
     virtual void parse(SSL_DetectionFrame &pck) = 0;
+    virtual void parseLog(SSL_DetectionFrame &pck) = 0;
 
 private slots:
     void readPendingPacket(QByteArray data, QString ip, int port);

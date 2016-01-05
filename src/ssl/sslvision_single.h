@@ -25,6 +25,7 @@ private:
     FPSCounter _fpscam1;
 
     virtual void parse(SSL_DetectionFrame &pck);
+    virtual void parseLog(SSL_DetectionFrame &pck);
 };
 
 

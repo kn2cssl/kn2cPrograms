@@ -20,6 +20,8 @@ public:
     void recordLog(SSL_WrapperPacket input);
     void restartTime();
     SSL_WrapperPacket returnCurrentPacket();
+    virtual int getLength();
+    void setPlayPermission(bool input);
 
 public slots:
     void timerShot();
@@ -30,6 +32,7 @@ private:
     QTime *elapsedTime;
     QString fileAddress;
     Vision_chunk current_chunk;
+    bool playPermisssion;
 
 signals:
     void dataReady();

@@ -25,10 +25,17 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
 
+    logTimer = new QTimer();
+    connect(logTimer, SIGNAL(timeout()), this, SLOT(logTimer_timeout()));
+
     ui->totalPolicies_lcd->display(RAND_POLICY_NUMBER);
     ui->totalIteration_lcd->display(TOTAL_ITERATIONS);
 
     //this->setWindowState(Qt::WindowFullScreen);
+
+    this->counter = 0;
+    this->logPlayer_status = "Stop";
+    this->logIsPlayed = false;
 }
 
 MainWindow::~MainWindow()
@@ -130,6 +137,25 @@ void MainWindow::disableLearningUi()
 void MainWindow::enableLearningUi()
 {
     ui->hillClimbing->setEnabled(true);
+}
+
+QString MainWindow::convertTime2String(int time)
+{
+    int min = (time / 1000) / 60;
+    int sec = (time / 1000) % 60;
+    return QString::number(min) + ":" + QString::number(sec);
+}
+
+void MainWindow::timelineReset()
+{
+    sc->pauseGameLog();
+    logTimer->stop();
+    this->counter = 0;
+    logIsPlayed = false;
+
+    QString timeLabel = "0:0 / " + convertTime2String(logLength);
+    ui->timeLabel->setText(timeLabel);
+    ui->timeLine_slider->setValue(0);
 }
 
 void MainWindow::timer_timeout()
@@ -578,47 +604,114 @@ void MainWindow::on_loadPolicies_button_clicked()
 {
     sc->wm->load_policies = true;
 }
+
 void MainWindow::on_playpause_button_clicked()
 {
-    if( sc->wm->gameCommand == "Pause")
+    logIsPlayed = !logIsPlayed;
+    QString pic_address = (logIsPlayed)? ":/resources/images/pause.png":":/resources/images/play.svg";
+    ui->playpause_button->setIcon(QIcon(pic_address));
+
+    if( logIsPlayed )
     {
-        QString pic_address = ":/resources/images/pause.png";
-        ui->playpause_button->setIcon(QIcon(pic_address));
-        sc->wm->gameCommand = "Play";
         sc->playGameLog();
+        logTimer->start(1000);
+        ui->timeLine_slider->setEnabled(true);
+
+        this->logPlayer_status = "Play";
+
+        QString pic_address = ":/resources/images/stop.svg";
+        ui->stoprecord_button->setIcon(QIcon(pic_address));
     }
-    else if( sc->wm->gameCommand == "Play")
+    else
     {
-        QString pic_address = ":/resources/images/play.svg";
-        ui->playpause_button->setIcon(QIcon(pic_address));
-        sc->wm->gameCommand = "Pause";
         sc->pauseGameLog();
+        logTimer->stop();
     }
 }
 
 void MainWindow::on_stoprecord_button_clicked()
 {
-    if( sc->wm->logCommand == "Record")
+    if( this->logPlayer_status == "Play" )
     {
+        this->logPlayer_status = "Stop";
+        sc->stopGameLog();
+        timelineReset();
+        ui->playpause_button->setDisabled(true);
+        ui->timeLine_slider->setDisabled(true);
         QString pic_address = ":/resources/images/record.png";
         ui->stoprecord_button->setIcon(QIcon(pic_address));
-        sc->wm->logCommand = "Stop";
+        pic_address = ":/resources/images/play.svg";
+        ui->playpause_button->setIcon(QIcon(pic_address));
+    }
+    else if( this->logPlayer_status == "Record" )
+    {
+        this->logPlayer_status = "Stop";
+        sc->saveGameLog();
+
+        logLength = sc->logLength();
+        ui->timeLine_slider->setMaximum(logLength);
+
+        timelineReset();
+
         ui->playpause_button->setEnabled(true);
         ui->timeLine_slider->setEnabled(true);
-        sc->stopGameLog();
+        QString pic_address = ":/resources/images/record.png";
+        ui->stoprecord_button->setIcon(QIcon(pic_address));
+        pic_address = ":/resources/images/play.svg";
+        ui->playpause_button->setIcon(QIcon(pic_address));
     }
-    else if( sc->wm->logCommand == "Stop")
+    else
     {
+        this->logPlayer_status = "Record";
+        sc->recordGameLog();
+        ui->playpause_button->setDisabled(true);
+        ui->timeLine_slider->setDisabled(true);
         QString pic_address = ":/resources/images/stop.svg";
         ui->stoprecord_button->setIcon(QIcon(pic_address));
-        sc->wm->logCommand = "Record";
-        sc->recordGameLog();
     }
 }
 
 void MainWindow::on_openLog_button_clicked()
 {
     QString fileAddress = QFileDialog::getOpenFileName(this,tr("Select Your Log File"), "/home", tr("Text Files (*.txt)"));
-    ui->playpause_button->setEnabled(true);
-    sc->loadGameLog(fileAddress);
+    if( !fileAddress.isEmpty() )
+    {
+        this->logPlayer_status = "Play";
+
+        sc->loadGameLog(fileAddress);
+
+        logLength = sc->logLength();
+        ui->timeLine_slider->setMaximum(logLength);
+
+        timelineReset();
+
+        ui->playpause_button->setEnabled(true);
+        ui->timeLine_slider->setEnabled(true);
+        QString pic_address = ":/resources/images/stop.svg";
+        ui->stoprecord_button->setIcon(QIcon(pic_address));
+        pic_address = ":/resources/images/play.svg";
+        ui->playpause_button->setIcon(QIcon(pic_address));
+    }
+}
+
+void MainWindow::on_timeLine_slider_sliderMoved(int position)
+{
+    qDebug()<<"slider: "<<convertTime2String(position);
+}
+
+void MainWindow::logTimer_timeout()
+{
+    counter += 1000;
+    if( counter > logLength )
+    {
+        counter = ui->timeLine_slider->maximum() ;
+        QString pic_address = ":/resources/images/play.svg";
+        ui->playpause_button->setIcon(QIcon(pic_address));
+        sc->pauseGameLog();
+        this->logIsPlayed = false;
+        logTimer->stop();
+    }
+
+    ui->timeLabel->setText(convertTime2String(counter) + " / " + convertTime2String(logLength));
+    ui->timeLine_slider->setValue(counter);
 }

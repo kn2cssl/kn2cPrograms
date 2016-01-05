@@ -8,6 +8,7 @@ Vision_logPlayer::Vision_logPlayer(WorldModel *worldmodel, QString address, QObj
     qDebug()<<"Address: "<<address;
 
     elapsedTime = new QTime();
+    playPermisssion = false;
 
 }
 
@@ -139,13 +140,27 @@ SSL_WrapperPacket Vision_logPlayer::returnCurrentPacket()
     return current_chunk.packet();
 }
 
+int Vision_logPlayer::getLength()
+{
+    if( !chunks.isEmpty() )
+        return chunks.last().time_elapsed();
+
+    return 0;
+}
+
+void Vision_logPlayer::setPlayPermission(bool input)
+{
+    this->playPermisssion = input;
+}
+
 void Vision_logPlayer::timerShot()
 {
     if( !chunks.isEmpty() )
     {
         int lastTime = current_chunk.time_elapsed();
         current_chunk = chunks.takeFirst();
-        QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(timerShot()));
+        if( playPermisssion )
+            QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(timerShot()));
         emit dataReady();
     }
 }

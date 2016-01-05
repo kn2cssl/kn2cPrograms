@@ -2,40 +2,51 @@
 
 SSLReceiver::SSLReceiver(QString ip, int port, QObject *parent) :
     FPSCounter(parent),
-    _udpsocket(this),
     _isStarted(false)
 {
+    this->ip = ip;
+    this->port = port;
+    udpsocketSetup(ip,port);
+}
+
+void SSLReceiver::udpsocketSetup(QString ip, int port)
+{
     // udp socket setup
+    udpsocket = new QUdpSocket();
     bool result;
-    result=_udpsocket.bind(QHostAddress::AnyIPv4, port, QUdpSocket::ReuseAddressHint);
-    if(!result) qDebug() << _udpsocket.errorString();
-    result=_udpsocket.joinMulticastGroup(QHostAddress(ip));
-    if(!result) qDebug() << _udpsocket.errorString();
+    result = udpsocket->bind(QHostAddress::AnyIPv4, port, QUdpSocket::ReuseAddressHint);
+    if(!result) qDebug() << udpsocket->errorString();
+    result = udpsocket->joinMulticastGroup(QHostAddress(ip));
+    if(!result) qDebug() << udpsocket->errorString();
+    socketIsIntialized = true;
 }
 
 void SSLReceiver::Start()
 {
     if(_isStarted) return;
-    connect(&_udpsocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+    if(!socketIsIntialized) udpsocketSetup(ip,port);
+    connect(udpsocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
     _isStarted=true;
 }
 
 void SSLReceiver::Stop()
 {
     if(!_isStarted) return;
-    disconnect(&_udpsocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+    disconnect(udpsocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
+    delete udpsocket;
+    socketIsIntialized = false;
     _isStarted=false;
 }
 
 void SSLReceiver::readPendingDatagrams()
 {
-    while (_udpsocket.hasPendingDatagrams())
+    while (udpsocket->hasPendingDatagrams())
     {
         QByteArray datagram;
-        datagram.resize(_udpsocket.pendingDatagramSize());
+        datagram.resize(udpsocket->pendingDatagramSize());
         QHostAddress sender;
         quint16 senderPort;
-        _udpsocket.readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
+        udpsocket->readDatagram(datagram.data(), datagram.size(), &sender, &senderPort);
         newReceivedPacket(datagram,sender.toString(),senderPort);
         Pulse();
     }
