@@ -42,18 +42,22 @@ void SSLVision::startPlaying()
 {
     this->Stop();
     logplayer->setPlayPermission(true);
+    logplayer->setPauseStatus(false);
     logplayer->playLog();
 }
 
 void SSLVision::stopPlaying()
 {
-    this->Start();
     logplayer->setPlayPermission(false);
+    logplayer->setPauseStatus(false);
+    this->Start();
 }
 
 void SSLVision::pausePlaying()
 {
     logplayer->setPlayPermission(false);
+    logplayer->setPauseStatus(true);
+    logplayer->pauseLog();
 }
 
 void SSLVision::loadPlaying(QString address)

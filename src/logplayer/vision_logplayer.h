@@ -17,14 +17,17 @@ public:
     virtual bool loadLog();
     bool loadLog(QString address);
     virtual bool saveLog();
+    virtual void pauseLog();
     void recordLog(SSL_WrapperPacket input);
     void restartTime();
     SSL_WrapperPacket returnCurrentPacket();
     virtual int getLength();
     void setPlayPermission(bool input);
+    void setPauseStatus(bool input);
 
 public slots:
     void timerShot();
+    void pauseShot();
 
 private:
     WorldModel *wm;
@@ -33,6 +36,7 @@ private:
     QString fileAddress;
     Vision_chunk current_chunk;
     bool playPermisssion;
+    bool logIsPaused;
 
 signals:
     void dataReady();

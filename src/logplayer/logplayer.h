@@ -11,6 +11,7 @@ public:
     virtual void playLog() = 0;
     virtual bool loadLog() = 0;
     virtual bool saveLog() = 0;
+    virtual void pauseLog() = 0;
    // virtual void recordLog() = 0;
     virtual int getLength() = 0;
 

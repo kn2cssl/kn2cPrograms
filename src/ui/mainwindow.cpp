@@ -148,7 +148,7 @@ QString MainWindow::convertTime2String(int time)
 
 void MainWindow::timelineReset()
 {
-    sc->pauseGameLog();
+    sc->stopGameLog();
     logTimer->stop();
     this->counter = 0;
     logIsPlayed = false;
@@ -160,7 +160,6 @@ void MainWindow::timelineReset()
 
 void MainWindow::timer_timeout()
 {
-    //qDebug() << "ui timer";
     ui->txtLog->setText(sc->log);
 
     ui->txtVisionSpeed->setText(QString::number(sc->sslvision->FPS()));

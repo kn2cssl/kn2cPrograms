@@ -9,7 +9,7 @@ Vision_logPlayer::Vision_logPlayer(WorldModel *worldmodel, QString address, QObj
 
     elapsedTime = new QTime();
     playPermisssion = false;
-
+    logIsPaused = false;
 }
 
 void Vision_logPlayer::playLog()
@@ -116,9 +116,13 @@ bool Vision_logPlayer::saveLog()
     return false;
 }
 
+void Vision_logPlayer::pauseLog()
+{
+    pauseShot();
+}
+
 void Vision_logPlayer::recordLog(SSL_WrapperPacket input)
 {
-    qDebug()<<"record log";
     Vision_chunk chunk;
     chunk.set_id(this->counter);
     chunk.set_time_elapsed(elapsedTime->elapsed());
@@ -153,6 +157,11 @@ void Vision_logPlayer::setPlayPermission(bool input)
     this->playPermisssion = input;
 }
 
+void Vision_logPlayer::setPauseStatus(bool input)
+{
+    this->logIsPaused = input;
+}
+
 void Vision_logPlayer::timerShot()
 {
     if( !chunks.isEmpty() )
@@ -163,5 +172,12 @@ void Vision_logPlayer::timerShot()
             QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(timerShot()));
         emit dataReady();
     }
+}
+
+void Vision_logPlayer::pauseShot()
+{
+    if( logIsPaused )
+        QTimer::singleShot(15, this, SLOT(pauseShot()));
+    emit dataReady();
 }
 
