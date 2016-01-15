@@ -37,6 +37,7 @@ private:
     Vision_chunk current_chunk;
     bool playPermisssion;
     bool logIsPaused;
+    int frameNumber;
 
 signals:
     void dataReady();

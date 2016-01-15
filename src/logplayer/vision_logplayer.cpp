@@ -10,13 +10,14 @@ Vision_logPlayer::Vision_logPlayer(WorldModel *worldmodel, QString address, QObj
     elapsedTime = new QTime();
     playPermisssion = false;
     logIsPaused = false;
+    this->frameNumber = 0;
 }
 
 void Vision_logPlayer::playLog()
 {
-    if( !chunks.isEmpty() )
+    if( frameNumber < chunks.size() )
     {
-        current_chunk = chunks.takeFirst();
+        current_chunk = chunks.at(frameNumber++);
         QTimer::singleShot(current_chunk.time_elapsed(), this, SLOT(timerShot()));
         emit dataReady();
     }
@@ -40,6 +41,7 @@ bool Vision_logPlayer::loadLog()
     else
     {
         chunks.clear();
+        this->frameNumber = 0;
         for(int i = 0; i < logs.chunks().size(); i++ )
         {
             chunks.append(logs.chunks(i));
@@ -65,6 +67,7 @@ bool Vision_logPlayer::loadLog(QString address)
     else
     {
         chunks.clear();
+        this->frameNumber = 0;
         for(int i = 0; i < logs.chunks().size(); i++ )
         {
             chunks.append(logs.chunks(i));
@@ -137,6 +140,7 @@ void Vision_logPlayer::restartTime()
     this->counter = 0;
     this->chunks.clear();
     this->elapsedTime->restart();
+    this->frameNumber = 0;
 }
 
 SSL_WrapperPacket Vision_logPlayer::returnCurrentPacket()
@@ -164,10 +168,11 @@ void Vision_logPlayer::setPauseStatus(bool input)
 
 void Vision_logPlayer::timerShot()
 {
-    if( !chunks.isEmpty() )
+    qDebug()<<"frameNumber: "<<frameNumber;
+    if( frameNumber < chunks.size() )
     {
         int lastTime = current_chunk.time_elapsed();
-        current_chunk = chunks.takeFirst();
+        current_chunk = chunks.at(frameNumber++);
         if( playPermisssion )
             QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(timerShot()));
         emit dataReady();
