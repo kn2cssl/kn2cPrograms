@@ -166,9 +166,51 @@ void Vision_logPlayer::setPauseStatus(bool input)
     this->logIsPaused = input;
 }
 
+void Vision_logPlayer::setFrameNumber(int msec)
+{
+    //    int function BinarySearch (Array A, int Lb, int Ub, int Key);
+    //      begin
+    //      do forever
+    //        M = (Lb + Ub)/2;
+    //        if (Key < A[M]) then
+    //          Ub = M - 1;
+    //        else if (Key > A[M]) then
+    //          Lb = M + 1;
+    //        else
+    //          return M;
+    //        if (Lb > Ub) then
+    //          return -1;
+    //      end;
+    
+    int Lb, Ub, Mid, foundIndex = -1;
+    Lb = 0; Ub = chunks.size();
+
+    do
+    {
+        Mid = (Lb + Ub)/2;
+
+        if ( msec - chunks.at(Mid).time_elapsed() < -10 )
+            Ub = Mid - 1;
+        else if ( msec - chunks.at(Mid).time_elapsed() > 10 )
+            Lb = Mid + 1;
+        else
+        {
+            foundIndex = Mid;
+            break;
+        }
+    }
+    while( Lb < Ub );
+
+    if( foundIndex >= 0)
+    {
+        this->current_chunk = chunks.at(foundIndex - 1);
+        this->frameNumber = foundIndex;
+        timerShot();
+    }
+}
+
 void Vision_logPlayer::timerShot()
 {
-    qDebug()<<"frameNumber: "<<frameNumber;
     if( frameNumber < chunks.size() )
     {
         int lastTime = current_chunk.time_elapsed();

@@ -185,3 +185,8 @@ int Soccer::logLength()
 
     return max;
 }
+
+void Soccer::setLogFrame(int msec)
+{
+    sslvision->setLogFrame(msec);
+}

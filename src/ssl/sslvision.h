@@ -27,6 +27,7 @@ public:
     void pausePlaying();
     void loadPlaying(QString address);
     int logLength();
+    void setLogFrame(int msec);
 
 protected:
     QTime _time;

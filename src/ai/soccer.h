@@ -34,6 +34,7 @@ public:
     void loadGameLog();
     void loadGameLog(QString address);
     int logLength();
+    void setLogFrame(int msec);
 
 //private:
     QString log;

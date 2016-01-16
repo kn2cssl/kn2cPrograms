@@ -70,6 +70,11 @@ int SSLVision::logLength()
     return logplayer->getLength();
 }
 
+void SSLVision::setLogFrame(int msec)
+{
+   logplayer->setFrameNumber(msec);
+}
+
 void SSLVision::readPendingPacket(QByteArray data, QString ip, int port)
 {
     // check for server ip (& port)

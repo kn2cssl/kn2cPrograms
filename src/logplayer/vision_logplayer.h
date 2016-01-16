@@ -24,6 +24,7 @@ public:
     virtual int getLength();
     void setPlayPermission(bool input);
     void setPauseStatus(bool input);
+    void setFrameNumber(int msec);
 
 public slots:
     void timerShot();
@@ -38,7 +39,7 @@ private:
     bool playPermisssion;
     bool logIsPaused;
     int frameNumber;
-
+    
 signals:
     void dataReady();
 

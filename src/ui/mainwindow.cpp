@@ -695,7 +695,9 @@ void MainWindow::on_openLog_button_clicked()
 
 void MainWindow::on_timeLine_slider_sliderMoved(int position)
 {
-    qDebug()<<"slider: "<<convertTime2String(position);
+    sc->setLogFrame(position);
+    ui->timeLabel->setText(convertTime2String(position) + " / " + convertTime2String(logLength));
+    counter = (position / 1000) * 1000;
 }
 
 void MainWindow::logTimer_timeout()
