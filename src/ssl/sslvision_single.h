@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QTime>
 
-#include "proto/sslvision/messages_robocup_ssl_wrapper_legacy.pb.h"
+#include "proto/messages_robocup_ssl_wrapper_legacy.pb.h"
 #include "base.h"
 #include "constants.h"
 #include "sslvision.h"

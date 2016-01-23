@@ -4,7 +4,7 @@
 #include <QObject>
 #include "logplayer.h"
 #include "worldmodel.h"
-#include "proto/sslrefbox/referee.pb.h"
+#include "proto/referee.pb.h"
 
 class Referee_logPlayer : public logPlayer
 {

@@ -4,7 +4,7 @@
 #include <QList>
 #include <QByteArray>
 #include <QDebug>
-#include "proto/grSim/grSim_Packet.pb.h"
+#include "proto/grSim_Packet.pb.h"
 
 struct grRobotData
 {

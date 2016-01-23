@@ -187,23 +187,24 @@ SOURCES +=	main.cpp \
     logplayer/logplayer.cpp \
     logplayer/vision_logplayer.cpp \
     logplayer/referee_logplayer.cpp \
-    proto/sslvision/messages_robocup_ssl_detection.pb.cc \
-    proto/sslvision/messages_robocup_ssl_geometry.pb.cc \
-    proto/sslvision/messages_robocup_ssl_geometry_legacy.pb.cc \
-    proto/sslvision/messages_robocup_ssl_refbox_log.pb.cc \
-    proto/sslvision/messages_robocup_ssl_wrapper.pb.cc \
-    proto/sslvision/messages_robocup_ssl_wrapper_legacy.pb.cc \
     logplayer/ai_logplayer.cpp \
-    proto/grSim/grSim_Commands.pb.cc \
-    proto/grSim/grSim_Packet.pb.cc \
-    proto/grSim/grSim_Replacement.pb.cc \
-    proto/AI/Ball_message.pb.cc \
-    proto/AI/position_message.pb.cc \
-    proto/AI/RobotCommand_message.pb.cc \
-    proto/AI/Robot_message.pb.cc \
-    proto/AI/ssl_log.pb.cc \
-    proto/sslrefbox/referee.pb.cc \
-    proto/sslvision/vision_log.pb.cc
+    proto/Ball_message.pb.cc \
+    proto/grSim_Commands.pb.cc \
+    proto/grSim_Packet.pb.cc \
+    proto/grSim_Replacement.pb.cc \
+    proto/log.pb.cc \
+    proto/messages_robocup_ssl_detection.pb.cc \
+    proto/messages_robocup_ssl_geometry.pb.cc \
+    proto/messages_robocup_ssl_geometry_legacy.pb.cc \
+    proto/messages_robocup_ssl_refbox_log.pb.cc \
+    proto/messages_robocup_ssl_wrapper.pb.cc \
+    proto/messages_robocup_ssl_wrapper_legacy.pb.cc \
+    proto/position_message.pb.cc \
+    proto/referee.pb.cc \
+    proto/RobotCommand_message.pb.cc \
+    proto/Robot_message.pb.cc \
+    proto/ssl_log.pb.cc \
+    proto/vision_log.pb.cc
 
 HEADERS  += \
     etc/settings.h \
@@ -326,23 +327,24 @@ HEADERS  += \
     logplayer/logplayer.h \
     logplayer/vision_logplayer.h \
     logplayer/referee_logplayer.h \
-    proto/AI/Ball_message.pb.h \
-    proto/AI/position_message.pb.h \
-    proto/AI/RobotCommand_message.pb.h \
-    proto/AI/Robot_message.pb.h \
-    proto/AI/ssl_log.pb.h \
-    proto/grSim/grSim_Commands.pb.h \
-    proto/grSim/grSim_Packet.pb.h \
-    proto/grSim/grSim_Replacement.pb.h \
-    proto/sslvision/messages_robocup_ssl_detection.pb.h \
-    proto/sslvision/messages_robocup_ssl_geometry.pb.h \
-    proto/sslvision/messages_robocup_ssl_geometry_legacy.pb.h \
-    proto/sslvision/messages_robocup_ssl_refbox_log.pb.h \
-    proto/sslvision/messages_robocup_ssl_wrapper.pb.h \
-    proto/sslvision/messages_robocup_ssl_wrapper_legacy.pb.h \
     logplayer/ai_logplayer.h \
-    proto/sslrefbox/referee.pb.h \
-    proto/sslvision/vision_log.pb.h
+    proto/Ball_message.pb.h \
+    proto/grSim_Commands.pb.h \
+    proto/grSim_Packet.pb.h \
+    proto/grSim_Replacement.pb.h \
+    proto/log.pb.h \
+    proto/messages_robocup_ssl_detection.pb.h \
+    proto/messages_robocup_ssl_geometry.pb.h \
+    proto/messages_robocup_ssl_geometry_legacy.pb.h \
+    proto/messages_robocup_ssl_refbox_log.pb.h \
+    proto/messages_robocup_ssl_wrapper.pb.h \
+    proto/messages_robocup_ssl_wrapper_legacy.pb.h \
+    proto/position_message.pb.h \
+    proto/referee.pb.h \
+    proto/RobotCommand_message.pb.h \
+    proto/Robot_message.pb.h \
+    proto/ssl_log.pb.h \
+    proto/vision_log.pb.h
 
 FORMS    +=	ui/mainwindow.ui
 

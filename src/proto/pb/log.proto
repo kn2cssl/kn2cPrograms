@@ -1,0 +1,8 @@
+import "vision_log.proto";
+import "ssl_log.proto";
+
+message logRecord
+{
+	optional SSL_log ai = 1;	
+	//optional Vision_log vision = 2;
+}
