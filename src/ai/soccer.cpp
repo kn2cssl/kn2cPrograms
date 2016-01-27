@@ -145,36 +145,113 @@ Soccer::Soccer(QObject *parent) :
 void Soccer::recordGameLog()
 {
     sslvision->startRecording();
+    ai->startRecording();
 }
 
 void Soccer::stopGameLog()
 {
     sslvision->stopPlaying();
+    ai->stopPlaying();
 }
 
-void Soccer::saveGameLog()
+bool Soccer::saveGameLog()
 {
-    sslvision->stopRecording();
+    logRecord logs;
+
+    Vision_log* visionLogs(logs.mutable_vision());
+    visionLogs->CopyFrom(sslvision->stopRecording());
+
+    SSL_log* aiLogs(logs.mutable_ai());
+    aiLogs->CopyFrom(ai->stopRecording());
+
+    QString logName;// = address;
+    logName.append("Log");
+    logName.append(QString::number(QDateTime::currentDateTime().date().year()));
+    logName.append(QString::number(QDateTime::currentDateTime().date().month()));
+    logName.append(QString::number(QDateTime::currentDateTime().date().day()));
+    logName.append("_");
+    logName.append(QString::number(QDateTime::currentDateTime().time().hour()));
+    logName.append(":");
+    logName.append(QString::number(QDateTime::currentDateTime().time().minute()));
+    logName.append(":");
+    logName.append(QString::number(QDateTime::currentDateTime().time().second()));
+    logName.append(".txt");
+
+    QFile file(logName);
+    this->Address = logName;
+
+    if( !file.exists() )
+    {
+        if ( file.open(QIODevice::WriteOnly | QIODevice::Text) )
+        {
+            fstream output;
+            output.open(logName.toUtf8(), fstream::out | fstream::trunc | fstream::binary);;
+            if ( logs.SerializeToOstream(&output) )
+            {
+                qDebug() << "Log saved compleltely." << endl;
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 void Soccer::playGameLog()
 {
     sslvision->startPlaying();
+    ai->startPlaying();
 }
 
 void Soccer::pauseGameLog()
 {
     sslvision->pausePlaying();
+    ai->pausePlaying();
 }
 
 void Soccer::loadGameLog()
 {
+    logRecord logs;
 
+    fstream input;
+    input.open(Address.toUtf8(), ios::in | ios::binary);
+    if (!input)
+    {
+        qDebug() << Address << ": File not found.  Creating a new file." << endl;
+
+    }
+    else if (!logs.ParseFromIstream(&input))
+    {
+        qDebug() << "Failed";
+    }
+    else
+    {
+        sslvision->loadPlaying(logs.vision());
+    }
 }
 
 void Soccer::loadGameLog(QString address)
 {
-    sslvision->loadPlaying(address);
+    logRecord logs;
+
+    fstream input;
+    input.open(address.toUtf8(), ios::in | ios::binary);
+    if (!input)
+    {
+        qDebug() << address << ": File not found.  Creating a new file." << endl;
+
+    }
+    else if (!logs.ParseFromIstream(&input))
+    {
+        qDebug() << "Failed";
+    }
+    else
+    {
+        qDebug()<<"vision is valid? "<<logs.vision().IsInitialized();
+        sslvision->loadPlaying(logs.vision());
+        qDebug()<<"ai is valid? "<<logs.ai().IsInitialized();
+        ai->loadPlaying(logs.ai());
+    }
 }
 
 int Soccer::logLength()

@@ -21,11 +21,11 @@ public:
     explicit SSLVision(QString ip, int port, TeamColorType color, TeamSideType side, CameraConfigType camera, WorldModel *wm, QObject *parent = 0);
     virtual int getFPS(int c) = 0;
     void startRecording();
-    void stopRecording();
+    Vision_log stopRecording();
     void startPlaying();
     void stopPlaying();
     void pausePlaying();
-    void loadPlaying(QString address);
+    void loadPlaying(Vision_log logs);
     int logLength();
     void setLogFrame(int msec);
 

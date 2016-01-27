@@ -20,6 +20,7 @@
 #include "outputbuffer.h"
 #include "ai.h"
 #include "mapsearchnode.h"
+#include "proto/log.pb.h"
 
 class Soccer : public QObject
 {
@@ -28,7 +29,7 @@ public:
     explicit Soccer(QObject *parent = 0);
     void recordGameLog();
     void stopGameLog();
-    void saveGameLog();
+    bool saveGameLog();
     void playGameLog();
     void pauseGameLog();
     void loadGameLog();
@@ -54,6 +55,8 @@ public:
     grSim* grsim;
     AI *ai;
     QString field;
+
+    QString Address;
 };
 
 #endif // SOCCER_H

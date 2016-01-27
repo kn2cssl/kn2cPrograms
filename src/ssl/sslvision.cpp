@@ -32,10 +32,10 @@ void SSLVision::startRecording()
     logplayer->restartTime();
 }
 
-void SSLVision::stopRecording()
+Vision_log SSLVision::stopRecording()
 {
     recordPermission = false;
-    logplayer->saveLog();
+    return logplayer->saveLog();
 }
 
 void SSLVision::startPlaying()
@@ -60,9 +60,9 @@ void SSLVision::pausePlaying()
     logplayer->pauseLog();
 }
 
-void SSLVision::loadPlaying(QString address)
+void SSLVision::loadPlaying(Vision_log logs)
 {
-    logplayer->loadLog(address);
+    logplayer->loadLog(logs);
 }
 
 int SSLVision::logLength()

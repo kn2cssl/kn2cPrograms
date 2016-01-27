@@ -100,17 +100,29 @@ class logRecord : public ::google::protobuf::Message {
   inline ::SSL_log* release_ai();
   inline void set_allocated_ai(::SSL_log* ai);
 
+  // optional .Vision_log vision = 2;
+  inline bool has_vision() const;
+  inline void clear_vision();
+  static const int kVisionFieldNumber = 2;
+  inline const ::Vision_log& vision() const;
+  inline ::Vision_log* mutable_vision();
+  inline ::Vision_log* release_vision();
+  inline void set_allocated_vision(::Vision_log* vision);
+
   // @@protoc_insertion_point(class_scope:logRecord)
  private:
   inline void set_has_ai();
   inline void clear_has_ai();
+  inline void set_has_vision();
+  inline void clear_has_vision();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::SSL_log* ai_;
+  ::Vision_log* vision_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
   friend void  protobuf_AddDesc_log_2eproto();
   friend void protobuf_AssignDesc_log_2eproto();
@@ -161,6 +173,44 @@ inline void logRecord::set_allocated_ai(::SSL_log* ai) {
     set_has_ai();
   } else {
     clear_has_ai();
+  }
+}
+
+// optional .Vision_log vision = 2;
+inline bool logRecord::has_vision() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+inline void logRecord::set_has_vision() {
+  _has_bits_[0] |= 0x00000002u;
+}
+inline void logRecord::clear_has_vision() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline void logRecord::clear_vision() {
+  if (vision_ != NULL) vision_->::Vision_log::Clear();
+  clear_has_vision();
+}
+inline const ::Vision_log& logRecord::vision() const {
+  return vision_ != NULL ? *vision_ : *default_instance_->vision_;
+}
+inline ::Vision_log* logRecord::mutable_vision() {
+  set_has_vision();
+  if (vision_ == NULL) vision_ = new ::Vision_log;
+  return vision_;
+}
+inline ::Vision_log* logRecord::release_vision() {
+  clear_has_vision();
+  ::Vision_log* temp = vision_;
+  vision_ = NULL;
+  return temp;
+}
+inline void logRecord::set_allocated_vision(::Vision_log* vision) {
+  delete vision_;
+  vision_ = vision;
+  if (vision) {
+    set_has_vision();
+  } else {
+    clear_has_vision();
   }
 }
 

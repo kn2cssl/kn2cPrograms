@@ -5,8 +5,8 @@
 #include <QFile>
 #include "worldmodel.h"
 #include "logplayer.h"
-#include "proto/sslvision/messages_robocup_ssl_wrapper.pb.h"
-#include "proto/sslvision/vision_log.pb.h"
+#include "proto/messages_robocup_ssl_wrapper.pb.h"
+#include "proto/vision_log.pb.h"
 
 class Vision_logPlayer : public logPlayer
 {
@@ -15,15 +15,13 @@ public:
     explicit Vision_logPlayer(WorldModel *worldmodel, QString address, QObject *parent = 0);
     virtual void playLog();
     virtual bool loadLog();
-    bool loadLog(QString address);
-    virtual bool saveLog();
+    bool loadLog(Vision_log logs);
+    Vision_log saveLog();
     virtual void pauseLog();
     void recordLog(SSL_WrapperPacket input);
     void restartTime();
     SSL_WrapperPacket returnCurrentPacket();
     virtual int getLength();
-    void setPlayPermission(bool input);
-    void setPauseStatus(bool input);
     void setFrameNumber(int msec);
 
 public slots:
@@ -36,8 +34,6 @@ private:
     QTime *elapsedTime;
     QString fileAddress;
     Vision_chunk current_chunk;
-    bool playPermisssion;
-    bool logIsPaused;
     int frameNumber;
     
 signals:

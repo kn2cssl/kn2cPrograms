@@ -91,7 +91,7 @@ void protobuf_AddDesc_Robot_5fmessage_2eproto() {
   ::protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\023Robot_message.proto\032\026position_message."
-    "proto\032\032RobotCommand_message.proto\"\323\005\n\rRo"
+    "proto\032\032RobotCommand_message.proto\"\341\005\n\rRo"
     "bot_message\022\017\n\007isValid\030\001 \002(\010\022#\n\010position"
     "\030\002 \002(\0132\021.position_message\022#\n\010velocity\030\003 "
     "\002(\0132\021.position_message\022*\n\006status\030\004 \001(\0162\032"
@@ -102,14 +102,15 @@ void protobuf_AddDesc_Robot_5fmessage_2eproto() {
     "s\022\010\n\004Idle\020\001\022\013\n\007Passing\020\002\022\013\n\007Kicking\020\003\022\013\n"
     "\007Chiping\020\004\022\021\n\rFollowingBall\020\005\022\020\n\014Blockin"
     "gBall\020\006\022\021\n\rBlockingRobot\020\007\022\021\n\rRecievingP"
-    "ass\020\010\".\n\013AgentRegion\022\010\n\004Left\020\025\022\n\n\006Center"
-    "\020\026\022\t\n\005Right\020\027\"\207\002\n\tAgentRole\022\n\n\006NoRole\020\037\022"
-    "\n\n\006ArcMid\020 \022\013\n\007ArcLeft\020!\022\014\n\010ArcRight\020\"\022\025"
-    "\n\021FixedPositionLeft\020#\022\026\n\022FixedPositionRi"
-    "ght\020$\022\024\n\020FixedPositionMid\020%\022\020\n\014AttackerL"
-    "eft\020&\022\021\n\rAttackerRight\020\'\022\017\n\013AttackerMid\020"
-    "(\022\013\n\007Blocker\020)\022\020\n\014DefenderLeft\020*\022\021\n\rDefe"
-    "nderRight\020+\022\017\n\013DefenderMid\020,\022\t\n\005Golie\020-", 799);
+    "ass\020\010\"<\n\013AgentRegion\022\014\n\010NoRegion\020\025\022\010\n\004Le"
+    "ft\020\026\022\n\n\006Center\020\027\022\t\n\005Right\020\030\"\207\002\n\tAgentRol"
+    "e\022\n\n\006NoRole\020\037\022\n\n\006ArcMid\020 \022\013\n\007ArcLeft\020!\022\014"
+    "\n\010ArcRight\020\"\022\025\n\021FixedPositionLeft\020#\022\026\n\022F"
+    "ixedPositionRight\020$\022\024\n\020FixedPositionMid\020"
+    "%\022\020\n\014AttackerLeft\020&\022\021\n\rAttackerRight\020\'\022\017"
+    "\n\013AttackerMid\020(\022\013\n\007Blocker\020)\022\020\n\014Defender"
+    "Left\020*\022\021\n\rDefenderRight\020+\022\017\n\013DefenderMid"
+    "\020,\022\t\n\005Golie\020-", 813);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Robot_message.proto", &protobuf_RegisterTypes);
   Robot_message::default_instance_ = new Robot_message();
@@ -168,6 +169,7 @@ bool Robot_message_AgentRegion_IsValid(int value) {
     case 21:
     case 22:
     case 23:
+    case 24:
       return true;
     default:
       return false;
@@ -175,6 +177,7 @@ bool Robot_message_AgentRegion_IsValid(int value) {
 }
 
 #ifndef _MSC_VER
+const Robot_message_AgentRegion Robot_message::NoRegion;
 const Robot_message_AgentRegion Robot_message::Left;
 const Robot_message_AgentRegion Robot_message::Center;
 const Robot_message_AgentRegion Robot_message::Right;

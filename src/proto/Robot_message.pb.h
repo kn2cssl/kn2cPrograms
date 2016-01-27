@@ -62,12 +62,13 @@ inline bool Robot_message_AgentStatus_Parse(
     Robot_message_AgentStatus_descriptor(), name, value);
 }
 enum Robot_message_AgentRegion {
-  Robot_message_AgentRegion_Left = 21,
-  Robot_message_AgentRegion_Center = 22,
-  Robot_message_AgentRegion_Right = 23
+  Robot_message_AgentRegion_NoRegion = 21,
+  Robot_message_AgentRegion_Left = 22,
+  Robot_message_AgentRegion_Center = 23,
+  Robot_message_AgentRegion_Right = 24
 };
 bool Robot_message_AgentRegion_IsValid(int value);
-const Robot_message_AgentRegion Robot_message_AgentRegion_AgentRegion_MIN = Robot_message_AgentRegion_Left;
+const Robot_message_AgentRegion Robot_message_AgentRegion_AgentRegion_MIN = Robot_message_AgentRegion_NoRegion;
 const Robot_message_AgentRegion Robot_message_AgentRegion_AgentRegion_MAX = Robot_message_AgentRegion_Right;
 const int Robot_message_AgentRegion_AgentRegion_ARRAYSIZE = Robot_message_AgentRegion_AgentRegion_MAX + 1;
 
@@ -198,6 +199,7 @@ class Robot_message : public ::google::protobuf::Message {
   }
 
   typedef Robot_message_AgentRegion AgentRegion;
+  static const AgentRegion NoRegion = Robot_message_AgentRegion_NoRegion;
   static const AgentRegion Left = Robot_message_AgentRegion_Left;
   static const AgentRegion Center = Robot_message_AgentRegion_Center;
   static const AgentRegion Right = Robot_message_AgentRegion_Right;

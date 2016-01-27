@@ -32,8 +32,9 @@ void protobuf_AssignDesc_log_2eproto() {
       "log.proto");
   GOOGLE_CHECK(file != NULL);
   logRecord_descriptor_ = file->message_type(0);
-  static const int logRecord_offsets_[1] = {
+  static const int logRecord_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, ai_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, vision_),
   };
   logRecord_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -79,7 +80,8 @@ void protobuf_AddDesc_log_2eproto() {
   ::protobuf_AddDesc_ssl_5flog_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\tlog.proto\032\020vision_log.proto\032\rssl_log.p"
-    "roto\"!\n\tlogRecord\022\024\n\002ai\030\001 \001(\0132\010.SSL_log", 79);
+    "roto\">\n\tlogRecord\022\024\n\002ai\030\001 \001(\0132\010.SSL_log\022"
+    "\033\n\006vision\030\002 \001(\0132\013.Vision_log", 108);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "log.proto", &protobuf_RegisterTypes);
   logRecord::default_instance_ = new logRecord();
@@ -98,6 +100,7 @@ struct StaticDescriptorInitializer_log_2eproto {
 
 #ifndef _MSC_VER
 const int logRecord::kAiFieldNumber;
+const int logRecord::kVisionFieldNumber;
 #endif  // !_MSC_VER
 
 logRecord::logRecord()
@@ -107,6 +110,7 @@ logRecord::logRecord()
 
 void logRecord::InitAsDefaultInstance() {
   ai_ = const_cast< ::SSL_log*>(&::SSL_log::default_instance());
+  vision_ = const_cast< ::Vision_log*>(&::Vision_log::default_instance());
 }
 
 logRecord::logRecord(const logRecord& from)
@@ -118,6 +122,7 @@ logRecord::logRecord(const logRecord& from)
 void logRecord::SharedCtor() {
   _cached_size_ = 0;
   ai_ = NULL;
+  vision_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -128,6 +133,7 @@ logRecord::~logRecord() {
 void logRecord::SharedDtor() {
   if (this != default_instance_) {
     delete ai_;
+    delete vision_;
   }
 }
 
@@ -157,6 +163,9 @@ void logRecord::Clear() {
     if (has_ai()) {
       if (ai_ != NULL) ai_->::SSL_log::Clear();
     }
+    if (has_vision()) {
+      if (vision_ != NULL) vision_->::Vision_log::Clear();
+    }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -174,6 +183,20 @@ bool logRecord::MergePartialFromCodedStream(
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ai()));
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(18)) goto parse_vision;
+        break;
+      }
+
+      // optional .Vision_log vision = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_vision:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_vision()));
         } else {
           goto handle_uninterpreted;
         }
@@ -205,6 +228,12 @@ void logRecord::SerializeWithCachedSizes(
       1, this->ai(), output);
   }
 
+  // optional .Vision_log vision = 2;
+  if (has_vision()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      2, this->vision(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -218,6 +247,13 @@ void logRecord::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->ai(), target);
+  }
+
+  // optional .Vision_log vision = 2;
+  if (has_vision()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        2, this->vision(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -236,6 +272,13 @@ int logRecord::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->ai());
+    }
+
+    // optional .Vision_log vision = 2;
+    if (has_vision()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->vision());
     }
 
   }
@@ -268,6 +311,9 @@ void logRecord::MergeFrom(const logRecord& from) {
     if (from.has_ai()) {
       mutable_ai()->::SSL_log::MergeFrom(from.ai());
     }
+    if (from.has_vision()) {
+      mutable_vision()->::Vision_log::MergeFrom(from.vision());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -289,12 +335,16 @@ bool logRecord::IsInitialized() const {
   if (has_ai()) {
     if (!this->ai().IsInitialized()) return false;
   }
+  if (has_vision()) {
+    if (!this->vision().IsInitialized()) return false;
+  }
   return true;
 }
 
 void logRecord::Swap(logRecord* other) {
   if (other != this) {
     std::swap(ai_, other->ai_);
+    std::swap(vision_, other->vision_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

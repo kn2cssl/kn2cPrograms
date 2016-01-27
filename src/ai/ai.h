@@ -8,6 +8,7 @@
 #include "play.h"
 #include "fpscounter.h"
 #include <QUdpSocket>
+#include "logplayer/ai_logplayer.h"
 
 class AI : public QObject
 {
@@ -17,6 +18,14 @@ public:
     FPSCounter fps;
     Play* getCurrentPlay();
     Tactic* getCurrentTactic(int i);
+    void startRecording();
+    SSL_log stopRecording();
+    void startPlaying();
+    void stopPlaying();
+    void pausePlaying();
+    void loadPlaying(SSL_log logs);
+    int logLength();
+    void setLogFrame(int msec);
 
 public slots:
     void Start();
@@ -28,12 +37,15 @@ private:
     QTimer timer;
     Play *current_play;
     Tactic *current_tactic[PLAYERS_MAX_NUM];
+    AI_logPlayer *logplayer;
     QUdpSocket *udp;
     QHostAddress ip;
     int firstWait;
+    bool recordPermission;
 
 private slots:
     void timer_timeout();
+    void updateWorldModel();
 
 private:
     QList<Play*> plays;

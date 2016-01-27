@@ -21,6 +21,7 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
 {
     qDebug() << "AI Initialization...";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
+    connect(logplayer, SIGNAL(dataReady()), this, SLOT(updateWorldModel()));
 
     Field::setup_consts(field_size);
 
@@ -32,6 +33,8 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
         current_tactic[i] = 0;
 
     firstWait = 0;
+    recordPermission = false;
+    logplayer = new AI_logPlayer("");
 
     plays.append(new playControl(wm));
     plays.append(new PlayFreeKickOpp(wm));
@@ -71,6 +74,45 @@ Tactic* AI::getCurrentTactic(int i)
     return current_tactic[i];
 }
 
+void AI::startRecording()
+{
+    recordPermission = true;
+    // logplayer->restartTime();
+}
+
+SSL_log AI::stopRecording()
+{
+    recordPermission = false;
+    return logplayer->saveLog();
+}
+
+void AI::startPlaying()
+{
+    this->Stop();
+    logplayer->setPlayPermission(true);
+    logplayer->setPauseStatus(false);
+    logplayer->playLog();
+}
+
+void AI::stopPlaying()
+{
+    logplayer->setPlayPermission(false);
+    logplayer->setPauseStatus(false);
+    this->Start();
+}
+
+void AI::pausePlaying()
+{
+    logplayer->setPlayPermission(false);
+    logplayer->setPauseStatus(true);
+    logplayer->pauseLog();
+}
+
+void AI::loadPlaying(SSL_log logs)
+{
+    logplayer->loadLog(logs);
+}
+
 void AI::timer_timeout()
 {
     if( firstWait > 5 )
@@ -97,6 +139,8 @@ void AI::timer_timeout()
         current_play = play;
         play->execute();
 
+        QList<RobotCommand> RCs;
+
         for(int i=0; i<PLAYERS_MAX_NUM; i++)
         {
             Tactic *tactic = play->getTactic(i);
@@ -104,8 +148,9 @@ void AI::timer_timeout()
             if(tactic == NULL) continue;
             tactic->setID(i);
             RobotCommand rc = tactic->getCommand();
-
+            RCs.append(rc);
             wm->ourRobot[i].SendCommand(rc);
+
             if(i == wm->indexOfUDP)
             {
                 if( wm->sendUDP)
@@ -150,9 +195,15 @@ void AI::timer_timeout()
             }
         }
 
-
+        if( recordPermission )
+            logplayer->recordLog(wm, RCs);
         fps.Pulse();
     }
     else
         firstWait++;
+}
+
+void AI::updateWorldModel()
+{
+    this->wm = logplayer->returnCurrentPacket();
 }

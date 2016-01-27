@@ -49,33 +49,17 @@ bool Vision_logPlayer::loadLog()
     }
 }
 
-bool Vision_logPlayer::loadLog(QString address)
+bool Vision_logPlayer::loadLog(Vision_log logs)
 {
-    Vision_log logs;
-
-    fstream input;
-    input.open(address.toUtf8(), ios::in | ios::binary);
-    if (!input)
+    chunks.clear();
+    this->frameNumber = 0;
+    for(int i = 0; i < logs.chunks().size(); i++ )
     {
-        qDebug() << address << ": File not found.  Creating a new file." << endl;
-
-    }
-    else if (!logs.ParseFromIstream(&input))
-    {
-        qDebug() << "Failed";
-    }
-    else
-    {
-        chunks.clear();
-        this->frameNumber = 0;
-        for(int i = 0; i < logs.chunks().size(); i++ )
-        {
-            chunks.append(logs.chunks(i));
-        }
+        chunks.append(logs.chunks(i));
     }
 }
 
-bool Vision_logPlayer::saveLog()
+Vision_log Vision_logPlayer::saveLog()
 {
     Vision_log logs;
     logs.set_number(this->counter);
@@ -86,37 +70,7 @@ bool Vision_logPlayer::saveLog()
         chunk->CopyFrom(chunks.at(i));
     }
 
-    QString logName = address;
-    logName.append("Log");
-    logName.append(QString::number(QDateTime::currentDateTime().date().year()));
-    logName.append(QString::number(QDateTime::currentDateTime().date().month()));
-    logName.append(QString::number(QDateTime::currentDateTime().date().day()));
-    logName.append("_");
-    logName.append(QString::number(QDateTime::currentDateTime().time().hour()));
-    logName.append(":");
-    logName.append(QString::number(QDateTime::currentDateTime().time().minute()));
-    logName.append(":");
-    logName.append(QString::number(QDateTime::currentDateTime().time().second()));
-    logName.append(".txt");
-
-    QFile file(logName);
-    this->address = logName;
-
-    if( !file.exists() )
-    {
-        if ( file.open(QIODevice::WriteOnly | QIODevice::Text) )
-        {
-            fstream output;
-            output.open(logName.toUtf8(), fstream::out | fstream::trunc | fstream::binary);;
-            if ( logs.SerializeToOstream(&output) )
-            {
-                qDebug() << "Log saved compleltely." << endl;
-                return true;
-            }
-        }
-    }
-
-    return false;
+    return logs;
 }
 
 void Vision_logPlayer::pauseLog()
@@ -154,16 +108,6 @@ int Vision_logPlayer::getLength()
         return chunks.last().time_elapsed();
 
     return 0;
-}
-
-void Vision_logPlayer::setPlayPermission(bool input)
-{
-    this->playPermisssion = input;
-}
-
-void Vision_logPlayer::setPauseStatus(bool input)
-{
-    this->logIsPaused = input;
 }
 
 void Vision_logPlayer::setFrameNumber(int msec)

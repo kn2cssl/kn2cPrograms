@@ -17,9 +17,10 @@ message Robot_message
 
 	enum AgentRegion
     	{
-		Left = 21;
-    		Center = 22;
-    		Right = 23;
+		NoRegion=21;
+		Left = 22;
+    		Center = 23;
+    		Right = 24;
     	}
 
 	enum AgentRole
