@@ -47,6 +47,7 @@ void Agent::SendCommand(RobotCommand rc)
 
     // grSim Packet
     grRobotData grRD;
+
     grRD.rid    = id;
     grRD.velx   = co.rs.VX;
     grRD.vely   = co.rs.VY;
@@ -58,7 +59,8 @@ void Agent::SendCommand(RobotCommand rc)
     grRD.kickspeedx = rc.kickspeedx;
     grRD.kickspeedz = rc.kickspeedz;
     grRD.spinner = 0;
-    outputBuffer->grpck.AddRobot(grRD);
+    if( packetIsValid(grRD) )
+        outputBuffer->grpck.AddRobot(grRD);
 }
 
 void Agent::Halt()
@@ -87,5 +89,14 @@ void Agent::Halt()
     grRD.kickspeedz=0;
     grRD.spinner=0;
     outputBuffer->grpck.AddRobot(grRD);
+}
+
+bool Agent::packetIsValid(grRobotData grRD)
+{
+    if( !isnan(grRD.velx) && !isnan(grRD.vely) && !isnan(grRD.velw) &&
+            !isnan(grRD.wheel1) && !isnan(grRD.wheel2) && !isnan(grRD.wheel3) && !isnan(grRD.wheel4) )
+        return  true;
+
+    return false;
 }
 

@@ -41,180 +41,946 @@ bool Play::conditionChanged()
 
 void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, bool& leftNav, Position &right, bool& rightNav)
 {
-    goalie.loc = Field::ourGoalCenter;
+
+    //goalie.loc = Field::ourGoalCenter;
     if( leftID != -1 )
         left = wm->ourRobot[leftID].pos;
     if( RightID != -1 )
         right = wm->ourRobot[RightID].pos;
 
-    if( wm->cmgs.theirPenaltyKick() )
+
+    //variables:
+
+    //defence with two players: goalkeeper : defender flag=false
+
+
+    double delta=90;
+    Vector2D lefttirak={-4500,500};
+    Vector2D righttirak={-4500,-500};
+    Vector2D rightspot={-4300,500};
+    Vector2D saferighttirak={-4500,600};
+    Vector2D safelefttirak={-4500,-600};
+    Vector2D leftspot={-4300,-500};
+    Vector2D Centerofgoal={-4550,0};
+
+    Vector2D ballpos=wm->ball.pos.loc;
+    Vector2D goallineintersection;
+    Vector2D goalkeeperlineintersection;
+    Vector2D ball2lefttirakvec=lefttirak-ballpos;
+    Vector2D ball2righttirakvec=righttirak-ballpos;
+
+    Vector2D goal;
+    Vector2D attackerpos=wm->oppRobot[0].pos.loc;
+
+    //qDebug()<<"x="<<attackerpos.x<<"y="<<attackerpos.y;
+
+    Segment2D safegoalline(saferighttirak,safelefttirak);
+    Segment2D goalline(righttirak,lefttirak);
+    Segment2D goalkeeperline(leftspot,rightspot);
+
+
+
+    Line2D *attacker2goalline;
+    Line2D *ball2righttirak;
+    Line2D *ball2lefttirak;
+    Line2D *ball2Centerofgoal;
+    //    Line2D *goalkeeperline;
+    attacker2goalline=new Line2D(attackerpos,(wm->oppRobot[0].pos.dir*(180/M_PI)));
+    ball2lefttirak=new Line2D(ballpos,lefttirak);
+    ball2righttirak=new Line2D(ballpos,righttirak);
+    ball2Centerofgoal=new Line2D(ballpos,Field::ourGoalCenter);
+    //    goalkeeperline=new Line2D(leftspot,rightspot);
+
+
+    //defence with two players: goalkeeper : defender flag=true
+
+    //    double delta=90;
+
+    //    Vector2D ballpos=wm->ball.pos.loc;
+    //    Vector2D goalkeeperpos=wm->ourRobot[0].pos.loc;
+    //    Vector2D defenderpos=wm->ourRobot[1].pos.loc;
+
+    //    Vector2D lefttirak={-4500,500};
+    //    Vector2D righttirak={-4500,-500};
+    //    Vector2D rightspot={-4320,500};
+    //    Vector2D leftspot={-4320,-500};
+    //    Vector2D Centerofgoal={-4550,0};
+    Vector2D ball2Centerofgoalvec=Centerofgoal-ballpos;
+
+    //    Segment2D goalline(lefttirak,righttirak);
+
+
+
+    //    Line2D *line2righttirak;
+    //    Line2D *line2lefttirak;
+
+    //    line2lefttirak=new Line2D(ballpos,lefttirak);
+    //    line2righttirak=new Line2D(ballpos,righttirak);
+
+    //    Vector2D ball2righttirak=righttirak-ballpos;
+    //    Vector2D ball2lefttirak=lefttirak-ballpos;
+
+    Line2D *defender2goalline;
+    Circle2D dangerousarea(Centerofgoal,1500);
+
+
+    Line2D *safeline;
+    Line2D *test;
+    //    Vector2D goal,E;
+    safeline=new Line2D(leftspot,rightspot);
+
+
+    /////////////////////////////////////////////////////////////////////////////
+    //defence with two players: defender
+
+
+    //    double delta=90;
+
+    //    Vector2D ballpos=wm->ball.pos.loc;
+    //    Vector2D goalkeeperpos=wm->ourRobot[0].pos.loc;
+    //    Vector2D defenderpos=wm->ourRobot[1].pos.loc;
+
+    //    Vector2D lefttirak={-4500,500};
+    //    Vector2D righttirak={-4500,-500};
+    //    Vector2D rightspot={-4320,500};
+    //    Vector2D leftspot={-4320,-500};
+    //    Vector2D Centerofgoal={-4550,0};
+    //    Vector2D ball2Centerofgoal=Centerofgoal-ballpos;
+
+    //    Segment2D goalline(lefttirak,righttirak);
+
+
+
+    //    Line2D *line2righttirak;
+    //    Line2D *line2lefttirak;
+
+    //    line2lefttirak=new Line2D(ballpos,lefttirak);
+    //    line2righttirak=new Line2D(ballpos,righttirak);
+
+    //    Vector2D ball2righttirak=righttirak-ballpos;
+    //    Vector2D ball2lefttirak=lefttirak-ballpos;
+
+    //    Line2D *defender2goalline;
+    //    Circle2D dangerousarea(Centerofgoal,1500);
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    //defence with three player:goalkeeper:defenderflags=false
+
+    //    double delta=90;
+    //    Vector2D lefttirak={-4500,500};
+    //    Vector2D righttirak={-4500,-500};
+    //    Vector2D rightspot={-4400,500};
+    //    Vector2D saferighttirak={-4500,600};
+    //    Vector2D safelefttirak={-4500,-600};
+    //    Vector2D leftspot={-4400,-500};
+    //    Vector2D Centerofgoal={-4550,0};
+
+    //    Vector2D ballpos=wm->ball.pos.loc;
+    //    Vector2D goalkeeperpos=wm->ourRobot[0].pos.loc;
+    //    Vector2D attackerpos=wm->ourRobot[1].pos.loc;
+    //    Vector2D goallineintersection;
+    //    Vector2D goalkeeperlineintersection;
+    //    Vector2D ball2lefttirakvec=lefttirak-ballpos;
+    //    Vector2D ball2righttirakvec=righttirak-ballpos;
+
+    //    Vector2D goal;
+
+
+
+    //    Segment2D safegoalline(saferighttirak,safelefttirak);
+    //    Segment2D goalline(righttirak,lefttirak);
+    //    Segment2D goalkeeperline(leftspot,rightspot);
+
+
+
+    //    Line2D *attacker2safegoalline;
+    //    Line2D *ball2righttirak;
+    //    Line2D *ball2lefttirak;
+    //    Line2D *goalkeeperline;
+    //    attacker2safegoalline=new Line2D(attackerpos,(wm->ourRobot[1].pos.dir)*(180/M_PI));
+    //    ball2lefttirak=new Line2D(ballpos,lefttirak);
+    //    ball2righttirak=new Line2D(ballpos,righttirak);
+    //    goalkeeperline=new Line2D(leftspot,rightspot);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //defence with three player:goalkeeper:defenderflags=true
+    Vector2D temp1,temp2,intersection,C,D;
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    //defence with three player:defenders
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    int mohammadreza=1;
+    QList<int> ids = wm->kn->findNearestOppositeTo(ballpos);
+    wm->oppRobot[ids.at(0)];
+
+
+
+    if(mohammadreza==0)//defence with two player....
     {
-        right.loc = Field::oppPenaltyParallelLineCenter;
-        right.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
-        rightNav = false;
 
-        left.loc.x = Field::oppPenaltyParallelLineCenter.x;
-        left.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.5);
-        leftNav = false;
-
-        goalie = goalieInPenalty();
-    }
-    else if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && (!wm->cmgs.canKickBall()) )
-    {
-        right.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
-        right.loc.y = Field::ourGoalCenter.y - 350;
-        rightNav = true;
-
-        left.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
-        left.loc.y = Field::ourGoalCenter.y + 350;
-        leftNav = true;
-    }
-    else
-    {
-        Vector2D secondPointForGoalie;
-
-        bool need2newPoints = false;
-
-        BallOwner_Finded = Find_OppRobot_BallOwner();
-        if(BallOwner_Finded) Player_filter(Player1);
-        Deffence_Geometry_making();
-
-        Ball_IS_Toward_Goal = Ball_Toward_Goal();
-        bool Two_Deffence=true;
-        if(MidID!=-1) Two_Deffence=false;
-
-        if(!Ball_IS_Toward_Goal)
+        if(wm->ball.vel.loc.length()>0.5)
         {
-            leftNav = true; rightNav = true;
-            if(Two_Deffence) // Two Deffences Are Available
+            qDebug()<<"hello";
+
+            Vector2D ballvel;
+            Line2D *ball2goal;
+            ball2goal=new Line2D(ballpos,wm->ball.vel.loc.dir().degree());
+
+            left.loc=wm->ourRobot[2].pos.loc;
+            goalie.loc=wm->ourRobot[0].pos.loc;
+
+
+            if(goalline.existIntersection(*ball2goal))
             {
-                secondPointForGoalie = ( wm->ourRobot[leftID].pos.loc + wm->ourRobot[RightID].pos.loc)/2;
-                need2newPoints = !hasPositionForGoalie(secondPointForGoalie);
-                if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
+                //defender:
+                Vector2D temp1,temp2,ball2goaldangerousareaintersection,ball2goalgoalkeeperlineintersection;
+
+                dangerousarea.intersection(*ball2goal,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+                if((ballpos-temp1).length2()>(ballpos-temp2).length2())
                 {
-                    bool Is_AnyOther_Dangerous = false ;
-                    Is_AnyOther_Dangerous = Find_AnyOther_Opp_Dangerous();
-                    if(Is_AnyOther_Dangerous)
+                    ball2goaldangerousareaintersection=temp2;
+                }
+                else
+                {
+                    ball2goaldangerousareaintersection=temp1;
+                }
+                left.loc=ball2goaldangerousareaintersection;
+                left.dir=wm->ball.vel.loc.dir().radian()+M_PI;
+
+                //goalkeeper:
+                ball2goalgoalkeeperlineintersection=goalkeeperline.intersection(*ball2goal);
+                goalie.loc=ball2goalgoalkeeperlineintersection;
+                goalie.dir=wm->ball.vel.loc.dir().radian()+M_PI;
+
+            }
+        }
+        else
+        {
+            //goalkeeper:
+            {
+                //qDebug()<<defenderflag;
+                if(!defenderflag)//defa saro shekl nagerefte....
+                {
+                    float attacker2balldistance;
+                    if(ids.size()>0)
                     {
-                        // Player1 Is Ready To Give A Pass To Player2
+                        attacker2balldistance=((wm->oppRobot[ids.at(0)].pos.loc-ballpos)).length();
+                        //qDebug()<<"id="<<ids.at(0);
+                    }
+                    if(attacker2balldistance<200)//the attacker wants to attack to safegoalline not goalline...//goalline.existIntersection(*attacker2goalline)
+                    {
+                        //qDebug()<<"yes";
 
-                        Vector2D Dyno_right,Dyno_left,Deff_center;
-                        //                        bool Is_left;
-                        //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
-                        Deff_center = Find_Deff_center(Player2.loc);
-                        int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
-                        //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
-                        Ref_2Deff_Player(Player1);
+                        //                    goallineintersection=goalline.intersection(*attacker2goalline);
+                        //                    goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+                        //                    Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
 
-                        if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
+                        //                    goalie.loc=goalkeeperlineintersection;
+                        //                    goalie.dir=wm->oppRobot[0].pos.dir+M_PI;//in the opposite of the attacker...
+                        goallineintersection=goalline.intersection(*attacker2goalline);
+                        goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+
+                        Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
+                        Vector2D C=goalkeeperline2goalline.rotatedVector(delta);
+                        C.setLength(100);
+                        Vector2D temp1=wm->ourRobot[0].pos.loc+C;
+                        Vector2D temp2=wm->ourRobot[0].pos.loc-C;
+
+                        Segment2D blocker(temp1,temp2);
+
+                        bool rightside=blocker.existIntersection(*ball2righttirak);
+                        bool leftside=blocker.existIntersection(*ball2lefttirak);
+                        //                    goallineintersection=goalline.intersection(*attacker2goalline);
+                        //                    goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+
+                        //                    Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
+                        //                    Vector2D C=goalkeeperline2goalline.rotatedVector(delta);
+                        //                    C.setLength(100);
+                        //                    Vector2D temp1=goalkeeperlineintersection+C;
+                        //                    Vector2D temp2=goalkeeperlineintersection-C;
+
+                        //                    Segment2D blocker(temp1,temp2);
+
+                        //                    bool rightside=blocker.existIntersection(*ball2righttirak);
+                        //                    bool leftside=blocker.existIntersection(*ball2lefttirak);
+
+                        if(rightside && !leftside)
                         {
-                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
-                            Left_loc = Average_Positioning(Left_loc , Dyno_left);
+                            Vector2D ball2righttirakintersection=blocker.intersection(*ball2righttirak);
+                            Vector2D A=goalkeeperline2goalline.rotatedVector(delta);
+                            A.setLength(100);
+                            goal=ball2righttirakintersection+A;
+
+                            Line2D *test;
+                            test=new Line2D(goal,ball2righttirakvec.dir().degree());
+
+                            if(!(goalline.existIntersection(*test)))
+                            {
+                                goal=ball2righttirakintersection-A;
+                            }
                         }
-                        else
+                        else if(!rightside && leftside)
                         {
-                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
-                            Right_loc = Average_Positioning(Dyno_right , Right_loc);
+                            Vector2D ball2lefttirakintersection=blocker.intersection(*ball2lefttirak);
+                            Vector2D A=goalkeeperline2goalline.rotatedVector(delta);
+                            A.setLength(100);
+                            goal=ball2lefttirakintersection+A;
+
+                            Line2D *test;
+                            test=new Line2D(goal,ball2lefttirakvec.dir().degree());
+
+                            if(!(goalline.existIntersection(*test)))
+                            {
+                                goal=ball2lefttirakintersection-A;
+                            }
+                        }
+
+                        else if(!rightside && !leftside)
+                        {
+
+                            goal=goalkeeperlineintersection;
+                        }
+
+                        goalie.loc=goal;
+                        goalie.dir=wm->oppRobot[0].pos.dir+M_PI;//in the opposite of the attacker...
+                    }
+                    else
+                    {
+                        //qDebug()<<"no";
+                        Vector2D ball2goalkeeperlineintersection=goalkeeperline.intersection(*ball2Centerofgoal);
+
+                        goalie.loc=ball2goalkeeperlineintersection;//{-4500,0};
+                        goalie.dir=ball2Centerofgoalvec.dir().radian()+M_PI;//in the opposite of the attacker...
+                    }
+
+                }
+
+                else//defa saro shekl gerefte...
+                {
+                    if((ballpos-lefttirak).length2()>(ballpos-righttirak).length2())
+                    {
+                        Vector2D intersection;
+                        intersection=safeline->intersection(*ball2lefttirak);
+
+                        Vector2D E=ball2lefttirakvec.rotatedVector(delta);
+                        E.setLength(110);
+
+                        goal=intersection+E;
+
+                        Line2D *test;
+                        test=new Line2D(goal,ball2lefttirakvec.dir().degree());
+
+                        if(!(goalline.existIntersection(*test)))
+                        {
+                            goal=intersection-E;
+                        }
+
+                        goalie.loc=goal;
+                        goalie.dir=(ball2righttirakvec.dir().radian()+M_PI);
+
+                    }
+
+                    else
+                    {
+                        Vector2D intersection;
+                        intersection=safeline->intersection(*ball2righttirak);
+
+                        Vector2D E=ball2righttirakvec.rotatedVector(delta);
+                        E.setLength(110);
+
+                        goal=intersection+E;
+
+                        Line2D *test;
+                        test=new Line2D(goal,ball2righttirakvec.dir().degree());
+
+                        if(!(goalline.existIntersection(*test)))
+                        {
+                            goal=intersection-E;
+                        }
+
+                        goalie.loc=goal;
+                        goalie.dir=(ball2righttirakvec.dir().radian()+M_PI);
+
+                    }
+
+                }
+
+
+            }
+
+
+            //defender:
+            {
+                if((ballpos-lefttirak).length2()<(ballpos-righttirak).length2())
+                {
+                    Vector2D A,B,intersection;
+                    dangerousarea.intersection(*ball2lefttirak,&A,&B);//the intersection between the line from ball to nearer tirack and the defined circle...
+                    if((ballpos-A).length2()>(ballpos-B).length2())
+                    {
+                        intersection=B;
+                    }
+                    else
+                    {
+                        intersection=A;
+                    }
+
+                    Vector2D C=ball2lefttirakvec.rotatedVector(delta);
+                    C.setLength(110);
+
+                    goal=intersection+C;
+
+                    Line2D *test;
+                    test=new Line2D(goal,ball2lefttirakvec.dir().degree());
+
+                    if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                    {
+                        goal=intersection-C;
+                    }
+
+
+                    left.loc=goal;
+                    left.dir=(ball2lefttirakvec.dir().radian()+M_PI);
+                    //              qDebug()<<"x="<<goal.x<<"y="<<goal.y;
+                }
+
+                else
+                {
+                    Vector2D A,B,intersection;
+                    dangerousarea.intersection(*ball2righttirak,&A,&B);//the intersection between the line from ball to nearer tirack and the defined circle...
+                    if((ballpos-A).length2()>(ballpos-B).length2())
+                    {
+                        intersection=B;
+                    }
+                    else
+                    {
+                        intersection=A;
+                    }
+
+                    Vector2D C=ball2righttirakvec.rotatedVector(delta);
+                    C.setLength(110);
+
+                    goal=intersection+C;
+
+                    Line2D *test;
+                    test=new Line2D(goal,ball2righttirakvec.dir().degree());
+
+                    if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                    {
+                        goal=intersection-C;
+                    }
+
+
+                    left.loc=goal;//maybe right(??????????????????????????????????????????????????????????????????????????????????????????????????????????/)
+                    left.dir=(ball2righttirakvec.dir().radian()+M_PI);
+                    //                qDebug()<<"x="<<goal.x<<"y="<<goal.y;
+                }
+
+
+                //qDebug()<<"x="<<goal.x<<"y="<<goal.y;
+
+                if(((wm->ourRobot[leftID].pos.loc-goal).length())<400)
+                {
+                    defenderflag=true;
+                }
+
+                else
+                {
+                    defenderflag=false;
+                }
+
+            }
+
+        }
+
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    if(mohammadreza==1)//defence with three player()
+    {
+        //goalkeeper:
+        {
+            if(false)//!defenderflag)//defa saro shekl nagerefte....
+            {
+                float attacker2balldistance;
+
+                if(ids.size()>0)
+                {
+                    attacker2balldistance=((wm->oppRobot[ids.at(0)].pos.loc-ballpos)).length();
+                    qDebug()<<"id="<<ids.at(0);
+                }
+
+                if(attacker2balldistance<200)//the attacker wants to attack to safegoalline not goalline...
+                {
+                    qDebug()<<"yes";
+
+                    //                    goallineintersection=goalline.intersection(*attacker2goalline);
+                    //                    goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+                    //                    Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
+
+                    //                    goalie.loc=goalkeeperlineintersection;
+                    //                    goalie.dir=wm->oppRobot[0].pos.dir+M_PI;//in the opposite of the attacker...
+
+
+
+                    goallineintersection=goalline.intersection(*attacker2goalline);
+                    goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+
+                    Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
+                    Vector2D C=goalkeeperline2goalline.rotatedVector(delta);
+                    C.setLength(100);
+                    Vector2D temp1=wm->ourRobot[0].pos.loc+C;
+                    Vector2D temp2=wm->ourRobot[0].pos.loc-C;
+
+                    Segment2D blocker(temp1,temp2);
+
+                    bool rightside=blocker.existIntersection(*ball2righttirak);
+                    bool leftside=blocker.existIntersection(*ball2lefttirak);
+
+
+
+
+                    //                    goallineintersection=goalline.intersection(*attacker2goalline);
+                    //                    goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
+
+                    //                    Vector2D goalkeeperline2goalline=goallineintersection-goalkeeperlineintersection;
+                    //                    Vector2D C=goalkeeperline2goalline.rotatedVector(delta);
+                    //                    C.setLength(100);
+                    //                    Vector2D temp1=goalkeeperlineintersection+C;
+                    //                    Vector2D temp2=goalkeeperlineintersection-C;
+
+                    //                    Segment2D blocker(temp1,temp2);
+
+                    //                    bool rightside=blocker.existIntersection(*ball2righttirak);
+                    //                    bool leftside=blocker.existIntersection(*ball2lefttirak);
+
+                    if(rightside && !leftside)
+                    {
+
+                        Vector2D ball2righttirakintersection=blocker.intersection(*ball2righttirak);
+                        Vector2D A=goalkeeperline2goalline.rotatedVector(delta);
+                        A.setLength(100);
+                        goal=ball2righttirakintersection+A;
+
+                        Line2D *test;
+                        test=new Line2D(goal,ball2righttirakvec.dir().degree());
+
+                        if(!(goalline.existIntersection(*test)))
+                        {
+                            goal=ball2righttirakintersection-A;
                         }
                     }
-                    else Ref_2Deff_Ball(); // !!!!! Will Complete
-                }
-                else //(BallOwner_Finded)
-                {
-                    bool Is_Danger_Player=false;
-                    Is_Danger_Player = Danger_Player_Direction(Player1,200);
-                    if(Is_Danger_Player) Ref_2Deff_Player(Player1);
-                    else // The Ball Owner Player Is Not Toward Our Goal
+
+                    else if(!rightside && leftside)
                     {
-                        bool Is_anyone_recieve_pass = Find_Pass_Receiver(Player1);
-                        if(Is_anyone_recieve_pass)
-                        {
-                            // Player1 Is Ready To Give A Pass To Player2
+                        Vector2D ball2lefttirakintersection=blocker.intersection(*ball2lefttirak);
+                        Vector2D A=goalkeeperline2goalline.rotatedVector(delta);
+                        A.setLength(100);
+                        goal=ball2lefttirakintersection+A;
 
-                            Vector2D Dyno_right,Dyno_left,Deff_center;
-                            //                        bool Is_left;
-                            //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
-                            Deff_center = Find_Deff_center(Player2.loc);
-                            int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
-                            //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
-                            Ref_2Deff_Player(Player1);
+                        Line2D *test;
+                        test=new Line2D(goal,ball2lefttirakvec.dir().degree());
 
-                            if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
-                            {
-                                Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
-                                Left_loc = Average_Positioning(Left_loc , Dyno_left);
-                            }
-                            else
-                            {
-                                Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
-                                Right_loc = Average_Positioning(Dyno_right , Right_loc);
-                            }
-                        }
-                        else // No One Recieve Pass
+                        if(!(goalline.existIntersection(*test)))
                         {
-                            Ref_2Deff_Ball();
+                            goal=ball2lefttirakintersection-A;
                         }
                     }
-                    //                Ref_2Deff_Player(Player1);
+
+                    else if(!rightside && !leftside)
+                    {
+
+                        goal=goalkeeperlineintersection;
+                    }
+
+                    goalie.loc=goal;
+                    goalie.dir=wm->oppRobot[0].pos.dir+M_PI;//in the opposite of the attacker...
                 }
+
+
+                else
+                {
+                    qDebug()<<"no";
+                    Vector2D ball2goalkeeperlineintersection=goalkeeperline.intersection(*ball2Centerofgoal);
+
+                    goalie.loc=ball2goalkeeperlineintersection;//{-4500,0};
+                    goalie.dir=ball2Centerofgoalvec.dir().radian()+M_PI;//in the opposite of the attacker...
+                }
+
             }
-            else // One Deffence !
+
+
+            else//defa saro shekl garefte...
             {
-                secondPointForGoalie = Find_MostDangerous_Goal_Point();
 
-                if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
-                {
-                    Ref_1Deff_Ball(leftID,RightID,MidID);
-                }
-                else //(BallOwner_Finded)
-                {
-                    Ref_1Deff_Player(Player1,leftID,RightID,MidID);
-                }
-                // For Let The Second Deffence Come Back
-                if(MidID==RightID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,leftID,Left_loc);
-                else if(MidID==leftID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,RightID,Right_loc);
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                Vector2D temp1,temp2,intersection,C,D;
+//                dangerousarea.intersection(*ball2lefttirak,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+//                if((ballpos-temp1).length2()>(ballpos-temp2).length2())
+//                {
+//                    intersection=temp2;
+//                }
+//                else
+//                {
+//                    intersection=temp1;
+//                }
+
+//                D=ball2lefttirakvec.rotatedVector(delta);
+//                D.setLength(200);//radius of robot
+//                leftpoint=intersection+D;
+
+//                Line2D *test;
+//                test=new Line2D(leftpoint,ball2lefttirakvec.dir().degree());
+
+//                if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+//                {
+//                    leftpoint=intersection-D;
+
+//                }
+
+
+
+
+//                //Vector2D temp1,temp2,intersection,C,D;
+//                dangerousarea.intersection(*ball2righttirak,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+//                if((ballpos-temp1).length2()>(ballpos-temp2).length2())
+//                {
+//                    intersection=temp2;
+//                }
+//                else
+//                {
+//                    intersection=temp1;
+//                }
+
+//                D=ball2righttirakvec.rotatedVector(delta);
+//                D.setLength(200);//radius of robot
+//                rightpoint=intersection+D;
+
+
+//                test=new Line2D(rightpoint,ball2lefttirakvec.dir().degree());
+
+//                if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+//                {
+//                    rightpoint=intersection-D;
+
+//                }
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+                Line2D *ball2rightpoint;
+                Line2D *ball2leftpoint;
+
+                ball2rightpoint=new Line2D(ballpos,rightpoint);
+                ball2leftpoint=new Line2D(ballpos,leftpoint);
+
+                Segment2D goalkeeperline(leftspot,rightspot);
+
+
+
+                Vector2D goalkeeperlinerightintersection=goalkeeperline.intersection(*ball2rightpoint);
+                Vector2D goalkeeperlinelefttintersection=goalkeeperline.intersection(*ball2leftpoint);
+                Segment2D rightpoint2leftpoint(goalkeeperlinerightintersection,goalkeeperlinelefttintersection);
+
+
+                goal.x=(goalkeeperlinelefttintersection.x+goalkeeperlinerightintersection.x)/2;
+                goal.y=(goalkeeperlinelefttintersection.y+goalkeeperlinerightintersection.y)/2;
+
+
+                /////////////////////////////////////////////////////////////////////////////////////////////
+//                Segment2D testsegment(wm->ourRobot[1].pos.loc,wm->ourRobot[2].pos.loc);
+//                goal.x=(wm->ourRobot[1].pos.loc.x+wm->ourRobot[2].pos.loc.x)/2;
+//                goal.y=(wm->ourRobot[1].pos.loc.y+wm->ourRobot[2].pos.loc.y)/2;
+                //////////////////////////////////////////////////////////////////////////////////////
+
+                Vector2D goal2ballpos=ballpos-goal;
+                qDebug()<<"x="<<goal.x<<"y="<<goal.y;
+                goalie.loc=goal;
+                goalie.dir=0;goal2ballpos.dir().radian()+M_PI;
+
             }
-            //            Goalie_loc = Find_MostDangerous_Goal_Point();
-            //            qDebug() << " Goalie : ( " << Goalie_loc.x << "," << Goalie_loc.y << ")";
-            //            goalie.loc = Danger_point ;
+
         }
-        else // Ball Is Moving To Our Goal
+
+
+        //defenders:
         {
-            Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,Field::MinY));
-            Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
-            Vector2D intersect_Point = L2R.intersection(BV2T);
+            //left defender....
+            Vector2D temp1,temp2,intersection,C,D;
+            dangerousarea.intersection(*ball2lefttirak,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+            if((ballpos-temp1).length2()>(ballpos-temp2).length2())
+            {
+                intersection=temp2;
+            }
+            else
+            {
+                intersection=temp1;
+            }
 
-            secondPointForGoalie = intersect_Point;
+            D=ball2lefttirakvec.rotatedVector(delta);
+            C=ball2lefttirakvec.rotatedVector(delta);
+            C.setLength(110);
+            D.setLength(200);//radius of robot
 
-            rightNav = false; leftNav = false;
-            if(Two_Deffence) Ref_2Deff_Moving_Ball();
-            else Ref_1Deff_Moving_Ball(leftID,RightID,MidID);
+            goal=intersection+C;
+            leftpoint=intersection+D;
+
+            Line2D *test;
+            test=new Line2D(goal,ball2lefttirakvec.dir().degree());
+
+            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+            {
+                goal=intersection-C;
+                leftpoint=intersection-D;
+
+            }
+            left.loc=goal;
+            left.dir=(ball2lefttirakvec.dir().radian()+M_PI);
+
+            //right defender
+            //            Vector2D temp1,temp2,intersection;
+            dangerousarea.intersection(*ball2righttirak,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+            if((ballpos-temp1).length2()>(ballpos-temp2).length2())
+            {
+                intersection=temp2;
+            }
+            else
+            {
+                intersection=temp1;
+            }
+
+
+            D=ball2lefttirakvec.rotatedVector(delta);
+            C=ball2lefttirakvec.rotatedVector(delta);
+            C.setLength(110);
+            D.setLength(200);//radius of robot
+
+            goal=intersection+C;
+            rightpoint=intersection+D;
+
+            //            Line2D *test;
+            test=new Line2D(goal,ball2righttirakvec.dir().degree());
+
+            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+            {
+                goal=intersection-C;
+                rightpoint=intersection-D;
+
+            }
+            right.loc=goal;
+            right.dir=(ball2righttirakvec.dir().radian()+M_PI);
+
+            if(ball2righttirak->dist(wm->ourRobot[RightID].pos.loc)<120 && ball2lefttirak->dist(wm->ourRobot[leftID].pos.loc)<120)
+            {
+                defendersflag=true;
+            }
+
+            else
+            {
+                defendersflag=false;
+            }
+
         }
 
-        //        Ref_2Deff_Moving_Ball();
-        //                Goalie_loc.y = (Field::ourGoalCenter.y + 2*Goalie_loc.y)/3; //
-        //                Goalie_loc.x += 200;
-        //                goalie.loc = Goalie_loc ;
-        left.loc = Left_loc;
-        left.dir = (wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
-        right.loc = Right_loc;
-        right.dir = (wm->ourRobot[RightID].pos.loc - Field::ourGoalPost_R).dir().radian();
 
-        if( (left.loc-wm->ball.pos.loc).length() < 400)
-            leftNav = false;
-        if( (right.loc-wm->ball.pos.loc).length() < 400)
-            rightNav = false;
 
-        //Goal Keeper Positions
-        //        qDebug()<<"secondPointForGoalie : "<<secondPointForGoalie.x<<" , "<<secondPointForGoalie.y;
-        if( need2newPoints )
-            secondPointForGoalie = (right.loc + left.loc)/2;
 
-        goalie = goaliePosition(secondPointForGoalie);
-
-        //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
-        //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
     }
+
+
+
+
+    //    qDebug()<<"x="<<goalie.loc.x<<"y="<<goalie.loc.y;
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//    if( wm->cmgs.theirPenaltyKick() )
+//    {
+//        right.loc = Field::oppPenaltyParallelLineCenter;
+//        right.loc.y = Field::oppPenaltyParallelLineCenter.y - (Field::MaxY*0.5);
+//        rightNav = false;
+
+//        left.loc.x = Field::oppPenaltyParallelLineCenter.x;
+//        left.loc.y = Field::oppPenaltyParallelLineCenter.y + (Field::MaxY*0.5);
+//        leftNav = false;
+
+//        goalie = goalieInPenalty();
+//    }
+//    else if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && (!wm->cmgs.canKickBall()) )
+//    {
+//        right.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
+//        right.loc.y = Field::ourGoalCenter.y - 350;
+//        rightNav = true;
+
+//        left.loc.x = Field::ourGoalCenter.x + Field::goalCircle_R + 200;
+//        left.loc.y = Field::ourGoalCenter.y + 350;
+//        leftNav = true;
+//    }
+//    else
+//    {
+//        Vector2D secondPointForGoalie;
+
+//        bool need2newPoints = false;
+
+//        BallOwner_Finded = Find_OppRobot_BallOwner();
+//        if(BallOwner_Finded) Player_filter(Player1);
+//        Deffence_Geometry_making();
+
+//        Ball_IS_Toward_Goal = Ball_Toward_Goal();
+//        bool Two_Deffence=true;
+//        if(MidID!=-1) Two_Deffence=false;
+
+//        if(!Ball_IS_Toward_Goal)
+//        {
+//            leftNav = true; rightNav = true;
+//            if(Two_Deffence) // Two Deffences Are Available
+//            {
+//                secondPointForGoalie = ( wm->ourRobot[leftID].pos.loc + wm->ourRobot[RightID].pos.loc)/2;
+//                need2newPoints = !hasPositionForGoalie(secondPointForGoalie);
+//                if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
+//                {
+//                    bool Is_AnyOther_Dangerous = false ;
+//                    Is_AnyOther_Dangerous = Find_AnyOther_Opp_Dangerous();
+//                    if(Is_AnyOther_Dangerous)
+//                    {
+//                        // Player1 Is Ready To Give A Pass To Player2
+
+//                        Vector2D Dyno_right,Dyno_left,Deff_center;
+//                        //                        bool Is_left;
+//                        //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
+//                        Deff_center = Find_Deff_center(Player2.loc);
+//                        int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
+//                        //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
+//                        Ref_2Deff_Player(Player1);
+
+//                        if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
+//                        {
+//                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
+//                            Left_loc = Average_Positioning(Left_loc , Dyno_left);
+//                        }
+//                        else
+//                        {
+//                            Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
+//                            Right_loc = Average_Positioning(Dyno_right , Right_loc);
+//                        }
+//                    }
+//                    else Ref_2Deff_Ball(); // !!!!! Will Complete
+//                }
+//                else //(BallOwner_Finded)
+//                {
+//                    bool Is_Danger_Player=false;
+//                    Is_Danger_Player = Danger_Player_Direction(Player1,200);
+//                    if(Is_Danger_Player) Ref_2Deff_Player(Player1);
+//                    else // The Ball Owner Player Is Not Toward Our Goal
+//                    {
+//                        bool Is_anyone_recieve_pass = Find_Pass_Receiver(Player1);
+//                        if(Is_anyone_recieve_pass)
+//                        {
+//                            // Player1 Is Ready To Give A Pass To Player2
+
+//                            Vector2D Dyno_right,Dyno_left,Deff_center;
+//                            //                        bool Is_left;
+//                            //                        Ref_2Deff_Player2(Player2,Left2,Right2,Deff_center);
+//                            Deff_center = Find_Deff_center(Player2.loc);
+//                            int Dyno_Id = Find_Dyno_Deffence(leftID,RightID,Deff_center);
+//                            //                        Ref_1Deff_Player2(Player2,leftID,RightID,Dyno_Id,Loc);
+//                            Ref_2Deff_Player(Player1);
+
+//                            if(Dyno_Id == leftID)// && Is_Player2_Dangerous) // left Deffence Must Go
+//                            {
+//                                Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_left);
+//                                Left_loc = Average_Positioning(Left_loc , Dyno_left);
+//                            }
+//                            else
+//                            {
+//                                Ref_1Deff_Loc(Player2.loc,leftID,RightID,Dyno_Id,Dyno_right);
+//                                Right_loc = Average_Positioning(Dyno_right , Right_loc);
+//                            }
+//                        }
+//                        else // No One Recieve Pass
+//                        {
+//                            Ref_2Deff_Ball();
+//                        }
+//                    }
+//                    //                Ref_2Deff_Player(Player1);
+//                }
+//            }
+//            else // One Deffence !
+//            {
+//                secondPointForGoalie = Find_MostDangerous_Goal_Point();
+
+//                if(!BallOwner_Finded) // NIST dar ekhtiare kesi  >> Ref2b(ball)
+//                {
+//                    Ref_1Deff_Ball(leftID,RightID,MidID);
+//                }
+//                else //(BallOwner_Finded)
+//                {
+//                    Ref_1Deff_Player(Player1,leftID,RightID,MidID);
+//                }
+//                // For Let The Second Deffence Come Back
+//                if(MidID==RightID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,leftID,Left_loc);
+//                else if(MidID==leftID) Ref_1Deff_Loc(wm->ball.pos.loc,leftID,RightID,RightID,Right_loc);
+//            }
+//            //            Goalie_loc = Find_MostDangerous_Goal_Point();
+//            //            qDebug() << " Goalie : ( " << Goalie_loc.x << "," << Goalie_loc.y << ")";
+//            //            goalie.loc = Danger_point ;
+//        }
+//        else // Ball Is Moving To Our Goal
+//        {
+//            Line2D L2R(Vector2D(Field::ourGoalCenter.x,Field::MaxY),Vector2D(Field::ourGoalCenter.x,Field::MinY));
+//            Line2D BV2T(wm->ball.pos.loc,AngleDeg::rad2deg(wm->ball.vel.loc.dir().radian())); //Ball Vell 2 Target
+//            Vector2D intersect_Point = L2R.intersection(BV2T);
+
+//            secondPointForGoalie = intersect_Point;
+
+//            rightNav = false; leftNav = false;
+//            if(Two_Deffence) Ref_2Deff_Moving_Ball();
+//            else Ref_1Deff_Moving_Ball(leftID,RightID,MidID);
+//        }
+
+//        //        Ref_2Deff_Moving_Ball();
+//        //                Goalie_loc.y = (Field::ourGoalCenter.y + 2*Goalie_loc.y)/3; //
+//        //                Goalie_loc.x += 200;
+//        //                goalie.loc = Goalie_loc ;
+//        left.loc = Left_loc;
+//        left.dir = (wm->ourRobot[leftID].pos.loc - Field::ourGoalPost_L).dir().radian();
+//        right.loc = Right_loc;
+//        right.dir = (wm->ourRobot[RightID].pos.loc - Field::ourGoalPost_R).dir().radian();
+
+//        if( (left.loc-wm->ball.pos.loc).length() < 400)
+//            leftNav = false;
+//        if( (right.loc-wm->ball.pos.loc).length() < 400)
+//            rightNav = false;
+
+//        //Goal Keeper Positions
+//        //        qDebug()<<"secondPointForGoalie : "<<secondPointForGoalie.x<<" , "<<secondPointForGoalie.y;
+//        if( need2newPoints )
+//            secondPointForGoalie = (right.loc + left.loc)/2;
+
+//        goalie = goaliePosition(secondPointForGoalie);
+
+//        //        qDebug() <<"Left Deffence " << left.loc.x << "," << left.loc.y ;
+//        //        qDebug() <<"Right Deffence " << right.loc.x << "," << right.loc.y ;
+//    }
+
+
 }
 
 

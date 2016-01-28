@@ -74,6 +74,15 @@ private:
 
     bool BallOwner_Finded,Player2_Finded;
 
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    bool defenderflag=false;
+    bool defendersflag=false;
+    Vector2D rightpoint;
+    Vector2D leftpoint;
+
+
+
 };
 
 #endif // PLAY_H
