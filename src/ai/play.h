@@ -78,8 +78,7 @@ private:
     ////////////////////////////////////////////////////////////////////////////////////
     bool defenderflag=false;
     bool defendersflag=false;
-    Vector2D rightpoint;
-    Vector2D leftpoint;
+
 
 
 
