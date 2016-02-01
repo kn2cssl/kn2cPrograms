@@ -266,4 +266,5 @@ int Soccer::logLength()
 void Soccer::setLogFrame(int msec)
 {
     sslvision->setLogFrame(msec);
+    ai->setLogFrame(msec);
 }

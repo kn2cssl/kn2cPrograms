@@ -17,8 +17,10 @@ void Vision_logPlayer::playLog()
 {
     if( frameNumber < chunks.size() )
     {
+        int lastTime = (frameNumber == 0) ? 0 : current_chunk.time_elapsed();
         current_chunk = chunks.at(frameNumber++);
-        QTimer::singleShot(current_chunk.time_elapsed(), this, SLOT(timerShot()));
+        if( playPermisssion )
+            QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(playLog()));
         emit dataReady();
     }
 }
@@ -149,19 +151,7 @@ void Vision_logPlayer::setFrameNumber(int msec)
     {
         this->current_chunk = chunks.at(foundIndex - 1);
         this->frameNumber = foundIndex;
-        timerShot();
-    }
-}
-
-void Vision_logPlayer::timerShot()
-{
-    if( frameNumber < chunks.size() )
-    {
-        int lastTime = current_chunk.time_elapsed();
-        current_chunk = chunks.at(frameNumber++);
-        if( playPermisssion )
-            QTimer::singleShot(current_chunk.time_elapsed()-lastTime, this, SLOT(timerShot()));
-        emit dataReady();
+        playLog();
     }
 }
 

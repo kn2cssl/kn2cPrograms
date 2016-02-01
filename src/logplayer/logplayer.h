@@ -8,7 +8,7 @@ class logPlayer : public QObject
     Q_OBJECT
 public:
     explicit logPlayer(QString address, QObject *parent = 0);
-    virtual void playLog() = 0;
+
     virtual bool loadLog() = 0;
     virtual void pauseLog() = 0;
    // virtual void recordLog() = 0;
@@ -24,6 +24,9 @@ protected:
     bool logIsPaused;
 
 signals:
+
+public slots:
+    virtual void playLog() = 0;
 
 private slots:
 

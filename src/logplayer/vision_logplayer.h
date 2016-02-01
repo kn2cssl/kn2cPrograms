@@ -25,7 +25,6 @@ public:
     void setFrameNumber(int msec);
 
 public slots:
-    void timerShot();
     void pauseShot();
 
 private:
