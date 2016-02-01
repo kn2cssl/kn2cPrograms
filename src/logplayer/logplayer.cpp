@@ -1,10 +1,12 @@
 #include "logplayer.h"
 
-logPlayer::logPlayer(QString address, QObject *parent) :
+logPlayer::logPlayer(QObject *parent) :
     QObject(parent)
 {
     this->counter = 0;
-    this->address = address;
+    this->playPermisssion = false;
+    this->logIsPaused = false;
+    this->frameNumber = 0;
 }
 
 void logPlayer::setPlayPermission(bool input)
@@ -15,4 +17,10 @@ void logPlayer::setPlayPermission(bool input)
 void logPlayer::setPauseStatus(bool input)
 {
     this->logIsPaused = input;
+}
+
+void logPlayer::restartCounters()
+{
+    this->counter = 0;
+    this->frameNumber = 0;
 }

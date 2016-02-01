@@ -12,7 +12,7 @@ SSLVision::SSLVision(QString ip, int port, TeamColorType color, TeamSideType sid
     _time.start();
     connect(this, SIGNAL(newReceivedPacket(QByteArray,QString,int)), this, SLOT(readPendingPacket(QByteArray,QString,int)),Qt::DirectConnection);
 
-    logplayer = new Vision_logPlayer(wm, "test",parent);
+    logplayer = new Vision_logPlayer();
     recordPermission = false;
 
     connect(logplayer, SIGNAL(dataReady()), this, SLOT(logResponder()));

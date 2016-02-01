@@ -1,16 +1,11 @@
 #include "vision_logplayer.h"
 
-Vision_logPlayer::Vision_logPlayer(WorldModel *worldmodel, QString address, QObject *parent) :
-    logPlayer(address,parent),
-    wm(worldmodel)
+Vision_logPlayer::Vision_logPlayer(QObject *parent) :
+    logPlayer(parent)
 {
     qDebug()<<"Vision logPlayer Intialization...";
-    qDebug()<<"Address: "<<address;
 
     elapsedTime = new QTime();
-    playPermisssion = false;
-    logIsPaused = false;
-    this->frameNumber = 0;
 }
 
 void Vision_logPlayer::playLog()
@@ -25,33 +20,7 @@ void Vision_logPlayer::playLog()
     }
 }
 
-bool Vision_logPlayer::loadLog()
-{
-    Vision_log logs;
-
-    fstream input;
-    input.open(address.toUtf8(), ios::in | ios::binary);
-    if (!input)
-    {
-        qDebug() << address << ": File not found.  Creating a new file." << endl;
-
-    }
-    else if (!logs.ParseFromIstream(&input))
-    {
-        qDebug() << "Failed";
-    }
-    else
-    {
-        chunks.clear();
-        this->frameNumber = 0;
-        for(int i = 0; i < logs.chunks().size(); i++ )
-        {
-            chunks.append(logs.chunks(i));
-        }
-    }
-}
-
-bool Vision_logPlayer::loadLog(Vision_log logs)
+void Vision_logPlayer::loadLog(Vision_log logs)
 {
     chunks.clear();
     this->frameNumber = 0;
@@ -77,7 +46,9 @@ Vision_log Vision_logPlayer::saveLog()
 
 void Vision_logPlayer::pauseLog()
 {
-    pauseShot();
+    if( logIsPaused )
+        QTimer::singleShot(15, this, SLOT(pauseLog()));
+    emit dataReady();
 }
 
 void Vision_logPlayer::recordLog(SSL_WrapperPacket input)
@@ -93,10 +64,10 @@ void Vision_logPlayer::recordLog(SSL_WrapperPacket input)
 
 void Vision_logPlayer::restartTime()
 {
-    this->counter = 0;
+    restartCounters();
+
     this->chunks.clear();
     this->elapsedTime->restart();
-    this->frameNumber = 0;
 }
 
 SSL_WrapperPacket Vision_logPlayer::returnCurrentPacket()
@@ -154,11 +125,3 @@ void Vision_logPlayer::setFrameNumber(int msec)
         playLog();
     }
 }
-
-void Vision_logPlayer::pauseShot()
-{
-    if( logIsPaused )
-        QTimer::singleShot(15, this, SLOT(pauseShot()));
-    emit dataReady();
-}
-
