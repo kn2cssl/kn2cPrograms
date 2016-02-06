@@ -85,16 +85,19 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     Vector2D attackerpos;
 
     Line2D *attacker2goalline;
+    bool oppIsInField;
 
     if( oppIds.size() == 0 )
     {
         attackerpos={0,0};
         attacker2goalline=new Line2D(attackerpos,0);
+        oppIsInField=false;
     }
     else
     {
         attackerpos=wm->oppRobot[oppIds.at(0)].pos.loc;
         attacker2goalline=new Line2D(attackerpos,(wm->oppRobot[oppIds.at(0)].pos.dir*(180/M_PI)));
+        oppIsInField=true;
     }
 
 
@@ -110,7 +113,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     Vector2D goallineintersection;//Intersection between  Line 2D from ball in direction of attacker and goallineSeg
     Vector2D goalkeeperlineintersection;//Intersection between  Line 2D from ball in direction of attacker and goalkeeperlineSeg
     Vector2D goal;//will be used as a temperory variable
-    bool oppIsInField;
+    //bool oppIsInField;
 
     //defence with two players: goalkeeper : defender flag=true
     /////////////////////////////////////////////////////////////////////////////
@@ -133,12 +136,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     if(oppIds.size()>0)
                     {
                         attacker2balldistance=((wm->oppRobot[oppIds.at(0)].pos.loc-ballpos)).length();
-                        oppIsInField=true;
                     }                   
-                    else
-                    {
-                        oppIsInField=false;
-                    }
+
                     if(attacker2balldistance<attackernoticeabledistance  && oppIsInField )//the attacker wants to attack to safegoalline not goalline...//goalline.existIntersection(*attacker2goalline)
                     {
 
@@ -403,13 +402,9 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 if(oppIds.size()>0)
                 {
                     attacker2balldistance=((wm->oppRobot[oppIds.at(0)].pos.loc-ballpos)).length();
-                    oppIsInField=true;
                 }
-                else
-                {
-                    oppIsInField=false;
-                }
-                if(attacker2balldistance<attackernoticeabledistance)//the attacker wants to attack to safegoalline not goalline...
+
+                if(attacker2balldistance<attackernoticeabledistance && oppIsInField)//the attacker wants to attack to safegoalline not goalline...
                 {
                     goallineintersection=goalline.intersection(*attacker2goalline);
                     goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
