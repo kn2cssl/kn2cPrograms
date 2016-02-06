@@ -1,6 +1,11 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+#define attackernoticeabledistance 200
+#define desireddefenderdistance 400
+#define desiredleftdefenderdistance 150
+#define desiredrightdefenderdistance 150
+
 #include <QObject>
 #include "worldmodel.h"
 #include "tactics.h"
@@ -16,6 +21,7 @@ public:
     virtual int enterCondition() = 0;
     bool conditionChanged();
     void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left, bool& leftNav,Position& right, bool& rightNav);
+//    void addseg();
 
 protected:
     WorldModel *wm;
@@ -76,8 +82,16 @@ private:
 
 
     ////////////////////////////////////////////////////////////////////////////////////
-    bool defenderflag=false;
-    bool defendersflag=false;
+    bool defenderflag;
+    bool defendersflag;
+
+
+//    QList<Segment2D> segList;
+
+//    Vector2D leftspot={-4300,-500};
+//    Vector2D rightspot={-4300,500};
+
+
 
 
 

@@ -136,6 +136,7 @@ RobotCommand TacticGoalie::getCommand()
         }
     }
 
+    rc.useNav=true;////////////////////////////////////////////////////////////badan pak shavad...
     rc.isBallObs = true;
     rc.isKickObs = true;
 
