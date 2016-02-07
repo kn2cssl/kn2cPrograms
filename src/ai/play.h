@@ -2,7 +2,7 @@
 #define PLAY_H
 
 #define attackernoticeabledistance 200
-#define desireddefenderdistance 400
+#define desireddefenderdistance 300
 #define desiredleftdefenderdistance 150
 #define desiredrightdefenderdistance 150
 
