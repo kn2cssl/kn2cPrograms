@@ -84,6 +84,14 @@ private:
     ////////////////////////////////////////////////////////////////////////////////////
     bool defenderflag;
     bool defendersflag;
+    bool goalkeepermovmentflag;
+    bool defendermovmentflag;
+
+    Vector2D goalkeeperlastpos;
+    Vector2D defenderlastpos;
+    Vector2D balllastpos;
+    double goalkeeperlastdir;
+    double defenderlastdir;
 
 
 //    QList<Segment2D> segList;
