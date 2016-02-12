@@ -52,6 +52,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 {
 
 
+    leftNav=true;
+    rightNav=true;
     goalie.loc = Field::ourGoalCenter;
     if( leftID != -1 )
         left = wm->ourRobot[leftID].pos;
@@ -254,7 +256,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
             else//defa saro shekl gerefte...
             {
-                if(wm->ball.pos.loc.y<-300 || wm->ball.pos.loc.y>300)
+                if(wm->ball.pos.loc.y<-100 || wm->ball.pos.loc.y>100)
                 {
                     if((ballpos-Field::ourGoalPost_L).length2()>(ballpos-Field::ourGoalPost_R).length2())
                     {
@@ -303,7 +305,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
                 else
                 {
-                    if(goalkeepermovmentflag)
+                    if(goalkeepermovmentflag && wm->ball.isValid)
                     {
                         if((ballpos-Field::ourGoalPost_L).length2()>(ballpos-Field::ourGoalPost_R).length2() )
                         {
@@ -360,7 +362,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
         //defender:
         {
-            if(wm->ball.pos.loc.y<-300 || wm->ball.pos.loc.y>300)
+            if(wm->ball.pos.loc.y<-100 || wm->ball.pos.loc.y>100)
             {
                 if((ballpos-Field::ourGoalPost_L).length2()<(ballpos-Field::ourGoalPost_R).length2())
                 {
@@ -430,7 +432,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
             else
             {
-                if(defendermovmentflag)
+                if(defendermovmentflag  && wm->ball.isValid)
                 {
                     if((ballpos-Field::ourGoalPost_L).length2()<(ballpos-Field::ourGoalPost_R).length2())
                     {
@@ -572,17 +574,18 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
     {
         //goalkeeper:
         {
-            if(!defendersflag)//defa saro shekl nagerefte....
+            if(!defenderflag)//defa saro shekl nagerefte....
             {
                 float attacker2balldistance;
-
                 if(oppIds.size()>0)
                 {
                     attacker2balldistance=((wm->oppRobot[oppIds.at(0)].pos.loc-ballpos)).length();
                 }
 
-                if(attacker2balldistance<attackernoticeabledistance && oppIsInField)//the attacker wants to attack to safegoalline not goalline...
+                if(attacker2balldistance<attackernoticeabledistance  && oppIsInField  &&  goalline.existIntersection(*attacker2goalline))//the attacker wants to attack to safegoalline not goalline...//goalline.existIntersection(*attacker2goalline)
                 {
+
+                    qDebug()<<"yesssssssssssssssssssssssssssssssss";
                     goallineintersection=goalline.intersection(*attacker2goalline);
                     goalkeeperlineintersection=goalkeeperline.intersection(*attacker2goalline);
 
@@ -604,14 +607,13 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                         temp.setLength(ROBOT_RADIUS);
                         goal=ball2ourGoalPostRintersection+temp;
 
-                        Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+                        Line2D *test = new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
 
                         if(!(goalline.existIntersection(*test)))
                         {
                             goal=ball2ourGoalPostRintersection-temp;
                         }
                     }
-
                     else if(!rightside && leftside)
                     {
                         Vector2D ball2ourGoalPostLintersection=blocker.intersection(*ball2ourGoalPostL);
@@ -629,25 +631,62 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
                     else if(!rightside && !leftside)
                     {
-
                         goal=goalkeeperlineintersection;
                     }
 
                     goalie.loc=goal;
-                    if(oppIds.size()>0)
-                    {
-                        goalie.dir=wm->oppRobot[oppIds.at(0)].pos.dir+M_PI;//in the opposite of the attacker...
-                    }
-                    else
-                    {
-                        goalie.dir=0;
-                    }
+
+
+                    goalie.dir=wm->oppRobot[oppIds.at(0)].pos.dir+M_PI;//in the opposite of the attacker...
+
+                    //                        else if(ourGoaPostR2OurRightCorner.existIntersection(*attacker2goalline))
+                    //                        {
+                    //                            qDebug()<<"right";
+                    //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
+
+                    //                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
+                    //                            temp.setLength(ROBOT_RADIUS);
+
+                    //                            goal=intersection+temp;
+
+                    //                            Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+
+                    //                            if(!(goalline.existIntersection(*test)))
+                    //                            {
+                    //                                goal=intersection-temp;
+                    //                            }
+
+                    //                            goalie.loc=goal;
+                    //                            goalie.dir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+                    //                        }
+
+                    //                        else if(ourGoaPostL2OurLeftCorner.existIntersection(*attacker2goalline))
+                    //                        {
+                    //                            qDebug()<<"left";
+                    //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
+
+                    //                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                    //                            temp.setLength(ROBOT_RADIUS);
+
+                    //                            goal=intersection+temp;
+
+                    //                            Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
+
+                    //                            if(!(goalline.existIntersection(*test)))
+                    //                            {
+                    //                                goal=intersection-temp;
+                    //                            }
+
+                    //                            goalie.loc=goal;
+                    //                            goalie.dir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+                    //                        }
+
                 }
 
                 else
                 {
+                    qDebug()<<"no";
                     Vector2D ball2goalkeeperlineintersection=goalkeeperline.intersection(*ball2ourGoalCenter);
-
                     goalie.loc=ball2goalkeeperlineintersection;
                     goalie.dir=ball2ourGoalCentervec.dir().radian()+M_PI;//in the opposite of the attacker...
                 }
@@ -806,7 +845,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     intersection=temp2;
                 }
 
-                Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
                 temp.setLength(ROBOT_RADIUS);
 
 
@@ -850,8 +889,6 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
 
 
-
-    balllastpos=wm->ball.pos.loc;
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
