@@ -1,0 +1,14 @@
+import "referee.proto";
+
+message Ref_chunk
+{
+  	required int64 time_elapsed = 1;
+	optional int64 id = 2;
+	required SSL_Referee packet = 3;
+}
+
+message Ref_log
+{
+	optional int64 number = 1;	
+	repeated Ref_chunk chunks = 2;
+}

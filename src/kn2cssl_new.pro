@@ -204,7 +204,8 @@ SOURCES +=	main.cpp \
     proto/RobotCommand_message.pb.cc \
     proto/Robot_message.pb.cc \
     proto/ssl_log.pb.cc \
-    proto/vision_log.pb.cc
+    proto/vision_log.pb.cc \
+    proto/ref_log.pb.cc
 
 HEADERS  += \
     etc/settings.h \
@@ -344,7 +345,8 @@ HEADERS  += \
     proto/RobotCommand_message.pb.h \
     proto/Robot_message.pb.h \
     proto/ssl_log.pb.h \
-    proto/vision_log.pb.h
+    proto/vision_log.pb.h \
+    proto/ref_log.pb.h
 
 FORMS    +=	ui/mainwindow.ui
 

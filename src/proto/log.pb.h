@@ -26,6 +26,7 @@
 #include <google/protobuf/unknown_field_set.h>
 #include "vision_log.pb.h"
 #include "ssl_log.pb.h"
+#include "ref_log.pb.h"
 // @@protoc_insertion_point(includes)
 
 // Internal implementation detail -- do not call these.
@@ -109,20 +110,32 @@ class logRecord : public ::google::protobuf::Message {
   inline ::Vision_log* release_vision();
   inline void set_allocated_vision(::Vision_log* vision);
 
+  // optional .Ref_log referee = 3;
+  inline bool has_referee() const;
+  inline void clear_referee();
+  static const int kRefereeFieldNumber = 3;
+  inline const ::Ref_log& referee() const;
+  inline ::Ref_log* mutable_referee();
+  inline ::Ref_log* release_referee();
+  inline void set_allocated_referee(::Ref_log* referee);
+
   // @@protoc_insertion_point(class_scope:logRecord)
  private:
   inline void set_has_ai();
   inline void clear_has_ai();
   inline void set_has_vision();
   inline void clear_has_vision();
+  inline void set_has_referee();
+  inline void clear_has_referee();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::SSL_log* ai_;
   ::Vision_log* vision_;
+  ::Ref_log* referee_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
   friend void  protobuf_AddDesc_log_2eproto();
   friend void protobuf_AssignDesc_log_2eproto();
@@ -211,6 +224,44 @@ inline void logRecord::set_allocated_vision(::Vision_log* vision) {
     set_has_vision();
   } else {
     clear_has_vision();
+  }
+}
+
+// optional .Ref_log referee = 3;
+inline bool logRecord::has_referee() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+inline void logRecord::set_has_referee() {
+  _has_bits_[0] |= 0x00000004u;
+}
+inline void logRecord::clear_has_referee() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline void logRecord::clear_referee() {
+  if (referee_ != NULL) referee_->::Ref_log::Clear();
+  clear_has_referee();
+}
+inline const ::Ref_log& logRecord::referee() const {
+  return referee_ != NULL ? *referee_ : *default_instance_->referee_;
+}
+inline ::Ref_log* logRecord::mutable_referee() {
+  set_has_referee();
+  if (referee_ == NULL) referee_ = new ::Ref_log;
+  return referee_;
+}
+inline ::Ref_log* logRecord::release_referee() {
+  clear_has_referee();
+  ::Ref_log* temp = referee_;
+  referee_ = NULL;
+  return temp;
+}
+inline void logRecord::set_allocated_referee(::Ref_log* referee) {
+  delete referee_;
+  referee_ = referee;
+  if (referee) {
+    set_has_referee();
+  } else {
+    clear_has_referee();
   }
 }
 

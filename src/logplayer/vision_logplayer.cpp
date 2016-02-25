@@ -102,23 +102,26 @@ void Vision_logPlayer::setFrameNumber(int msec)
     int Lb, Ub, Mid, foundIndex = -1;
     Lb = 0; Ub = chunks.size();
 
-    do
+    if( Ub > Lb)
     {
-        Mid = (Lb + Ub)/2;
-
-        if ( msec - chunks.at(Mid).time_elapsed() < -10 )
-            Ub = Mid - 1;
-        else if ( msec - chunks.at(Mid).time_elapsed() > 10 )
-            Lb = Mid + 1;
-        else
+        do
         {
-            foundIndex = Mid;
-            break;
-        }
-    }
-    while( Lb < Ub );
+            Mid = (Lb + Ub)/2;
 
-    if( foundIndex >= 0)
+            if ( msec - chunks.at(Mid).time_elapsed() < -10 )
+                Ub = Mid - 1;
+            else if ( msec - chunks.at(Mid).time_elapsed() > 10 )
+                Lb = Mid + 1;
+            else
+            {
+                foundIndex = Mid;
+                break;
+            }
+        }
+        while( Lb < Ub );
+    }
+
+    if( foundIndex > 0)
     {
         this->current_chunk = chunks.at(foundIndex - 1);
         this->frameNumber = foundIndex;

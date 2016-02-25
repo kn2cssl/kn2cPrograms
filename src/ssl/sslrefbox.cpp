@@ -41,6 +41,28 @@ void SSLRefBox::parse(GameStatePacket pck)
     // save last gs packet
     refgs = pck;
     if(paused) return;
+    bool ball_moved = _lastBallpos.loc.dist(_wm->ball.pos.loc) > _ball_min;
+    _wm->cmgs.transition(pck.cmd, ball_moved);
+    updategs(pck.cmd, ball_moved);
+
+    if(pck.cmd_counter != _lastCMDCounter) // new cmd
+    {
+        // save ball position
+        _lastBallpos = _wm->ball.pos;
+        // update command counter
+        _lastCMDCounter = pck.cmd_counter;
+        // send signal
+        emit newRefreeCommand();
+    }
+    else    // no new cmd
+    {
+    }
+}
+
+void SSLRefBox::logParse(GameStatePacket pck)
+{
+    // save last gs packet
+    refgs = pck;
 
     bool ball_moved = _lastBallpos.loc.dist(_wm->ball.pos.loc) > _ball_min;
     _wm->cmgs.transition(pck.cmd, ball_moved);
@@ -137,4 +159,3 @@ void SSLRefBox::updategs(char cmd, bool)
         break;
     }
 }
-

@@ -26,6 +26,7 @@ protected:
     WorldModel* _wm;
     Position _lastBallpos;
     void parse(GameStatePacket pck);
+    void logParse(GameStatePacket pck);
     void updategs(char cmd, bool ball_moved);
 
 signals:
