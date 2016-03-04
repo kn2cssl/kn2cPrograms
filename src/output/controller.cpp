@@ -53,15 +53,19 @@ ControllerResult Controller::calc(ControllerInput &ci)
 
 RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 {
-    RobotSpeed ans, setpoint;
-    Vector2D speed,speed_sp,speed_err;
+    RobotSpeed setpoint;
+    Vector2D speed_sp;
 
     double werr;
     Vector2D err;
-  //  ! Test
+
+
+    //! Test
 //    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 1000,-900)).r()) < 20 )
+//    //if(ci.cur_pos.loc.x > -1000)
 //    wu1=0;
 //    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r()) < 20 )
+//    //if(ci.cur_pos.loc.x < -3800)
 //    wu1=1;
 
 
@@ -70,11 +74,14 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
 //    if(wu1==0)
-//               ci.mid_pos.loc.x = - 3800;
+//              ci.mid_pos.loc.x = - 3800;
+//            //setpoint.VX =  -2;
 //        else
-//               ci.mid_pos.loc.x = - 1000;
+//            //setpoint.VX =  2;
+//              ci.mid_pos.loc.x = - 1000;
+    //! test
 
-    //    ! test
+
 
     err = (ci.mid_pos.loc - ci.cur_pos.loc);
     if(fabs(err.r()) < 25 ) err = {0,0};
@@ -89,29 +96,44 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     /**
      * @brief PID controller based on pure err of distance
      */
-    double wkp=2 ,wki=1,wkd=0.1;
+        /////////////////////////////////////////////////////////////////////////////////
 
-        wi = wi + werr * 0.015 * wki;
-        if(fabs(wi) > 3) wi = 3* sign(wi) ;
-        if(fabs(werr)<0.1) wi=0;
+        double wkp=0.1,wki_pos=0.18,wki_neg=.2,wkd = 0.1;
+        double wa_max = 2;
+        //* finding useful vector of previous setpoint
+        if ( wi * werr < 0)
+        {
+            wi = 0;
+        }
+        //#
+
+        if((pow(ci.cur_vel.dir,2)/2/wa_max > fabs(werr) )&& (wi * werr > 0 ))
+        {
+
+            wi= wi - wki_neg*sign(werr);
+            if(fabs(wi) < 0 ) wi=0;
+
+        }
+        else
+        {
+            wi = wi + wki_pos*sign(werr);
+            int wmaxSpeed = 20;
+            if(fabs(wi) > wmaxSpeed ) wi = fabs(wi)/wi*20;
+
+        }
 
         wd = (ci.cur_vel.dir - ci.last_vel.dir - wd) *.1 + wd ;
-        if(fabs(wd) > 5 ) wd = 5 * sign(wd) ;
+        float wi_err = wi - ci.cur_vel.dir ;
+        wkp = 1.2;
+        wp = wi_err * wkp;
 
-        wp = werr;
-        if(fabs(wp) > 10 ) wp = 10 * sign(wp) ;
+        setpoint.VW =  wp  + wi  - wd * wkd ;
+////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
-        setpoint.VW =  wp * wkp + wi  - wd * wkd;
-        if(fabs(setpoint.VW) > 4 ) setpoint.VW = 4 * sign(setpoint.VW) ;
-//        setpoint.VW = 0.01;
-        //qDebug() <<werr<<wp<<wi<<wd;
-
-
-       double kp=0.1,ki_pos=0.04,ki_neg=0.4,kd = 0.01;
-       double a_max = 0.003;
-       Vector2D i_err = i - ci.cur_vel.loc ;
-       //qDebug() <<ci.cur_pos.loc.x<<ci.cur_pos.loc.y<<ci.mid_pos.loc.x<<ci.mid_pos.loc.y<<fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r());
-
+/////////   linear potion profile
+       double kp=0.4,ki_pos=0.03,ki_neg=0.06,kd = 0.01;
+       double a_max = 0.002; double a_max_c = 0.001;
+       double ki = 0.001;
        //* finding useful vector of previous setpoint
        double err_angel = atan2(err.y,err.x);
        double i_angel =atan2(i.y,i.x);
@@ -131,41 +153,55 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        if( 2 < (i-ci.cur_vel.loc).length())
        {
            fault_counter ++ ;
-           if(fault_counter > 10)
+           if(fault_counter > 20)
            {
                fault_counter = 0 ;
                i.setLength(2);
+               qDebug() <<"aaa";
            }
+
        }
        //#
 
-       if(fabs( ci.cur_vel.loc.r2()/2/a_max > fabs(err.r()) ))
+       err_angel = atan2(err.y,err.x);
+       i_angel =atan2(ci.cur_vel.loc.y,ci.cur_vel.loc.x);
+       diff = cos(err_angel - i_angel);
+       if( ( fabs( ci.cur_vel.loc.r2()/2/a_max )> fabs(err.r()) ) && (diff > 0))
        {
-           p = i_err * kp;
-           if(fabs(p.length()) > .8 ) p=p.setLength(.8);
-
            i= i - err.setLength(ki_neg);
            if(fabs(i.length()) < 0 ) i=i.setLength(0);
 
        }
        else
        {
-           p = i_err * kp;
-           if(fabs(p.length()) > .8) p=p.setLength(.8);
+           if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
-           if((fabs(i.length()) > 1) && ((ci.mid_pos.loc - ci.cur_pos.loc).length() < 300))
-           {
-               i=i.setLength(.6);
-           }
-           if(fabs(i.length()) > 3 ) i=i.setLength(3);
+           // TODO remove
+           ci.maxSpeed = 2;
+           if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
        }
 
-       // d = (ci.cur_vel.loc - ci.last_vel.loc - d) *.1 + d ;
 
-       speed_sp = p + i + d * kd;
-       double max_speed = 4;//ci.maxSpeed;
-       if(speed_sp.r() > max_speed)speed_sp.setLength(max_speed);
+       Vector2D i_err = i - ci.cur_vel.loc ;
+
+       p = i_err * kp;
+       i_near = i_near +  i_err * ki;
+
+        err_angel = atan2(i.y,i.x);
+        i_angel =atan2(i_near.y,i_near.x);
+        diff = cos(err_angel - i_angel);
+       if ( diff > 0)
+       {
+           i_near.setLength(i_near.length() * diff );
+           i_near.setDir(atan2(i.y,i.x)*180/M_PI );
+       }
+       else
+       {
+           i_near = i_near.setLength(0);
+       }
+
+       speed_sp = p + i_near +i+ d * kd;
 
        setpoint.VX =  speed_sp.x;
        setpoint.VY =  speed_sp.y;

@@ -43,8 +43,8 @@ void Agent::SendCommand(RobotCommand rc)
     reRD.Vy     = wm->ourRobot[id].vel.loc.y * 1000;
     reRD.Wr     = wm->ourRobot[id].vel.dir * 100;
     reRD.alpha  = wm->ourRobot[id].pos.dir * 1000;
-    reRD.KICK   = 255;(quint8) rc.kickspeedx;
-    reRD.CHIP   = 123;(quint8) rc.kickspeedz;
+    reRD.KICK   = (quint8) rc.kickspeedx;
+    reRD.CHIP   = (quint8) rc.kickspeedz;
     reRD.SPIN   = 128;//for test
     outputBuffer->wpck.AddRobot(reRD);
 

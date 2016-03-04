@@ -124,16 +124,28 @@ void PlayStop::setPositions()
     int leftID = -1, rightID = -1 , midID = -1;
     bool leftNav, rightNav;
 
-    if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) /*&& (leftChecker < 100)*/ )
+    if( haltedRobotIsInField(previousLeftID) && wm->ourRobot[previousLeftID].Role != AgentRole::DefenderLeft )
+        previousLeftID = -1;
+
+    if( haltedRobotIsInField(previousRightID) && wm->ourRobot[previousRightID].Role != AgentRole::DefenderRight )
+        previousRightID = -1;
+
+    if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) && (leftChecker < PresenceCounter) )
+    {
         leftID = tDefenderLeft->getID();
+        this->previousLeftID = tDefenderLeft->getID();;
+    }
 
-    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight /*&& (rightChecker < 100)*/ )
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight && (rightChecker < PresenceCounter) )
+    {
         rightID = tDefenderRight->getID();
+        this->previousRightID = tDefenderRight->getID();;
+    }
 
-    if( leftChecker > 100 || leftID == -1 )
+    if( leftChecker > PresenceCounter || leftID == -1 )
         midID = rightID;
 
-    if( rightChecker > 100  || rightID == -1)
+    if( rightChecker > PresenceCounter  || rightID == -1)
         midID = leftID;
 
     zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
@@ -145,20 +157,29 @@ void PlayStop::setPositions()
 
     if( leftID != -1)
     {
-        if( /*(wm->ourRobot[leftID].Status != AgentStatus::FollowingBall ) &&*/ (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+        if( (wm->ourRobot[leftID].Status != AgentStatus::FollowingBall ) && (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
             leftChecker++;
         else
+            leftChecker = 0;
+    }
+    else
+    {
+        if( !haltedRobotIsInField(previousLeftID) )
             leftChecker = 0;
     }
 
     if( rightID != -1)
     {
-        if( /*(wm->ourRobot[rightID].Status != AgentStatus::FollowingBall ) &&*/ (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+        if( (wm->ourRobot[rightID].Status != AgentStatus::FollowingBall ) && (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
             rightChecker++;
         else
             rightChecker = 0;
     }
-
+    else
+    {
+        if( !haltedRobotIsInField(previousRightID) )
+            rightChecker = 0;
+    }
 
     tGolie->setIdlePosition(goaliePos);
 

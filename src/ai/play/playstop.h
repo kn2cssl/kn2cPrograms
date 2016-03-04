@@ -1,6 +1,8 @@
 #ifndef PLAYSTOP_H
 #define PLAYSTOP_H
 
+#define PresenceCounter 1000
+
 #include "play.h"
 #include "QDebug"
 
