@@ -35,21 +35,17 @@ void Agent::SendCommand(RobotCommand rc)
     // Real Game Packet
     RobotData reRD;
     reRD.RID    = id;
-    reRD.Vx_sp  = co.msR.M0;        //co.rs.VX * 1000;
-    reRD.Vy_sp  = co.msR.M1;        //co.rs.VY * 1000;
-    reRD.Wr_sp  = co.msR.M2;        //co.rs.VW * 1000;
-    reRD.Vx     = co.msR.M3;        //wm->ourRobot[id].vel.loc.x * 1000;
+    reRD.Vx_sp  = co.rs.VX * 1000;
+    reRD.Vy_sp  = co.rs.VY * 1000;
+    reRD.Wr_sp  = co.rs.VW * 1000;
+    reRD.Vx     = wm->ourRobot[id].vel.loc.x * 1000;
     reRD.Vy     = wm->ourRobot[id].vel.loc.y * 1000;
-    reRD.Wr     = wm->ourRobot[id].vel.dir * 1000;
+    reRD.Wr     = wm->ourRobot[id].vel.dir * 100;
     reRD.alpha  = wm->ourRobot[id].pos.dir * 1000;
-    reRD.KICK   =(quint8) rc.kickspeedx;
+    reRD.KICK   = (quint8) rc.kickspeedx;
     reRD.CHIP   = (quint8) rc.kickspeedz;
     reRD.SPIN   = 128;//for test
     outputBuffer->wpck.AddRobot(reRD);
-
-
-//   qDebug()<<"kick:"<<rc.kickspeedx;
-
 
     // grSim Packet
     grRobotData grRD;
@@ -64,7 +60,8 @@ void Agent::SendCommand(RobotCommand rc)
     grRD.kickspeedx = rc.kickspeedx;
     grRD.kickspeedz = rc.kickspeedz;
     grRD.spinner = 0;
-    outputBuffer->grpck.AddRobot(grRD);
+    if( packetIsValid(grRD) )
+        outputBuffer->grpck.AddRobot(grRD);
 }
 
 void Agent::Halt()
@@ -95,5 +92,21 @@ void Agent::Halt()
     outputBuffer->grpck.AddRobot(grRD);
 }
 
+<<<<<<< HEAD
 
 
+=======
+bool Agent::packetIsValid(grRobotData grRD)
+
+{
+
+    if( !isnan(grRD.velx) && !isnan(grRD.vely) && !isnan(grRD.velw) &&
+
+            !isnan(grRD.wheel1) && !isnan(grRD.wheel2) && !isnan(grRD.wheel3) && !isnan(grRD.wheel4) )
+
+        return  true;
+
+    return false;
+
+}
+>>>>>>> defence

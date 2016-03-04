@@ -39,16 +39,15 @@ struct RobotData
     unsigned char KICK;	// kick options
     unsigned char CHIP;	// CHIP & SPIN   #SCCCCCCC
     unsigned char SPIN;
-        signed short int M0;	// motor 1
-        signed short int M1;	// motor 2
-        signed short int M2;	// motor 3
-        signed short int M3;	// motor 4
-        unsigned char KCK;	// kick options
-        unsigned char CHP;	// CHIP & SPIN   #SCCCCCCC
+    signed short int M0;	// motor 1
+    signed short int M1;	// motor 2
+    signed short int M2;	// motor 3
+    signed short int M3;	// motor 4
+    unsigned char KCK;	// kick options
+    unsigned char CHP;	// CHIP & SPIN   #SCCCCCCC
 
     RobotData() :
         RID(0xFF),
-
         Vx_sp(0),
         Vy_sp(0),
         Wr_sp(0),

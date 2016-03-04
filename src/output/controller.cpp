@@ -1,5 +1,6 @@
 ﻿#include "controller.h"
 #include "constants.h"
+#include "math.h"
 
 #define ROBOTRADIUS 0.090
 #define SpeedToRPMR 5000
@@ -13,14 +14,12 @@ Controller::Controller(QObject *parent) :
 
     timer.start();
 
-
     err0 = {0,0};
     err1 = {0,0};
     u1 = {0,0};
     derived0 = {0,0};
     derived1 = {0,0};
     integral = {0,0};
-    last_setpoint = {0,0};
 
     wu1 = 0;
     wu1_last = 0;
@@ -54,191 +53,165 @@ ControllerResult Controller::calc(ControllerInput &ci)
 
 RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 {
-    //double time = timer.elapsed()/1000;
-    //timer.restart();
-    /******************************Linear Speed Controller************************************/
-    err1 = (ci.mid_pos.loc - ci.cur_pos.loc)*.001;
+    RobotSpeed setpoint;
+    Vector2D speed_sp;
 
-//    if(ci.maxSpeed == 3)
-//        ci.maxSpeed == 4;
+    double werr;
+    Vector2D err;
 
 
-    ///!
-//    if((ci.mid_pos.loc - last_setpoint ).length() > 30)
-//    {
-////            qDebug() <<"L"<<err1.length()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length();
-////             qDebug() <<"D"<<err1.dir().radian()<<(err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).dir().radian();
-////        err1 = err1 + (ci.mid_pos.loc - last_setpoint ) *0.009;
-//        err1.setLength((err1 + (ci.mid_pos.loc - last_setpoint ) *0.009).length());
-//    }
-//    last_setpoint = ci.mid_pos.loc;
-    //!!
-
-    double kp;
-    double ki;
-    double kd;
-
-    float err = err1.length();
+    //! Test
+    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 1000,-900)).r()) < 20 )
+    //if(ci.cur_pos.loc.x > -1000)
+    wu1=0;
+    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r()) < 20 )
+    //if(ci.cur_pos.loc.x < -3800)
+    wu1=1;
 
 
+    ci.mid_pos.loc.y = -900;
+    ci.mid_pos.dir = M_PI_2;
 
-    if(err > 1.5)
-    {
-        kp = fabs(err1.length());
-        ki = 0.01;
-        kd = 3;
-        integral = integral + err1*AI_TIMER/1000.0 ;
-    }
-    else /*if(err > .04)*/
-    {
-        integral.scale(0);
-        if(ci.fin_pos.loc == ci.mid_pos.loc)
+
+    if(wu1==0)
+              ci.mid_pos.loc.x = - 3800;
+            //setpoint.VX =  -2;
+        else
+            //setpoint.VX =  2;
+              ci.mid_pos.loc.x = - 1000;
+    //! test
+
+
+
+    err = (ci.mid_pos.loc - ci.cur_pos.loc);
+    if(fabs(err.r()) < 25 ) err = {0,0};
+
+
+    werr = (ci.mid_pos.dir - ci.cur_pos.dir);
+    if(fabs(werr) > M_PI) werr = werr - sign(werr)*M_2PI;
+    if(fabs(werr) < 0.07 ) werr = 0;
+
+
+
+    /**
+     * @brief PID controller based on pure err of distance
+     */
+        /////////////////////////////////////////////////////////////////////////////////
+
+        double wkp=0.1,wki_pos=0.18,wki_neg=.2,wkd = 0.1;
+        double wa_max = 2;
+        //* finding useful vector of previous setpoint
+        if ( wi * werr < 0)
         {
-            kp = 5-2*fabs(ci.cur_vel.loc.length());fabs(err1.length())+2.9;////day2//f
-                if((ci.mid_pos.loc - last_setpoint ).length() > 30)
-                {
-                    ki=.3;
-                }
-                last_setpoint = ci.mid_pos.loc;
+            wi = 0;
+        }
+        //#
+
+        if((pow(ci.cur_vel.dir,2)/2/wa_max > fabs(werr) )&& (wi * werr > 0 ))
+        {
+
+            wi= wi - wki_neg*sign(werr);
+            if(fabs(wi) < 0 ) wi=0;
+
         }
         else
         {
-            kp = 4;
+            wi = wi + wki_pos*sign(werr);
+            int wmaxSpeed = 20;
+            if(fabs(wi) > wmaxSpeed ) wi = fabs(wi)/wi*20;
+
         }
-        kd = 3;
 
-    }
+        wd = (ci.cur_vel.dir - ci.last_vel.dir - wd) *.1 + wd ;
+        float wi_err = wi - ci.cur_vel.dir ;
+        wkp = 1.2;
+        wp = wi_err * wkp;
 
+        setpoint.VW =  wp  + wi  - wd * wkd ;
+////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
+/////////   linear potion profile
+       double kp=0.4,ki_pos=0.03,ki_neg=0.06,kd = 0.01;
+       double a_max = 0.002; double a_max_c = 0.001;
+       double ki = 0.001;
+       //* finding useful vector of previous setpoint
+       double err_angel = atan2(err.y,err.x);
+       double i_angel =atan2(i.y,i.x);
+       double diff = cos(err_angel - i_angel);
+       if ( diff > 0)
+       {
+           i.setLength(i.length() * diff );
+           i.setDir(atan2(err.y,err.x)*180/M_PI );
+       }
+       else
+       {
+           i = i.setLength(0);
+       }
+       //#
 
+       //* it keeps setpoint small till robot can't compensate its err
+       if( 2 < (i-ci.cur_vel.loc).length())
+       {
+           fault_counter ++ ;
+           if(fault_counter > 20)
+           {
+               fault_counter = 0 ;
+               i.setLength(2);
+               qDebug() <<"aaa";
+           }
 
-    derived1 = (ci.cur_vel.loc - derived0)*0.1;
-    derived0 = ci.cur_vel.loc;
+       }
+       //#
 
+       err_angel = atan2(err.y,err.x);
+       i_angel =atan2(ci.cur_vel.loc.y,ci.cur_vel.loc.x);
+       diff = cos(err_angel - i_angel);
+       if( ( fabs( ci.cur_vel.loc.r2()/2/a_max )> fabs(err.r()) ) && (diff > 0))
+       {
+           i= i - err.setLength(ki_neg);
+           if(fabs(i.length()) < 0 ) i=i.setLength(0);
 
+       }
+       else
+       {
+           if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
+           i = i + err.setLength(ki_pos);
+           // TODO remove
+           ci.maxSpeed = 2;
+           if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
-    LinearSpeed = err1*kp + integral*ki*err - derived1*kd;
-
-
-//    ////////////////////////////////////////day2
-    double diff_angel = ci.cur_vel.dir - LinearSpeed.dir().radian();
-    if (diff_angel > M_PI) diff_angel -= 2 * M_PI;
-    if (diff_angel < -M_PI) diff_angel += 2 * M_PI;
-    if(fabs(diff_angel) > M_PI*0.7)
-    {
-        LinearSpeed = LinearSpeed_past + (LinearSpeed - LinearSpeed_past)*0.01;//*50/(ci.mid_pos.loc - last_setpoint).length();
-
-        if(ci.id==8)
-        qDebug()<<"filter"<<(ci.mid_pos.loc - last_setpoint).length();
-    }
-    LinearSpeed_past = LinearSpeed ;
-//    ////////////////////////////////////////day2
-
-    if(LinearSpeed.length()>ci.maxSpeed)
-    {
-        LinearSpeed.setLength(ci.maxSpeed);
-    }
-
-    if(ci.id == 8)
-    qDebug()<<LinearSpeed.length();
-    Vector2D RotLinearSpeed=LinearSpeed;
-    LinearSpeed_past = LinearSpeed ;
-    /*************************************Rotation ctrl**********************/
-    double wkp,wki,wkd,wu1;
-    double MAXROTATIONSPEED = 2.5,RotationSpeed;
-    werr1 = ci.fin_pos.dir - ci.cur_pos.dir ;
-
-    if (werr1 > M_PI) werr1 -= 2 * M_PI;
-    if (werr1 < -M_PI) werr1 += 2 * M_PI;
-
-    double werr = fabs(werr1);
-
-
-    //wki=0.003*fabs(werr0);
-    //wintegral = wintegral + werr1*AI_TIMER;
-
-    wkp=5*fabs(werr0);//0.3;
-    wkd=1;
-//    if(werr<.3 + 10*fabs(ci.cur_vel.dir))
-//    {
-//         wintegral=0;
-//        //wintegral = wintegral - 3*werr1*AI_TIMER;
-
-//        wkp=0.4;
-//        wkd=0.003;
-//    }
+       }
 
 
+       Vector2D i_err = i - ci.cur_vel.loc ;
 
-    //if(ci.id == 3)
-    //qDebug()<<werr1<<wintegral;
-    werr0=werr0+(werr1-werr0)*0.1;
+       p = i_err * kp;
+       i_near = i_near +  i_err * ki;
 
-    wderived1 = (ci.cur_vel.dir)*10;
-    wderived0 = ci.cur_vel.dir;
-    wu1 = werr1*wkp + wintegral*wki - wderived1*wkd;
+        err_angel = atan2(i.y,i.x);
+        i_angel =atan2(i_near.y,i_near.x);
+        diff = cos(err_angel - i_angel);
+       if ( diff > 0)
+       {
+           i_near.setLength(i_near.length() * diff );
+           i_near.setDir(atan2(i.y,i.x)*180/M_PI );
+       }
+       else
+       {
+           i_near = i_near.setLength(0);
+       }
 
+       speed_sp = p + i_near +i+ d * kd;
 
-//    if (fabs(wu1)>MAXROTATIONSPEED)
-//    {
-//        wintegral = wintegral - werr1*AI_TIMER;
-//        wu1=MAXROTATIONSPEED*sign(wu1);
-//    }
-
-    RotationSpeed = wu1;
-
-
-    double alpha = ci.cur_pos.dir ;+atan(RotationSpeed*0.187);
-    //alpha is the corrected angel whitch handle the problem
-    //of nonlinear relation of rotational movement and linear movement
-
-
-
-//grsim:
+       setpoint.VX =  speed_sp.x;
+       setpoint.VY =  speed_sp.y;
 
 
-        werr1 = ci.fin_pos.dir - ci.cur_pos.dir ;
-
-        if (werr1 > M_PI) werr1 -= 2 * M_PI;
-        if (werr1 < -M_PI) werr1 += 2 * M_PI;
-
-        float Kp=2;
-
-        float P=kp*werr1;
-
-        wu1=P;
-
-        RotationSpeed = wu1;
-
-
-
-
-
-
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    RotLinearSpeed.x = LinearSpeed.x * cos(alpha) + LinearSpeed.y * sin(alpha);
-    RotLinearSpeed.y = -LinearSpeed.x * sin(alpha) + LinearSpeed.y * cos(alpha);
-
-    RobotSpeed ans;
-
-    ans.VX = RotLinearSpeed.x;
-    ans.VY = RotLinearSpeed.y;
-    ans.VW = RotationSpeed ;
-
-    if(werr <0.07  /*&& err1.length()<.015*/) ans.VW=0;//maximum priscision in angel for robot becuse of it/s phisic's limits is 0.07 rad
-
-
-    if(err1.length()<.02)
-    {
-        ans.VX=0;
-        ans.VY=0;
-    }
-
-    return ans;
+       ci.last_vel = ci.cur_vel;
+//    setpoint.VX=0;
+//    setpoint.VY=0;
+//    setpoint.VW=0;
+    return setpoint;
 }
 
 RobotSpeed Controller::calcRobotSpeed_adjt(ControllerInput &ci)

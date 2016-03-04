@@ -8,7 +8,7 @@ MobileObject::MobileObject() :
     isValid = false;
     connect(&timer_seen, SIGNAL(timeout()), this, SLOT(timer_seen_timeout()));
     connect(&timer_vel, SIGNAL(timeout()), this, SLOT(timer_vel_timeout()));
-    timer_seen_interval = 500;
+    timer_seen_interval = 100;
     timer_vel_interval = 40;
     for(int i=0; i<LAST_COUNT; i++)
         last_postc[i].time = -1;
@@ -50,9 +50,10 @@ void MobileObject::vel_calc()
 {
     PositionTimeCamera last = vel_postc;
 
-    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc)*0.12;
-    vel.dir = (pos.dir - last.pos.dir) / (time - last.time );
-
+    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc)*1;
+    float dir_dif = pos.dir - last.pos.dir ;
+    if(fabs(dir_dif) > M_PI) dir_dif = dir_dif - dir_dif/fabs(dir_dif)*M_PI*2;
+    vel.dir = (dir_dif) / (time - last.time ) *1000 ;
 
     pos_predicted.loc = pos.loc + vel.loc * (time - last.time);
     pos_predicted.dir = pos.dir + vel.dir * (time - last.time);

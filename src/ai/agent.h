@@ -39,6 +39,7 @@ enum AgentRole
 
 enum AgentRegion
 {
+    NoRegion,
     Left,
     Center,
     Right
@@ -83,6 +84,8 @@ private:
     Navigation nav;
     OutputBuffer *outputBuffer;
     WorldModel *wm;
+
+    bool packetIsValid(grRobotData grRD);
 
 };
 
