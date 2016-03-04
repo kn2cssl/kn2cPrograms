@@ -186,7 +186,9 @@ SOURCES +=	main.cpp \
     ssl/sslvision_double.cpp \
     ai/skill.cpp \
     ai/skill/skillkick.cpp \
-    ai/skill/skilltest.cpp
+    ai/skill/skilltest.cpp \
+    ai/skill/skillpassreceive.cpp \
+    ai/skill/skillonetouch.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -308,7 +310,9 @@ HEADERS  += \
     ai/skill.h \
     ai/skill/skillkick.h \
     ai/Skills.h \
-    ai/skill/skilltest.h
+    ai/skill/skilltest.h \
+    ai/skill/skillpassreceive.h \
+    ai/skill/skillonetouch.h
 
 FORMS    +=	ui/mainwindow.ui
 

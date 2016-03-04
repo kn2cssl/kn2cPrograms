@@ -10,10 +10,12 @@ class Skill : public QObject
     Q_OBJECT
 public:
     explicit Skill(WorldModel *wm, QObject *parent = 0);
-    virtual bool execute(RobotCommand& rc, int id = 0) = 0;
+    virtual bool execute(RobotCommand& rc) = 0;
+    void setIndex(int id);
 
 protected:
     WorldModel *wm;
+    int index;
 
 };
 
