@@ -5,6 +5,10 @@
 #define desireddefenderdistance 300
 #define desiredleftdefenderdistance 150
 #define desiredrightdefenderdistance 150
+#define middleAreaWidth 200
+#define rightTirak -1
+#define leftTirak 1
+
 
 #include <QObject>
 #include "worldmodel.h"
@@ -51,11 +55,15 @@ private:
     bool angelflag;
     bool angelflags;
 
-    Vector2D goalkeeperlastpos;
-    Vector2D defenderlastpos;
+
+//    Vector2D goalkeeperlastpos;
+//    Vector2D defenderlastpos;
     Vector2D balllastpos;
-    double goalkeeperlastdir;
-    double defenderlastdir;
+//    double goalkeeperlastdir;
+//    double defenderlastdir;
+
+    int defenderlasttirak;
+    int goalkeeperlasttirak;
 };
 
 #endif // PLAY_H

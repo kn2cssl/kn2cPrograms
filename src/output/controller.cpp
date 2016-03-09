@@ -61,30 +61,30 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
     //! Test
-    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 1000,-900)).r()) < 20 )
-    //if(ci.cur_pos.loc.x > -1000)
-    wu1=0;
-    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r()) < 20 )
-    //if(ci.cur_pos.loc.x < -3800)
-    wu1=1;
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 1000,-900)).r()) < 10 )
+//    //if(ci.cur_pos.loc.x > -1000)
+//    wu1=0;
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r()) < 10 )
+//    //if(ci.cur_pos.loc.x < -3800)
+//    wu1=1;
 
 
-    ci.mid_pos.loc.y = -900;
-    ci.mid_pos.dir = M_PI_2;
+//    ci.mid_pos.loc.y = -900;
+//    ci.mid_pos.dir = M_PI_2;
 
 
-    if(wu1==0)
-              ci.mid_pos.loc.x = - 3800;
-            //setpoint.VX =  -2;
-        else
-            //setpoint.VX =  2;
-              ci.mid_pos.loc.x = - 1000;
+//    if(wu1==0)
+//              ci.mid_pos.loc.x = - 3800;
+//            //setpoint.VX =  -2;
+//        else
+//            //setpoint.VX =  2;
+//              ci.mid_pos.loc.x = - 1000;
     //! test
 
 
 
     err = (ci.mid_pos.loc - ci.cur_pos.loc);
-    if(fabs(err.r()) < 25 ) err = {0,0};
+    if(fabs(err.r()) < 1 ) err = {0,0};
 
 
     werr = (ci.mid_pos.dir - ci.cur_pos.dir);
@@ -98,34 +98,43 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
      */
         /////////////////////////////////////////////////////////////////////////////////
 
-        double wkp=0.1,wki_pos=0.18,wki_neg=.2,wkd = 0.1;
+        double wkp=1.9,wki_pos=0.18,wki_neg=.2,wkd = 0.1,wki=.01;
         double wa_max = 2;
         //* finding useful vector of previous setpoint
-        if ( wi * werr < 0)
-        {
-            wi = 0;
-        }
-        //#
+/*        if ( wi * werr < 0)
+//        {
+//            wi = 0;
+//        }
+//        //#
 
-        if((pow(ci.cur_vel.dir,2)/2/wa_max > fabs(werr) )&& (wi * werr > 0 ))
-        {
+//        if((pow(ci.cur_vel.dir,2)/2/wa_max > fabs(werr) )&& (wi * werr > 0 ))
+//        {
 
-            wi= wi - wki_neg*sign(werr);
-            if(fabs(wi) < 0 ) wi=0;
+//            wi= wi - wki_neg*sign(werr);
+//            if(fabs(wi) < 0 ) wi=0;
 
-        }
-        else
-        {
-            wi = wi + wki_pos*sign(werr);
-            int wmaxSpeed = 20;
-            if(fabs(wi) > wmaxSpeed ) wi = fabs(wi)/wi*20;
+//        }
+//        else
+//        {
+//            wi = wi + wki_pos*sign(werr);
+//            int wmaxSpeed = 20;
+//            if(fabs(wi) > wmaxSpeed ) wi = fabs(wi)/wi*20;
 
-        }
+//        }
 
-        wd = (ci.cur_vel.dir - ci.last_vel.dir - wd) *.1 + wd ;
-        float wi_err = wi - ci.cur_vel.dir ;
-        wkp = 1.2;
-        wp = wi_err * wkp;
+//        wd = (ci.cur_vel.dir - ci.last_vel.dir - wd) *.1 + wd ;
+//        float wi_err = wi - ci.cur_vel.dir ;
+//        wkp = 1.2;
+//        wp = wi_err * wkp;
+*/
+        wp = werr * wkp;
+        if (fabs(wp) > 10) wp = sign(wp) * 10;
+        qDebug() <<wp;
+
+//        wi = werr * wki + wi;
+//        if (fabs(wi) > 1) wi = sign(wi) * 1;
+//        wd = (ci.cur_vel.dir - ci.last_vel.dir - wd) *.1 + wd ;
+//        if (fabs(wd) > 3) wd = sign(wd) * 3;
 
         setpoint.VW =  wp  + wi  - wd * wkd ;
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
@@ -177,7 +186,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
            if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
            // TODO remove
-           ci.maxSpeed = 2;
+           ci.maxSpeed = 4;
            if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
        }

@@ -80,8 +80,8 @@ bool SkillKick::execute(RobotCommand &rc )
                 fabs(((this->_Target-wm->ourRobot[index].pos.loc).dir().degree())-(ball2target.dir().degree())<4)
                 )
         {
-            rc.kickspeedx=200;
-            qDebug()<<"kick";
+            rc.kickspeedx=6;
+            qDebug()<<"kickkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk";
         }
 
     }

@@ -51,6 +51,7 @@ bool Play::conditionChanged()
 
 void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, bool& leftNav, Position &right, bool& rightNav)
 {
+
     goalie.loc = Field::ourGoalCenter;
 
     if( wm->cmgs.theirPenaltyKick() )
@@ -212,7 +213,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 Vector2D ball2ourGoalPostRintersection=blocker.intersection(*ball2ourGoalPostR);
                                 Vector2D temp=goalkeeperline2goalline.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
                                 goal=ball2ourGoalPostRintersection+temp;
 
                                 Line2D *test = new Line2D(goal,ball2ourGoalPostRvec.dir().degree());//for checking if the Vector temp have to be added itself or with 180 rotation
@@ -226,7 +227,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 Vector2D ball2ourGoalPostLintersection=blocker.intersection(*ball2ourGoalPostL);
                                 Vector2D temp=goalkeeperline2goalline.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
                                 goal=ball2ourGoalPostLintersection+temp;
 
                                 Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());//for checking if the Vector temp have to be added itself or with 180 rotation
@@ -271,7 +272,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
 
                     //                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                    //                            temp.setLength(ROBOT_RADIUS+20);
+                    //                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                     //                            goal=intersection+temp;
 
@@ -292,7 +293,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
 
                     //                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                    //                            temp.setLength(ROBOT_RADIUS+20);
+                    //                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                     //                            goal=intersection+temp;
 
@@ -334,7 +335,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 }
                 else//defa saro shekl gerefte...
                 {
-                    if(wm->ball.pos.loc.y<-100 || wm->ball.pos.loc.y>100)
+                    if(wm->ball.pos.loc.y<-middleAreaWidth || wm->ball.pos.loc.y>middleAreaWidth)
                     {
 
                         if(!angelflag)
@@ -344,7 +345,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                                 Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
 
                                 Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                                 goal=intersection+temp;
 
@@ -364,7 +365,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                                 intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
 
                                 Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                                 goal=intersection+temp;
 
@@ -393,56 +394,104 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                         {
                             if((ballpos-Field::ourGoalPost_L).length2()>(ballpos-Field::ourGoalPost_R).length2() )
                             {
-                                Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
+                                //                                Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
 
-                                Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                //                                Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                                //                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
-                                goal=intersection+temp;
+                                //                                goal=intersection+temp;
 
-                                Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
+                                //                                Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
 
-                                if(!(goalline.existIntersection(*test)))
-                                {
-                                    goal=intersection-temp;
-                                }
+                                //                                if(!(goalline.existIntersection(*test)))
+                                //                                {
+                                //                                    goal=intersection-temp;
+                                //                                }
 
-                                goalkeeperlastpos=goal;
-                                goalkeeperlastdir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+                                //                                goalkeeperlastpos=goal;
+                                //                                goalkeeperlastdir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+                                goalkeeperlasttirak=leftTirak;
                             }
                             else
                             {
-                                Vector2D intersection;
-                                intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
+                                //                                Vector2D intersection;
+                                //                                intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
 
-                                Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                //                                Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
+                                //                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
-                                goal=intersection+temp;
+                                //                                goal=intersection+temp;
 
-                                Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+                                //                                Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
 
-                                if(!(goalline.existIntersection(*test)))
-                                {
-                                    goal=intersection-temp;
-                                }
-                                goalkeeperlastpos=goal;
-                                goalkeeperlastdir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+                                //                                if(!(goalline.existIntersection(*test)))
+                                //                                {
+                                //                                    goal=intersection-temp;
+                                //                                }
+                                //                                goalkeeperlastpos=goal;
+                                //                                goalkeeperlastdir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+
+
+                                goalkeeperlasttirak=rightTirak;
                             }
 
                             goalkeepermovmentflag=false;
+
+
                         }
 
-                        goalie.loc=goalkeeperlastpos;
-                        goalie.dir=goalkeeperlastdir;
+                        if(goalkeeperlasttirak==leftTirak)
+                        {
+                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
+
+                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
+
+                            goal=intersection+temp;
+
+                            Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
+
+                            if(!(goalline.existIntersection(*test)))
+                            {
+                                goal=intersection-temp;
+                            }
+
+                            goalie.dir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+                        }
+
+                        if(goalkeeperlasttirak==rightTirak)
+                        {
+                            Vector2D intersection;
+                            intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
+
+                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
+                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
+
+                            goal=intersection+temp;
+
+                            Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+
+                            if(!(goalline.existIntersection(*test)))
+                            {
+                                goal=intersection-temp;
+                            }
+                            goalie.dir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+                        }
+
+                        goalie.loc=goal;
+                        //
+                        //                        goalie.loc=goalkeeperlastpos;
+                        //                        goalie.dir=goalkeeperlastdir;
+                        qDebug()<<goal.x<<","<<goal.y;
                     }
                 }
             }
 
             //defender:
             {
+                qDebug()<<"bale";
                 angelflag=false;//if the ball is loacating in the special margine the angel falg will switch to true below...
-                if(wm->ball.pos.loc.y<-100 || wm->ball.pos.loc.y>100)
+                if(wm->ball.pos.loc.y<-middleAreaWidth || wm->ball.pos.loc.y>middleAreaWidth)
                 {
                     if((ballpos-Field::ourGoalPost_L).length2()<(ballpos-Field::ourGoalPost_R).length2())
                     {
@@ -459,7 +508,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                         }
 
                         Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                        temp.setLength(ROBOT_RADIUS+20);
+                        temp.setLength(ROBOT_RADIUS+20+20+20);
 
                         goal=intersection+temp;
 
@@ -513,7 +562,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                         }
 
                         Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                        temp.setLength(ROBOT_RADIUS+20);
+                        temp.setLength(ROBOT_RADIUS+20+20+20);
 
                         goal=intersection+temp;
 
@@ -555,7 +604,6 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     }
 
                     defendermovmentflag=true;
-
                 }
                 else
                 {
@@ -563,71 +611,173 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     {
                         if((ballpos-Field::ourGoalPost_L).length2()<(ballpos-Field::ourGoalPost_R).length2())
                         {
-                            Vector2D temp1,temp2,intersection;
-                            dangerousarea.intersection(*ball2ourGoalPostL,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+                            //                            Vector2D temp1,temp2,intersection;
+                            //                            dangerousarea.intersection(*ball2ourGoalPostL,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
 
-                            if(wm->kn->IsInsideField(temp1))
-                            {
-                                intersection=temp1;
-                            }
-                            else
-                            {
-                                intersection=temp2;
-                            }
+                            //                            if(wm->kn->IsInsideField(temp1))
+                            //                            {
+                            //                                intersection=temp1;
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                intersection=temp2;
+                            //                            }
 
-                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                            temp.setLength(ROBOT_RADIUS+20);
+                            //                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                            //                            temp.setLength(ROBOT_RADIUS+20+20+20);
 
-                            goal=intersection+temp;
+                            //                            goal=intersection+temp;
 
-                            Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
+                            //                            Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
 
-                            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
-                            {
-                                goal=intersection-temp;
-                            }
+                            //                            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                            //                            {
+                            //                                goal=intersection-temp;
+                            //                            }
 
-                            defenderlastpos=goal;
-                            defenderlastdir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+                            //                            defenderlastpos=goal;
+                            //                            defenderlastdir=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+
+                            defenderlasttirak=leftTirak;
                         }
 
                         else
                         {
-                            Vector2D temp1,temp2,intersection;
-                            dangerousarea.intersection(*ball2ourGoalPostR,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+                            //                            Vector2D temp1,temp2,intersection;
+                            //                            dangerousarea.intersection(*ball2ourGoalPostR,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
 
-                            if(wm->kn->IsInsideField(temp1))
-                            {
-                                intersection=temp1;
-                            }
-                            else
-                            {
-                                intersection=temp2;
-                            }
+                            //                            if(wm->kn->IsInsideField(temp1))
+                            //                            {
+                            //                                intersection=temp1;
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                intersection=temp2;
+                            //                            }
 
-                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                            temp.setLength(ROBOT_RADIUS+20);
+                            //                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
+                            //                            temp.setLength(ROBOT_RADIUS+20+20+20);
 
-                            goal=intersection+temp;
+                            //                            goal=intersection+temp;
 
-                            Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+                            //                            Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
 
-                            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
-                            {
-                                goal=intersection-temp;
-                            }
+                            //                            if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                            //                            {
+                            //                                goal=intersection-temp;
+                            //                            }
 
-                            defenderlastpos=goal;
-                            defenderlastdir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+                            //                            defenderlastpos=goal;
+                            //                            defenderlastdir=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+
+                            defenderlasttirak=rightTirak;
                         }
 
                         defendermovmentflag=false;
 
                     }
 
-                    Midpos=defenderlastpos;
-                    Midangel=defenderlastdir;
+                    if(defenderlasttirak==leftTirak)
+                    {
+                        Vector2D temp1,temp2,intersection;
+                        dangerousarea.intersection(*ball2ourGoalPostL,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
 
+                        if(wm->kn->IsInsideField(temp1))
+                        {
+                            intersection=temp1;
+                        }
+                        else
+                        {
+                            intersection=temp2;
+                        }
+
+                        Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
+                        temp.setLength(ROBOT_RADIUS+20+20+20);
+
+                        goal=intersection+temp;
+
+                        Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
+
+                        if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                        {
+                            goal=intersection-temp;
+                        }
+                        Midangel=(ball2ourGoalPostLvec.dir().radian()+M_PI);
+
+                    }
+
+                    if(defenderlasttirak==rightTirak)
+                    {
+                        Vector2D temp1,temp2,intersection;
+                        dangerousarea.intersection(*ball2ourGoalPostR,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+
+                        if(wm->kn->IsInsideField(temp1))
+                        {
+                            intersection=temp1;
+                        }
+                        else
+                        {
+                            intersection=temp2;
+                        }
+
+                        Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
+                        temp.setLength(ROBOT_RADIUS+20+20+20);
+
+                        goal=intersection+temp;
+
+                        Line2D *test=new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
+
+                        if(!(goalline.existIntersection(*test)))//the defender is locating in the wrong pos
+                        {
+                            goal=intersection-temp;
+                        }
+
+                        Midangel=(ball2ourGoalPostRvec.dir().radian()+M_PI);
+
+                    }
+
+                    Midpos=goal;
+                    //                    Midpos=defenderlastpos;
+                    //                    Midangel=defenderlastdir;
+
+                }
+
+
+
+                if((ballpos-Field::ourGoalCenter).length()<1500-ROBOT_RADIUS)//zamani ke tooop poshte modafe gharar migirad
+                {
+
+                    if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc))//zamani ke toooop dar mohavate ast....
+                    {
+                        qDebug()<<"is inn our field";
+                        Vector2D intersection,temp1,temp2;
+                        dangerousarea.intersection(*ball2ourGoalCenter,&temp1,&temp2);//the intersection between the line from ball to nearer tirack and the defined circle...
+                        if(wm->kn->IsInsideField(temp1))
+                        {
+                            intersection=temp1;
+                        }
+                        else
+                        {
+                            intersection=temp2;
+                        }
+
+                        Midpos=intersection;
+                        Midangel=(ball2ourGoalCentervec.dir().radian()+M_PI);
+                    }
+
+                    else
+                    {
+                        if(oppIsInField)
+                        {
+                            Vector2D ball2nearestattacker=(wm->oppRobot[oppIds.at(0)].pos.loc-wm->ball.pos.loc);
+                            ball2nearestattacker.setLength(300);
+                            Midpos=ballpos+ball2nearestattacker;
+                            Midangel=ball2nearestattacker.dir().radian();
+                            leftNav=false;
+                            rightNav=false;
+                        }
+
+                    }
                 }
 
                 if(MidID!=-1)
@@ -648,6 +798,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 {
                     defenderflag=false;
                 }
+
+                qDebug()<<defenderflag;
 
             }
 
@@ -736,7 +888,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 Vector2D ball2ourGoalPostRintersection=blocker.intersection(*ball2ourGoalPostR);
                                 Vector2D temp=goalkeeperline2goalline.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
                                 goal=ball2ourGoalPostRintersection+temp;
 
                                 Line2D *test = new Line2D(goal,ball2ourGoalPostRvec.dir().degree());
@@ -750,7 +902,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 Vector2D ball2ourGoalPostLintersection=blocker.intersection(*ball2ourGoalPostL);
                                 Vector2D temp=goalkeeperline2goalline.rotatedVector(90);
-                                temp.setLength(ROBOT_RADIUS+20);
+                                temp.setLength(ROBOT_RADIUS+20+20+20+20);
                                 goal=ball2ourGoalPostLintersection+temp;
 
                                 Line2D *test=new Line2D(goal,ball2ourGoalPostLvec.dir().degree());
@@ -793,7 +945,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostR);
 
                     //                            Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                    //                            temp.setLength(ROBOT_RADIUS+20);
+                    //                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                     //                            goal=intersection+temp;
 
@@ -814,7 +966,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     //                            Vector2D intersection=goalkeeperline.intersection(*ball2ourGoalPostL);
 
                     //                            Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                    //                            temp.setLength(ROBOT_RADIUS+20);
+                    //                            temp.setLength(ROBOT_RADIUS+20+20+20+20);
 
                     //                            goal=intersection+temp;
 
@@ -1103,18 +1255,6 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
                 }
 
-                /////////////////////////////////////////////////////////////////////////////vaqti setpointha dar ham gharar migirand
-                if((Leftgoal-Rightgoal).length()<2*ROBOT_RADIUS)
-                {
-                    leftNav=false;
-                    rightNav=false;
-                }
-                else
-                {
-                    leftNav=true;
-                    rightNav=true;
-                }
-
                 ////////////////////////////////////////////////////////////////////////////////
                 if(((wm->ourRobot[leftID].pos.loc)-Leftgoal).length()<desiredleftdefenderdistance && ((wm->ourRobot[RightID].pos.loc)-Rightgoal).length()<desiredrightdefenderdistance)
                 {
@@ -1125,6 +1265,13 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                     defendersflag=false;
                 }
 
+
+                /////////////////////////////////////////////////////////////////////////////vaqti setpointha dar ham gharar migirand
+                if((Leftgoal-Rightgoal).length()<2*ROBOT_RADIUS && defendersflag)
+                {
+                    leftNav=false;
+                    rightNav=false;
+                }
             }
 
 
@@ -1148,6 +1295,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
         }
     }
+
+    //    qDebug()<<"leftnav="<<leftNav<<"rightnav"<<rightNav;
 }
 
 bool Play::haltedRobotIsInField(int robotID)
