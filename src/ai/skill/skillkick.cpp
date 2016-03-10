@@ -77,7 +77,7 @@ bool SkillKick::execute(RobotCommand &rc )
         if( wm->ball.isValid&&
                 ballCircle.contains(wm->ourRobot[index].pos.loc)&&
                 rearCircle.contains(wm->ourRobot[index].pos.loc)&&
-                fabs(((this->_Target-wm->ourRobot[index].pos.loc).dir().degree())-(ball2target.dir().degree())<4)
+                fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
                 )
         {
             rc.kickspeedx=6;
@@ -94,8 +94,8 @@ bool SkillKick::execute(RobotCommand &rc )
 
 
 
-
-
+//        Vector2D S=wm->oppRobot[0].pos.loc-target;//-wm->oppRobot[0].pos.loc;
+//        S.setDir(wm->ourRobot[0].pos.dir*(180/M_PI));
 
 
 

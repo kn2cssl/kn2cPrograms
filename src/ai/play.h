@@ -62,6 +62,9 @@ private:
 //    double goalkeeperlastdir;
 //    double defenderlastdir;
 
+    Vector2D leftDefenderLastpos;
+    Vector2D rightDefenderLastpos;
+
     int defenderlasttirak;
     int goalkeeperlasttirak;
 };
