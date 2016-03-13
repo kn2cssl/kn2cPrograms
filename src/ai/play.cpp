@@ -761,7 +761,11 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                         if(oppIsInField)
                         {
                             Vector2D ball2nearestattacker=(wm->oppRobot[oppIds.at(0)].pos.loc-wm->ball.pos.loc);
-                            ball2nearestattacker.setLength(300);
+                            ball2nearestattacker.setLength(200+200);
+                            if((ballpos-wm->oppRobot[oppIds.at(0)].pos.loc).length()<200)
+                            {
+                                ball2nearestattacker.setLength(ROBOT_RADIUS+20);
+                            }
                             Midpos=ballpos+ball2nearestattacker;
                             Midangel=ball2nearestattacker.dir().radian();
                             leftNav=false;
@@ -1277,7 +1281,11 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 leftNav=false;
                                 Vector2D ball2nearestattacker=(wm->oppRobot[oppIds.at(0)].pos.loc-wm->ball.pos.loc);
-                                ball2nearestattacker.setLength(300);
+                                ball2nearestattacker.setLength(200+200);
+                                if((ballpos-wm->oppRobot[oppIds.at(0)].pos.loc).length()<200)
+                                {
+                                    ball2nearestattacker.setLength(ROBOT_RADIUS+20);
+                                }
 
                                 left.loc=ballpos+ball2nearestattacker;
                                 left.dir=ball2nearestattacker.dir().radian();
@@ -1288,7 +1296,12 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                             {
                                 rightNav=false;
                                 Vector2D ball2nearestattacker=(wm->oppRobot[oppIds.at(0)].pos.loc-wm->ball.pos.loc);
-                                ball2nearestattacker.setLength(300);
+                                ball2nearestattacker.setLength(200+200);
+
+                                if((ballpos-wm->oppRobot[oppIds.at(0)].pos.loc).length()<200)
+                                {
+                                    ball2nearestattacker.setLength(ROBOT_RADIUS+20);
+                                }
 
                                 right.loc=ballpos+ball2nearestattacker;
                                 right.dir=ball2nearestattacker.dir().radian();
@@ -1312,53 +1325,41 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
 
 
                 /////////////////////////////////////////////////////////////////////////////vaqti setpointha dar ham gharar migirand
-                //                leftDefenderLastpos=Leftgoal;
-                //                rightDefenderLastpos=Rightgoal;
-
                 if((Leftgoal-Rightgoal).length()<2*ROBOT_RADIUS)
                 {
-
                     qDebug()<<"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
-                    if((ballpos-Field::ourGoalPost_L).length2()<(ballpos-Field::ourGoalPost_R).length2())
+
+                    //goalkeeper:
+                    goalie.loc=Field::ourGoalCenter;
+                    goalie.dir=ball2ourGoalCentervec.dir().radian()+M_PI;
+
+                    //defenders:
+                    Vector2D temp1,temp2,dangerousareaball2ourGoalCenterlineintersection;
+
+                    dangerousarea.intersection(*ball2ourGoalCenter,&temp1,&temp2);
+                    if(wm->kn->IsInsideField(temp1))
                     {
-
-                        left.loc=Leftgoal;
-
-                        Vector2D temp=ball2ourGoalPostLvec.rotatedVector(90);
-                        temp.setLength(2*ROBOT_RADIUS-20);
-                        Vector2D temp1=Leftgoal+temp;
-                        Vector2D temp2= Leftgoal-temp;
-
-                        if(((temp1-wm->ourRobot[RightID].pos.loc).length2())<((temp2-wm->ourRobot[RightID].pos.loc).length2()))
-                        {
-                            right.loc=temp1;
-                        }
-                        else
-                        {
-                            right.loc=temp2;
-                        }
-
+                        dangerousareaball2ourGoalCenterlineintersection=temp1;
                     }
-
                     else
                     {
-                        right.loc=Rightgoal;
-
-                        Vector2D temp=ball2ourGoalPostRvec.rotatedVector(90);
-                        temp.setLength(2*ROBOT_RADIUS-20);
-                        Vector2D temp1=Rightgoal+temp;
-                        Vector2D temp2= Rightgoal-temp;
-
-                        if((temp1-wm->ourRobot[leftID].pos.loc).length2()<(temp2-wm->ourRobot[leftID].pos.loc).length2())
-                        {
-                            left.loc=temp1;
-                        }
-                        else
-                        {
-                            left.loc=temp2;
-                        }
+                        dangerousareaball2ourGoalCenterlineintersection=temp2;
                     }
 
+                    Vector2D temp=ball2ourGoalCentervec.rotatedVector(90);
+                    temp.setLength(ROBOT_RADIUS+20+20);
+                    temp1=dangerousareaball2ourGoalCenterlineintersection+temp;
+                    temp2= dangerousareaball2ourGoalCenterlineintersection-temp;
+                    if((Field::ourGoalPost_L-temp2).length2()<(Field::ourGoalPost_L-temp1).length2())
+                    {
+                        left.loc=temp2;
+                        right.loc=temp1;
+                    }
+                    else
+                    {
+                        left.loc=temp1;
+                        right.loc=temp2;
+                    }
                 }
 
                 ///////////////////////////////////////////////////////////////////////////////////////check the sitution if the ball is closing to our goal...

@@ -85,7 +85,8 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
     err = (ci.mid_pos.loc - ci.cur_pos.loc);
     if(fabs(err.r()) < 1 ) err = {0,0};
-
+    if(ci.id == 0)
+    qDebug() <<"err"<<err.r();
 
     werr = (ci.mid_pos.dir - ci.cur_pos.dir);
     if(fabs(werr) > M_PI) werr = werr - sign(werr)*M_2PI;
