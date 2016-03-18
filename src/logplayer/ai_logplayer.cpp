@@ -1,10 +1,11 @@
 #include "ai_logplayer.h"
 
-AI_logPlayer::AI_logPlayer(QString address, QObject *parent) :
-    logPlayer(address,parent)
+AI_logPlayer::AI_logPlayer(QObject *parent) :
+    logPlayer(parent)
 {
     qDebug() <<"AI log player Initilization...";
-    qDebug()<<"Log Address: "<<address;
+
+    this->interval = AI_TIMER;
 }
 
 void AI_logPlayer::playLog()
@@ -390,6 +391,7 @@ void AI_logPlayer::timerShot()
     if( frameNumber < chunks.size() )
     {
         current_chunk = chunks.at(frameNumber++);
+        //qDebug()<<"playPermisssion:"<<playPermisssion;
         if( playPermisssion )
             QTimer::singleShot(15, this, SLOT(timerShot()));
         emit dataReady();

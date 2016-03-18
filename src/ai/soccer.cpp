@@ -144,13 +144,15 @@ Soccer::Soccer(QObject *parent) :
 
 void Soccer::recordGameLog()
 {
-    sslvision->startRecording();
+    sslvision->startRecording(); 
+    sslrefboxnew->startRecording();
     ai->startRecording();
 }
 
 void Soccer::stopGameLog()
 {
     sslvision->stopPlaying();
+    sslrefboxnew->stopPlaying();
     ai->stopPlaying();
 }
 
@@ -163,6 +165,9 @@ bool Soccer::saveGameLog()
 
     SSL_log* aiLogs(logs.mutable_ai());
     aiLogs->CopyFrom(ai->stopRecording());
+
+    Ref_log* refLog(logs.mutable_referee());
+    refLog->CopyFrom(sslrefboxnew->stopRecording());
 
     QString logName;// = address;
     logName.append("Log");
@@ -201,12 +206,14 @@ void Soccer::playGameLog()
 {
     sslvision->startPlaying();
     ai->startPlaying();
+    sslrefboxnew->startPlaying();
 }
 
 void Soccer::pauseGameLog()
 {
     sslvision->pausePlaying();
     ai->pausePlaying();
+    sslrefboxnew->pausePlaying();
 }
 
 void Soccer::loadGameLog()
@@ -227,6 +234,8 @@ void Soccer::loadGameLog()
     else
     {
         sslvision->loadPlaying(logs.vision());
+        //AI should be added here
+        sslrefboxnew->loadPlaying(logs.referee());
     }
 }
 
@@ -247,10 +256,10 @@ void Soccer::loadGameLog(QString address)
     }
     else
     {
-        qDebug()<<"vision is valid? "<<logs.vision().IsInitialized();
         sslvision->loadPlaying(logs.vision());
         qDebug()<<"ai is valid? "<<logs.ai().IsInitialized();
         ai->loadPlaying(logs.ai());
+        sslrefboxnew->loadPlaying(logs.referee());
     }
 }
 
@@ -260,11 +269,15 @@ int Soccer::logLength()
 
     max = sslvision->logLength();
 
+    if( max < sslrefboxnew->logLength() )
+        max = sslrefboxnew->logLength();
+
     return max;
 }
 
 void Soccer::setLogFrame(int msec)
 {
     sslvision->setLogFrame(msec);
-    ai->setLogFrame(msec);
+//    ai->setLogFrame(msec);
+    sslrefboxnew->setLogFrame(msec);
 }

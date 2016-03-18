@@ -10,7 +10,7 @@ class AI_logPlayer : public logPlayer
 {
     Q_OBJECT
 public:
-    explicit AI_logPlayer(QString address, QObject *parent = 0);
+    explicit AI_logPlayer(QObject *parent = 0);
     virtual void playLog();
     virtual bool loadLog();
     bool loadLog(SSL_log logs);

@@ -21,7 +21,6 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
 {
     qDebug() << "AI Initialization...";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
-    connect(logplayer, SIGNAL(dataReady()), this, SLOT(updateWorldModel()));
 
     Field::setup_consts(field_size);
 
@@ -34,7 +33,8 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
 
     firstWait = 0;
     recordPermission = false;
-    logplayer = new AI_logPlayer("");
+    logplayer = new AI_logPlayer();
+    connect(logplayer, SIGNAL(dataReady()), this, SLOT(updateWorldModel()));
 
     plays.append(new playControl(wm));
     plays.append(new PlayFreeKickOpp(wm));
@@ -88,7 +88,7 @@ SSL_log AI::stopRecording()
 
 void AI::startPlaying()
 {
-    this->Stop();
+    //this->Stop();
     logplayer->setPlayPermission(true);
     logplayer->setPauseStatus(false);
     logplayer->playLog();
@@ -111,6 +111,11 @@ void AI::pausePlaying()
 void AI::loadPlaying(SSL_log logs)
 {
     logplayer->loadLog(logs);
+}
+
+void AI::setLogFrame(int msec)
+{
+    logplayer->setFrameNumber(msec);
 }
 
 void AI::timer_timeout()
@@ -205,5 +210,6 @@ void AI::timer_timeout()
 
 void AI::updateWorldModel()
 {
-    this->wm = logplayer->returnCurrentPacket();
+//    qDebug()<<"world model update";
+//    this->wm = logplayer->returnCurrentPacket();
 }
