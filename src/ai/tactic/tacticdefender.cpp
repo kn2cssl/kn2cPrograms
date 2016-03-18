@@ -50,27 +50,27 @@ RobotCommand TacticDefender::getCommand()
         if( exactGoal.contains(intersect) && wm->ball.vel.loc.length() > 0.5 )
             ballTowardUsDangerously = true;
 
-       if( (oppDistance - ourDistance > 1000) && !ballTowardUsDangerously )
+        if( (oppDistance - ourDistance > 1000) && !ballTowardUsDangerously )
         {
             Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                     wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
-//            Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
-//            Circle2D cir(wm->ball.pos.loc, 60);
+            //            Line2D line(ballPredictedPos, wm->ourRobot[this->id].pos.loc);
+            //            Circle2D cir(wm->ball.pos.loc, 60);
             Vector2D first,second,main,chipPoint;
-//            cir.intersection(line,&first,&second);
-//            double firstDist , secondDist;
-//            firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
-//            secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
-//            if( firstDist < secondDist)
-//            {
-//                main = first;
-//                chipPoint = second;
-//            }
-//            else
-//            {
-//                main = second;
-//                chipPoint = first;
-//            }
+            //            cir.intersection(line,&first,&second);
+            //            double firstDist , secondDist;
+            //            firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
+            //            secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
+            //            if( firstDist < secondDist)
+            //            {
+            //                main = first;
+            //                chipPoint = second;
+            //            }
+            //            else
+            //            {
+            //                main = second;
+            //                chipPoint = first;
+            //            }
 
             main = ballPredictedPos;
             main.x = main.x - 200;
@@ -98,7 +98,7 @@ RobotCommand TacticDefender::getCommand()
 
                 if( inDangerousPosition )
                 {
-//                        qDebug()<<"in a dangerous position , chip the ball";
+                    //                        qDebug()<<"in a dangerous position , chip the ball";
                     OperatingPosition p = BallControl(chipPoint, 100, this->id, rc.maxSpeed);
 
                     Ray2D chipDir(wm->ourRobot[this->id].pos.loc,chipPoint);
@@ -112,11 +112,11 @@ RobotCommand TacticDefender::getCommand()
                         }
                     }
 
-//                    if( p.readyToShoot && chipIsSuitable )
-//                    {
-//                        rc.kickspeedz = detectChipSpeed(p.shootSensor);
-//                        qDebug()<<"Chippppppppppp";
-//                    }
+                    //                    if( p.readyToShoot && chipIsSuitable )
+                    //                    {
+                    //                        rc.kickspeedz = detectChipSpeed(p.shootSensor);
+                    //                        qDebug()<<"Chippppppppppp";
+                    //                    }
 
                     rc.fin_pos = p.pos;
                     rc.useNav = p.useNav;
@@ -149,7 +149,7 @@ RobotCommand TacticDefender::getCommand()
         }
         else
         {
-//            qDebug()<<"dangerous distance from opp , don't go";
+            //            qDebug()<<"dangerous distance from opp , don't go";
             rc.fin_pos = idlePosition;
             rc.useNav = false;
             rc.isBallObs = true;
@@ -261,6 +261,64 @@ RobotCommand TacticDefender::getCommand()
         }
 
         rc.maxSpeed=1.5;
+
+        rc.useNav = true;
+        rc.isBallObs = true;
+        rc.isKickObs = true;
+    }
+    else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingRobot)
+    {
+        AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
+//        AngleDeg desiredDeg ;//=  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
+//        if( wm->ball.isValid )
+//            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
+//        else
+//            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
+
+        Position final;
+        final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));
+        final.loc.y = wm->oppRobot[playerToKeep].pos.loc.y - (300*sin(desiredDeg.radian()));
+        final.dir = desiredDeg.radian();
+
+        if( wm->gs == GameStateType::STATE_Free_kick_Opp || wm->gs == GameStateType::STATE_Indirect_Free_kick_Opp)
+        {
+            if( wm->kn->IsInsideSecureArea(final.loc,wm->ball.pos.loc) )
+            {
+                Vector2D fstInt,secInt;
+                Circle2D secArea(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
+
+                Line2D connectedLine(wm->ball.pos.loc,Field::ourGoalCenter);
+                int numberOfIntersections = secArea.intersection(connectedLine,&fstInt,&secInt);
+
+                rc.fin_pos.dir = (wm->oppRobot[playerToKeep].pos.loc - Field::ourGoalCenter).dir().radian();
+                if( numberOfIntersections == 2 )
+                {
+                    if( (fstInt-final.loc).length() > (secInt-final.loc).length() )
+                        rc.fin_pos.loc = secInt;
+                    else
+                        rc.fin_pos.loc = fstInt;
+                }
+                else if( numberOfIntersections == 1 )
+                {
+                    rc.fin_pos.loc = fstInt;
+                }
+                else
+                    rc.fin_pos = wm->ourRobot[this->id].pos;
+            }
+            else
+            {
+                rc.fin_pos = final;
+            }
+        }
+        else
+        {
+            rc.fin_pos = final;
+        }
+
+        if( wm->opp_vel > 3 )
+            rc.maxSpeed = 3;
+        else
+            rc.maxSpeed = wm->opp_vel;
 
         rc.useNav = true;
         rc.isBallObs = true;

@@ -5,6 +5,8 @@
 #include <QList>
 #include "worldmodel.h"
 
+#define DangerousProb 0.5
+
 class Marking
 {
     /*  Factors :

@@ -237,6 +237,12 @@ void PlayGameOn::setPlayer2Keep(int ourR, int oppR)
     case AgentRole::AttackerLeft:
         tAttackerLeft->setPlayerToKeep(oppR);
         break;
+    case AgentRole::DefenderLeft:
+        tDefenderLeft->setPlayerToKeep(oppR);
+        break;
+    case AgentRole::DefenderRight:
+        tDefenderRight->setPlayerToKeep(oppR);
+        break;
     default:
         break;
     }
@@ -338,29 +344,42 @@ void PlayGameOn::initRole()
 
 void PlayGameOn::coach()
 {
-    game_status = wm->kn->gameStatus(game_status);
-
-    int ballOwner = findBallOwner();
-
     Position leftDefPos,rightDefPos,goaliePos;
     int leftID = -1, rightID = -1 , midID = -1;
     bool leftNav, rightNav;
 
-    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
+    if( haltedRobotIsInField(previousLeftID) && wm->ourRobot[previousLeftID].Role != AgentRole::DefenderLeft )
+        previousLeftID = -1;
+
+    if( haltedRobotIsInField(previousRightID) && wm->ourRobot[previousRightID].Role != AgentRole::DefenderRight )
+        previousRightID = -1;
+
+    if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) && (leftChecker < PresenceCounter) )
+    {
         leftID = tDefenderLeft->getID();
+        this->previousLeftID = tDefenderLeft->getID();;
+    }
 
-    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight && (rightChecker < PresenceCounter) )
+    {
         rightID = tDefenderRight->getID();
+        this->previousRightID = tDefenderRight->getID();;
+    }
 
-    if( leftChecker > 100 || leftID == -1 )
+    if( leftChecker > PresenceCounter || leftID == -1 || !wm->kn->robotIsIdle(leftID))
+    {
         midID = rightID;
+        leftID = -1;
+    }
 
-    if( rightChecker > 100  || rightID == -1)
+    if( rightChecker > PresenceCounter  || rightID == -1 || !wm->kn->robotIsIdle(rightID))
+    {
         midID = leftID;
+        rightID = -1;
+    }
 
     zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
 
-    tGolie->setIdlePosition(goaliePos);
     tDefenderLeft->setIdlePosition(leftDefPos);
     tDefenderLeft->setUseNav(leftNav);
     tDefenderRight->setIdlePosition(rightDefPos);
@@ -368,19 +387,35 @@ void PlayGameOn::coach()
 
     if( leftID != -1)
     {
-        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+        if( (wm->kn->robotIsIdle(leftID)) && (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
             leftChecker++;
         else
+            leftChecker = 0;
+    }
+    else
+    {
+        if( !haltedRobotIsInField(previousLeftID) )
             leftChecker = 0;
     }
 
     if( rightID != -1)
     {
-        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+        if( (wm->kn->robotIsIdle(rightID)) && (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
             rightChecker++;
         else
             rightChecker = 0;
     }
+    else
+    {
+        if( !haltedRobotIsInField(previousRightID) )
+            rightChecker = 0;
+    }
+
+    tGolie->setIdlePosition(goaliePos);
+
+    game_status = wm->kn->gameStatus(game_status);
+
+    int ballOwner = findBallOwner();
 
     if( game_status == "Defending" )
     {

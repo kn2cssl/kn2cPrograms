@@ -1,6 +1,13 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+#define attackernoticeabledistance 200
+#define desireddefenderdistance 300
+#define desiredleftdefenderdistance 150
+#define desiredrightdefenderdistance 150
+
+#define PresenceCounter 1000
+
 #include <QObject>
 #include "worldmodel.h"
 #include "tactics.h"
@@ -16,6 +23,8 @@ public:
     virtual int enterCondition() = 0;
     bool conditionChanged();
     void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left, bool& leftNav,Position& right, bool& rightNav);
+    bool haltedRobotIsInField(int robotID);
+//    void addseg();
 
 protected:
     WorldModel *wm;
@@ -29,6 +38,8 @@ protected:
 
     int leftChecker;
     int rightChecker;
+    int previousLeftID;
+    int previousRightID;
 
 private:
     QString name;
@@ -73,6 +84,32 @@ private:
 
 
     bool BallOwner_Finded,Player2_Finded;
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    bool defenderflag;
+    bool defendersflag;
+    bool goalkeepermovmentflag;
+    bool defendermovmentflag;
+    bool angelflag;
+    bool angelflags;
+
+    Vector2D goalkeeperlastpos;
+    Vector2D defenderlastpos;
+    Vector2D balllastpos;
+    double goalkeeperlastdir;
+    double defenderlastdir;
+
+
+//    QList<Segment2D> segList;
+
+//    Vector2D leftspot={-4300,-500};
+//    Vector2D rightspot={-4300,500};
+
+
+
+
+
 
 };
 

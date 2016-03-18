@@ -637,6 +637,30 @@ QList<int> Knowledge::findAttackers()
     return output;
 }
 
+int Knowledge::findOurLeftDefender()
+{
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        if( _wm->ourRobot[ourAgents.at(i)].Role == AgentRole::DefenderLeft )
+            return ourAgents.at(i);
+    }
+    return -1;
+}
+
+int Knowledge::findOurRightDefender()
+{
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        if( _wm->ourRobot[ourAgents.at(i)].Role == AgentRole::DefenderRight )
+            return ourAgents.at(i);
+    }
+    return -1;
+}
+
 QList<int> Knowledge::findOurObstacles()
 {
     QList<int> output;
@@ -765,6 +789,13 @@ double Knowledge::oppScoringChance(Vector2D loc)
             out = TANDPis.at(i);
     }
     return out.prob;
+}
+
+bool Knowledge::robotIsIdle(int id)
+{
+    if( _wm->ourRobot[id].Status == AgentStatus::Idle )
+        return true;
+    return false;
 }
 
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)

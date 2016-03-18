@@ -57,10 +57,14 @@ public:
     int findOppReciever();
 
     QList<int> findAttackers();
+    int findOurLeftDefender();
+    int findOurRightDefender();
     QList<int> findOurObstacles();
 
     double scoringChance(Vector2D loc);
     double oppScoringChance(Vector2D loc);
+
+    bool robotIsIdle(int id);
 
     OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
 

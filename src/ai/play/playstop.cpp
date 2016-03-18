@@ -124,16 +124,28 @@ void PlayStop::setPositions()
     int leftID = -1, rightID = -1 , midID = -1;
     bool leftNav, rightNav;
 
-    if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) /*&& (leftChecker < 100)*/ )
+    if( haltedRobotIsInField(previousLeftID) && wm->ourRobot[previousLeftID].Role != AgentRole::DefenderLeft )
+        previousLeftID = -1;
+
+    if( haltedRobotIsInField(previousRightID) && wm->ourRobot[previousRightID].Role != AgentRole::DefenderRight )
+        previousRightID = -1;
+
+    if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) && (leftChecker < PresenceCounter) )
+    {
         leftID = tDefenderLeft->getID();
+        this->previousLeftID = tDefenderLeft->getID();;
+    }
 
-    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight /*&& (rightChecker < 100)*/ )
+    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight && (rightChecker < PresenceCounter) )
+    {
         rightID = tDefenderRight->getID();
+        this->previousRightID = tDefenderRight->getID();;
+    }
 
-    if( leftChecker > 100 || leftID == -1 )
+    if( leftChecker > PresenceCounter || leftID == -1 )
         midID = rightID;
 
-    if( rightChecker > 100  || rightID == -1)
+    if( rightChecker > PresenceCounter  || rightID == -1)
         midID = leftID;
 
     zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
@@ -150,6 +162,11 @@ void PlayStop::setPositions()
         else
             leftChecker = 0;
     }
+    else
+    {
+        if( !haltedRobotIsInField(previousLeftID) )
+            leftChecker = 0;
+    }
 
     if( rightID != -1)
     {
@@ -158,47 +175,19 @@ void PlayStop::setPositions()
         else
             rightChecker = 0;
     }
-
+    else
+    {
+        if( !haltedRobotIsInField(previousRightID) )
+            rightChecker = 0;
+    }
 
     tGolie->setIdlePosition(goaliePos);
 
-    QList<Vector2D> positions = generatePositions();
-
-    Positioning bestPositions;
-    bool isMatched;
-
-    bestPositions.setWorldModel(wm);
-    QList<Positioning_Struct> out = bestPositions.bestPositions(wm->kn->findAttackers(), positions, isMatched);
-
-    for( int i = 0; i < out.size(); i++)
-    {
-        switch (wm->ourRobot[out.at(i).ourI].Role)
-        {
-        case AttackerLeft:
-            tStopLeft->setStopPosition(out.at(i).loc);
-            break;
-        case AttackerRight:
-            tStopRight->setStopPosition(out.at(i).loc);
-            break;
-        case AttackerMid:
-            tStopMid->setStopPosition(out.at(i).loc);
-            break;
-        default:
-            break;
-        }
-    }
-}
-
-QList<Vector2D> PlayStop::generatePositions()
-{
-   //tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
-   QList<Vector2D> out;
-
     if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
-        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
-        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
-        out.append(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
+        tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
+        tStopRight->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
+        tStopMid->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
     }
     else if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
     {
@@ -212,9 +201,9 @@ QList<Vector2D> PlayStop::generatePositions()
         else
             mainL = candidateL_2;
 
-        out.append(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-        out.append(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-        out.append(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
+        tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
+        tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+        tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
     }
     else
     {
@@ -273,9 +262,9 @@ QList<Vector2D> PlayStop::generatePositions()
                 else
                     mainL = candidateL_2;
 
-                out.append(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-                out.append(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-                out.append(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
+                tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
+                tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+                tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
             }
             else
             {
@@ -284,20 +273,18 @@ QList<Vector2D> PlayStop::generatePositions()
                 finalPos = Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x,
                         0.5*(wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+wm->ourRobot[tDefenderRight->getID()].pos.loc.y)
                         );
-                out.append(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
-                out.append(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
-                out.append(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
+                tStopLeft->setStopPosition(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
+                tStopMid->setStopPosition(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
+                tStopRight->setStopPosition(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
             }
         }
         else
         {
-            out.append(leftPos);
-            out.append(finalPos);
-            out.append(rightPos);
+            tStopLeft->setStopPosition(leftPos);
+            tStopMid->setStopPosition(finalPos);
+            tStopRight->setStopPosition(rightPos);
         }
     }
-
-    return out;
 }
 
 void PlayStop::execute()

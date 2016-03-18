@@ -17,7 +17,23 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
 
     QList<double> F2 = distanceToGoal(oppPlayers);
     QList<double> F3 = oppScoringChance(oppPlayers);
-    QList<double> F5 = distanceToBall(oppPlayers);
+    // QList<double> F5 = distanceToBall(oppPlayers);
+
+    QList<int> dangerousOpposite;
+    for(int i=0; i < oppPlayers.size(); i++)
+    {
+        if( F3.at(i) > DangerousProb || wm->kn->IsInsideOurField(wm->oppRobot[oppPlayers.at(i)].pos.loc) )
+            dangerousOpposite.append(oppPlayers.at(i));
+    }
+
+    if( dangerousOpposite.size() > ourPlayers.size() )
+    {
+        if( (wm->ball.pos.loc - Field::ourGoalPost_L).length2() <  (wm->ball.pos.loc - Field::ourGoalPost_R).length2() )
+            ourPlayers.append(wm->kn->findOurRightDefender());
+        else
+            ourPlayers.append(wm->kn->findOurLeftDefender());
+    }
+
 
     QList<int> weights;
     for(int i=0;i<ourPlayers.size();i++)
@@ -31,11 +47,11 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
                     + (wm->mark_coef[3]*(F3.at(j)))
                     + (wm->mark_coef[4]*F4) );
 
-//            qDebug()<<"-----"<<ourPlayers.at(i)<<" , "<<oppPlayers.at(j)<<"----";
-//            qDebug()<<"F1 : "<< (wm->mark_coef[1]*(1-Distance));
-//            qDebug()<<"F2 : "<< (wm->mark_coef[2]*(1-F2.at(j)));
-//            qDebug()<<"F3 : "<< (wm->mark_coef[3]*(F3.at(j)));
-//            qDebug()<<"F4 : "<< (wm->mark_coef[4]*F4);
+            //            qDebug()<<"-----"<<ourPlayers.at(i)<<" , "<<oppPlayers.at(j)<<"----";
+            //            qDebug()<<"F1 : "<< (wm->mark_coef[1]*(1-Distance));
+            //            qDebug()<<"F2 : "<< (wm->mark_coef[2]*(1-F2.at(j)));
+            //            qDebug()<<"F3 : "<< (wm->mark_coef[3]*(F3.at(j)));
+            //            qDebug()<<"F4 : "<< (wm->mark_coef[4]*F4);
 
             weights.append(weight);
         }
@@ -98,11 +114,11 @@ QList<double> Marking::distanceToGoal(QList<int> opp)
 double Marking::formationDistance(int our)
 {
     if( wm->ourRobot[our].Role == AgentRole::DefenderMid   ||
-        wm->ourRobot[our].Role == AgentRole::DefenderRight ||
-        wm->ourRobot[our].Role == AgentRole::DefenderLeft
-        )
+            wm->ourRobot[our].Role == AgentRole::DefenderRight ||
+            wm->ourRobot[our].Role == AgentRole::DefenderLeft
+            )
     {
-        return 0;
+        return 1;
     }
     return 2;
 }
