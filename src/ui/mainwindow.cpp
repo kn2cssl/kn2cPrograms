@@ -12,7 +12,7 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     _render = new RenderArea(soccer);
     ui->gridRender->addWidget(_render);
     QStringList indexses;
-    indexses<<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"<<"8"<<"9"<<"10"<<"11";
+    indexses<<"0"<<"1"<<"2"<<"3"<<"4"<<"5"<<"6"<<"7"<<"8"<<"9"<<"10"<<"11"<<"All";
     ui->astarIndex_comboBox->addItems(indexses);
     ui->udpID_comboBox->addItems(indexses);
     QStringList udp_values;
