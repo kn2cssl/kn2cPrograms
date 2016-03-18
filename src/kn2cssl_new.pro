@@ -205,7 +205,9 @@ SOURCES +=	main.cpp \
     proto/Robot_message.pb.cc \
     proto/ssl_log.pb.cc \
     proto/vision_log.pb.cc \
-    proto/ref_log.pb.cc
+    proto/ref_log.pb.cc \
+    ai/skill/skillpassreceive.cpp \
+    ai/skill/skillonetouch.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -346,7 +348,9 @@ HEADERS  += \
     proto/Robot_message.pb.h \
     proto/ssl_log.pb.h \
     proto/vision_log.pb.h \
-    proto/ref_log.pb.h
+    proto/ref_log.pb.h \
+    ai/skill/skillpassreceive.h \
+    ai/skill/skillonetouch.h
 
 FORMS    +=	ui/mainwindow.ui
 

@@ -5,12 +5,15 @@
 #define desireddefenderdistance 300
 #define desiredleftdefenderdistance 150
 #define desiredrightdefenderdistance 150
+#define middleAreaWidth 200
+#define rightTirak -1
+#define leftTirak 1
 
-#define PresenceCounter 1000
 
 #include <QObject>
 #include "worldmodel.h"
 #include "tactics.h"
+#define PresenceCounter 1000
 
 class Play : public QObject
 {
@@ -24,7 +27,6 @@ public:
     bool conditionChanged();
     void zonePositions(int leftID,int RightID,int MidID,Position& goalie,Position& left, bool& leftNav,Position& right, bool& rightNav);
     bool haltedRobotIsInField(int robotID);
-//    void addseg();
 
 protected:
     WorldModel *wm;
@@ -42,51 +44,11 @@ protected:
     int previousRightID;
 
 private:
-    QString name;
-
-    void Player_filter(Position Player);
-    double last_dir;//,dir;
-
-    void Ref_2Deff_Player(Position p);
-    void Ref_2Deff_Ball();
-    void Ref_2Deff_Player2(Position p,Vector2D &Left_2,Vector2D &Right_2,Vector2D &Deff_center);
-    void Ref_2Deff_Moving_Ball();
-    void Ref_1Deff_Player(Position p,int Left_ID,int Right_ID,int Mid_ID);
-    void Ref_1Deff_Ball(int Left_ID,int Right_ID,int Mid_ID);
-    void Ref_1Deff_Player2(Position p,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
-    void Ref_1Deff_Moving_Ball(int Left_ID,int Right_ID,int Mid_ID);
-    void Ref_2Deff_Loc(Vector2D loc);
-    void Ref_1Deff_Loc(Vector2D loc,int Left_ID,int Right_ID,int Mid_ID,Vector2D &Loc);
-    bool Danger_Player_Direction(Position p , int thr);
-    bool Ball_Toward_Goal();
-
     bool hasPositionForGoalie(Vector2D midOfDef);
-    Position goaliePosition(Vector2D midOfDef);
     Position goalieInPenalty();
 
-    Position Player1,Player2;
+    QString name;
 
-
-    Vector2D Right_loc,Left_loc,Goalie_loc,Deffence_center,Wall;
-    double Wall_length,Dist_2_Deffence;
-    bool Ball_IS_Toward_Goal;
-
-    void Deffence_Geometry_making();
-    bool Find_OppRobot_BallOwner();
-    bool Find_Pass_Receiver(Position Player1);
-    bool Find_AnyOther_Opp_Dangerous();
-    Vector2D Find_MostDangerous_Goal_Point();
-
-
-    int Find_Dyno_Deffence(int Left_ID,int Right_ID,Vector2D Deff_center);
-    Vector2D Find_Deff_center(Vector2D loc);
-    Vector2D Average_Positioning(Vector2D l1,Vector2D l2);
-
-
-    bool BallOwner_Finded,Player2_Finded;
-
-
-    ////////////////////////////////////////////////////////////////////////////////////
     bool defenderflag;
     bool defendersflag;
     bool goalkeepermovmentflag;
@@ -94,23 +56,18 @@ private:
     bool angelflag;
     bool angelflags;
 
-    Vector2D goalkeeperlastpos;
-    Vector2D defenderlastpos;
+
+//    Vector2D goalkeeperlastpos;
+//    Vector2D defenderlastpos;
     Vector2D balllastpos;
-    double goalkeeperlastdir;
-    double defenderlastdir;
+//    double goalkeeperlastdir;
+//    double defenderlastdir;
 
+    Vector2D leftDefenderLastpos;
+    Vector2D rightDefenderLastpos;
 
-//    QList<Segment2D> segList;
-
-//    Vector2D leftspot={-4300,-500};
-//    Vector2D rightspot={-4300,500};
-
-
-
-
-
-
+    int defenderlasttirak;
+    int goalkeeperlasttirak;
 };
 
 #endif // PLAY_H

@@ -19,7 +19,7 @@ void playControl::initRole()
 
 void playControl::execute()
 {
-    tactics[7] = anghezy ;
+    tactics[0] = anghezy ;
     tactics[3] = anghezy ;
 }
 

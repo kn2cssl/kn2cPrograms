@@ -157,7 +157,7 @@ void PlayStop::setPositions()
 
     if( leftID != -1)
     {
-        if( /*(wm->ourRobot[leftID].Status != AgentStatus::FollowingBall ) &&*/ (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
+        if( (wm->ourRobot[leftID].Status != AgentStatus::FollowingBall ) && (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
             leftChecker++;
         else
             leftChecker = 0;
@@ -170,7 +170,7 @@ void PlayStop::setPositions()
 
     if( rightID != -1)
     {
-        if( /*(wm->ourRobot[rightID].Status != AgentStatus::FollowingBall ) &&*/ (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
+        if( (wm->ourRobot[rightID].Status != AgentStatus::FollowingBall ) && (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
             rightChecker++;
         else
             rightChecker = 0;

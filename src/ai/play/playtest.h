@@ -11,5 +11,12 @@ public:
     virtual void execute();
     virtual void initRole();
     virtual int enterCondition();
+
+ ////////////////////////////
+private:
+       int flag=0;
+    TacticTest *test;
+    TacticTest2 *test2;
+    ///////////////////////////
 };
 #endif // PLAYTEST_H

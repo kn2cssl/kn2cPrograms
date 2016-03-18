@@ -38,6 +38,14 @@ private:
     double wu1,wu1_last,wintegral,werr0,werr1;
     double wderived0,wderived1;
 
+
+    ///////////////////////////////////////////////////////////////new controller
+    double wp,wi,wd;
+    Vector2D p,i,d,i_near,i_far;
+    int fault_counter;
+    ///////////////////////////////////////////////////////////////
+
+
     int stateCTRL;
 
     ofstream out;

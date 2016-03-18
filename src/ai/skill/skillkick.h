@@ -4,6 +4,7 @@
 #include <QObject>
 #include "skill.h"
 
+
 class SkillKick : public Skill
 {
     Q_OBJECT
@@ -11,6 +12,7 @@ public:
     explicit SkillKick(WorldModel* wm, QObject *parent = 0);
     bool execute(RobotCommand& rc);
     void setTarget(const Vector2D& Target);
+
 private:
     Vector2D _Target;
 };
