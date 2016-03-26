@@ -109,7 +109,8 @@ int PlayGameOn::findBallOwner()
         int oneTouchPlayer = wm->kn->findOneTouchPlayer();
         if( oneTouchPlayer != -1 )
         {
-            wm->ourRobot[oneTouchPlayer].Status = AgentStatus::FollowingBall;
+            wm->ourRobot[oneTouchPlayer].Status = AgentStatus::OneTouch;
+            ownerIndex = oneTouchPlayer;
             ours.removeOne(oneTouchPlayer);
         }
         else

@@ -47,6 +47,7 @@ private:
     double maxDistance;
 
     SkillKick* sKick;
+    SkillOneTouch* sOneTouch;
 protected:
     bool canKick;
 };

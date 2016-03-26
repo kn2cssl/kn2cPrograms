@@ -12,11 +12,12 @@ class SkillOneTouch : public Skill
 public:
     explicit SkillOneTouch(WorldModel* wm, QObject *parent = 0);
     bool execute(RobotCommand& rc);
-    void setTarget(const Vector2D& Target);
+    void setTarget(const Vector2D target);
+    void setPosition(const Vector2D position);
 
 private:
-
-    Vector2D _Target;
+    Vector2D position;
+    Vector2D target;
     Vector2D currentposition;
     bool firstTime;
 

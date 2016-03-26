@@ -18,12 +18,10 @@ bool SkillOneTouch::execute(RobotCommand &rc)
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // done...version 1.0
-    index=4;
     rc.maxSpeed=3;
     Vector2D ballPos=wm->ball.pos.loc;
     Vector2D kickerPos=wm->ourRobot[index].pos.loc;
-    Vector2D target={-2380,2000};
-    //    Vector2D target=this->_Target;
+    Vector2D target = this->target;
     Vector2D robot2target=target-wm->ourRobot[index].pos.loc;
     Vector2D ballVelrobotCircleintersection;
     Vector2D target2robotLine;
@@ -40,7 +38,7 @@ bool SkillOneTouch::execute(RobotCommand &rc)
     if(!(checkingCircle.HasIntersection(*ballVel)) || wm->ball.vel.loc.length()<0.2 ||  !(wm->ball.isValid) )
     {
         movementFlag=true;
-        goal={-2340,-1500};
+        goal = this->position;
         qDebug()<<"ready";
     }
     else
@@ -80,11 +78,11 @@ bool SkillOneTouch::execute(RobotCommand &rc)
     if(   ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (   (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
     {
         rc.kickspeedx=200;
-//        this->firstTime = true;
-//        return true;
+        //        this->firstTime = true;
+        //        return true;
     }
 
-//        return false;
+    //        return false;
 
     //returning from onetouch state
     if(wm->ball.vel.loc.length()<0.2)
@@ -103,12 +101,12 @@ bool SkillOneTouch::execute(RobotCommand &rc)
 
 }
 
+void SkillOneTouch::setTarget(const Vector2D target)
+{
+    this->target = target;
+}
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
+void SkillOneTouch::setPosition(const Vector2D position)
+{
+    this->position = position;
+}

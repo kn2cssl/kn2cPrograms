@@ -8,6 +8,7 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
 
     sKick = new SkillKick(wm);
+    sOneTouch = new SkillOneTouch(wm);
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -116,7 +117,13 @@ RobotCommand TacticAttacker::getCommand()
     }
     else if(wm->ourRobot[id].Status == AgentStatus::OneTouch)
     {
-        rc.fin_pos.loc = Vector2D(0,0);
+        sOneTouch->setIndex(this->id);
+        sOneTouch->setTarget(Field::oppGoalCenter);
+        sOneTouch->setPosition(idlePosition.loc);
+
+        bool inOneTouch = sOneTouch->execute(rc);
+        if( !inOneTouch )
+          wm->ourRobot[id].Status = AgentStatus::Idle;
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
