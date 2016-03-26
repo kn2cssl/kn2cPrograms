@@ -8,105 +8,107 @@ SkillOneTouch::SkillOneTouch(WorldModel* wm, QObject *parent) :
 
 bool SkillOneTouch::execute(RobotCommand &rc)
 {
-    if( firstTime )
+    //    if( firstTime )
+    //    {
+    //        currentposition=wm->ourRobot[index].pos.loc;
+    //        firstTime = false;
+    //    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // done...version 1.0
+    index=4;
+    rc.maxSpeed=3;
+    Vector2D ballPos=wm->ball.pos.loc;
+    Vector2D kickerPos=wm->ourRobot[index].pos.loc;
+    Vector2D target={-2380,2000};
+    //    Vector2D target=this->_Target;
+    Vector2D robot2target=target-wm->ourRobot[index].pos.loc;
+    Vector2D ballVelrobotCircleintersection;
+    Vector2D target2robotLine;
+    Vector2D ballVelRobotLineIntersection;
+    Vector2D target2robotCircle;
+
+    //Locating in the predicted point to recieve the ball
+    float lowPassFilterFactor=0.2;
+    ballVelAngel=((wm->ball.vel.loc.dir().degree()-ballVelAngel)*lowPassFilterFactor)+ballVelAngel;
+    Line2D *filteredballVel = new Line2D(ballPos,ballVelAngel);
+    Line2D *ballVel= new Line2D(ballPos,wm->ball.vel.loc.dir().degree());
+    Circle2D checkingCircle(kickerPos,ROBOT_RADIUS+500);
+
+    if(!(checkingCircle.HasIntersection(*ballVel)) || wm->ball.vel.loc.length()<0.2 ||  !(wm->ball.isValid) )
     {
-        currentposition=wm->ourRobot[index].pos.loc;
-        firstTime = false;
-    }
-
-    //locating in the predicted position to receive the ball...
-
-    Vector2D robot2target= this->_Target - wm->ourRobot[index].pos.loc;
-    rc.fin_pos.dir=robot2target.dir().radian();
-    rc.fin_pos.loc=currentposition;
-
-    if (wm->ball.vel.loc.length()>0.1)
-    {
-        Vector2D goal;
-        Vector2D Ballpos=wm->ball.pos.loc;
-        Ball2C = new Line2D(Ballpos , wm->ball.vel.loc.dir().degree());
-        Vector2D intersection1,intersection2;
-
-        ballvel.setDir(wm->ball.vel.loc.dir().degree());
-
-
-        if(fabs(ballvel.dir().degree()-last_ballvel.dir().degree())>10)
-        {
-            CR.assign(wm->ourRobot[index].pos.loc,ROBOT_RADIUS+500);
-        }
-
-        last_ballvel.setDir(ballvel.dir().degree());
-
-        CR.intersection(*Ball2C,&intersection1,&intersection2);
-
-        if( CR.HasIntersection(*Ball2C))
-        {
-            if((Ballpos-intersection1).length2()>(Ballpos-intersection2).length2())
-            {
-                goal=intersection1;
-            }
-
-            else
-            {
-                goal=intersection2;
-            }
-
-            rc.fin_pos.loc=goal;
-        }
-    }
-
-    //kicking...
-    Vector2D ball2target;
-
-    ball2target=this->_Target - wm->ball.pos.loc;
-
-    if( wm->isSim )
-    {
-        //simulation:
-        Vector2D centerofrarecircle;
-        ball2target.setLength(115);
-        centerofrarecircle=wm->ball.pos.loc-ball2target;
-        Circle2D C2(centerofrarecircle,120);
-        Circle2D C(wm->ball.pos.loc,ROBOT_RADIUS+20);
-        if(     wm->ball.isValid&&
-                C.contains(wm->ourRobot[index].pos.loc)&&
-                C2.contains(wm->ourRobot[index].pos.loc)&&
-                (fabs((wm->ourRobot[index].pos.dir)-(ball2target.dir().radian())<0.08))
-                )
-        {
-            this->firstTime = true;
-            rc.kickspeedx=5;
-            return true;
-
-        }
-
+        movementFlag=true;
+        goal={-2340,-1500};
+        qDebug()<<"ready";
     }
     else
     {
-        //real:
-        Vector2D centerofrarecircle;
-        ball2target.setLength(115);
-        centerofrarecircle=wm->ball.pos.loc-ball2target;
-        Circle2D C2(centerofrarecircle,120);
-        Circle2D C(wm->ball.pos.loc,ROBOT_RADIUS+15);
-        if(     wm->ball.isValid&&
-                C.contains(wm->ourRobot[index].pos.loc)&&
-                C2.contains(wm->ourRobot[index].pos.loc)
-                )
+        qDebug()<<"locating";
+        if(movementFlag)//movementflag bayad dar kick.cpp true shavad...vaqti dastooor shooot myad...
         {
-            this->firstTime = true;
-            rc.kickspeedx=10;
-            return true;
+            robotCircle.assign(kickerPos,ROBOT_RADIUS+500);
+            Vector2D temp1,temp2;
+            robotCircle.intersection(*ballVel,&temp1,&temp2);
+
+            if((ballPos-temp1).length2()>(ballPos-temp2).length2())
+            {
+                ballVelrobotCircleintersection=temp1;
+            }
+            else
+            {
+                ballVelrobotCircleintersection=temp2;
+            }
+
+            target2robotCircle=ballVelrobotCircleintersection-target;
+            Vector2D temp=target2robotCircle.rotatedVector(90);
+            robotLine=new Line2D(ballVelrobotCircleintersection,temp.dir().degree());
+
+            movementFlag=false;
+        }
+        ballVelRobotLineIntersection=robotLine->intersection(*filteredballVel);
+        target2robotLine=ballVelRobotLineIntersection-target;
+        target2robotLine.setLength(ROBOT_RADIUS+10);
+        goal=ballVelRobotLineIntersection+target2robotLine;
+    }
+
+    rc.fin_pos.loc=goal;
+    rc.fin_pos.dir=robot2target.dir().radian();
+
+    //kicking
+    if(   ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (   (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
+    {
+        rc.kickspeedx=200;
+//        this->firstTime = true;
+//        return true;
+    }
+
+//        return false;
+
+    //returning from onetouch state
+    if(wm->ball.vel.loc.length()<0.2)
+    {
+        return false;
+    }
+    else
+    {
+        if( fabs((-target2robotLine).dir().degree()-wm->ball.vel.loc.dir().degree())>45 && fabs((-target2robotLine).dir().degree()-wm->ball.vel.loc.dir().degree())<135 )
+        {
+            return false;
         }
     }
 
-    return false;
+    return true;
+
 }
 
 
 
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
