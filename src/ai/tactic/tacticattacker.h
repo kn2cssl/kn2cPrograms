@@ -45,6 +45,8 @@ private:
     bool pastMidPoint; // FreeKick
     kickType freeKickType;
     double maxDistance;
+
+    SkillKick* sKick;
 protected:
     bool canKick;
 };

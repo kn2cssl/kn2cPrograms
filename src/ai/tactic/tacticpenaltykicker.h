@@ -13,6 +13,7 @@ public:
 private:
     bool targetSelected;
     Vector2D target;
+    SkillKick* sKick;
 };
 
 #endif // TACTICPENALTYKICKER_H

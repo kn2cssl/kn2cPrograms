@@ -5,6 +5,8 @@ TacticPenaltyKicker::TacticPenaltyKicker(WorldModel *worldmodel, QObject *parent
 {
     this->setObjectName("TacticPenaltyKicker");
     targetSelected = false;
+
+    sKick = new SkillKick(wm);
 }
 
 RobotCommand TacticPenaltyKicker::getCommand()
@@ -30,12 +32,15 @@ RobotCommand TacticPenaltyKicker::getCommand()
             targetSelected = true;
         }
 
-        OperatingPosition kickPoint = BallControl(target, 100, this->id, rc.maxSpeed );
-        rc.fin_pos = kickPoint.pos;
-        if( kickPoint.readyToShoot )
-            rc.kickspeedx = detectKickSpeed(kickType::Shoot,kickPoint.shootSensor);
+        //OperatingPosition kickPoint = BallControl(target, 100, this->id, rc.maxSpeed );
+        //rc.fin_pos = kickPoint.pos;
+//        if( kickPoint.readyToShoot )
+//            rc.kickspeedx = detectKickSpeed(kickType::Shoot,kickPoint.shootSensor);
 
-        rc.useNav = kickPoint.useNav;
+//        rc.useNav = kickPoint.useNav;
+        sKick->setIndex(this->id);
+        sKick->setTarget(target);
+        sKick->execute(rc);
     }
     else
     {

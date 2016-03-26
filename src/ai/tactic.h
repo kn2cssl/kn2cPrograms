@@ -24,7 +24,6 @@ public:
     void setPlayerToKeep(int index);
     float detectKickSpeed(kickType type, bool shoot_sensor);
     float detectChipSpeed(bool shoot_sensor);
-    OperatingPosition BallControl(Vector2D Target , int Prob ,  int ID , double maxSpeed, int Task=0 );
 
 private:
     Vector2D last_ball_vell;

@@ -4,6 +4,8 @@ TacticGoalie::TacticGoalie(WorldModel *worldmodel, QObject *parent) :
     Tactic("TacticGoalie", worldmodel, parent)
 {
     reach2Ball = false;
+
+    sKick = new SkillKick(wm);
 }
 
 RobotCommand TacticGoalie::getCommand()
@@ -48,7 +50,10 @@ RobotCommand TacticGoalie::getCommand()
         target = wm->ball.pos.loc;
         target.x = target.x + 2*ROBOT_RADIUS;
 
-        OperatingPosition chipPoint = BallControl(target, 100, this->id,rc.maxSpeed);
+        //OperatingPosition chipPoint = BallControl(target, 100, this->id,rc.maxSpeed);
+        sKick->setIndex(this->id);
+        sKick->setTarget(target);
+        sKick->execute(rc);
 
 
 //        double firstDist , secondDist;
@@ -67,8 +72,8 @@ RobotCommand TacticGoalie::getCommand()
 
         bool chipTheBall = true;
 
-        rc.fin_pos = chipPoint.pos;
-        rc.useNav = chipPoint.useNav;
+//        rc.fin_pos = chipPoint.pos;
+//        rc.useNav = chipPoint.useNav;
 
         if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,wm->ball.pos.loc,ROBOT_RADIUS) || reach2Ball )
         {

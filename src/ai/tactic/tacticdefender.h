@@ -19,6 +19,8 @@ private:
     bool reach2Ball;
     bool useNav;
     int oppPassReciever;
+
+    SkillKick* sKick;
 };
 
 #endif // TACTICDEFENDER_H

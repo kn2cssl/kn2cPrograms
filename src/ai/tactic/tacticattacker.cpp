@@ -6,6 +6,8 @@ TacticAttacker::TacticAttacker(WorldModel *worldmodel, QObject *parent) :
 {
     everyOneInTheirPos = false;
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
+
+    sKick = new SkillKick(wm);
 }
 
 RobotCommand TacticAttacker::getCommand()
@@ -18,15 +20,10 @@ RobotCommand TacticAttacker::getCommand()
         rc.maxSpeed = 3;
 
         tANDp target = findTarget();
-        OperatingPosition p = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 
-        if( p.readyToShoot )
-            rc.kickspeedx = detectKickSpeed(kickType::Shoot, p.shootSensor);
-
-        rc.fin_pos = p.pos;
-        rc.useNav = p.useNav;
-        rc.isBallObs = true;
-        rc.isKickObs = true;
+        sKick->setTarget(target.pos);
+        sKick->setIndex(this->id);
+        sKick->execute(rc);
     }
     else if(wm->ourRobot[id].Status == AgentStatus::Kicking)
     {
@@ -213,15 +210,15 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
     wm->passPoints.clear();
     wm->passPoints.push_back(goal);
 
-    OperatingPosition kickPoint = BallControl(goal,100,this->id,rc.maxSpeed);
+//    OperatingPosition kickPoint = BallControl(goal,100,this->id,rc.maxSpeed);
 
-    rc.fin_pos = kickPoint.pos;
-    rc.useNav = kickPoint.useNav;
-    qDebug()<<"readyToShoot : "<<kickPoint.readyToShoot<<"   , everyOneInTheirPos : "<<everyOneInTheirPos;
+    sKick->setIndex(this->id);
+    sKick->setTarget(goal);
+    sKick->execute(rc);
 
-    if(  kickPoint.readyToShoot && everyOneInTheirPos)
+    if(  /*kickPoint.readyToShoot &&*/ !everyOneInTheirPos)
     {
-        rc.kickspeedx = detectKickSpeed(freeKickType, kickPoint.shootSensor);
+        rc.kickspeedx = 0;//detectKickSpeed(freeKickType, kickPoint.shootSensor);
         //        Line2D ball2Target(wm->ball.pos.loc,goal);
 
         //        QList<int> activeOpp = wm->kn->ActiveOppAgents();
@@ -265,16 +262,20 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
 
     tANDp target = findTarget();
-    OperatingPosition kickPoint = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
+//    OperatingPosition kickPoint = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 
-    rc.fin_pos = kickPoint.pos;
+    sKick->setIndex(this->id);
+    sKick->setTarget(target.pos);
+    sKick->execute(rc);
 
-    if( kickPoint.readyToShoot )
-    {
-        rc.kickspeedx = detectKickSpeed(kickType::Shoot, kickPoint.shootSensor);
-        qDebug()<<"Kickk...";
-    }
-    rc.useNav = kickPoint.useNav;
+    //rc.fin_pos = kickPoint.pos;
+
+//    if( kickPoint.readyToShoot )
+//    {
+//        rc.kickspeedx = detectKickSpeed(kickType::Shoot, kickPoint.shootSensor);
+//        qDebug()<<"Kickk...";
+//    }
+//    rc.useNav = kickPoint.useNav;
 
     return rc;
 }
@@ -289,17 +290,21 @@ RobotCommand TacticAttacker::StartTheGame()
         rc.maxSpeed = 1.5;
 
     Vector2D target(Field::oppGoalCenter.x,Field::oppGoalCenter.y);
-    OperatingPosition kickPoint = BallControl(target, 100, this->id, rc.maxSpeed);
+//    OperatingPosition kickPoint = BallControl(target, 100, this->id, rc.maxSpeed);
 
-    rc.fin_pos = kickPoint.pos;
-    rc.useNav = kickPoint.useNav;
+    sKick->setIndex(this->id);
+    sKick->setTarget(target);
+    sKick->execute(rc);
 
-    if( kickPoint.readyToShoot )
-    {
-        //rc.kickspeedz = 2.5;//50;
-        rc.kickspeedx = detectKickSpeed(kickType::Shoot, kickPoint.shootSensor);
-        qDebug()<<"Kickk...";
-    }
+//    rc.fin_pos = kickPoint.pos;
+//    rc.useNav = kickPoint.useNav;
+
+//    if( kickPoint.readyToShoot )
+//    {
+//        //rc.kickspeedz = 2.5;//50;
+//        rc.kickspeedx = detectKickSpeed(kickType::Shoot, kickPoint.shootSensor);
+//        qDebug()<<"Kickk...";
+//    }
 
     return rc;
 }
@@ -319,14 +324,18 @@ RobotCommand TacticAttacker::ChipTheBallIndirect()
     Vector2D target = receiverPos;
     Vector2D goal(target.x,target.y);
 
-    OperatingPosition kickPoint = BallControl(goal, 100, this->id, rc.maxSpeed,3);
+    //OperatingPosition kickPoint = BallControl(goal, 100, this->id, rc.maxSpeed,3);
 
-    rc.fin_pos = kickPoint.pos;
-    rc.useNav = kickPoint.useNav;
+    sKick->setIndex(this->id);
+    sKick->setTarget(goal);
+    sKick->execute(rc);
 
-    if(  kickPoint.readyToShoot && everyOneInTheirPos)
+//    rc.fin_pos = kickPoint.pos;
+//    rc.useNav = kickPoint.useNav;
+
+    if(  /*kickPoint.readyToShoot &&*/ !everyOneInTheirPos)
     {
-        rc.kickspeedz = detectChipSpeed(kickPoint.shootSensor);
+        rc.kickspeedz = 0;//detectChipSpeed(kickPoint.shootSensor);
         qDebug()<<"Chip...";
     }
 
