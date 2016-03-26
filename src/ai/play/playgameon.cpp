@@ -106,78 +106,88 @@ int PlayGameOn::findBallOwner()
 
     if( wm->ball.isValid && !wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
     {
-        if( wm->defenceMode )
-            candidates = wm->kn->findAttackers();
+        int oneTouchPlayer = wm->kn->findOneTouchPlayer();
+        if( oneTouchPlayer != -1 )
+        {
+            wm->ourRobot[oneTouchPlayer].Status = AgentStatus::FollowingBall;
+            ours.removeOne(oneTouchPlayer);
+        }
         else
-            candidates = wm->kn->ActiveAgents();
-
-        ours.removeOne(wm->ref_goalie_our);
-        candidates.removeOne(wm->ref_goalie_our);
-
-        for(int i=0;i<candidates.size();i++)
         {
-            Vector2D predictedPos;
-            if( (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerMid)
-                    ||
-                    (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerLeft)
-                    ||
-                    (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerRight)  )
-            {
-                predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,2,wm->ball.vel.loc);
-                double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
-                distance2Prediction.append(distance);
-            }
+            if( wm->defenceMode )
+                candidates = wm->kn->findAttackers();
             else
-            {
-                predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,1,wm->ball.vel.loc);
-                double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
-                distance2Prediction.append(distance);
-            }
-        }
+                candidates = wm->kn->ActiveAgents();
 
-        int min_i = -1;
-        double min_d = 35000000;
-        QList<int> sameDistances;
+            ours.removeOne(wm->ref_goalie_our);
+            candidates.removeOne(wm->ref_goalie_our);
 
-        for(int i=0;i<distance2Prediction.size();i++)
-        {
-            if( min_d - distance2Prediction.at(i) > ROBOT_RADIUS )
+            for(int i=0;i<candidates.size();i++)
             {
-                min_d = distance2Prediction.at(i);
-                min_i = candidates.at(i);
-                sameDistances.clear();
-                sameDistances.append(candidates.at(i));
-            }
-            else if( fabs(distance2Prediction.at(i)-min_d) < ROBOT_RADIUS )
-            {
-                sameDistances.append(candidates.at(i));
-            }
-        }
-
-        if( sameDistances.size() > 1 )
-        {
-            int min_i_s = -1;
-            double min_degree = 35000000;
-
-            for(int i=0;i<sameDistances.size();i++)
-            {
-                double r2b = fabs((wm->ball.pos.loc - wm->ourRobot[sameDistances.at(i)].pos.loc).dir().radian());
-                if( r2b < min_degree )
+                Vector2D predictedPos;
+                if( (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerMid)
+                        ||
+                        (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerLeft)
+                        ||
+                        (wm->ourRobot[candidates.at(i)].Role == AgentRole::AttackerRight)  )
                 {
-                    min_degree = r2b;
-                    min_i_s = sameDistances.at(i);
+                    predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,2,wm->ball.vel.loc);
+                    double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
+                    distance2Prediction.append(distance);
+                }
+                else
+                {
+                    predictedPos = wm->kn->PredictDestination(wm->ourRobot[candidates.at(i)].pos.loc, wm->ball.pos.loc,1,wm->ball.vel.loc);
+                    double distance = (predictedPos - wm->ourRobot[candidates.at(i)].pos.loc).length();
+                    distance2Prediction.append(distance);
                 }
             }
 
-            min_i = min_i_s;
+            int min_i = -1;
+            double min_d = 35000000;
+            QList<int> sameDistances;
+
+            for(int i=0;i<distance2Prediction.size();i++)
+            {
+                if( min_d - distance2Prediction.at(i) > ROBOT_RADIUS )
+                {
+                    min_d = distance2Prediction.at(i);
+                    min_i = candidates.at(i);
+                    sameDistances.clear();
+                    sameDistances.append(candidates.at(i));
+                }
+                else if( fabs(distance2Prediction.at(i)-min_d) < ROBOT_RADIUS )
+                {
+                    sameDistances.append(candidates.at(i));
+                }
+            }
+
+            if( sameDistances.size() > 1 )
+            {
+                int min_i_s = -1;
+                double min_degree = 35000000;
+
+                for(int i=0;i<sameDistances.size();i++)
+                {
+                    double r2b = fabs((wm->ball.pos.loc - wm->ourRobot[sameDistances.at(i)].pos.loc).dir().radian());
+                    if( r2b < min_degree )
+                    {
+                        min_degree = r2b;
+                        min_i_s = sameDistances.at(i);
+                    }
+                }
+
+                min_i = min_i_s;
+            }
+
+            if(min_i != -1)
+            {
+                wm->ourRobot[min_i].Status = AgentStatus::FollowingBall;
+                ownerIndex = min_i;
+                ours.removeOne(min_i);
+            }
         }
 
-        if(min_i != -1)
-        {
-            wm->ourRobot[min_i].Status = AgentStatus::FollowingBall;
-            ownerIndex = min_i;
-            ours.removeOne(min_i);
-        }
         while( !ours.isEmpty() )
             wm->ourRobot[ours.takeFirst()].Status = AgentStatus::Idle;
 

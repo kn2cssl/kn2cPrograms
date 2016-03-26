@@ -117,6 +117,10 @@ RobotCommand TacticAttacker::getCommand()
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
+    else if(wm->ourRobot[id].Status == AgentStatus::OneTouch)
+    {
+        rc.fin_pos.loc = Vector2D(0,0);
+    }
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
         rc.fin_pos = idlePosition;
@@ -143,8 +147,8 @@ RobotCommand TacticAttacker::getCommand()
     {
         Vector2D gc2fp = ( rc.fin_pos.loc - Field::oppGoalCenter);
         gc2fp.setLength(Field::goalCircleDEF_R + ROBOT_RADIUS);
-        rc.fin_pos.loc = gc2fp + Field::ourGoalCenter;
-        rc.fin_pos.dir = gc2fp.dir().radian();
+        rc.fin_pos.loc = gc2fp + Field::oppGoalCenter;
+        rc.fin_pos.dir = (Field::oppGoalCenter - wm->ourRobot[this->id].pos.loc).dir().radian();//gc2fp.dir().radian();
     }
 
     return rc;

@@ -66,7 +66,8 @@ public:
 
     bool robotIsIdle(int id);
 
-    OperatingPosition AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos);
+    bool oneTouchScenario();
+    int findOneTouchPlayer();
 
 private:
     WorldModel* _wm;

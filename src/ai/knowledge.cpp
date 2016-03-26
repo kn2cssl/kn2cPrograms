@@ -798,6 +798,32 @@ bool Knowledge::robotIsIdle(int id)
     return false;
 }
 
+bool Knowledge::oneTouchScenario()
+{
+    QList<int> activeAgents = ActiveAgents();
+
+    for(int i =  activeAgents.size(); i > 0; i-- )
+    {
+        if( _wm->ourRobot[activeAgents.at(i-1)].Status == AgentStatus::OneTouch )
+            return true;
+    }
+
+    return false;
+}
+
+int Knowledge::findOneTouchPlayer()
+{
+    QList<int> activeAgents = ActiveAgents();
+
+    for(int i =  activeAgents.size(); i > 0; i-- )
+    {
+        if( _wm->ourRobot[activeAgents.at(i-1)].Status == AgentStatus::OneTouch )
+            return activeAgents.at(i-1);
+    }
+
+    return -1;
+}
+
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)
 {
     if( (current.loc-desired.loc).length() < distThreshold)
@@ -829,87 +855,4 @@ Position Knowledge::AdjustKickPoint(Vector2D ballPos, Vector2D target, int kickS
 
 
     return p;
-}
-
-OperatingPosition Knowledge::AdjustKickPointB(Vector2D ballLoc, Vector2D target, Position robotPos)
-{
-    OperatingPosition KickPos;
-    Vector2D KickDir = (target - ballLoc);
-    bool shoot_sensor = true;
-    double DirErr;
-    double DistErr;
-    double BallDir = _wm->ball.vel.loc.dir().radian();
-    double DAngel = AngleDeg ::deg2rad(80);
-
-    if(_wm->ball.vel.loc.length()>.2 && (-KickDir.dir().radian()-DAngel)<BallDir && (-KickDir.dir().radian()+DAngel)>BallDir)
-    {
-        KickPos.pos.dir = BallDir-M_PI;
-        if (KickPos.pos.dir > M_PI) KickPos.pos.dir -= 2 * M_PI;
-        if (KickPos.pos.dir < -M_PI) KickPos.pos.dir += 2 * M_PI;
-
-        KickPos.pos.loc = ballLoc ;
-    }
-    else
-    {
-        //possession point >>navigation : ON
-        KickDir.setLength( ROBOT_RADIUS + BALL_RADIUS*2);
-        KickPos.useNav = true ;
-
-        KickPos.pos.dir = KickDir.dir().radian();
-        KickPos.pos.loc = ballLoc - KickDir;
-
-        //possession point check
-        DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
-        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
-
-        DistErr = (KickPos.pos.loc - robotPos.loc).length();
-        if(DirErr < 15 && DistErr < BALL_RADIUS*2) kickPermission = true;
-        if(DirErr > 19 && DistErr > BALL_RADIUS*3) kickPermission = false;
-
-    }
-
-    if(kickPermission)
-    {
-        Vector2D ball_vel_change;
-
-        ball_vel_change =_wm->ball.vel.loc - last_ball_vell;
-        last_ball_vell = _wm->ball.vel.loc ;
-
-        if(ball_vel_change.length()>0.02)
-            shoot_sensor = false;
-
-        //control point >>navigation : OFF
-        KickDir.setLength( ROBOT_RADIUS- BALL_RADIUS);
-        KickPos.useNav = false ;
-        KickPos.pos.dir = KickDir.dir().radian();//(ballLoc - robotPos.loc).dir().radian();//
-        KickPos.pos.loc = ballLoc - KickDir;
-
-        DirErr = AngleDeg::rad2deg(fabs(KickPos.pos.dir  - robotPos.dir));
-        if(DirErr > 360.0)  DirErr = 360.0 - DirErr ;
-
-        DistErr = (KickPos.pos.loc - robotPos.loc).length();
-        //qDebug()<<"A"<<DirErr<<DistErr<<ball_vel_change.length();
-
-        //#kick distance and angel limits
-        if(shoot_sensor)//kicking limits when shooting with sensor
-        {
-
-        }
-        else//kicking limits when shooting without sensor
-        {
-            if(DirErr < 10 && DistErr < 45)
-            {
-                KickPos.readyToShoot = true;
-                qDebug()<<"shooooooooooooooooooooooooooooooooooooooot";
-            }
-            else
-            {
-                KickPos.readyToShoot = false;
-            }
-
-        }
-        //##kick distance and angel limits
-    }
-
-    return KickPos;
 }
