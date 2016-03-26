@@ -852,7 +852,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
             {
                 if(!defendersflag)//defa saro shekl nagerefte....
                 {
-                    qDebug()<<"defenderflag=false";
+//                    qDebug()<<"defenderflag=false";
                     float attacker2balldistance;
                     if(oppIds.size()>0)
                     {
@@ -1000,7 +1000,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 }
                 else//defa saro shekl garefte...
                 {
-                    qDebug()<<"defenderflag=true";
+//                    qDebug()<<"defenderflag=true";
                     if(!angelflags)//toop dar noghteye koor nist...
                     {
                         Vector2D temp1,temp2,intersection;

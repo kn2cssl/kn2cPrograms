@@ -16,6 +16,16 @@
 #define PICOFCIR 500;
 #define MARGINFROMGOALPOST 300;
 
+#define PresenceCounter 1000
+
+#define attackernoticeabledistance 200
+#define desireddefenderdistance 300
+#define desiredleftdefenderdistance 150
+#define desiredrightdefenderdistance 150
+#define middleAreaWidth 200
+#define rightTirak -1
+#define leftTirak 1
+
 #define NUMOFDEFENDERS 2
 
 #define DangerDist 300
