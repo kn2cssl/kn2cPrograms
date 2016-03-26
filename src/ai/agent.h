@@ -15,7 +15,8 @@ enum AgentStatus
     FollowingBall,
     BlockingBall,
     BlockingRobot,
-    RecievingPass
+    RecievingPass,
+    OneTouch
 };
 
 enum AgentRole
