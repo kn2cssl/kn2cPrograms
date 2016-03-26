@@ -6,6 +6,8 @@ TacticDefender::TacticDefender(WorldModel *worldmodel, QObject *parent) :
     reach2Ball = false;
     this->useNav = false;
     oppPassReciever = -1;
+
+    sKick = new SkillKick(wm);
 }
 
 RobotCommand TacticDefender::getCommand()
@@ -99,7 +101,11 @@ RobotCommand TacticDefender::getCommand()
                 if( inDangerousPosition )
                 {
                     //                        qDebug()<<"in a dangerous position , chip the ball";
-                    OperatingPosition p = BallControl(chipPoint, 100, this->id, rc.maxSpeed);
+                    //OperatingPosition p = BallControl(chipPoint, 100, this->id, rc.maxSpeed);
+
+                    sKick->setIndex(this->id);
+                    sKick->setTarget(chipPoint);
+                    sKick->execute(rc);
 
                     Ray2D chipDir(wm->ourRobot[this->id].pos.loc,chipPoint);
                     bool chipIsSuitable = true;
@@ -118,21 +124,17 @@ RobotCommand TacticDefender::getCommand()
                     //                        qDebug()<<"Chippppppppppp";
                     //                    }
 
-                    rc.fin_pos = p.pos;
-                    rc.useNav = p.useNav;
+                    //                    rc.fin_pos = p.pos;
+                    //                    rc.useNav = p.useNav;
                     rc.isBallObs = true;
                     rc.isKickObs = true;
                 }
                 else
                 {
-                    OperatingPosition p = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
+                    sKick->setIndex(this->id);
+                    sKick->setTarget(target.pos);
+                    sKick->execute(rc);
 
-                    if( p.readyToShoot )
-                    {
-                        rc.kickspeedx = detectKickSpeed(kickType::Shoot, p.shootSensor);
-                    }
-                    rc.fin_pos = p.pos;
-                    rc.useNav = p.useNav;
                     rc.isBallObs = true;
                     rc.isKickObs = true;
                 }
@@ -269,11 +271,11 @@ RobotCommand TacticDefender::getCommand()
     else if(wm->ourRobot[this->id].Status == AgentStatus::BlockingRobot)
     {
         AngleDeg desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
-//        AngleDeg desiredDeg ;//=  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
-//        if( wm->ball.isValid )
-//            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
-//        else
-//            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
+        //        AngleDeg desiredDeg ;//=  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
+        //        if( wm->ball.isValid )
+        //            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-wm->ball.pos.loc).dir();
+        //        else
+        //            desiredDeg =  (wm->oppRobot[playerToKeep].pos.loc-Field::ourGoalCenter).dir();
 
         Position final;
         final.loc.x = wm->oppRobot[playerToKeep].pos.loc.x - (300*cos(desiredDeg.radian()));

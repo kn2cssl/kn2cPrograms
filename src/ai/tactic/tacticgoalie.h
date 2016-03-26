@@ -17,6 +17,7 @@ public:
 private:
     Position idlePosistion;
     bool reach2Ball;
+    SkillKick* sKick;
 
 };
 

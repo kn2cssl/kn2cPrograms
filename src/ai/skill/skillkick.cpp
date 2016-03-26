@@ -8,13 +8,18 @@ SkillKick::SkillKick(WorldModel* wm, QObject *parent) :
 bool SkillKick::execute(RobotCommand &rc )
 {
 
+
+    Vector2D Target=Field::ourGoalCenter;wm->ourRobot[4].pos.loc;Field::ourGoalCenter;
+    index=1;
     //locating behind the ball...
 
     Vector2D goal;
 
     Vector2D ball2target;
 
-    ball2target=this->_Target - wm->ball.pos.loc;
+    //    ball2target=this->_Target - wm->ball.pos.loc;
+
+    ball2target= Target - wm->ball.pos.loc;
 
     ball2target.setLength(ROBOT_RADIUS+8);
 
@@ -69,22 +74,35 @@ bool SkillKick::execute(RobotCommand &rc )
     else
     {
         // real:
-        Vector2D centerofrarecircle;
-        ball2target.setLength(ROBOT_RADIUS+10);
-        centerofrarecircle=wm->ball.pos.loc-ball2target;
-        Circle2D rearCircle(centerofrarecircle,20);
-        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
-        if( wm->ball.isValid&&
-                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
-                rearCircle.contains(wm->ourRobot[index].pos.loc)&&
-                fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
-                )
-        {
-            rc.kickspeedx=6;
-            qDebug()<<"kickkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk";
-        }
 
+        //without kicking sensor
+//        Vector2D centerofrarecircle;
+//        ball2target.setLength(ROBOT_RADIUS+10);
+//        centerofrarecircle=wm->ball.pos.loc-ball2target;
+//        Circle2D rearCircle(centerofrarecircle,20);
+//        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
+//        if( wm->ball.isValid&&
+//                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+//                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+//                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+//                )
+//        {
+//            rc.kickspeedx=40;
+//        }
+
+
+
+        //with kicking sensor
+        if(  ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<90  || fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))>270)  )
+        {
+            rc.kickspeedx=200;
+//            if(passFlag)
+//            {
+//                rc.kickspeedx=sqrt(2*10*lossFactor*(this->_Target-wm->ourRobot[index].pos.loc).length());
+//            }
+        }
     }
+
 }
 
 
@@ -237,7 +255,7 @@ bool SkillKick::execute(RobotCommand &rc )
 
 ////        else if(receiver0)
 ////        {
-            //RecievingPass
+//RecievingPass
 
 
 //            Vector2D robot2ball=wm->ball.pos.loc-wm->ourRobot[index].pos.loc;
@@ -341,24 +359,24 @@ bool SkillKick::execute(RobotCommand &rc )
 
 
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            // kicking
+// kicking
 
 
-            //real:
-            //    Vector2D A;
-            //    vec2goal.setLength(115);
-            //    A=wm->ball.pos.loc-vec2goal;
-            //    Circle2D C2(A,120);
-            //    Circle2D C(wm->ball.pos.loc,ROBOT_RADIUS+15);
-            //    if( wm->ball.isValid&&
-            //        C.contains(wm->ourRobot[0].pos.loc)&&
-            //        C2.contains(wm->ourRobot[0].pos.loc)
-            //      )
-            //    {
-            //        rc.kickspeedx=10;
-            //    }
+//real:
+//    Vector2D A;
+//    vec2goal.setLength(115);
+//    A=wm->ball.pos.loc-vec2goal;
+//    Circle2D C2(A,120);
+//    Circle2D C(wm->ball.pos.loc,ROBOT_RADIUS+15);
+//    if( wm->ball.isValid&&
+//        C.contains(wm->ourRobot[0].pos.loc)&&
+//        C2.contains(wm->ourRobot[0].pos.loc)
+//      )
+//    {
+//        rc.kickspeedx=10;
+//    }
 
 
 

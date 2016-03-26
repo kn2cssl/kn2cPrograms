@@ -13,6 +13,8 @@ public:
     Position queuePos;
     bool kickPermision;
     bool kickIt;
+
+    SkillKick* sKick;
 };
 
 #endif // TacticPreparing_H

@@ -4,6 +4,8 @@
 #include <QObject>
 #include "skill.h"
 
+#define lossFactor 1
+
 
 class SkillKick : public Skill
 {
@@ -15,6 +17,7 @@ public:
 
 private:
     Vector2D _Target;
+    bool passFlag;
 };
 
 #endif // SKILLKICK_H
