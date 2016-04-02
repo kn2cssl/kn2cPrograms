@@ -3,6 +3,7 @@
 Marking::Marking()
 {
     maxDistance = sqrt(pow(Field::MaxX*2,2)+pow(Field::MaxY*2,2));
+    this->forwardedDefenderID = -1;
 }
 
 QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool &isMatched)
@@ -25,15 +26,6 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
         if( F3.at(i) > DangerousProb || wm->kn->IsInsideOurField(wm->oppRobot[oppPlayers.at(i)].pos.loc) )
             dangerousOpposite.append(oppPlayers.at(i));
     }
-
-    if( dangerousOpposite.size() > ourPlayers.size() )
-    {
-        if( (wm->ball.pos.loc - Field::ourGoalPost_L).length2() <  (wm->ball.pos.loc - Field::ourGoalPost_R).length2() )
-            ourPlayers.append(wm->kn->findOurRightDefender());
-        else
-            ourPlayers.append(wm->kn->findOurLeftDefender());
-    }
-
 
     QList<int> weights;
     for(int i=0;i<ourPlayers.size();i++)
@@ -69,9 +61,57 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
             Marking_Struct tmp;
             tmp.ourI = ourPlayers.at(i);
             tmp.oppI = oppPlayers.at(matching.at(i) - ourPlayers.size());
+            dangerousOpposite.removeOne(tmp.oppI);
             out.append(tmp);
         }
     }
+
+    if( dangerousOpposite.size() > 0 && wm->ball.isValid)
+    {
+        int leftID = wm->kn->findOurLeftDefender() , rightID = wm->kn->findOurRightDefender();
+        if( leftID != -1 && rightID != -1 )
+        {
+            double leftDef2Opp = (wm->oppRobot[dangerousOpposite.at(0)].pos.loc - wm->ourRobot[leftID].pos.loc).length();
+            double rightDef2Opp = (wm->oppRobot[dangerousOpposite.at(0)].pos.loc - wm->ourRobot[rightID].pos.loc).length();
+
+            if( rightDef2Opp - leftDef2Opp > 200 )
+            {
+                Marking_Struct tmp;
+                tmp.ourI = leftID;
+                tmp.oppI = dangerousOpposite.at(0);
+                out.append(tmp);
+                forwardedDefenderID = leftID;
+            }
+            else if( leftDef2Opp - rightDef2Opp > 200 )
+            {
+                Marking_Struct tmp;
+                tmp.ourI = rightID;
+                tmp.oppI = dangerousOpposite.at(0);
+                out.append(tmp);
+                forwardedDefenderID = rightID;
+            }
+            else
+            {
+                if( forwardedDefenderID != -1)
+                {
+                    Marking_Struct tmp;
+                    tmp.ourI = forwardedDefenderID;
+                    tmp.oppI = dangerousOpposite.at(0);
+                    out.append(tmp);
+                }
+                else
+                {
+                    Marking_Struct tmp;
+                    tmp.ourI = leftID;
+                    tmp.oppI = dangerousOpposite.at(0);
+                    out.append(tmp);
+                    forwardedDefenderID = leftID;
+                }
+            }
+        }
+    }
+    else
+        forwardedDefenderID = -1;
 
     return out;
 }

@@ -29,6 +29,7 @@ public:
 private:
     WorldModel *wm;
     double maxDistance;
+    int forwardedDefenderID;
 };
 
 #endif // Marking_H

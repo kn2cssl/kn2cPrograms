@@ -22,7 +22,6 @@ RobotCommand TacticAttacker::getCommand()
     {
         rc.maxSpeed = 3;
 
-
         tANDp target = findTarget();
 
         Vector2D passSenderPos = wm->ourRobot[kickerID].pos.loc;

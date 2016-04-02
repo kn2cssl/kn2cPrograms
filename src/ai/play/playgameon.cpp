@@ -188,11 +188,10 @@ int PlayGameOn::findBallOwner()
             ownerIndex = min_i;
             ours.removeOne(min_i);
         }
-
-        while( !ours.isEmpty() )
-            wm->ourRobot[ours.takeFirst()].Status = AgentStatus::Idle;
-
     }
+
+    while( !ours.isEmpty() )
+        wm->ourRobot[ours.takeFirst()].Status = AgentStatus::Idle;
 
     return ownerIndex;
 }
