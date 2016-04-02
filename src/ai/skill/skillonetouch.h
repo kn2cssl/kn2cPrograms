@@ -28,6 +28,7 @@ private:
     double ballVelAngel;
     Circle2D robotCircle;
     Vector2D passSender2ball;
+    Vector2D lastPos;
     //////////////////////////////////////////////////
 
 };

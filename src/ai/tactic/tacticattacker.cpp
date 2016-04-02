@@ -29,7 +29,7 @@ RobotCommand TacticAttacker::getCommand()
         Vector2D passSender2OneTouchKicker = OneTouchKickerPos-passSenderPos;
         Vector2D passSender2Ball = wm->ball.pos.loc-passSenderPos;
         Line2D *ballVel= new Line2D(wm->ball.pos.loc,passSender2Ball.dir().degree());
-        Circle2D checkingCircle(OneTouchKickerPos,ROBOT_RADIUS+500);
+        Circle2D checkingCircle(OneTouchKickerPos,ROBOT_RADIUS+750);
 
         qDebug()<<((passSenderPos-OneTouchKickerPos).length2()>(passSenderPos-wm->ball.pos.loc).length2() ) <<" , "<<(fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())<30)<<" , "<<(wm->ball.vel.loc.length()>0.2)<<" , "<<(checkingCircle.HasIntersection(*ballVel));
         if( ( (kickerID!=-1) && (passSenderPos-OneTouchKickerPos).length2()>(passSenderPos-wm->ball.pos.loc).length2() )  &&  (fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())<30)  &&  (wm->ball.vel.loc.length()>0.4) && (checkingCircle.HasIntersection(*ballVel)))
