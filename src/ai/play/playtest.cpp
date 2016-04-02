@@ -9,7 +9,7 @@ PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
 
 int PlayTest::enterCondition()
 {
-    return 2000000;
+    return 0;
 }
 
 void PlayTest::initRole()
