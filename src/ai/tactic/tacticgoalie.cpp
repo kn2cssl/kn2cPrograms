@@ -53,6 +53,7 @@ RobotCommand TacticGoalie::getCommand()
         //OperatingPosition chipPoint = BallControl(target, 100, this->id,rc.maxSpeed);
         sKick->setIndex(this->id);
         sKick->setTarget(target);
+        sKick->setKickType(true);
         sKick->execute(rc);
 
 

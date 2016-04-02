@@ -112,7 +112,7 @@ void freeKickDirect::execute()
     target = Field::oppGoalCenter;
     tAttackerMid->isKicker(target);
     tAttackerMid->setFreeKickType(kickType::Shoot);
-    tAttackerMid->youHavePermissionForKick();
+    tAttackerMid->youHavePermissionForKick(-1);
     activeAgents.removeOne(tAttackerMid->getID());
 
     while(activeAgents.size() > 0)

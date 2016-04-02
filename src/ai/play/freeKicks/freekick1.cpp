@@ -113,7 +113,15 @@ void freeKick1::setPositions()
     tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
 
     if( checkDistances() )
-        tAttackerMid->youHavePermissionForKick();
+    {
+        recieverID = tAttackerMid->findBestPlayerForPass();
+        tAttackerMid->youHavePermissionForKick(recieverID);
+    }
+    else
+    {
+        tAttackerMid->youDontHavePermissionForKick();
+        recieverID = -1;
+    }
 }
 
 bool freeKick1::checkDistances()
@@ -122,17 +130,19 @@ bool freeKick1::checkDistances()
 
     if( wm->ourRobot[tAttackerLeft->getID()].isValid && tAttackerLeft->getID() != -1)
     {
-        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
+        //if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
+        if( (wm->ourRobot[tAttackerLeft->getID()].pos.loc - Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200)).length() > 200)
             leftInPos = false;
     }
 
     if( wm->ourRobot[tAttackerRight->getID()].isValid && tAttackerRight->getID() != -1)
     {
-        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
+        //        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
+        if( (wm->ourRobot[tAttackerRight->getID()].pos.loc - Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200)).length() > 200)
             rightInPos = false;
     }
 
-    return rightInPos & leftInPos;
+    return (rightInPos && leftInPos);
 }
 
 void freeKick1::execute()
@@ -154,7 +164,7 @@ void freeKick1::execute()
     activeAgents.removeOne(tAttackerMid->getID());
     if(wm->cmgs.ourIndirectKick())
     {
-        int recieverID = tAttackerMid->findBestPlayerForPass();
+        //        recieverID = tAttackerMid->findBestPlayerForPass();
         if(recieverID != -1)
         {
             wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;

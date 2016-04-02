@@ -133,7 +133,7 @@ void freeKick7::setPositions(QList<int> our)
                 if( wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc
                                          ,Vector2D(0.3*Field::MaxX, -sign(wm->ball.pos.loc.y)*(0.6)*Field::MaxY)
                                          , 200))
-                    tAttackerMid->youHavePermissionForKick();
+                    tAttackerMid->youHavePermissionForKick(-1);
                 break;
             default:
                 break;

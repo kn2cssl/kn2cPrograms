@@ -40,6 +40,7 @@ RobotCommand TacticPenaltyKicker::getCommand()
 //        rc.useNav = kickPoint.useNav;
         sKick->setIndex(this->id);
         sKick->setTarget(target);
+        sKick->setKickType(true);
         sKick->execute(rc);
     }
     else

@@ -30,9 +30,12 @@ public:
     void setIdlePosition(Position pos);
     void setIdlePosition(Vector2D pos);
 
-    void youHavePermissionForKick();
+    void youHavePermissionForKick(int index);
+    void youDontHavePermissionForKick();
 
     void setFreeKickType(kickType type);
+
+    void setKickerID(int id);
 
     bool everyOneInTheirPos;
 
@@ -48,6 +51,11 @@ private:
 
     SkillKick* sKick;
     SkillOneTouch* sOneTouch;
+
+    bool holdKickPos;
+    Position kickPos;
+    int kickerID;
+
 protected:
     bool canKick;
 };

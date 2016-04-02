@@ -182,7 +182,7 @@ OperatingPosition TacticKickLearning::kickForLearn(Vector2D Target, int Prob, in
     {
         kickPermission = false;//reset
         sensorFault = 0;//reset
-        startProbability = RESET;//reset
+       // startProbability = RESET;//reset
         ballDisplacement = {0,0} ;//reset
         //        qDebug()<<"kickperfalse";
     }

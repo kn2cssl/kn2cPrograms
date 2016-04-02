@@ -6,6 +6,7 @@ Knowledge::Knowledge(WorldModel *wm, QObject *parent) :
     _wm(wm)
 {
     kickPermission=false;
+    this->lastOneTouchStatus = false;
 }
 
 int Knowledge::CountActiveAgents()
@@ -637,6 +638,34 @@ QList<int> Knowledge::findAttackers()
     return output;
 }
 
+QList<int> Knowledge::findIdleAttackers()
+{
+    QList<int> output;
+    QList<int> ourAgents = _wm->kn->ActiveAgents();
+
+    for(int i=0;i<ourAgents.size();i++)
+    {
+        if( _wm->ourRobot[ourAgents.at(i)].isValid && _wm->ourRobot[ourAgents.at(i)].Status == AgentStatus::Idle)
+        {
+            switch (_wm->ourRobot[ourAgents.at(i)].Role)
+            {
+            case AgentRole::AttackerMid:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerLeft:
+                output.append(ourAgents.at(i));
+                break;
+            case AgentRole::AttackerRight:
+                output.append(ourAgents.at(i));
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    return output;
+}
+
 int Knowledge::findOurLeftDefender()
 {
     QList<int> ourAgents = _wm->kn->ActiveAgents();
@@ -798,30 +827,27 @@ bool Knowledge::robotIsIdle(int id)
     return false;
 }
 
-bool Knowledge::oneTouchScenario()
+bool Knowledge::isInOneTouch(int kickerID, int recieverID)
 {
-    QList<int> activeAgents = ActiveAgents();
-
-    for(int i =  activeAgents.size(); i > 0; i-- )
+    if( _wm->ball.isValid && _wm->ourRobot[kickerID].isValid && _wm->ourRobot[recieverID].isValid )
     {
-        if( _wm->ourRobot[activeAgents.at(i-1)].Status == AgentStatus::OneTouch )
-            return true;
+        Vector2D passSenderPos = _wm->ourRobot[kickerID].pos.loc;
+        Vector2D OneTouchKickerPos = _wm->ourRobot[recieverID].pos.loc;
+        Vector2D passSender2OneTouchKicker = OneTouchKickerPos-passSenderPos;
+        Vector2D passSender2Ball = _wm->ball.pos.loc-passSenderPos;
+        Line2D *ballVel= new Line2D(_wm->ball.pos.loc,_wm->ball.vel.loc.dir().degree());
+        Circle2D checkingCircle(OneTouchKickerPos,ROBOT_RADIUS+500);
+//        if(  ( (passSenderPos-OneTouchKickerPos).length2()<(passSenderPos-_wm->ball.pos.loc).length2() )  ||  (fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())>30)  ||  (_wm->ball.vel.loc.length()<0.2)  ||  !(checkingCircle.HasIntersection(*ballVel)) )
+//        {
+//            lastOneTouchStatus = false;
+//            return false;
+//        }
+
+        lastOneTouchStatus = true;
+        return true;
     }
 
-    return false;
-}
-
-int Knowledge::findOneTouchPlayer()
-{
-    QList<int> activeAgents = ActiveAgents();
-
-    for(int i =  activeAgents.size(); i > 0; i-- )
-    {
-        if( _wm->ourRobot[activeAgents.at(i-1)].Status == AgentStatus::OneTouch )
-            return activeAgents.at(i-1);
-    }
-
-    return -1;
+    return lastOneTouchStatus;
 }
 
 bool Knowledge::ReachedToPos(Position current, Position desired, double distThreshold, double degThreshold)

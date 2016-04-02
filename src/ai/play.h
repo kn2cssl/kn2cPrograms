@@ -46,12 +46,14 @@ private:
     bool angelflag;
     bool angelflags;
 
+    double ballVelAngel;
 
-//    Vector2D goalkeeperlastpos;
-//    Vector2D defenderlastpos;
+
+    //    Vector2D goalkeeperlastpos;
+    //    Vector2D defenderlastpos;
     Vector2D balllastpos;
-//    double goalkeeperlastdir;
-//    double defenderlastdir;
+    //    double goalkeeperlastdir;
+    //    double defenderlastdir;
 
     Vector2D leftDefenderLastpos;
     Vector2D rightDefenderLastpos;

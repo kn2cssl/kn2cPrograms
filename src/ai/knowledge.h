@@ -57,6 +57,7 @@ public:
     int findOppReciever();
 
     QList<int> findAttackers();
+    QList<int> findIdleAttackers();
     int findOurLeftDefender();
     int findOurRightDefender();
     QList<int> findOurObstacles();
@@ -66,13 +67,13 @@ public:
 
     bool robotIsIdle(int id);
 
-    bool oneTouchScenario();
-    int findOneTouchPlayer();
+    bool isInOneTouch(int kickerID, int recieverID);
 
 private:
     WorldModel* _wm;
     bool kickPermission;//reset:check
     Vector2D last_ball_vell;
+    bool lastOneTouchStatus;
 };
 
 #endif // KNOWLEDGE_H

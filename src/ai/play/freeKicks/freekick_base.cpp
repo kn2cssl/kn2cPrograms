@@ -1301,8 +1301,6 @@ void freeKick_base::zonePositions(int leftID, int RightID, int MidID, Position &
                 /////////////////////////////////////////////////////////////////////////////vaqti setpointha dar ham gharar migirand
                 if((Leftgoal-Rightgoal).length()<2*ROBOT_RADIUS)
                 {
-                    qDebug()<<"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
-
                     //goalkeeper:
                     goalie.loc=Field::ourGoalCenter;
                     goalie.dir=ball2ourGoalCentervec.dir().radian()+M_PI;

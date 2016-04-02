@@ -196,7 +196,7 @@ void freeKick5::execute()
             wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
             activeAgents.removeOne(recieverID);
         }
-        tAttackerMid->youHavePermissionForKick();
+        tAttackerMid->youHavePermissionForKick(-1);
     }
 
     while(activeAgents.size() > 0)

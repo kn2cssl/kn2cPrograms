@@ -13,10 +13,9 @@ public:
     explicit SkillOneTouch(WorldModel* wm, QObject *parent = 0);
     bool execute(RobotCommand& rc);
     void setTarget(const Vector2D target);
-    void setPosition(const Vector2D position);
+    void resetAllFlags();
 
 private:
-    Vector2D position;
     Vector2D target;
     Vector2D currentposition;
     bool firstTime;
@@ -28,6 +27,7 @@ private:
     Line2D *robotLine;
     double ballVelAngel;
     Circle2D robotCircle;
+    Vector2D passSender2ball;
     //////////////////////////////////////////////////
 
 };

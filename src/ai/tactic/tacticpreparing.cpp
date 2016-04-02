@@ -36,6 +36,7 @@ RobotCommand TacticPreparing::getCommand()
 
             sKick->setIndex(this->id);
             sKick->setTarget(target.pos);
+            sKick->setKickType(true);
             sKick->execute(rc);
 
             if( rc.kickspeedx > 0 )

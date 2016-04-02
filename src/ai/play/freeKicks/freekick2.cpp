@@ -77,7 +77,7 @@ void freeKick2::setPositions()
     tAttackerLeft->setIdlePosition(leftPos);
 
     if( checkPositions(leftPos,rightPos) )
-        tAttackerMid->youHavePermissionForKick();
+        tAttackerMid->youHavePermissionForKick(-1);
 
         tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
 }

@@ -35,6 +35,8 @@ private:
     Vector2D rightPrevious;
     Vector2D leftPrevious;
 
+    int kickerID;
+
     virtual void initRole();
     void coach();
     void setGameOnPos(int ourR,Vector2D loc);

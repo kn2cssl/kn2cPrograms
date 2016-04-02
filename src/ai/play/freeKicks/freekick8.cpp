@@ -110,7 +110,7 @@ void freeKick8::execute()
     target = Field::oppGoalCenter;
     tAttackerMid->isChiper(target);
     tAttackerMid->setFreeKickType(kickType::FreeKick8);
-    tAttackerMid->youHavePermissionForKick();
+    tAttackerMid->youHavePermissionForKick(-1);
     activeAgents.removeOne(tAttackerMid->getID());
 
     while(activeAgents.size() > 0)

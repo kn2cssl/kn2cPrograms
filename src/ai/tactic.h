@@ -6,11 +6,6 @@
 #include "worldmodel.h"
 #include "Skills.h"
 
-#define SHOOT 0
-#define AIM 1
-#define DEFEND 2
-#define RESET 0
-
 class Tactic : public QObject
 {
     Q_OBJECT
@@ -22,7 +17,6 @@ public:
     int getID();
     tANDp findTarget();
     void setPlayerToKeep(int index);
-    float detectKickSpeed(kickType type, bool shoot_sensor);
     float detectChipSpeed(bool shoot_sensor);
 
 protected:

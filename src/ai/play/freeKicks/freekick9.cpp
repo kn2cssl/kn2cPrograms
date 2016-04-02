@@ -158,7 +158,7 @@ void freeKick9::setPositions(QList<int> our)
             case AgentRole::AttackerMid:
                 tAttackerMid->isKicker();
                 tAttackerMid->setIdlePosition(wm->ourRobot[our.at(i)].pos);
-                tAttackerMid->youHavePermissionForKick();
+                tAttackerMid->youHavePermissionForKick(-1);
                 break;
             default:
                 break;

@@ -4,16 +4,129 @@ SkillOneTouch::SkillOneTouch(WorldModel* wm, QObject *parent) :
     Skill(wm, parent)
 {
     this->firstTime = true;
+    this->movementFlag = true;
 }
+
+//bool SkillOneTouch::execute(RobotCommand &rc)
+//{
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    // done...version 1.0
+//    rc.maxSpeed=3;
+//    Vector2D ballPos=wm->ball.pos.loc;
+//    Vector2D kickerPos=wm->ourRobot[index].pos.loc;
+//    Vector2D target = this->target;
+//    Vector2D robot2target=target-wm->ourRobot[index].pos.loc;
+//    Vector2D ballVelrobotCircleintersection;
+//    Vector2D target2robotLine;
+//    Vector2D ballVelRobotLineIntersection;
+//    Vector2D target2robotCircle;
+
+//    QList<int> ourIds = wm->kn->findNearestTo(wm->ball.pos.loc);
+
+
+
+//    //Locating in the predicted point to recieve the ball
+//    float lowPassFilterFactor=0.8;
+//    ballVelAngel=((wm->ball.vel.loc.dir().degree()-ballVelAngel)*lowPassFilterFactor)+ballVelAngel;
+//    qDebug()<<"ballVelAngel: "<<ballVelAngel;
+//    Line2D *filteredballVel = new Line2D(ballPos,ballVelAngel);
+//    Line2D *ballVel= new Line2D(ballPos,wm->ball.vel.loc.dir().degree());
+
+
+
+//    //    if(  ( wm->ball.vel.loc.length()<0.5 && (wm->ourRobot[ourIds.at(0)].pos.loc)-(ballPos).length()< )  ||  !(wm->ball.isValid)  )
+//    //    {
+//    //        movementFlag=true;
+//    //        goal = this->position;
+//    //        qDebug()<<"ready";
+//    //    }
+//    //    else
+//    //    {
+//    qDebug()<<"locating";
+//    qDebug()<<"movementFlag: "<<movementFlag;
+//    if( movementFlag && robotCircle.HasIntersection(*ballVel) )//movementflag bayad dar kick.cpp true shavad...vaqti dastooor shooot myad...
+//    {
+//        Vector2D temp1,temp2;
+
+//        robotCircle.intersection(*ballVel,&temp1,&temp2);
+
+//        if((ballPos-temp1).length2()>(ballPos-temp2).length2())
+//        {
+//            ballVelrobotCircleintersection=temp1;
+//        }
+//        else
+//        {
+//            ballVelrobotCircleintersection=temp2;
+//        }
+
+//        target2robotCircle=ballVelrobotCircleintersection-target;
+//        Vector2D temp=target2robotCircle.rotatedVector(90);
+//        robotLine=new Line2D(ballVelrobotCircleintersection,temp.dir().degree());
+
+//        movementFlag=false;
+//    }
+
+//    if(movementFlag)
+//    {
+//        robotCircle.assign(kickerPos,ROBOT_RADIUS+500);
+//        goal=wm->ourRobot[index].pos.loc;
+//        qDebug()<<"marizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
+//    }
+
+//    else
+//    {
+//        qDebug()<<"after mov flag if";
+//        ballVelRobotLineIntersection=robotLine->intersection(*filteredballVel);
+//        qDebug()<<"line1";
+//        target2robotLine=ballVelRobotLineIntersection-target;
+//        qDebug()<<"line2";
+//        target2robotLine.setLength(ROBOT_RADIUS+10);
+//        qDebug()<<"line3";
+//        goal=ballVelRobotLineIntersection+target2robotLine;
+//        qDebug()<<"rc.fin pos";
+//    }
+
+//    rc.fin_pos.loc=goal;
+//    rc.fin_pos.dir=robot2target.dir().radian();
+
+//    if( !wm->useShootSensor )
+//    {
+//        //without kicking sensor
+
+//        Vector2D ball2target= this->target - wm->ball.pos.loc;;
+//        Vector2D centerofrarecircle;
+//        ball2target.setLength(ROBOT_RADIUS+10);
+//        centerofrarecircle=wm->ball.pos.loc-ball2target;
+//        Circle2D rearCircle(centerofrarecircle,20);
+//        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
+//        if( wm->ball.isValid&&
+//                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+//                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+//                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+//                )
+//        {
+//            rc.kickspeedx=40;
+//        }
+//    }
+//    else
+//    {
+//        //kicking
+//        if(   ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (   (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
+//        {
+//            rc.kickspeedx=200;
+//        }
+//    }
+
+
+//    return true;
+
+//}
+
 
 bool SkillOneTouch::execute(RobotCommand &rc)
 {
-    //    if( firstTime )
-    //    {
-    //        currentposition=wm->ourRobot[index].pos.loc;
-    //        firstTime = false;
-    //    }
-
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,30 +137,22 @@ bool SkillOneTouch::execute(RobotCommand &rc)
     Vector2D target = this->target;
     Vector2D robot2target=target-wm->ourRobot[index].pos.loc;
     Vector2D ballVelrobotCircleintersection;
-    Vector2D target2robotLine;
-    Vector2D ballVelRobotLineIntersection;
-    Vector2D target2robotCircle;
 
-    //Locating in the predicted point to recieve the ball
-    float lowPassFilterFactor=0.2;
-    ballVelAngel=((wm->ball.vel.loc.dir().degree()-ballVelAngel)*lowPassFilterFactor)+ballVelAngel;
-    Line2D *filteredballVel = new Line2D(ballPos,ballVelAngel);
-    Line2D *ballVel= new Line2D(ballPos,wm->ball.vel.loc.dir().degree());
-    Circle2D checkingCircle(kickerPos,ROBOT_RADIUS+500);
+    QList<int> ourIds = wm->kn->findNearestTo(wm->ball.pos.loc);
 
-    if(!(checkingCircle.HasIntersection(*ballVel)) || wm->ball.vel.loc.length()<0.2 ||  !(wm->ball.isValid) )
+    Line2D *ballVel;
+
+    if( movementFlag )
     {
-        movementFlag=true;
-        goal = this->position;
-        qDebug()<<"ready";
-    }
-    else
-    {
-        qDebug()<<"locating";
-        if(movementFlag)//movementflag bayad dar kick.cpp true shavad...vaqti dastooor shooot myad...
+        qDebug()<<"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+        if( (ballPos-wm->ourRobot[ourIds.at(0)].pos.loc) .length()>200)
         {
-            robotCircle.assign(kickerPos,ROBOT_RADIUS+500);
+            qDebug()<<"222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222";
             Vector2D temp1,temp2;
+            robotCircle.assign(kickerPos,ROBOT_RADIUS+500);
+            passSender2ball=ballPos-wm->ourRobot[ourIds.at(0)].pos.loc;
+            ballVel= new Line2D(ballPos,passSender2ball.dir().degree());
+
             robotCircle.intersection(*ballVel,&temp1,&temp2);
 
             if((ballPos-temp1).length2()>(ballPos-temp2).length2())
@@ -59,41 +164,55 @@ bool SkillOneTouch::execute(RobotCommand &rc)
                 ballVelrobotCircleintersection=temp2;
             }
 
-            target2robotCircle=ballVelrobotCircleintersection-target;
-            Vector2D temp=target2robotCircle.rotatedVector(90);
-            robotLine=new Line2D(ballVelrobotCircleintersection,temp.dir().degree());
+            goal=ballVelrobotCircleintersection;
 
             movementFlag=false;
         }
-        ballVelRobotLineIntersection=robotLine->intersection(*filteredballVel);
-        target2robotLine=ballVelRobotLineIntersection-target;
-        target2robotLine.setLength(ROBOT_RADIUS+10);
-        goal=ballVelRobotLineIntersection+target2robotLine;
+
+        else
+        {
+            goal=wm->ourRobot[index].pos.loc;
+        }
+
     }
+
 
     rc.fin_pos.loc=goal;
     rc.fin_pos.dir=robot2target.dir().radian();
 
-    //kicking
-    if(   ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (   (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
-    {
-        rc.kickspeedx=200;
-        //        this->firstTime = true;
-        //        return true;
-    }
 
-    //        return false;
 
-    //returning from onetouch state
-    if(wm->ball.vel.loc.length()<0.2)
+    if( !wm->useShootSensor )
     {
-        return false;
+        //without kicking sensor
+
+        Vector2D ball2target= this->target - wm->ball.pos.loc;;
+        Vector2D centerofrarecircle;
+        ball2target.setLength(ROBOT_RADIUS+10);
+        centerofrarecircle=wm->ball.pos.loc-ball2target;
+        Circle2D rearCircle(centerofrarecircle,20);
+        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
+        if( wm->ball.isValid&&
+                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+                )
+        {
+            if( wm->isSim )
+                rc.kickspeedx = 8;
+            else
+                rc.kickspeedx=40;
+        }
     }
     else
     {
-        if( fabs((-target2robotLine).dir().degree()-wm->ball.vel.loc.dir().degree())>45 && fabs((-target2robotLine).dir().degree()-wm->ball.vel.loc.dir().degree())<135 )
+        //kicking
+        if(   (((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500) )  )//&& (    (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
         {
-            return false;
+            if( wm->isSim )
+                rc.kickspeedx = 8;
+            else
+                rc.kickspeedx=200;
         }
     }
 
@@ -101,12 +220,95 @@ bool SkillOneTouch::execute(RobotCommand &rc)
 
 }
 
+
+
+//bool SkillOneTouch::execute(RobotCommand &rc)
+//{
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//    // done...version 1.0
+//    rc.maxSpeed=3;
+//    Vector2D ballPos=wm->ball.pos.loc;
+//    Vector2D kickerPos=wm->ourRobot[index].pos.loc;
+//    Vector2D target = this->target;
+//    Vector2D robot2target=target-wm->ourRobot[index].pos.loc;
+//    QList<int> ourIds = wm->kn->findNearestTo(wm->ball.pos.loc);
+
+
+//    if( movementFlag )
+//    {
+//        qDebug()<<"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
+//        if( (ballPos-wm->ourRobot[ourIds.at(0)].pos.loc) .length()>200)
+//        {
+//            qDebug()<<"222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"<<ourIds.at(0);
+//            Line2D *robotLine =new Line2D (kickerPos,robot2target.rotatedVector(90).dir().degree());
+//            passSender2ball=ballPos-wm->ourRobot[ourIds.at(0)].pos.loc;
+//            Line2D *ballVel= new Line2D(ballPos,passSender2ball.dir().degree());
+
+//            Vector2D ballVelrobotLineintersection=robotLine->intersection(*ballVel);
+
+//            goal=ballVelrobotLineintersection;
+
+//            movementFlag=false;
+//        }
+
+//        else
+//        {
+//            goal=wm->ourRobot[index].pos.loc;
+//        }
+
+//    }
+
+
+//    rc.fin_pos.loc=goal;
+//    rc.fin_pos.dir=robot2target.dir().radian();
+
+
+
+//    if( !wm->useShootSensor )
+//    {
+//        //without kicking sensor
+
+//        Vector2D ball2target= this->target - wm->ball.pos.loc;;
+//        Vector2D centerofrarecircle;
+//        ball2target.setLength(ROBOT_RADIUS+10);
+//        centerofrarecircle=wm->ball.pos.loc-ball2target;
+//        Circle2D rearCircle(centerofrarecircle,20);
+//        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
+//        if( wm->ball.isValid&&
+//                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+//                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+//                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+//                )
+//        {
+//            rc.kickspeedx=40;
+//        }
+//    }
+//    else
+//    {
+//        //kicking
+//        if(   (((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500) )  )//&& (    (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))<90)  ||  (fabs((-target2robotLine).dir().degree()-(wm->ourRobot[index].pos.dir*180/M_PI))>270)  ) )
+//        {
+//            rc.kickspeedx=200;
+//        }
+//    }
+
+//    return true;
+
+//}
+
+
+
+
+
+
 void SkillOneTouch::setTarget(const Vector2D target)
 {
     this->target = target;
 }
 
-void SkillOneTouch::setPosition(const Vector2D position)
+void SkillOneTouch::resetAllFlags()
 {
-    this->position = position;
+    this->movementFlag = true;
 }

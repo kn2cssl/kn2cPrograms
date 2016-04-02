@@ -199,7 +199,7 @@ void freeKick6::execute()
         activeAgents.removeOne(tAttackerMid->getID());
         wm->ourRobot[recieverID].Status = AgentStatus::RecievingPass;
         activeAgents.removeOne(recieverID);
-        tAttackerMid->youHavePermissionForKick();
+        tAttackerMid->youHavePermissionForKick(-1);
     }
     else if( state == 1)
     {

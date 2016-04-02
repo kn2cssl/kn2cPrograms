@@ -105,6 +105,7 @@ RobotCommand TacticDefender::getCommand()
 
                     sKick->setIndex(this->id);
                     sKick->setTarget(chipPoint);
+                    sKick->setKickType(true);
                     sKick->execute(rc);
 
                     Ray2D chipDir(wm->ourRobot[this->id].pos.loc,chipPoint);
@@ -133,6 +134,7 @@ RobotCommand TacticDefender::getCommand()
                 {
                     sKick->setIndex(this->id);
                     sKick->setTarget(target.pos);
+                    sKick->setKickType(true);
                     sKick->execute(rc);
 
                     rc.isBallObs = true;

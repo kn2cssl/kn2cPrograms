@@ -165,7 +165,7 @@ void freeKick10::setPositions(QList<int> our)
                 break;
             case AgentRole::AttackerMid:
                 tAttackerMid->isKicker();
-                tAttackerMid->youHavePermissionForKick();
+                tAttackerMid->youHavePermissionForKick(-1);
                 break;
             default:
                 break;

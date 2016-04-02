@@ -115,7 +115,10 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
         Line2D *ball2ourGoalPostR=new Line2D(ballpos,Field::ourGoalPost_R);
         Line2D *ball2ourGoalPostL= new Line2D(ballpos,Field::ourGoalPost_L);
         Line2D *ball2ourGoalCenter=new Line2D(ballpos,Field::ourGoalCenter);
-        Line2D *ball2goal = new Line2D(ballpos,wm->ball.vel.loc.dir().degree());
+
+        float lowPassFilterFactor=0.2;
+        ballVelAngel=((wm->ball.vel.loc.dir().degree()-ballVelAngel)*lowPassFilterFactor)+ballVelAngel;
+        Line2D *ball2goal = new Line2D(ballpos,ballVelAngel);
         Vector2D ball2ourGoalCentervec=Field::ourGoalCenter-ballpos;
 
 
@@ -852,7 +855,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
             {
                 if(!defendersflag)//defa saro shekl nagerefte....
                 {
-//                    qDebug()<<"defenderflag=false";
+                    //                    qDebug()<<"defenderflag=false";
                     float attacker2balldistance;
                     if(oppIds.size()>0)
                     {
@@ -1000,7 +1003,7 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 }
                 else//defa saro shekl garefte...
                 {
-//                    qDebug()<<"defenderflag=true";
+                    //                    qDebug()<<"defenderflag=true";
                     if(!angelflags)//toop dar noghteye koor nist...
                     {
                         Vector2D temp1,temp2,intersection;
@@ -1327,8 +1330,6 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
                 /////////////////////////////////////////////////////////////////////////////vaqti setpointha dar ham gharar migirand
                 if((Leftgoal-Rightgoal).length()<2*ROBOT_RADIUS)
                 {
-                    qDebug()<<"sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
-
                     //goalkeeper:
                     goalie.loc=Field::ourGoalCenter;
                     goalie.dir=ball2ourGoalCentervec.dir().radian()+M_PI;

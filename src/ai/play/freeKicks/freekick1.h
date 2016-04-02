@@ -14,6 +14,8 @@ public:
 private:
     void setPositions();
     bool checkDistances();
+
+    int recieverID;
 };
 
 #endif // FREEKICK1_H
