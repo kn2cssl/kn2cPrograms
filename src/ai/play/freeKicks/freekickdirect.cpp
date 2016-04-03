@@ -11,10 +11,16 @@ int freeKickDirect::enterCondition(Level level)
 {
     tANDp tandp = tAttackerMid->findTarget();
 
-    if( wm->cmgs.directKick() && (tandp.prob > 60) )
+    if( wm->cmgs.directKick() && (tandp.prob > 40) )
         return 800;
+    else if( wm->cmgs.ourIndirectKick() && (wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,Field::MaxY)
+                                  , Vector2D(Field::MaxX,0.82*Field::MaxY))
+             ||
+             wm->kn->IsInsideRect(wm->ball.pos.loc, Vector2D(0.44*Field::MaxX,0.82*Field::MinY)
+                                  , Vector2D(Field::MaxX,Field::MinY))))
+        return -10;
 
-    return 0;
+    return 10;
 }
 
 void freeKickDirect::setPositions()
@@ -101,8 +107,8 @@ void freeKickDirect::execute()
 {
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
-//    if(!rolesIsInit)
-        initRole();
+    //    if(!rolesIsInit)
+    initRole();
 
     for(int i=0;i<activeAgents.size();i++)
         setTactics(activeAgents.at(i));
