@@ -16,6 +16,7 @@ private:
     bool checkDistances();
 
     int recieverID;
+    Position rightPos, leftPos;
 };
 
 #endif // FREEKICK1_H

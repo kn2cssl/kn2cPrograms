@@ -30,17 +30,22 @@ RobotCommand TacticAttacker::getCommand()
         Line2D *ballVel= new Line2D(wm->ball.pos.loc,passSender2Ball.dir().degree());
         Circle2D checkingCircle(OneTouchKickerPos,ROBOT_RADIUS+750);
 
+        qDebug()<<":this id: "<<this->id;
         qDebug()<<((passSenderPos-OneTouchKickerPos).length2()>(passSenderPos-wm->ball.pos.loc).length2() ) <<" , "<<(fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())<30)<<" , "<<(wm->ball.vel.loc.length()>0.2)<<" , "<<(checkingCircle.HasIntersection(*ballVel));
-        if( ( (kickerID!=-1) && (passSenderPos-OneTouchKickerPos).length2()>(passSenderPos-wm->ball.pos.loc).length2() )  &&  (fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())<30)  &&  (wm->ball.vel.loc.length()>0.4) && (checkingCircle.HasIntersection(*ballVel)))
+        if( ( (kickerID!=-1) && (passSenderPos-OneTouchKickerPos).length2()>(passSenderPos-wm->ball.pos.loc).length2() )  &&  (fabs(passSender2OneTouchKicker.dir().degree()-passSender2Ball.dir().degree())<30)  &&  (wm->ball.vel.loc.length()>0.2) && (checkingCircle.HasIntersection(*ballVel)))
         {
+            qDebug()<<"11111111111111111111111111111111111111111111111111111111111111111touch";
             sOneTouch->setIndex(this->id);
             sOneTouch->setTarget(Field::oppGoalCenter);
             sOneTouch->execute(rc);
         }
         else
         {
+            qDebug()<<"followingballllllllllllllllllllllllllllllllllllllllllllllllllllllllll";
             if( kickerID != -1 && ( kickerID != this->id) )
                 wm->ourRobot[kickerID].Status = AgentStatus::Idle;
+
+            sOneTouch->resetAllFlags();
 
             sKick->setTarget(target.pos);
             sKick->setIndex(this->id);
@@ -143,7 +148,6 @@ RobotCommand TacticAttacker::getCommand()
     else if(wm->ourRobot[id].Status == AgentStatus::Idle)
     {
         this->holdKickPos = false;
-        sOneTouch->resetAllFlags();
 
         rc.fin_pos = idlePosition;
         rc.useNav = true;

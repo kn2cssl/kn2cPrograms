@@ -101,14 +101,26 @@ void freeKick1::setPositions()
 
     tGolie->setIdlePosition(goaliePos);
 
-    Position tmp;
-    tmp.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200);
-    tmp.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
-    tAttackerLeft->setIdlePosition(tmp);
+    Position left,right;
+    if( wm->ball.pos.loc.y < 0 )
+    {
+        left.loc = Vector2D(Field::MaxX/3,wm->ball.pos.loc.y+200);
+        right.loc = Vector2D(Field::MaxX/3,Field::oppGoalCenter.y+400);
+    }
+    else
+    {
+        left.loc = Vector2D(Field::MaxX/3,wm->ball.pos.loc.y-200);
+        right.loc = Vector2D(Field::MaxX/3,Field::oppGoalCenter.y-400);
+    }
 
-    tmp.loc = Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200);
-    tmp.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerRight->getID()].pos.loc).dir().radian();
-    tAttackerRight->setIdlePosition(tmp);
+    left.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerLeft->getID()].pos.loc).dir().radian();
+    tAttackerLeft->setIdlePosition(left);
+
+    right.dir = ( Field::oppGoalCenter - wm->ourRobot[tAttackerRight->getID()].pos.loc).dir().radian();
+    tAttackerRight->setIdlePosition(right);
+
+    leftPos = left;
+    rightPos = right;
 
     tAttackerMid->setIdlePosition(wm->ourRobot[tAttackerMid->getID()].pos);
 
@@ -131,14 +143,14 @@ bool freeKick1::checkDistances()
     if( wm->ourRobot[tAttackerLeft->getID()].isValid && tAttackerLeft->getID() != -1)
     {
         //if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerLeft->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200), 200))
-        if( (wm->ourRobot[tAttackerLeft->getID()].pos.loc - Vector2D(Field::MaxX/3,Field::oppGoalPost_L.y+200)).length() > 200)
+        if( (wm->ourRobot[tAttackerLeft->getID()].pos.loc - leftPos.loc).length() > 200)
             leftInPos = false;
     }
 
     if( wm->ourRobot[tAttackerRight->getID()].isValid && tAttackerRight->getID() != -1)
     {
         //        if( !wm->kn->ReachedToPos(wm->ourRobot[tAttackerRight->getID()].pos.loc, Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200),200) )
-        if( (wm->ourRobot[tAttackerRight->getID()].pos.loc - Vector2D(Field::MaxX/3,Field::oppGoalPost_R.y-200)).length() > 200)
+        if( (wm->ourRobot[tAttackerRight->getID()].pos.loc - rightPos.loc).length() > 200)
             rightInPos = false;
     }
 

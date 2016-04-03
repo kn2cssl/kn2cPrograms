@@ -18,11 +18,7 @@ private:
     QTime timer;
 
     RobotSpeed calcRobotSpeed_main(ControllerInput &ci);
-    RobotSpeed calcRobotSpeed_adjt(ControllerInput &ci);
-    RobotSpeed calcRobotSpeed_test(ControllerInput &ci);
-
-    MotorSpeed calcReal(RobotSpeed rs);
-    MotorSpeed calcSimul(RobotSpeed rs);
+    MotorSpeed calcSimul(RobotSpeed rs, ControllerInput &ci);
 
 private:
 

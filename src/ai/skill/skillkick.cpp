@@ -16,7 +16,7 @@ bool SkillKick::execute(RobotCommand &rc)
 
     ball2target=this->_Target - wm->ball.pos.loc;
 
-    ball2target.setLength(ROBOT_RADIUS+6);
+    ball2target.setLength(ROBOT_RADIUS+8);
 
     goal=wm->ball.pos.loc - ball2target;
 

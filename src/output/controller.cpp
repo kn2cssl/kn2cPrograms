@@ -185,8 +185,8 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        {
            if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
-           // TODO remove
-           ci.maxSpeed = 4;
+//           // TODO remove
+//           ci.maxSpeed = 4;
            if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
        }

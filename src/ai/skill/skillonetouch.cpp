@@ -143,10 +143,11 @@ bool SkillOneTouch::execute(RobotCommand &rc)
 
     Line2D *ballVel;
 
+    qDebug()<<"========================================="<<movementFlag<<"======================================";
     if( movementFlag )
     {
         qDebug()<<"11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-        if( (ballPos-wm->ourRobot[ourIds.at(0)].pos.loc) .length()>200)
+        if( (ballPos-wm->ourRobot[ourIds.at(0)].pos.loc) .length()>300)
         {
             qDebug()<<"=================================================="<<ourIds.at(0)<<"==============================================";
             Vector2D temp1,temp2;
@@ -156,7 +157,7 @@ bool SkillOneTouch::execute(RobotCommand &rc)
 
             robotCircle.intersection(*ballVel,&temp1,&temp2);
 
-            if((ballPos-temp1).length2()<(ballPos-temp2).length2())
+            if((ballPos-temp1).length2()>(ballPos-temp2).length2())
             {
                 ballVelrobotCircleintersection=temp1;
             }
@@ -178,9 +179,6 @@ bool SkillOneTouch::execute(RobotCommand &rc)
         }
 
     }
-
-
-//    lastPos=wm->ourRobot[index].pos.loc;
 
     rc.fin_pos.loc=goal;
     rc.fin_pos.dir=robot2target.dir().radian();
