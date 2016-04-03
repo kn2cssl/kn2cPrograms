@@ -15,7 +15,7 @@ RobotCommand TacticPreparing::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
-    rc.maxSpeed = 0.5;
+    rc.maxSpeed = 4;
     if( kickPermision )
     {
         rc.fin_pos.loc = Vector2D(0,0);

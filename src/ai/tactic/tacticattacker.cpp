@@ -18,10 +18,9 @@ RobotCommand TacticAttacker::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
+    rc.maxSpeed = 4;
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
-        rc.maxSpeed = 3;
-
         tANDp target = findTarget();
 
         Vector2D passSenderPos = wm->ourRobot[kickerID].pos.loc;
@@ -64,7 +63,6 @@ RobotCommand TacticAttacker::getCommand()
             }
 
             rc.fin_pos = kickPos;
-            rc.maxSpeed = 2;
             rc.useNav = true;
         }
         else
@@ -85,9 +83,6 @@ RobotCommand TacticAttacker::getCommand()
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
     {
         rc.fin_pos = idlePosition;
-
-        rc.maxSpeed = 2.5;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -141,11 +136,6 @@ RobotCommand TacticAttacker::getCommand()
             rc.fin_pos = final;
         }
 
-        if( wm->opp_vel > 3 )
-            rc.maxSpeed = 3;
-        else
-            rc.maxSpeed = wm->opp_vel;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -156,13 +146,15 @@ RobotCommand TacticAttacker::getCommand()
         sOneTouch->resetAllFlags();
 
         rc.fin_pos = idlePosition;
-        rc.maxSpeed = 2;
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
         if( wm->gs == STATE_Stop )
+        {
+            rc.maxSpeed = 1;
             return rc;
+        }
     }
 
     if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )
@@ -188,8 +180,6 @@ RobotCommand TacticAttacker::goBehindBall()
 {
     RobotCommand rc;
     canKick=false;
-
-    rc.maxSpeed = 1;
 
     float deg=atan((0-wm->ball.pos.loc.y)/(3025-wm->ball.pos.loc.x));
 
@@ -221,8 +211,6 @@ RobotCommand TacticAttacker::KickTheBallIndirect()
 
     if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc, wm->ball.pos.loc, SECURE_DIST) )
         rc.maxSpeed = 0.5;
-    else
-        rc.maxSpeed = 1.5;
 
     Vector2D target = receiverPos;
 
@@ -296,9 +284,6 @@ RobotCommand TacticAttacker::KickTheBallDirect()
 
     if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc, wm->ball.pos.loc, SECURE_DIST))
         rc.maxSpeed = 0.5;
-    else
-        rc.maxSpeed = 1.5;
-
 
     tANDp target = findTarget();
     //    OperatingPosition kickPoint = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
@@ -326,8 +311,6 @@ RobotCommand TacticAttacker::StartTheGame()
 
     if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc, wm->ball.pos.loc, 200))
         rc.maxSpeed = 0.5;
-    else
-        rc.maxSpeed = 1.5;
 
     Vector2D target(Field::oppGoalCenter.x,Field::oppGoalCenter.y);
     //    OperatingPosition kickPoint = BallControl(target, 100, this->id, rc.maxSpeed);
@@ -354,13 +337,8 @@ RobotCommand TacticAttacker::ChipTheBallIndirect()
 {
     RobotCommand rc;
 
-    //    rc.maxSpeed = 1.5;
-
     if(  (wm->ourRobot[this->id].pos.loc - wm->ball.pos.loc).length() < SECURE_DIST)
         rc.maxSpeed = 0.5;
-    else
-        rc.maxSpeed = 1.5;
-
 
     Vector2D target = receiverPos;
     Vector2D goal(target.x,target.y);

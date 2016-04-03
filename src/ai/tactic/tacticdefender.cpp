@@ -15,10 +15,10 @@ RobotCommand TacticDefender::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
+    rc.maxSpeed = 4;
+
     if(wm->ourRobot[this->id].Status == AgentStatus::FollowingBall)
     {
-        rc.maxSpeed = 1.5;
-
         Vector2D v;
         v = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
                 wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
@@ -163,9 +163,6 @@ RobotCommand TacticDefender::getCommand()
     else if(wm->ourRobot[this->id].Status == AgentStatus::RecievingPass)
     {
         rc.fin_pos = idlePosition;
-
-        rc.maxSpeed = 2.5;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -264,8 +261,6 @@ RobotCommand TacticDefender::getCommand()
             break;
         }
 
-        rc.maxSpeed=1.5;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -319,11 +314,6 @@ RobotCommand TacticDefender::getCommand()
             rc.fin_pos = final;
         }
 
-        if( wm->opp_vel > 3 )
-            rc.maxSpeed = 3;
-        else
-            rc.maxSpeed = wm->opp_vel;
-
         rc.useNav = true;
         rc.isBallObs = true;
         rc.isKickObs = true;
@@ -331,15 +321,15 @@ RobotCommand TacticDefender::getCommand()
     else if(wm->ourRobot[this->id].Status == AgentStatus::Idle)
     {
         rc.fin_pos = idlePosition;
-
-        rc.maxSpeed = 3;
-
         rc.useNav = this->useNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
         if( wm->gs == STATE_Stop )
+        {
+            rc.maxSpeed = 1;
             return rc;
+        }
     }
 
     if( wm->kn->IsInsideGolieArea(rc.fin_pos.loc) )

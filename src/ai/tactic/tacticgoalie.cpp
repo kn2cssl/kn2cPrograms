@@ -11,27 +11,11 @@ TacticGoalie::TacticGoalie(WorldModel *worldmodel, QObject *parent) :
 RobotCommand TacticGoalie::getCommand()
 {
     RobotCommand rc;
+    rc.maxSpeed = 4;
 
-    //        double ballDeg;
-    //        double ballDir;
-    //        double yInGoal;
-
-    //        //Geometric calculations
-    //        ballDeg=atan((wm->ball.pos.loc.y-0.0)/(wm->ball.pos.loc.x+(float)(Field::MaxX)));
-    //        ballDir=(float)(wm->ball.vel.loc.y)/(float)(wm->ball.vel.loc.x);
-    //        yInGoal=wm->ball.pos.loc.y-ballDir*(float)((float)(Field::MaxX)+wm->ball.pos.loc.x);
-
-    //        if(((wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y<0) || (wm->ball.vel.loc.x<0 && wm->ball.vel.loc.y>0)) && (abs(yInGoal)<400))
-    //        {
-    //         rc.fin_pos.loc={-(float)(Field::MaxX)+ROBOT_RADIUS,yInGoal};
-    //         rc.fin_pos.dir=ballDeg;
-    //        }
-    //        else
-    //        {
-    //            rc.fin_pos.loc={-(float)(Field::MaxX)+ROBOT_RADIUS,0};
-    //            rc.fin_pos.dir=ballDeg;
-    //        }
-    //        //qDebug()<<ballDeg*180.0/3.14<<beta<<alpha<<dtgc;
+    rc.useNav=false;
+    rc.isBallObs = false;
+    rc.isKickObs = true;
 
     if( wm->kn->IsInsideGolieArea(wm->ball.pos.loc) && wm->cmgs.canKickBall() && (wm->ball.vel.loc.length() < 0.5)
             && !isVeryCloseToGoal(wm->ball.pos.loc) )
@@ -55,6 +39,7 @@ RobotCommand TacticGoalie::getCommand()
         sKick->setTarget(target);
         sKick->setKickType(true);
         sKick->execute(rc);
+        rc.kickspeedx = 0;
 
 
 //        double firstDist , secondDist;
@@ -122,6 +107,9 @@ RobotCommand TacticGoalie::getCommand()
         }
 //        else
 //            reach2Ball = false;
+
+        rc.useNav = true;
+        rc.isBallObs = true;
     }
     else
     {
@@ -132,19 +120,8 @@ RobotCommand TacticGoalie::getCommand()
             rc.maxSpeed = 0;
         }
         else
-        {
             rc.fin_pos = idlePosistion;
-            rc.maxSpeed = 2;
-
-            rc.useNav = false;
-            rc.isBallObs = true;
-            rc.isKickObs = true;
-        }
     }
-
-    rc.useNav=true;////////////////////////////////////////////////////////////badan pak shavad...
-    rc.isBallObs = true;
-    rc.isKickObs = true;
 
     return rc;
 }
