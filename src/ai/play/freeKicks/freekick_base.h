@@ -50,6 +50,8 @@ protected:
     bool angelflag;
     bool angelflags;
 
+    double ballVelAngel;
+
 
 //    Vector2D goalkeeperlastpos;
 //    Vector2D defenderlastpos;

@@ -51,7 +51,6 @@ bool Play::conditionChanged()
 
 void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, Position &left, bool& leftNav, Position &right, bool& rightNav)
 {
-
     goalie.loc = Field::ourGoalCenter;
 
     if( wm->cmgs.theirPenaltyKick() )
