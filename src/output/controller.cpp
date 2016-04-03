@@ -141,7 +141,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
 /////////   linear potion profile
-       double kp=0.4,ki_pos=0.4,ki_neg=0.06,kd = 0.01;
+       double kp=0.4,ki_pos=0.03,ki_neg=0.06,kd = 0.01;
        double a_max = 0.002; double a_max_c = 0.001;
        double ki = 0.001;
        //* finding useful vector of previous setpoint
@@ -186,6 +186,8 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        {
            if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
+           // TODO remove
+           ci.maxSpeed = 4;
            if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
        }
