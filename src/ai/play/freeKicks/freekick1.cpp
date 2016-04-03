@@ -36,10 +36,10 @@ void freeKick1::setPositions()
     int leftID = -1, rightID = -1 , midID = -1;
     bool leftNav, rightNav;
 
-    if( haltedRobotIsInField(previousLeftID) && wm->ourRobot[previousLeftID].Role != AgentRole::DefenderLeft )
+    if( wm->ourRobot[previousLeftID].Role != AgentRole::DefenderLeft )
         previousLeftID = -1;
 
-    if( haltedRobotIsInField(previousRightID) && wm->ourRobot[previousRightID].Role != AgentRole::DefenderRight )
+    if( wm->ourRobot[previousRightID].Role != AgentRole::DefenderRight )
         previousRightID = -1;
 
     if( (wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft) && (leftChecker < PresenceCounter) )
