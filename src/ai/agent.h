@@ -81,12 +81,13 @@ public:
 
 private:
     int id;
-    Controller ctrl;
+    Controller *ctrl;
     Navigation nav;
     OutputBuffer *outputBuffer;
     WorldModel *wm;
 
-    bool packetIsValid(grRobotData grRD);
+    bool grSimPacketIsValid(grRobotData grRD);
+    bool controllerResultIsValid(ControllerResult co);
 
 };
 
