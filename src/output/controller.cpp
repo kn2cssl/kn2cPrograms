@@ -61,24 +61,24 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
     //! Test
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 1000,-900)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( -2400,-2000)).r()) < 10 )
 //    //if(ci.cur_pos.loc.x > -1000)
 //    wu1=0;
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D(- 3800,-900)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( -2400, 2000)).r()) < 10 )
 //    //if(ci.cur_pos.loc.x < -3800)
 //    wu1=1;
 
 
-//    ci.mid_pos.loc.y = -900;
+//    ci.mid_pos.loc.x = -2400;
 //    ci.mid_pos.dir = M_PI_2;
 
 
 //    if(wu1==0)
-//              ci.mid_pos.loc.x = - 3800;
+//              ci.mid_pos.loc.y =  2000;
 //            //setpoint.VX =  -2;
 //        else
 //            //setpoint.VX =  2;
-//              ci.mid_pos.loc.x = - 1000;
+//              ci.mid_pos.loc.y =  -2000;
     //! test
 
 
@@ -185,8 +185,6 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        {
            if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
-//           // TODO remove
-//           ci.maxSpeed = 4;
            if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
 
        }
