@@ -84,7 +84,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
     err = (ci.mid_pos.loc - ci.cur_pos.loc);
-    if(fabs(err.r()) < 1 ) err = {0,0};
+    if(fabs(err.r()) < 5 ) err = {0,0};
     if(ci.id == 0)
     qDebug() <<"err"<<err.r();
 
@@ -141,9 +141,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
 /////////   linear potion profile
-       double kp=0.4,ki_pos=0.4,ki_neg=0.06,kd = 0.01;
+       double kp=0.1,ki_pos=0.2,ki_neg=0.06,kd = 0.01;
        double a_max = 0.002; double a_max_c = 0.001;
-       double ki = 0.001;
+       double ki = 0.01;
        //* finding useful vector of previous setpoint
        double err_angel = atan2(err.y,err.x);
        double i_angel =atan2(i.y,i.x);
@@ -160,17 +160,17 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        //#
 
        //* it keeps setpoint small till robot can't compensate its err
-       if( 2 < (i-ci.cur_vel.loc).length())
-       {
-           fault_counter ++ ;
-           if(fault_counter > 20)
-           {
-               fault_counter = 0 ;
-               i.setLength(2);
-               qDebug() <<"aaa";
-           }
+//       if( 2 < (i-ci.cur_vel.loc).length())
+//       {
+//           fault_counter ++ ;
+//           if(fault_counter > 20)
+//           {
+//               fault_counter = 0 ;
+//               i.setLength(2);
+//               qDebug() <<"aaa";
+//           }
 
-       }
+//       }
        //#
        err_angel = atan2(err.y,err.x);
        i_angel =atan2(ci.cur_vel.loc.y,ci.cur_vel.loc.x);
@@ -207,6 +207,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        {
            i_near = i_near.setLength(0);
        }
+
+       if(ci.id==9)
+           qDebug() <<"aaaaaaaaaaaaaaa"<<i.r();
 
        speed_sp = p + i_near +i+ d * kd;
 
