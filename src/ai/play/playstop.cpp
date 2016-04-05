@@ -202,7 +202,7 @@ void PlayStop::setPositions()
             mainL = candidateL_2;
 
         tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-        tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
+        tStopMid->setStopPosition(Vector2D(Field::MinX+300,-sign(wm->ball.pos.loc.y)*1400));
         tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
     }
     else
