@@ -6,6 +6,8 @@ Agent::Agent() :
 {
     wm = 0;
     id = -1;
+
+    ctrl = new Controller();
 }
 
 void Agent::setID(int id)
@@ -30,7 +32,13 @@ void Agent::SendCommand(RobotCommand rc)
     if(!wm->ourRobot[id].isValid) return;
 
     ControllerInput ci = nav.calc(rc);
-    ControllerResult co = ctrl.calc(ci);
+    ControllerResult co = ctrl->calc(ci);
+
+    if( !controllerResultIsValid(co) )
+    {
+        delete ctrl;
+        ctrl = new Controller();
+    }
 
     // Real Game Packet
     RobotData reRD;
@@ -61,7 +69,7 @@ void Agent::SendCommand(RobotCommand rc)
     grRD.kickspeedx = rc.kickspeedx;
     grRD.kickspeedz = rc.kickspeedz;
     grRD.spinner = 0;
-    if( packetIsValid(grRD) )
+    if( grSimPacketIsValid(grRD) )
         outputBuffer->grpck.AddRobot(grRD);
 }
 
@@ -93,11 +101,19 @@ void Agent::Halt()
     outputBuffer->grpck.AddRobot(grRD);
 }
 
-bool Agent::packetIsValid(grRobotData grRD)
+bool Agent::grSimPacketIsValid(grRobotData grRD)
 {
     if( !isnan(grRD.velx) && !isnan(grRD.vely) && !isnan(grRD.velw) &&
             !isnan(grRD.wheel1) && !isnan(grRD.wheel2) && !isnan(grRD.wheel3) && !isnan(grRD.wheel4) )
         return  true;
 
     return false;
+}
+
+bool Agent::controllerResultIsValid(ControllerResult co)
+{
+    if( isnan(co.rs.VW) || isnan(co.rs.VX) || isnan(co.rs.VY) )
+        return false;
+
+    return true;
 }
