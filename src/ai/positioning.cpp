@@ -16,10 +16,41 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
     {
         isMatched = true;
         QList<Vector2D> poses;
-        poses.append(Vector2D(0,Field::MaxY-200));
+
+        //Supportive Attacker
+        Segment2D seg(Field::ourGoalCenter, wm->ball.pos.loc);
+        Circle2D cir(wm->ball.pos.loc, 1000);
+        Vector2D temp1,temp2;
+        cir.intersection(seg, &temp1, &temp2);
+        if( wm->kn->IsInsideCircle(temp1, Field::ourGoalCenter,Field::goalCircle_R+600))
+        {
+            Line2D line(Vector2D(wm->ball.pos.loc.x,Field::MaxY), Vector2D(wm->ball.pos.loc.x, Field::MinY));
+            int num = cir.intersection(line, &temp1, &temp2);
+            if( wm->kn->IsInsideField(temp1) )
+                poses.append(temp1);
+
+            if( wm->kn->IsInsideField(temp2) )
+                poses.append(Vector2D(temp2.x+500,temp2.y));
+        }
+        else
+        {
+            if( temp1.y > -500 && temp1.y < 500)
+            {
+                poses.append(Vector2D(temp1.x,-500));
+                poses.append(Vector2D(temp1.x+500,+500));
+            }
+            else
+            {
+                poses.append(temp1);
+                poses.append(Vector2D(temp1.x+500,-temp1.y));
+            }
+        }
+        //End of Supportive Attacker
+
+        //        poses.append(Vector2D(0,Field::MaxY-200));
         poses.append(Vector2D(0,Field::MinY+200));
-        poses.append(Vector2D(0 - 200,Field::MaxY-200));
-        poses.append(Vector2D(0 - 200,Field::MinY+200));
+        //        poses.append(Vector2D(0 - 200,Field::MaxY-200));
+        //        poses.append(Vector2D(0 - 200,Field::MinY+200));
 
         for(int i = 0;i<ours.size();i++)
         {
