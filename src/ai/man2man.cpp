@@ -66,7 +66,7 @@ QList<Marking_Struct> Marking::findMarking(QList<int> our, QList<int> opp, bool 
         }
     }
 
-    if( dangerousOpposite.size() > 0 && wm->ball.isValid && (wm->kn->CountActiveAgents() == 6))
+    if( dangerousOpposite.size() > 0 && wm->ball.isValid && (wm->kn->CountActiveAgents() == 6) && wm->use4Player4Marking )
     {
         int leftID = wm->kn->findOurLeftDefender() , rightID = wm->kn->findOurRightDefender();
         if( leftID != -1 && rightID != -1 )

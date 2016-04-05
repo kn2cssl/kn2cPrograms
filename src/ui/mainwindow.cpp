@@ -443,9 +443,9 @@ void MainWindow::timer_timeout()
     sc->wm->showDefenderDebug = ui->showDefence->isChecked();
 
     sc->wm->useShootSensor = ui->useShootSensor_chBox->isChecked();
-
     sc->wm->defenceMode = ui->defenceMode_chbox->isChecked();
-
+    sc->wm->useVoronoi = ui->useVoronoi_chbox->isChecked();
+    sc->wm->use4Player4Marking = ui->useDefInMan2Man_chbox->isChecked();
 
     // Machine Learning Ui
     ui->learningTypelineEdit->setText(sc->wm->ml_type);

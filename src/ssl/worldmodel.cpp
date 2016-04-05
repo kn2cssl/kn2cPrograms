@@ -37,6 +37,10 @@ WorldModel::WorldModel(OutputBuffer *outputBuffer)
 
     defenceMode = false;
 
+    useVoronoi = false;
+
+    use4Player4Marking = false;
+
     climbing_status = "stopped";
     policy_index = 0;
     iteration_index = 0;

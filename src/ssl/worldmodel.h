@@ -69,6 +69,8 @@ public:
     int freeKickerID;
     bool useShootSensor;
     bool defenceMode;
+    bool useVoronoi;
+    bool use4Player4Marking;
 
     //----Graphical Debug-----
     QList<Vector2D> navigation_pos;

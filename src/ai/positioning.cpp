@@ -10,9 +10,9 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
 {
     QList<Positioning_Struct> out;
 
-    if( wm->kn->IsInsideRect(wm->ball.pos.loc
+    if( (wm->kn->IsInsideRect(wm->ball.pos.loc
                              ,Vector2D(Field::MinX,Field::MaxY)
-                             ,Vector2D(0.33*Field::MinX,Field::MinY)) && wm->defenceMode )
+                             ,Vector2D(0.33*Field::MinX,Field::MinY)) && wm->defenceMode) || (!wm->useVoronoi) )
     {
         isMatched = true;
         QList<Vector2D> poses;
@@ -47,10 +47,10 @@ QList<Positioning_Struct> Positioning::find_positions(QList<int> ours, bool &isM
         }
         //End of Supportive Attacker
 
-        //        poses.append(Vector2D(0,Field::MaxY-200));
+                poses.append(Vector2D(0,Field::MaxY-200));
         poses.append(Vector2D(0,Field::MinY+200));
-        //        poses.append(Vector2D(0 - 200,Field::MaxY-200));
-        //        poses.append(Vector2D(0 - 200,Field::MinY+200));
+                poses.append(Vector2D(0 - 200,Field::MaxY-200));
+                poses.append(Vector2D(0 - 200,Field::MinY+200));
 
         for(int i = 0;i<ours.size();i++)
         {
