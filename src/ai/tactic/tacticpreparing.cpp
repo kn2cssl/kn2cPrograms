@@ -23,7 +23,7 @@ RobotCommand TacticPreparing::getCommand()
 
         if(wm->ball.pos.loc.x > 0 && wm->ball.pos.loc.x < Field::MaxX/2)
         {
-            tANDp target = findTarget();
+//            tANDp target = findTarget();
 //            OperatingPosition kick = BallControl(target.pos, target.prob, this->id, rc.maxSpeed);
 //            rc.fin_pos = kick.pos;
 //            rc.useNav = kick.useNav;
@@ -35,7 +35,7 @@ RobotCommand TacticPreparing::getCommand()
 //            }
 
             sKick->setIndex(this->id);
-            sKick->setTarget(target.pos);
+            sKick->setTarget(Field::oppGoalCenter);
             sKick->setKickType(true);
             sKick->execute(rc);
 

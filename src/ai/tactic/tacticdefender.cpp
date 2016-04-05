@@ -16,6 +16,13 @@ RobotCommand TacticDefender::getCommand()
     if(!wm->ourRobot[id].isValid) return rc;
 
     rc.maxSpeed = 4;
+    if( wm->cmgs.canKickBall() )
+    {
+        if( wm->isSim )
+            rc.kickspeedx = 8;
+        else if( wm->useShootSensor )
+            rc.kickspeedx = 200;
+    }
 
     if(wm->ourRobot[this->id].Status == AgentStatus::FollowingBall)
     {

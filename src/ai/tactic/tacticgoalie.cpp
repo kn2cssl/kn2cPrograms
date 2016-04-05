@@ -24,12 +24,12 @@ RobotCommand TacticGoalie::getCommand()
 
         rc.maxSpeed = 0.5;
 
-//        Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
-//                wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
+        //        Vector2D ballPredictedPos = wm->kn->PredictDestination(wm->ourRobot[this->id].pos.loc,
+        //                wm->ball.pos.loc,rc.maxSpeed,wm->ball.vel.loc);
 
-//        Vector2D first,second,chipPoint;
-//        chipPoint = ballPredictedPos;
-//        chipPoint.x = chipPoint.x - 2*ROBOT_RADIUS;
+        //        Vector2D first,second,chipPoint;
+        //        chipPoint = ballPredictedPos;
+        //        chipPoint.x = chipPoint.x - 2*ROBOT_RADIUS;
 
         target = wm->ball.pos.loc;
         target.x = target.x + 2*ROBOT_RADIUS;
@@ -42,24 +42,24 @@ RobotCommand TacticGoalie::getCommand()
         rc.kickspeedx = 0;
 
 
-//        double firstDist , secondDist;
-//        firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
-//        secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
-//        if( firstDist < secondDist)
-//        {
-//            target = second;
-//            chipPoint = first;
-//        }
-//        else
-//        {
-//            target = first;
-//            chipPoint = second;
-//        }
+        //        double firstDist , secondDist;
+        //        firstDist = (wm->ourRobot[this->id].pos.loc - first).length();
+        //        secondDist = (wm->ourRobot[this->id].pos.loc - second).length();
+        //        if( firstDist < secondDist)
+        //        {
+        //            target = second;
+        //            chipPoint = first;
+        //        }
+        //        else
+        //        {
+        //            target = first;
+        //            chipPoint = second;
+        //        }
 
         bool chipTheBall = true;
 
-//        rc.fin_pos = chipPoint.pos;
-//        rc.useNav = chipPoint.useNav;
+        //        rc.fin_pos = chipPoint.pos;
+        //        rc.useNav = chipPoint.useNav;
 
         if( wm->kn->ReachedToPos(wm->ourRobot[this->id].pos.loc,wm->ball.pos.loc,ROBOT_RADIUS) || reach2Ball )
         {
@@ -99,14 +99,14 @@ RobotCommand TacticGoalie::getCommand()
                 }
             }
 
-//            if( chipPoint.readyToShoot && chipTheBall )
-//            {
-//                rc.kickspeedx = detectChipSpeed(chipPoint.shootSensor);
-//                qDebug()<<"chipp...............";
-//            }
+            //            if( chipPoint.readyToShoot && chipTheBall )
+            //            {
+            //                rc.kickspeedx = detectChipSpeed(chipPoint.shootSensor);
+            //                qDebug()<<"chipp...............";
+            //            }
         }
-//        else
-//            reach2Ball = false;
+        //        else
+        //            reach2Ball = false;
 
         rc.useNav = true;
         rc.isBallObs = true;
@@ -138,13 +138,18 @@ void TacticGoalie::setIdlePosition(Vector2D pos)
 
 bool TacticGoalie::isVeryCloseToGoal(Vector2D ballPoint)
 {
-    int picOfCir = PICOFCIR - 4*ROBOT_RADIUS;
-    int marginFromGoalPost = MARGINFROMGOALPOST - 4*ROBOT_RADIUS;
+    if( wm->ball.isValid )
+    {
+        int picOfCir = PICOFCIR - 4*ROBOT_RADIUS;
+        int marginFromGoalPost = MARGINFROMGOALPOST - 4*ROBOT_RADIUS;
 
-    double halfOfGoal = (Field::ourGoalPost_L.y-Field::ourGoalPost_R.y)/2;
+        double halfOfGoal = (Field::ourGoalPost_L.y-Field::ourGoalPost_R.y)/2;
 
-    if( wm->kn->IsInsideCircle(ballPoint, Vector2D(Field::MinX-halfOfGoal-marginFromGoalPost+picOfCir, 0), halfOfGoal + marginFromGoalPost))
-        return true;
+        if( wm->kn->IsInsideCircle(ballPoint, Vector2D(Field::MinX-halfOfGoal-marginFromGoalPost+picOfCir, 0), halfOfGoal + marginFromGoalPost))
+            return true;
+
+        return false;
+    }
 
     return false;
 }
