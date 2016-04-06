@@ -108,7 +108,7 @@ bool SkillKick::execute(RobotCommand &rc)
             if(  ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<90  || fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))>270)  )
             {
                 if( !isShoot )
-                    rc.kickspeedx = 125;
+                    rc.kickspeedx = 140;
                 else
                     rc.kickspeedx = 200;
                 //            if(passFlag)

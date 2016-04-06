@@ -61,15 +61,15 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
     //! Test
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( -2400,-2000)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 10 )
 //    //if(ci.cur_pos.loc.x > -1000)
 //    wu1=0;
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( -2400, 2000)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400, 2000)).r()) < 10 )
 //    //if(ci.cur_pos.loc.x < -3800)
 //    wu1=1;
 
 
-//    ci.mid_pos.loc.x = -2400;
+//    ci.mid_pos.loc.x = 2400;
 //    ci.mid_pos.dir = M_PI_2;
 
 
@@ -141,9 +141,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
 /////////   linear potion profile
-       double kp=0.1,ki_pos=0.2,ki_neg=0.06,kd = 0.01;
-       double a_max = 0.002; double a_max_c = 0.001;
-       double ki = 0.01;
+       double kp=0.02,ki_pos=0.02,ki_neg=0.06,kd = 0.01;
+       double a_max = 0.001; double a_max_c = 0.001;
+       double ki = 0.07;
        //* finding useful vector of previous setpoint
        double err_angel = atan2(err.y,err.x);
        double i_angel =atan2(i.y,i.x);
