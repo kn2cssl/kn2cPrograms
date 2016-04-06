@@ -60,7 +60,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
     Vector2D err;
 
 
-    //! Test
+//    //! Test
 //    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 10 )
 //    //if(ci.cur_pos.loc.x > -1000)
 //    wu1=0;
@@ -79,7 +79,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 //        else
 //            //setpoint.VX =  2;
 //              ci.mid_pos.loc.y =  -2000;
-    //! test
+//    //! test
 
 
 
@@ -141,9 +141,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
 /////////   linear potion profile
-       double kp=0.02,ki_pos=0.02,ki_neg=0.06,kd = 0.01;
-       double a_max = 0.001; double a_max_c = 0.001;
-       double ki = 0.07;
+       double kp=0.000,ki_pos=0.05,ki_neg=0.06,kd = 0.01;
+       double a_max = 0.002; double a_max_c = 0.001;
+       double ki = 0.0001;
        //* finding useful vector of previous setpoint
        double err_angel = atan2(err.y,err.x);
        double i_angel =atan2(i.y,i.x);
@@ -183,6 +183,7 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
        }
        else
        {
+//           ci.maxSpeed = 4 ;
            if( fabs( i.r2()/2/a_max_c )< fabs(err.r()) )
            i = i + err.setLength(ki_pos);
            if(fabs(i.length()) > ci.maxSpeed ) i=i.setLength(ci.maxSpeed);
@@ -208,10 +209,11 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
            i_near = i_near.setLength(0);
        }
 
-       if(ci.id==9)
-           qDebug() <<"aaaaaaaaaaaaaaa"<<i.r();
 
        speed_sp = p + i_near +i+ d * kd;
+
+//       if(ci.id==7)
+//           qDebug() <<"aaaaaaaaaaaaaaa"<<i.r()<<ci.cur_vel.loc.r();
 
        setpoint.VX =  speed_sp.x;
        setpoint.VY =  speed_sp.y;
