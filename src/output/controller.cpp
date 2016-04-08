@@ -61,32 +61,31 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
 //    //! Test
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 1000 )
 //    //if(ci.cur_pos.loc.x > -1000)
 //    wu1=0;
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400, 2000)).r()) < 10 )
+//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400, 2000)).r()) < 1000 )
 //    //if(ci.cur_pos.loc.x < -3800)
 //    wu1=1;
 
 
 //    ci.mid_pos.loc.x = 2400;
-//    ci.mid_pos.dir = M_PI_2;
+//    ci.mid_pos.dir = M_PI;
 
 
 //    if(wu1==0)
-//              ci.mid_pos.loc.y =  2000;
+//              ci.mid_pos.loc.y =  2860;
 //            //setpoint.VX =  -2;
 //        else
 //            //setpoint.VX =  2;
-//              ci.mid_pos.loc.y =  -2000;
+//              ci.mid_pos.loc.y =  -2860;
 //    //! test
 
 
 
     err = (ci.mid_pos.loc - ci.cur_pos.loc);
     if(fabs(err.r()) < 5 ) err = {0,0};
-    if(ci.id == 0)
-    qDebug() <<"err"<<err.r();
+    if(fabs(err.r()) < 500 ) ci.fin_pos.dir = (ci.mid_pos.loc - ci.cur_pos.loc).dir().radian() + M_PI_2;
 
     werr = (ci.mid_pos.dir - ci.cur_pos.dir);
     if(fabs(werr) > M_PI) werr = werr - sign(werr)*M_2PI;
@@ -141,8 +140,9 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 ////qDebug() <<setpoint.VW*1000<<ci.cur_vel.dir<<wi<<wp<<wi_err;
 
 /////////   linear potion profile
-       double kp=0.000,ki_pos=0.05,ki_neg=0.06,kd = 0.01;
+       double kp=0.000,ki_pos=0.03,ki_neg=0.06,kd = 0.01;
        double a_max = 0.002; double a_max_c = 0.001;
+       if(fabs(err.r()) < 700 ) ki_pos=0.2;
        double ki = 0.0001;
        //* finding useful vector of previous setpoint
        double err_angel = atan2(err.y,err.x);

@@ -252,7 +252,7 @@
          </font>
         </property>
         <property name="text">
-         <string>7</string>
+         <string>6</string>
         </property>
        </widget>
        <widget class="QCheckBox" name="defenceMode_chbox">
@@ -899,7 +899,7 @@
          <string>Use Four Players for Marking</string>
         </property>
         <property name="checked">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </widget>
