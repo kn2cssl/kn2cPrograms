@@ -13,7 +13,7 @@ PlayFormations::PlayFormations(WorldModel *worldmodel, QObject *parent) :
 
 int PlayFormations::enterCondition()
 {
-    return 20000000;
+    return 0;
 }
 
 void PlayFormations::initRole()
