@@ -20,5 +20,6 @@
 #include "tactic/tacticpreparing.h"
 #include "tactic/tacticcontrol.h"
 #include "tactic/tactickicklearning.h"
+#include "tactic/tacticformation.h"
 
 #endif // TACTICS_H
