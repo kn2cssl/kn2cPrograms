@@ -102,6 +102,8 @@ void Play::zonePositions(int leftID, int RightID, int MidID, Position &goalie, P
             ballpos.x=Field::MinX+20;
         }
         
+        //variables
+
         Vector2D ball2ourGoalPostLvec=Field::ourGoalPost_L-ballpos;
         Vector2D ball2ourGoalPostRvec=Field::ourGoalPost_R-ballpos;
         Segment2D goalline(Field::ourGoalPost_R,Field::ourGoalPost_L);
