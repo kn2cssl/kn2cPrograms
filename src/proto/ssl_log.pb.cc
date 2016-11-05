@@ -140,6 +140,7 @@ const int log_chunk::kOppsFieldNumber;
 log_chunk::log_chunk()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:log_chunk)
 }
 
 void log_chunk::InitAsDefaultInstance() {
@@ -150,6 +151,7 @@ log_chunk::log_chunk(const log_chunk& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:log_chunk)
 }
 
 void log_chunk::SharedCtor() {
@@ -160,6 +162,7 @@ void log_chunk::SharedCtor() {
 }
 
 log_chunk::~log_chunk() {
+  // @@protoc_insertion_point(destructor:log_chunk)
   SharedDtor();
 }
 
@@ -191,7 +194,7 @@ log_chunk* log_chunk::New() const {
 }
 
 void log_chunk::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 3) {
     chunk_number_ = GOOGLE_LONGLONG(0);
     if (has_ball()) {
       if (ball_ != NULL) ball_->::Ball_message::Clear();
@@ -205,20 +208,23 @@ void log_chunk::Clear() {
 
 bool log_chunk::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:log_chunk)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int64 chunk_number = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &chunk_number_)));
           set_has_chunk_number();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_ball;
         break;
@@ -226,13 +232,12 @@ bool log_chunk::MergePartialFromCodedStream(
 
       // required .Ball_message ball = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_ball:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ball()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(26)) goto parse_ours;
         break;
@@ -240,13 +245,12 @@ bool log_chunk::MergePartialFromCodedStream(
 
       // repeated .Robot_message ours = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 26) {
          parse_ours:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_ours()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(26)) goto parse_ours;
         if (input->ExpectTag(34)) goto parse_opps;
@@ -255,24 +259,24 @@ bool log_chunk::MergePartialFromCodedStream(
 
       // repeated .Robot_message opps = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 34) {
          parse_opps:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_opps()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(34)) goto parse_opps;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -280,12 +284,18 @@ bool log_chunk::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:log_chunk)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:log_chunk)
+  return false;
 #undef DO_
 }
 
 void log_chunk::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:log_chunk)
   // required int64 chunk_number = 1;
   if (has_chunk_number()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->chunk_number(), output);
@@ -313,10 +323,12 @@ void log_chunk::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:log_chunk)
 }
 
 ::google::protobuf::uint8* log_chunk::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:log_chunk)
   // required int64 chunk_number = 1;
   if (has_chunk_number()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->chunk_number(), target);
@@ -347,6 +359,7 @@ void log_chunk::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:log_chunk)
   return target;
 }
 
@@ -441,12 +454,8 @@ bool log_chunk::IsInitialized() const {
   if (has_ball()) {
     if (!this->ball().IsInitialized()) return false;
   }
-  for (int i = 0; i < ours_size(); i++) {
-    if (!this->ours(i).IsInitialized()) return false;
-  }
-  for (int i = 0; i < opps_size(); i++) {
-    if (!this->opps(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->ours())) return false;
+  if (!::google::protobuf::internal::AllAreInitialized(this->opps())) return false;
   return true;
 }
 
@@ -482,6 +491,7 @@ const int SSL_log::kChunksFieldNumber;
 SSL_log::SSL_log()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:SSL_log)
 }
 
 void SSL_log::InitAsDefaultInstance() {
@@ -491,6 +501,7 @@ SSL_log::SSL_log(const SSL_log& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:SSL_log)
 }
 
 void SSL_log::SharedCtor() {
@@ -501,6 +512,7 @@ void SSL_log::SharedCtor() {
 }
 
 SSL_log::~SSL_log() {
+  // @@protoc_insertion_point(destructor:SSL_log)
   SharedDtor();
 }
 
@@ -531,10 +543,21 @@ SSL_log* SSL_log::New() const {
 }
 
 void SSL_log::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    numberofchunks_ = GOOGLE_LONGLONG(0);
-    timerinterval_ = GOOGLE_LONGLONG(0);
-  }
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<SSL_log*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(numberofchunks_, timerinterval_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   chunks_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -542,20 +565,23 @@ void SSL_log::Clear() {
 
 bool SSL_log::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:SSL_log)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int64 numberOfChunks = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &numberofchunks_)));
           set_has_numberofchunks();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_timerInterval;
         break;
@@ -563,15 +589,14 @@ bool SSL_log::MergePartialFromCodedStream(
 
       // required int64 timerInterval = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_timerInterval:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
                  input, &timerinterval_)));
           set_has_timerinterval();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(26)) goto parse_chunks;
         break;
@@ -579,24 +604,24 @@ bool SSL_log::MergePartialFromCodedStream(
 
       // repeated .log_chunk chunks = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 26) {
          parse_chunks:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_chunks()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(26)) goto parse_chunks;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -604,12 +629,18 @@ bool SSL_log::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:SSL_log)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:SSL_log)
+  return false;
 #undef DO_
 }
 
 void SSL_log::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:SSL_log)
   // required int64 numberOfChunks = 1;
   if (has_numberofchunks()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->numberofchunks(), output);
@@ -630,10 +661,12 @@ void SSL_log::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:SSL_log)
 }
 
 ::google::protobuf::uint8* SSL_log::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:SSL_log)
   // required int64 numberOfChunks = 1;
   if (has_numberofchunks()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->numberofchunks(), target);
@@ -655,6 +688,7 @@ void SSL_log::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:SSL_log)
   return target;
 }
 
@@ -737,9 +771,7 @@ void SSL_log::CopyFrom(const SSL_log& from) {
 bool SSL_log::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
 
-  for (int i = 0; i < chunks_size(); i++) {
-    if (!this->chunks(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->chunks())) return false;
   return true;
 }
 

@@ -14,6 +14,9 @@
 #include "play/playtest2.h"
 #include "play/playlearning.h"
 #include "play/playformations.h"
+//ali hejazi
+#include "play/playhw2_1.h"
+#include "play/mantomandefense.h"
 
 AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, QObject *parent) :
     QObject(parent),
@@ -52,6 +55,9 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     plays.append(new PlayTest2(wm));
     plays.append(new PlayLearning(wm));
     plays.append(new PlayFormations(wm));
+    //ali hejazi
+    plays.append(new PlayHW2_1(wm));
+    plays.append(new mantomanDefense(wm));
 }
 
 void AI::Start()

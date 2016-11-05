@@ -1,15 +1,14 @@
 #include "playtest.h"
 PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
     Play("PlayTest", worldmodel, parent)
-{//////////////////////////////////
-    test = new TacticTest(wm);
-    test2 = new TacticTest2(wm);
-    ///////////////////////////////////
+{
+    tTest = new TacticTest(wm);
+    tTest2 = new TacticTest(wm);
 }
 
 int PlayTest::enterCondition()
 {
-    return 0;
+    return 999999;
 }
 
 void PlayTest::initRole()
@@ -17,10 +16,11 @@ void PlayTest::initRole()
 }
 
 void PlayTest::execute()
-{//---////////////////////////////////////////////////////
-
-        tactics[0] = test;
-        tactics[1] = test;
-        tactics[2] = test;
+{
+//    std::cout << wm->kn->ActiveAgents()[0] << std::endl;
+//    wm->debug_pos.clear();
+//    wm->debug_pos.append(wm->ourRobot[1].pos.loc);
+//    wm->debug_pos.append(wm->ourRobot[0].pos.loc);
+    tactics[2] = tTest;
 
 }
