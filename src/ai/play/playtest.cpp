@@ -8,7 +8,7 @@ PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
 
 int PlayTest::enterCondition()
 {
-    return 0;
+    return 99990;
 }
 
 void PlayTest::initRole()
@@ -21,6 +21,6 @@ void PlayTest::execute()
 //    wm->debug_pos.clear();
 //    wm->debug_pos.append(wm->ourRobot[1].pos.loc);
 //    wm->debug_pos.append(wm->ourRobot[0].pos.loc);
-    tactics[2] = tTest;
-
+    if(wm->ball.vel.loc.length() > 1)
+        qDebug() << wm->ball.vel.loc.length();
 }

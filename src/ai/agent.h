@@ -81,7 +81,7 @@ public:
 
 private:
     int id;
-    Controller ctrl;
+    Controller *ctrl;
     Navigation nav;
     OutputBuffer *outputBuffer;
     WorldModel *wm;

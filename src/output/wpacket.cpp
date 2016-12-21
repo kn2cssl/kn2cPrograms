@@ -22,11 +22,14 @@ QByteArray WPacket::GetPacket()
 
     for(int i=0; i<_rdata.size(); i++)
     {
-        _rdata[i].M0 = qToBigEndian<unsigned short int>(_rdata[i].M0);
-        _rdata[i].M1 = qToBigEndian<unsigned short int>(_rdata[i].M1);
-        _rdata[i].M2 = qToBigEndian<unsigned short int>(_rdata[i].M2);
-        _rdata[i].M3 = qToBigEndian<unsigned short int>(_rdata[i].M3);
-        rd.append((const char*)&(_rdata[i]), 11); //sizeof(RobotData);
+        _rdata[i].Vx_sp = qToBigEndian<unsigned short int>(_rdata[i].Vx_sp);
+        _rdata[i].Vy_sp = qToBigEndian<unsigned short int>(_rdata[i].Vy_sp);
+        _rdata[i].Wr_sp = qToBigEndian<unsigned short int>(_rdata[i].Wr_sp);
+        _rdata[i].Vx    = qToBigEndian<unsigned short int>(_rdata[i].Vx);
+        _rdata[i].Vy    = qToBigEndian<unsigned short int>(_rdata[i].Vy);
+        _rdata[i].Wr    = qToBigEndian<unsigned short int>(_rdata[i].Wr);
+        _rdata[i].alpha = qToBigEndian<unsigned short int>(_rdata[i].alpha);
+        rd.append((const char*)&(_rdata[i]), 18); //sizeof(RobotData);
     }
 
     unsigned char checksum=0;
