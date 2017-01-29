@@ -121,6 +121,7 @@ const int RobotCommand_message::kIsKickObsFieldNumber;
 RobotCommand_message::RobotCommand_message()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:RobotCommand_message)
 }
 
 void RobotCommand_message::InitAsDefaultInstance() {
@@ -132,6 +133,7 @@ RobotCommand_message::RobotCommand_message(const RobotCommand_message& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:RobotCommand_message)
 }
 
 void RobotCommand_message::SharedCtor() {
@@ -148,6 +150,7 @@ void RobotCommand_message::SharedCtor() {
 }
 
 RobotCommand_message::~RobotCommand_message() {
+  // @@protoc_insertion_point(destructor:RobotCommand_message)
   SharedDtor();
 }
 
@@ -180,38 +183,50 @@ RobotCommand_message* RobotCommand_message::New() const {
 }
 
 void RobotCommand_message::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RobotCommand_message*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(maxspeed_, iskickobs_);
     if (has_fin_pos()) {
       if (fin_pos_ != NULL) fin_pos_->::position_message::Clear();
     }
     if (has_fin_vel()) {
       if (fin_vel_ != NULL) fin_vel_->::position_message::Clear();
     }
-    maxspeed_ = 0;
-    kickspeedx_ = 0;
-    kickspeedz_ = 0;
-    usenav_ = false;
-    isballobs_ = false;
-    iskickobs_ = false;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
 bool RobotCommand_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:RobotCommand_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .position_message fin_pos = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_pos()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_fin_vel;
         break;
@@ -219,13 +234,12 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required .position_message fin_vel = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_fin_vel:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_vel()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(29)) goto parse_maxSpeed;
         break;
@@ -233,15 +247,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float maxSpeed = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+        if (tag == 29) {
          parse_maxSpeed:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &maxspeed_)));
           set_has_maxspeed();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(37)) goto parse_kickspeedx;
         break;
@@ -249,15 +262,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float kickspeedx = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+        if (tag == 37) {
          parse_kickspeedx:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedx_)));
           set_has_kickspeedx();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(45)) goto parse_kickspeedz;
         break;
@@ -265,15 +277,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float kickspeedz = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+        if (tag == 45) {
          parse_kickspeedz:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedz_)));
           set_has_kickspeedz();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(48)) goto parse_useNav;
         break;
@@ -281,15 +292,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool useNav = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 48) {
          parse_useNav:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &usenav_)));
           set_has_usenav();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(56)) goto parse_isBallObs;
         break;
@@ -297,15 +307,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool isBallObs = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 56) {
          parse_isBallObs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isballobs_)));
           set_has_isballobs();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(64)) goto parse_isKickObs;
         break;
@@ -313,25 +322,25 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool isKickObs = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 64) {
          parse_isKickObs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &iskickobs_)));
           set_has_iskickobs();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -339,12 +348,18 @@ bool RobotCommand_message::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:RobotCommand_message)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:RobotCommand_message)
+  return false;
 #undef DO_
 }
 
 void RobotCommand_message::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:RobotCommand_message)
   // required .position_message fin_pos = 1;
   if (has_fin_pos()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
@@ -391,10 +406,12 @@ void RobotCommand_message::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:RobotCommand_message)
 }
 
 ::google::protobuf::uint8* RobotCommand_message::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:RobotCommand_message)
   // required .position_message fin_pos = 1;
   if (has_fin_pos()) {
     target = ::google::protobuf::internal::WireFormatLite::
@@ -443,6 +460,7 @@ void RobotCommand_message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:RobotCommand_message)
   return target;
 }
 

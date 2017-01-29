@@ -3,11 +3,7 @@
 PlayTest2::PlayTest2(WorldModel *worldmodel, QObject *parent) :
     Play("PlayTest2", worldmodel, parent)
 {
-    // Goaler.
-    tGolie = new TacticGoalie(wm);
-    tTF = new TacticTestFriction(wm);
-    thalt = new TacticHalt(wm);
-    tTest = new TacticTest(wm);
+    tTest = new TacticTest2(wm);
 }
 
 int PlayTest2::enterCondition()
@@ -22,8 +18,14 @@ void PlayTest2::initRole()
 
 void PlayTest2::execute()
 {
-//    tactics[wm->ref_goalie_our] = tGolie;
-    tactics[3] = tTest;
-    qDebug()<<"Ball Speed is "<<wm->ball.vel.loc.length();
+    for(int i=0;i<wm->kn->ActiveAgents().length();i++){
+        tactics[wm->kn->ActiveAgents()[i]] = tTest;
+    }
+    wm->debug_pos.clear();
+//    if(wm->ball.isValid){
+//        wm->debug_pos.append(wm->ball.pos.loc);
+//        qDebug()<<"x :"<<wm->ball.pos.loc.x;
+//        qDebug()<<"y :"<<wm->ball.pos.loc.y<<"\n\n";
+//    }
 }
 

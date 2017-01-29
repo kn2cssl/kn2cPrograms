@@ -21,6 +21,7 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     outputbuffer(outputbuffer)
 {
     qDebug() << "AI Initialization...";
+    qDebug()<<"WTF WTF WTF";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
 
     Field::setup_consts(field_size);
@@ -52,6 +53,7 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     plays.append(new PlayTest2(wm));
     plays.append(new PlayLearning(wm));
     plays.append(new PlayFormations(wm));
+
 }
 
 void AI::Start()

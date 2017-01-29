@@ -14,11 +14,7 @@ public:
     virtual int enterCondition();
 
 private:
-    TacticGoalie* tGolie;
-    TacticTestFriction* tTF;
-    TacticHalt* thalt;
-    TacticTest* tTest;
-
+    TacticTest2* tTest;
     virtual void initRole();
 };
 
