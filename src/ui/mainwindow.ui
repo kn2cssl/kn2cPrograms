@@ -802,6 +802,9 @@
          <property name="text">
           <string>A* Nodes</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
         <widget class="QCheckBox" name="showDebugs">
          <property name="geometry">
@@ -819,6 +822,9 @@
          </property>
          <property name="text">
           <string>Debug Points</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </widget>

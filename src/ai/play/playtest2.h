@@ -3,6 +3,7 @@
 
 #include "play.h"
 #include "QDebug"
+#include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 
 class PlayTest2 : public Play
 {
@@ -10,16 +11,15 @@ class PlayTest2 : public Play
 public:
     explicit PlayTest2(WorldModel *worldmodel, QObject *parent = 0);
     virtual void execute();
-    //virtual Tactic* getTactic(int id);
+    virtual void initRole();
     virtual int enterCondition();
+    //virtual Tactic* getTactic(int id);
+
+    int Parabola_intersection (Vector2D, Vector2D, double, Vector2D *, Vector2D *);
 
 private:
-    TacticGoalie* tGolie;
-    TacticTestFriction* tTF;
-    TacticHalt* thalt;
-    TacticTest* tTest;
+    TacticTest2 *tTest1;
 
-    virtual void initRole();
 };
 
 #endif // PLAYTEST2_H

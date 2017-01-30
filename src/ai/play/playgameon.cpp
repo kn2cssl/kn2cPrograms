@@ -445,7 +445,7 @@ void PlayGameOn::coach()
     }
 
     tGolie->setIdlePosition(goaliePos);
-
+    wm->debug_pos.append(goaliePos.loc);//test
     game_status = wm->kn->gameStatus(game_status);
 
     int ballOwner = findBallOwner();
