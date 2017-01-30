@@ -9,9 +9,14 @@ public:
     explicit TacticTest(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
 
-private:
-    Skill *sTest;
+    void setpos ( Vector2D pos);
 
+    void setidtest (int idt);
+
+private:
+    Vector2D fpos;
+
+    int idtest;
 };
-#endif // TACTICTEST_H
+#endif //
 
