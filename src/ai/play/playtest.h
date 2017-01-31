@@ -11,12 +11,6 @@ public:
     virtual void execute();
     virtual void initRole();
     virtual int enterCondition();
-<<<<<<< HEAD
-private:
-    TacticTest* tTest;
-    TacticTest* tTest2;
-=======
-
 private:
     TacticTest *tTest1;
     TacticTest *tTest2;
@@ -36,9 +30,5 @@ private:
 
     int c = -1;
     int t = 0;
-<<<<<<< HEAD
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 };
 #endif // PLAYTEST_H

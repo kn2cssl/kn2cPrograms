@@ -13,14 +13,7 @@ public:
     QList <Vector2D> way;
     explicit TacticTest2(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();
-<<<<<<< HEAD
-=======
 
 private:
-
-<<<<<<< HEAD
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 };
 #endif // TACTICTEST2_H

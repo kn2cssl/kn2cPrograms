@@ -2,12 +2,6 @@
 PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
     Play("PlayTest", worldmodel, parent)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    tTest = new TacticTest(wm);
-=======
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
     tTest1 = new TacticTest(wm);
     tTest2 = new TacticTest(wm);
     tTest3 = new TacticTest(wm);
@@ -23,10 +17,6 @@ PlayTest::PlayTest(WorldModel *worldmodel, QObject *parent) :
     tStopRight = new TacticStop(wm);
     tAttackerLeft = new TacticAttacker(wm);
     tAttackerRight = new TacticAttacker(wm);
-<<<<<<< HEAD
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 }
 
 int PlayTest::enterCondition()
@@ -41,11 +31,6 @@ void PlayTest::initRole()
 
 void PlayTest::execute()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
     //tactics[2] = tTest;
 
     /*
@@ -987,7 +972,7 @@ void PlayTest::execute()
     }
 */
 
-    if (c == -1)
+    /*if (c == -1)
     {
         tTest1->setpos( Vector2D(-1500, 250) );
         tactics[2] = tTest1;
@@ -1274,20 +1259,16 @@ void PlayTest::execute()
     if ( (wm->ourRobot[3].pos.loc - Vector2D(-500, -250)).length() < 50 && t == 3)
         c = 32;
 */
-    cout << c << endl;
+   // cout << c << endl;
 
     //tTest1->setpos( Vector2D (-1000, 0) );
     //tactics[2] = tTest1;
 
     //tTest1->setpos( Vector2D(-1000, 0) );
     //tactics[0] = tTest1;
-<<<<<<< HEAD
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 
-    wm->debug_type=2;
-    wm->debug_pos.append(wm->ball.pos.loc);
+  //  wm->debug_type=2;
+   // wm->debug_pos.append(wm->ball.pos.loc);
 //    for(int i=0;i<wm->kn->ActiveAgents().length();i++){
 //        tactics[wm->kn->ActiveAgents()[i]] = tTest;
 //    }

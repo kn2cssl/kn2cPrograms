@@ -3,16 +3,8 @@
 PlayTest2::PlayTest2(WorldModel *worldmodel, QObject *parent) :
     Play("PlayTest2", worldmodel, parent)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
     tTest = new TacticTest2(wm);
-=======
     tTest1 = new TacticTest2(wm);
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
-    tTest1 = new TacticTest2(wm);
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-}
 
 int PlayTest2::enterCondition()
 {
@@ -86,8 +78,6 @@ void PlayTest2::initRole()
 
 void PlayTest2::execute()
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
     for(int i=0;i<wm->kn->ActiveAgents().length();i++){
         tactics[wm->kn->ActiveAgents()[i]] = tTest;
     }
@@ -97,9 +87,6 @@ void PlayTest2::execute()
 //        qDebug()<<"x :"<<wm->ball.pos.loc.x;
 //        qDebug()<<"y :"<<wm->ball.pos.loc.y<<"\n\n";
 //    }
-=======
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 
     //QList <int> order;
     Vector2D t[3][2];
@@ -290,9 +277,5 @@ void PlayTest2::execute()
     */
 
     //tactics[2] = tTest1;
-<<<<<<< HEAD
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
-=======
->>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
 }
 
