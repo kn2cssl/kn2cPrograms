@@ -14,13 +14,9 @@
 #include "freekick10.h"
 #include "freekick11.h"
 #include "freekick47.h"
-<<<<<<< HEAD
-=======
 //armin sadreddin
 #include "freekicktest1.h"
 //armin sadreddin
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 #include "freekickdirect.h"
 //kamran
 #include"freekicktest2.h"

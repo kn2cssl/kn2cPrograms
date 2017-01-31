@@ -140,7 +140,6 @@ Ball_message::Ball_message()
   // @@protoc_insertion_point(constructor:Ball_message)
 }
 Ball_message::Ball_message(const Ball_message& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -157,11 +156,6 @@ Ball_message::Ball_message(const Ball_message& from)
     velocity_ = NULL;
   }
   isvalid_ = from.isvalid_;
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:Ball_message)
 }
 
@@ -209,13 +203,8 @@ Ball_message* Ball_message::New(::google::protobuf::Arena* arena) const {
 }
 
 void Ball_message::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:Ball_message)
   if (_has_bits_[0 / 32] & 3u) {
-=======
-  if (_has_bits_[0 / 32] & 7) {
-    isvalid_ = false;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_position()) {
       GOOGLE_DCHECK(position_ != NULL);
       position_->::position_message::Clear();
@@ -232,30 +221,18 @@ void Ball_message::Clear() {
 
 bool Ball_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Ball_message)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Ball_message)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required bool isValid = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_isvalid();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isvalid_)));
@@ -267,12 +244,7 @@ bool Ball_message::MergePartialFromCodedStream(
 
       // required .position_message position = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_position:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_position()));
         } else {
@@ -283,21 +255,12 @@ bool Ball_message::MergePartialFromCodedStream(
 
       // required .position_message velocity = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 26u) {
-=======
-        if (tag == 26) {
-         parse_velocity:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_velocity()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -350,14 +313,9 @@ void Ball_message::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:Ball_message)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* Ball_message::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* Ball_message::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:Ball_message)
   // required bool isValid = 1;
   if (has_isvalid()) {

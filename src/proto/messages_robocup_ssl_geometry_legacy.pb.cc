@@ -201,7 +201,6 @@ SSL_GeometryFieldSize::SSL_GeometryFieldSize()
   // @@protoc_insertion_point(constructor:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
 }
 SSL_GeometryFieldSize::SSL_GeometryFieldSize(const SSL_GeometryFieldSize& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -210,11 +209,6 @@ SSL_GeometryFieldSize::SSL_GeometryFieldSize(const SSL_GeometryFieldSize& from)
   ::memcpy(&line_width_, &from.line_width_,
     reinterpret_cast<char*>(&penalty_line_from_spot_dist_) -
     reinterpret_cast<char*>(&line_width_) + sizeof(penalty_line_from_spot_dist_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
 }
 
@@ -256,7 +250,6 @@ SSL_GeometryFieldSize* SSL_GeometryFieldSize::New(::google::protobuf::Arena* are
 }
 
 void SSL_GeometryFieldSize::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
   if (_has_bits_[0 / 32] & 255u) {
     ::memset(&line_width_, 0, reinterpret_cast<char*>(&goal_wall_width_) -
@@ -268,58 +261,22 @@ void SSL_GeometryFieldSize::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_GeometryFieldSize*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(line_width_, goal_wall_width_);
-  }
-  if (_has_bits_[8 / 32] & 16128) {
-    ZR_(center_circle_radius_, penalty_line_from_spot_dist_);
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 line_width = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_line_width();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &line_width_)));
@@ -331,13 +288,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 field_length = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_field_length();
-=======
-        if (tag == 16) {
-         parse_field_length:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &field_length_)));
@@ -349,13 +301,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 field_width = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 24u) {
           set_has_field_width();
-=======
-        if (tag == 24) {
-         parse_field_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &field_width_)));
@@ -367,13 +314,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 boundary_width = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 32u) {
           set_has_boundary_width();
-=======
-        if (tag == 32) {
-         parse_boundary_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &boundary_width_)));
@@ -385,13 +327,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 referee_width = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 40u) {
           set_has_referee_width();
-=======
-        if (tag == 40) {
-         parse_referee_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &referee_width_)));
@@ -403,13 +340,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 goal_width = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 48u) {
           set_has_goal_width();
-=======
-        if (tag == 48) {
-         parse_goal_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &goal_width_)));
@@ -421,13 +353,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 goal_depth = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 56u) {
           set_has_goal_depth();
-=======
-        if (tag == 56) {
-         parse_goal_depth:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &goal_depth_)));
@@ -439,13 +366,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 goal_wall_width = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 64u) {
           set_has_goal_wall_width();
-=======
-        if (tag == 64) {
-         parse_goal_wall_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &goal_wall_width_)));
@@ -457,13 +379,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 center_circle_radius = 9;
       case 9: {
-<<<<<<< HEAD
         if (tag == 72u) {
           set_has_center_circle_radius();
-=======
-        if (tag == 72) {
-         parse_center_circle_radius:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &center_circle_radius_)));
@@ -475,13 +392,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 defense_radius = 10;
       case 10: {
-<<<<<<< HEAD
         if (tag == 80u) {
           set_has_defense_radius();
-=======
-        if (tag == 80) {
-         parse_defense_radius:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &defense_radius_)));
@@ -493,13 +405,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 defense_stretch = 11;
       case 11: {
-<<<<<<< HEAD
         if (tag == 88u) {
           set_has_defense_stretch();
-=======
-        if (tag == 88) {
-         parse_defense_stretch:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &defense_stretch_)));
@@ -511,13 +418,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 free_kick_from_defense_dist = 12;
       case 12: {
-<<<<<<< HEAD
         if (tag == 96u) {
           set_has_free_kick_from_defense_dist();
-=======
-        if (tag == 96) {
-         parse_free_kick_from_defense_dist:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &free_kick_from_defense_dist_)));
@@ -529,13 +431,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 penalty_spot_from_field_line_dist = 13;
       case 13: {
-<<<<<<< HEAD
         if (tag == 104u) {
           set_has_penalty_spot_from_field_line_dist();
-=======
-        if (tag == 104) {
-         parse_penalty_spot_from_field_line_dist:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &penalty_spot_from_field_line_dist_)));
@@ -547,23 +444,14 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 penalty_line_from_spot_dist = 14;
       case 14: {
-<<<<<<< HEAD
         if (tag == 112u) {
           set_has_penalty_line_from_spot_dist();
-=======
-        if (tag == 112) {
-         parse_penalty_line_from_spot_dist:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &penalty_line_from_spot_dist_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -669,14 +557,9 @@ void SSL_GeometryFieldSize::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_GeometryFieldSize::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_GeometryFieldSize::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize)
   // required int32 line_width = 1;
   if (has_line_width()) {
@@ -1422,7 +1305,6 @@ SSL_GeometryData::SSL_GeometryData()
   // @@protoc_insertion_point(constructor:RoboCup2014Legacy.Geometry.SSL_GeometryData)
 }
 SSL_GeometryData::SSL_GeometryData(const SSL_GeometryData& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1434,11 +1316,6 @@ SSL_GeometryData::SSL_GeometryData(const SSL_GeometryData& from)
   } else {
     field_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:RoboCup2014Legacy.Geometry.SSL_GeometryData)
 }
 
@@ -1482,13 +1359,7 @@ SSL_GeometryData* SSL_GeometryData::New(::google::protobuf::Arena* arena) const 
 }
 
 void SSL_GeometryData::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:RoboCup2014Legacy.Geometry.SSL_GeometryData)
-=======
-  if (has_field()) {
-    if (field_ != NULL) field_->::RoboCup2014Legacy::Geometry::SSL_GeometryFieldSize::Clear();
-  }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   calib_.Clear();
   if (has_field()) {
     GOOGLE_DCHECK(field_ != NULL);
@@ -1500,29 +1371,17 @@ void SSL_GeometryData::Clear() {
 
 bool SSL_GeometryData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Geometry.SSL_GeometryData)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Geometry.SSL_GeometryData)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize field = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_field()));
         } else {
@@ -1533,25 +1392,14 @@ bool SSL_GeometryData::MergePartialFromCodedStream(
 
       // repeated .SSL_GeometryCameraCalibration calib = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 18) {
-         parse_calib:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_calib()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(18)) goto parse_calib;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1599,14 +1447,9 @@ void SSL_GeometryData::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:RoboCup2014Legacy.Geometry.SSL_GeometryData)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_GeometryData::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_GeometryData::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:RoboCup2014Legacy.Geometry.SSL_GeometryData)
   // required .RoboCup2014Legacy.Geometry.SSL_GeometryFieldSize field = 1;
   if (has_field()) {
@@ -1706,14 +1549,8 @@ bool SSL_GeometryData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->calib())) return false;
   if (has_field()) {
-<<<<<<< HEAD
     if (!this->field_->IsInitialized()) return false;
   }
-=======
-    if (!this->field().IsInitialized()) return false;
-  }
-  if (!::google::protobuf::internal::AllAreInitialized(this->calib())) return false;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   return true;
 }
 

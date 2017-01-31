@@ -139,7 +139,6 @@ grSim_Packet::grSim_Packet()
   // @@protoc_insertion_point(constructor:grSim_Packet)
 }
 grSim_Packet::grSim_Packet(const grSim_Packet& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -155,11 +154,6 @@ grSim_Packet::grSim_Packet(const grSim_Packet& from)
   } else {
     replacement_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_Packet)
 }
 
@@ -207,12 +201,8 @@ grSim_Packet* grSim_Packet::New(::google::protobuf::Arena* arena) const {
 }
 
 void grSim_Packet::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_Packet)
   if (_has_bits_[0 / 32] & 3u) {
-=======
-  if (_has_bits_[0 / 32] & 3) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_commands()) {
       GOOGLE_DCHECK(commands_ != NULL);
       commands_->::grSim_Commands::Clear();
@@ -228,29 +218,17 @@ void grSim_Packet::Clear() {
 
 bool grSim_Packet::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_Packet)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_Packet)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .grSim_Commands commands = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_commands()));
         } else {
@@ -261,21 +239,12 @@ bool grSim_Packet::MergePartialFromCodedStream(
 
       // optional .grSim_Replacement replacement = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_replacement:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_replacement()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -323,14 +292,9 @@ void grSim_Packet::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_Packet)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_Packet::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_Packet::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_Packet)
   // optional .grSim_Commands commands = 1;
   if (has_commands()) {

@@ -208,7 +208,6 @@ SSL_DetectionBall::SSL_DetectionBall()
   // @@protoc_insertion_point(constructor:SSL_DetectionBall)
 }
 SSL_DetectionBall::SSL_DetectionBall(const SSL_DetectionBall& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -217,11 +216,6 @@ SSL_DetectionBall::SSL_DetectionBall(const SSL_DetectionBall& from)
   ::memcpy(&confidence_, &from.confidence_,
     reinterpret_cast<char*>(&pixel_y_) -
     reinterpret_cast<char*>(&confidence_) + sizeof(pixel_y_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_DetectionBall)
 }
 
@@ -263,7 +257,6 @@ SSL_DetectionBall* SSL_DetectionBall::New(::google::protobuf::Arena* arena) cons
 }
 
 void SSL_DetectionBall::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_DetectionBall)
   if (_has_bits_[0 / 32] & 127u) {
     ::memset(&confidence_, 0, reinterpret_cast<char*>(&pixel_y_) -
@@ -271,55 +264,22 @@ void SSL_DetectionBall::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_DetectionBall*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 127) {
-    ZR_(confidence_, pixel_y_);
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_DetectionBall::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_DetectionBall)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_DetectionBall)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required float confidence = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 13u) {
           set_has_confidence();
-=======
-        if (tag == 13) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &confidence_)));
@@ -331,13 +291,8 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // optional uint32 area = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_area();
-=======
-        if (tag == 16) {
-         parse_area:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &area_)));
@@ -349,13 +304,8 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // required float x = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_x();
-=======
-        if (tag == 29) {
-         parse_x:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &x_)));
@@ -367,13 +317,8 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // required float y = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_y();
-=======
-        if (tag == 37) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &y_)));
@@ -385,13 +330,8 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // optional float z = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_z();
-=======
-        if (tag == 45) {
-         parse_z:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &z_)));
@@ -403,13 +343,8 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // required float pixel_x = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 53u) {
           set_has_pixel_x();
-=======
-        if (tag == 53) {
-         parse_pixel_x:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &pixel_x_)));
@@ -421,23 +356,14 @@ bool SSL_DetectionBall::MergePartialFromCodedStream(
 
       // required float pixel_y = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 61u) {
           set_has_pixel_y();
-=======
-        if (tag == 61) {
-         parse_pixel_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &pixel_y_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -508,14 +434,9 @@ void SSL_DetectionBall::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_DetectionBall)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_DetectionBall::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_DetectionBall::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_DetectionBall)
   // required float confidence = 1;
   if (has_confidence()) {
@@ -918,7 +839,6 @@ SSL_DetectionRobot::SSL_DetectionRobot()
   // @@protoc_insertion_point(constructor:SSL_DetectionRobot)
 }
 SSL_DetectionRobot::SSL_DetectionRobot(const SSL_DetectionRobot& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -927,11 +847,6 @@ SSL_DetectionRobot::SSL_DetectionRobot(const SSL_DetectionRobot& from)
   ::memcpy(&confidence_, &from.confidence_,
     reinterpret_cast<char*>(&height_) -
     reinterpret_cast<char*>(&confidence_) + sizeof(height_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_DetectionRobot)
 }
 
@@ -973,7 +888,6 @@ SSL_DetectionRobot* SSL_DetectionRobot::New(::google::protobuf::Arena* arena) co
 }
 
 void SSL_DetectionRobot::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_DetectionRobot)
   if (_has_bits_[0 / 32] & 255u) {
     ::memset(&confidence_, 0, reinterpret_cast<char*>(&height_) -
@@ -981,55 +895,22 @@ void SSL_DetectionRobot::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_DetectionRobot*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(confidence_, height_);
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_DetectionRobot::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_DetectionRobot)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_DetectionRobot)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required float confidence = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 13u) {
           set_has_confidence();
-=======
-        if (tag == 13) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &confidence_)));
@@ -1041,13 +922,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // optional uint32 robot_id = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_robot_id();
-=======
-        if (tag == 16) {
-         parse_robot_id:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &robot_id_)));
@@ -1059,13 +935,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // required float x = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_x();
-=======
-        if (tag == 29) {
-         parse_x:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &x_)));
@@ -1077,13 +948,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // required float y = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_y();
-=======
-        if (tag == 37) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &y_)));
@@ -1095,13 +961,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // optional float orientation = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_orientation();
-=======
-        if (tag == 45) {
-         parse_orientation:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &orientation_)));
@@ -1113,13 +974,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // required float pixel_x = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 53u) {
           set_has_pixel_x();
-=======
-        if (tag == 53) {
-         parse_pixel_x:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &pixel_x_)));
@@ -1131,13 +987,8 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // required float pixel_y = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 61u) {
           set_has_pixel_y();
-=======
-        if (tag == 61) {
-         parse_pixel_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &pixel_y_)));
@@ -1149,23 +1000,14 @@ bool SSL_DetectionRobot::MergePartialFromCodedStream(
 
       // optional float height = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 69u) {
           set_has_height();
-=======
-        if (tag == 69) {
-         parse_height:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &height_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1241,14 +1083,9 @@ void SSL_DetectionRobot::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_DetectionRobot)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_DetectionRobot::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_DetectionRobot::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_DetectionRobot)
   // required float confidence = 1;
   if (has_confidence()) {
@@ -1688,7 +1525,6 @@ SSL_DetectionFrame::SSL_DetectionFrame()
   // @@protoc_insertion_point(constructor:SSL_DetectionFrame)
 }
 SSL_DetectionFrame::SSL_DetectionFrame(const SSL_DetectionFrame& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1700,11 +1536,6 @@ SSL_DetectionFrame::SSL_DetectionFrame(const SSL_DetectionFrame& from)
   ::memcpy(&t_capture_, &from.t_capture_,
     reinterpret_cast<char*>(&t_sent_) -
     reinterpret_cast<char*>(&t_capture_) + sizeof(t_sent_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_DetectionFrame)
 }
 
@@ -1746,25 +1577,7 @@ SSL_DetectionFrame* SSL_DetectionFrame::New(::google::protobuf::Arena* arena) co
 }
 
 void SSL_DetectionFrame::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_DetectionFrame)
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_DetectionFrame*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(t_capture_, t_sent_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   balls_.Clear();
   robots_yellow_.Clear();
   robots_blue_.Clear();
@@ -1778,30 +1591,18 @@ void SSL_DetectionFrame::Clear() {
 
 bool SSL_DetectionFrame::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_DetectionFrame)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_DetectionFrame)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 frame_number = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_frame_number();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &frame_number_)));
@@ -1813,13 +1614,8 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // required double t_capture = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 17u) {
           set_has_t_capture();
-=======
-        if (tag == 17) {
-         parse_t_capture:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &t_capture_)));
@@ -1831,13 +1627,8 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // required double t_sent = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 25u) {
           set_has_t_sent();
-=======
-        if (tag == 25) {
-         parse_t_sent:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &t_sent_)));
@@ -1849,13 +1640,8 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // required uint32 camera_id = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 32u) {
           set_has_camera_id();
-=======
-        if (tag == 32) {
-         parse_camera_id:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &camera_id_)));
@@ -1867,15 +1653,9 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // repeated .SSL_DetectionBall balls = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 42u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 42) {
-         parse_balls:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_balls()));
         } else {
           goto handle_unusual;
@@ -1886,15 +1666,9 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // repeated .SSL_DetectionRobot robots_yellow = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 50u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 50) {
-         parse_robots_yellow:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_robots_yellow()));
         } else {
           goto handle_unusual;
@@ -1905,25 +1679,14 @@ bool SSL_DetectionFrame::MergePartialFromCodedStream(
 
       // repeated .SSL_DetectionRobot robots_blue = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 58u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 58) {
-         parse_robots_blue:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_robots_blue()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(58)) goto parse_robots_blue;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1997,14 +1760,9 @@ void SSL_DetectionFrame::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_DetectionFrame)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_DetectionFrame::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_DetectionFrame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_DetectionFrame)
   // required uint32 frame_number = 1;
   if (has_frame_number()) {
@@ -2208,10 +1966,6 @@ void SSL_DetectionFrame::CopyFrom(const SSL_DetectionFrame& from) {
 
 bool SSL_DetectionFrame::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-<<<<<<< HEAD
-=======
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   if (!::google::protobuf::internal::AllAreInitialized(this->balls())) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->robots_yellow())) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->robots_blue())) return false;

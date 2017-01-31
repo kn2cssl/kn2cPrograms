@@ -282,7 +282,6 @@ Vector2f::Vector2f()
   // @@protoc_insertion_point(constructor:Vector2f)
 }
 Vector2f::Vector2f(const Vector2f& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -291,11 +290,6 @@ Vector2f::Vector2f(const Vector2f& from)
   ::memcpy(&x_, &from.x_,
     reinterpret_cast<char*>(&y_) -
     reinterpret_cast<char*>(&x_) + sizeof(y_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:Vector2f)
 }
 
@@ -337,7 +331,6 @@ Vector2f* Vector2f::New(::google::protobuf::Arena* arena) const {
 }
 
 void Vector2f::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:Vector2f)
   if (_has_bits_[0 / 32] & 3u) {
     ::memset(&x_, 0, reinterpret_cast<char*>(&y_) -
@@ -345,53 +338,22 @@ void Vector2f::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<Vector2f*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(x_, y_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool Vector2f::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Vector2f)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Vector2f)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required float x = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 13u) {
           set_has_x();
-=======
-        if (tag == 13) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &x_)));
@@ -403,23 +365,14 @@ bool Vector2f::MergePartialFromCodedStream(
 
       // required float y = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 21u) {
           set_has_y();
-=======
-        if (tag == 21) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &y_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -465,14 +418,9 @@ void Vector2f::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:Vector2f)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* Vector2f::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* Vector2f::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:Vector2f)
   // required float x = 1;
   if (has_x()) {
@@ -670,7 +618,6 @@ SSL_FieldLineSegment::SSL_FieldLineSegment()
   // @@protoc_insertion_point(constructor:SSL_FieldLineSegment)
 }
 SSL_FieldLineSegment::SSL_FieldLineSegment(const SSL_FieldLineSegment& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -691,28 +638,14 @@ SSL_FieldLineSegment::SSL_FieldLineSegment(const SSL_FieldLineSegment& from)
     p2_ = NULL;
   }
   thickness_ = from.thickness_;
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_FieldLineSegment)
 }
 
 void SSL_FieldLineSegment::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-<<<<<<< HEAD
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&p1_, 0, reinterpret_cast<char*>(&thickness_) -
     reinterpret_cast<char*>(&p1_) + sizeof(thickness_));
-=======
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  p1_ = NULL;
-  p2_ = NULL;
-  thickness_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 SSL_FieldLineSegment::~SSL_FieldLineSegment() {
@@ -721,15 +654,8 @@ SSL_FieldLineSegment::~SSL_FieldLineSegment() {
 }
 
 void SSL_FieldLineSegment::SharedDtor() {
-<<<<<<< HEAD
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) {
-=======
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (this != default_instance_) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     delete p1_;
   }
   if (this != internal_default_instance()) {
@@ -761,19 +687,11 @@ SSL_FieldLineSegment* SSL_FieldLineSegment::New(::google::protobuf::Arena* arena
 }
 
 void SSL_FieldLineSegment::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_FieldLineSegment)
   if (_has_bits_[0 / 32] & 7u) {
     if (has_name()) {
       GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_.UnsafeRawStringPointer())->clear();
-=======
-  if (_has_bits_[0 / 32] & 15) {
-    if (has_name()) {
-      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        name_->clear();
-      }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     }
     if (has_p1()) {
       GOOGLE_DCHECK(p1_ != NULL);
@@ -791,39 +709,23 @@ void SSL_FieldLineSegment::Clear() {
 
 bool SSL_FieldLineSegment::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_FieldLineSegment)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_FieldLineSegment)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string name = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-<<<<<<< HEAD
             "SSL_FieldLineSegment.name");
-=======
-            "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         } else {
           goto handle_unusual;
         }
@@ -832,12 +734,7 @@ bool SSL_FieldLineSegment::MergePartialFromCodedStream(
 
       // required .Vector2f p1 = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_p1:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_p1()));
         } else {
@@ -848,12 +745,7 @@ bool SSL_FieldLineSegment::MergePartialFromCodedStream(
 
       // required .Vector2f p2 = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 26u) {
-=======
-        if (tag == 26) {
-         parse_p2:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_p2()));
         } else {
@@ -864,23 +756,14 @@ bool SSL_FieldLineSegment::MergePartialFromCodedStream(
 
       // required float thickness = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_thickness();
-=======
-        if (tag == 37) {
-         parse_thickness:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &thickness_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -914,11 +797,7 @@ void SSL_FieldLineSegment::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_FieldLineSegment.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -947,25 +826,16 @@ void SSL_FieldLineSegment::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_FieldLineSegment)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_FieldLineSegment::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_FieldLineSegment::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_FieldLineSegment)
   // required string name = 1;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_FieldLineSegment.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -1349,7 +1219,6 @@ SSL_FieldCicularArc::SSL_FieldCicularArc()
   // @@protoc_insertion_point(constructor:SSL_FieldCicularArc)
 }
 SSL_FieldCicularArc::SSL_FieldCicularArc(const SSL_FieldCicularArc& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1367,30 +1236,14 @@ SSL_FieldCicularArc::SSL_FieldCicularArc(const SSL_FieldCicularArc& from)
   ::memcpy(&radius_, &from.radius_,
     reinterpret_cast<char*>(&thickness_) -
     reinterpret_cast<char*>(&radius_) + sizeof(thickness_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_FieldCicularArc)
 }
 
 void SSL_FieldCicularArc::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-<<<<<<< HEAD
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&center_, 0, reinterpret_cast<char*>(&thickness_) -
     reinterpret_cast<char*>(&center_) + sizeof(thickness_));
-=======
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  center_ = NULL;
-  radius_ = 0;
-  a1_ = 0;
-  a2_ = 0;
-  thickness_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 SSL_FieldCicularArc::~SSL_FieldCicularArc() {
@@ -1399,15 +1252,8 @@ SSL_FieldCicularArc::~SSL_FieldCicularArc() {
 }
 
 void SSL_FieldCicularArc::SharedDtor() {
-<<<<<<< HEAD
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) {
-=======
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (this != default_instance_) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     delete center_;
   }
 }
@@ -1436,88 +1282,44 @@ SSL_FieldCicularArc* SSL_FieldCicularArc::New(::google::protobuf::Arena* arena) 
 }
 
 void SSL_FieldCicularArc::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_FieldCicularArc)
   if (_has_bits_[0 / 32] & 3u) {
     if (has_name()) {
       GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
       (*name_.UnsafeRawStringPointer())->clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_FieldCicularArc*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 63) {
-    ZR_(radius_, thickness_);
-    if (has_name()) {
-      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        name_->clear();
-      }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     }
     if (has_center()) {
       GOOGLE_DCHECK(center_ != NULL);
       center_->::Vector2f::Clear();
     }
   }
-<<<<<<< HEAD
   if (_has_bits_[0 / 32] & 60u) {
     ::memset(&radius_, 0, reinterpret_cast<char*>(&thickness_) -
       reinterpret_cast<char*>(&radius_) + sizeof(thickness_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_FieldCicularArc::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_FieldCicularArc)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_FieldCicularArc)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string name = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-<<<<<<< HEAD
             "SSL_FieldCicularArc.name");
-=======
-            "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         } else {
           goto handle_unusual;
         }
@@ -1526,12 +1328,7 @@ bool SSL_FieldCicularArc::MergePartialFromCodedStream(
 
       // required .Vector2f center = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_center:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_center()));
         } else {
@@ -1542,13 +1339,8 @@ bool SSL_FieldCicularArc::MergePartialFromCodedStream(
 
       // required float radius = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_radius();
-=======
-        if (tag == 29) {
-         parse_radius:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &radius_)));
@@ -1560,13 +1352,8 @@ bool SSL_FieldCicularArc::MergePartialFromCodedStream(
 
       // required float a1 = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_a1();
-=======
-        if (tag == 37) {
-         parse_a1:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &a1_)));
@@ -1578,13 +1365,8 @@ bool SSL_FieldCicularArc::MergePartialFromCodedStream(
 
       // required float a2 = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_a2();
-=======
-        if (tag == 45) {
-         parse_a2:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &a2_)));
@@ -1596,23 +1378,14 @@ bool SSL_FieldCicularArc::MergePartialFromCodedStream(
 
       // required float thickness = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 53u) {
           set_has_thickness();
-=======
-        if (tag == 53) {
-         parse_thickness:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &thickness_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1646,11 +1419,7 @@ void SSL_FieldCicularArc::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_FieldCicularArc.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -1688,25 +1457,16 @@ void SSL_FieldCicularArc::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_FieldCicularArc)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_FieldCicularArc::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_FieldCicularArc::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_FieldCicularArc)
   // required string name = 1;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_FieldCicularArc.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -1979,29 +1739,9 @@ void SSL_FieldCicularArc::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:SSL_FieldCicularArc.name)
 }
 
-<<<<<<< HEAD
 // required .Vector2f center = 2;
 bool SSL_FieldCicularArc::has_center() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
-=======
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int SSL_GeometryFieldSize::kFieldLengthFieldNumber;
-const int SSL_GeometryFieldSize::kFieldWidthFieldNumber;
-const int SSL_GeometryFieldSize::kGoalWidthFieldNumber;
-const int SSL_GeometryFieldSize::kGoalDepthFieldNumber;
-const int SSL_GeometryFieldSize::kBoundaryWidthFieldNumber;
-const int SSL_GeometryFieldSize::kFieldLinesFieldNumber;
-const int SSL_GeometryFieldSize::kFieldArcsFieldNumber;
-#endif  // !_MSC_VER
-
-SSL_GeometryFieldSize::SSL_GeometryFieldSize()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:SSL_GeometryFieldSize)
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 void SSL_FieldCicularArc::set_has_center() {
   _has_bits_[0] |= 0x00000002u;
@@ -2160,7 +1900,6 @@ SSL_GeometryFieldSize::SSL_GeometryFieldSize()
     protobuf_InitDefaults_messages_5frobocup_5fssl_5fgeometry_2eproto();
   }
   SharedCtor();
-<<<<<<< HEAD
   // @@protoc_insertion_point(constructor:SSL_GeometryFieldSize)
 }
 SSL_GeometryFieldSize::SSL_GeometryFieldSize(const SSL_GeometryFieldSize& from)
@@ -2174,9 +1913,6 @@ SSL_GeometryFieldSize::SSL_GeometryFieldSize(const SSL_GeometryFieldSize& from)
   ::memcpy(&field_length_, &from.field_length_,
     reinterpret_cast<char*>(&boundary_width_) -
     reinterpret_cast<char*>(&field_length_) + sizeof(boundary_width_));
-=======
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_GeometryFieldSize)
 }
 
@@ -2218,28 +1954,7 @@ SSL_GeometryFieldSize* SSL_GeometryFieldSize::New(::google::protobuf::Arena* are
 }
 
 void SSL_GeometryFieldSize::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_GeometryFieldSize)
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_GeometryFieldSize*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 31) {
-    ZR_(field_length_, goal_depth_);
-    boundary_width_ = 0;
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   field_lines_.Clear();
   field_arcs_.Clear();
   if (_has_bits_[0 / 32] & 31u) {
@@ -2252,30 +1967,18 @@ void SSL_GeometryFieldSize::Clear() {
 
 bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_GeometryFieldSize)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_GeometryFieldSize)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 field_length = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_field_length();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &field_length_)));
@@ -2287,13 +1990,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 field_width = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_field_width();
-=======
-        if (tag == 16) {
-         parse_field_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &field_width_)));
@@ -2305,13 +2003,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 goal_width = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 24u) {
           set_has_goal_width();
-=======
-        if (tag == 24) {
-         parse_goal_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &goal_width_)));
@@ -2323,13 +2016,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 goal_depth = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 32u) {
           set_has_goal_depth();
-=======
-        if (tag == 32) {
-         parse_goal_depth:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &goal_depth_)));
@@ -2341,13 +2029,8 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // required int32 boundary_width = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 40u) {
           set_has_boundary_width();
-=======
-        if (tag == 40) {
-         parse_boundary_width:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &boundary_width_)));
@@ -2359,15 +2042,9 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // repeated .SSL_FieldLineSegment field_lines = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 50u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 50) {
-         parse_field_lines:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_field_lines()));
         } else {
           goto handle_unusual;
@@ -2378,25 +2055,14 @@ bool SSL_GeometryFieldSize::MergePartialFromCodedStream(
 
       // repeated .SSL_FieldCicularArc field_arcs = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 58u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 58) {
-         parse_field_arcs:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_field_arcs()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(58)) goto parse_field_arcs;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -2469,14 +2135,9 @@ void SSL_GeometryFieldSize::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_GeometryFieldSize)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_GeometryFieldSize::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_GeometryFieldSize::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_GeometryFieldSize)
   // required int32 field_length = 1;
   if (has_field_length()) {
@@ -2689,10 +2350,6 @@ void SSL_GeometryFieldSize::CopyFrom(const SSL_GeometryFieldSize& from) {
 
 bool SSL_GeometryFieldSize::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-<<<<<<< HEAD
-=======
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   if (!::google::protobuf::internal::AllAreInitialized(this->field_lines())) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->field_arcs())) return false;
   return true;
@@ -2934,7 +2591,6 @@ SSL_GeometryCameraCalibration::SSL_GeometryCameraCalibration()
   // @@protoc_insertion_point(constructor:SSL_GeometryCameraCalibration)
 }
 SSL_GeometryCameraCalibration::SSL_GeometryCameraCalibration(const SSL_GeometryCameraCalibration& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -2943,11 +2599,6 @@ SSL_GeometryCameraCalibration::SSL_GeometryCameraCalibration(const SSL_GeometryC
   ::memcpy(&camera_id_, &from.camera_id_,
     reinterpret_cast<char*>(&derived_camera_world_tz_) -
     reinterpret_cast<char*>(&camera_id_) + sizeof(derived_camera_world_tz_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_GeometryCameraCalibration)
 }
 
@@ -2989,7 +2640,6 @@ SSL_GeometryCameraCalibration* SSL_GeometryCameraCalibration::New(::google::prot
 }
 
 void SSL_GeometryCameraCalibration::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_GeometryCameraCalibration)
   if (_has_bits_[0 / 32] & 255u) {
     ::memset(&camera_id_, 0, reinterpret_cast<char*>(&q2_) -
@@ -3001,58 +2651,22 @@ void SSL_GeometryCameraCalibration::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_GeometryCameraCalibration*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(camera_id_, q2_);
-  }
-  if (_has_bits_[8 / 32] & 32512) {
-    ZR_(q3_, derived_camera_world_tz_);
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_GeometryCameraCalibration)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_GeometryCameraCalibration)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 camera_id = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_camera_id();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &camera_id_)));
@@ -3064,13 +2678,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float focal_length = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 21u) {
           set_has_focal_length();
-=======
-        if (tag == 21) {
-         parse_focal_length:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &focal_length_)));
@@ -3082,13 +2691,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float principal_point_x = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_principal_point_x();
-=======
-        if (tag == 29) {
-         parse_principal_point_x:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &principal_point_x_)));
@@ -3100,13 +2704,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float principal_point_y = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_principal_point_y();
-=======
-        if (tag == 37) {
-         parse_principal_point_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &principal_point_y_)));
@@ -3118,13 +2717,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float distortion = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_distortion();
-=======
-        if (tag == 45) {
-         parse_distortion:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &distortion_)));
@@ -3136,13 +2730,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float q0 = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 53u) {
           set_has_q0();
-=======
-        if (tag == 53) {
-         parse_q0:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &q0_)));
@@ -3154,13 +2743,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float q1 = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 61u) {
           set_has_q1();
-=======
-        if (tag == 61) {
-         parse_q1:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &q1_)));
@@ -3172,13 +2756,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float q2 = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 69u) {
           set_has_q2();
-=======
-        if (tag == 69) {
-         parse_q2:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &q2_)));
@@ -3190,13 +2769,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float q3 = 9;
       case 9: {
-<<<<<<< HEAD
         if (tag == 77u) {
           set_has_q3();
-=======
-        if (tag == 77) {
-         parse_q3:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &q3_)));
@@ -3208,13 +2782,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float tx = 10;
       case 10: {
-<<<<<<< HEAD
         if (tag == 85u) {
           set_has_tx();
-=======
-        if (tag == 85) {
-         parse_tx:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &tx_)));
@@ -3226,13 +2795,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float ty = 11;
       case 11: {
-<<<<<<< HEAD
         if (tag == 93u) {
           set_has_ty();
-=======
-        if (tag == 93) {
-         parse_ty:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &ty_)));
@@ -3244,13 +2808,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // required float tz = 12;
       case 12: {
-<<<<<<< HEAD
         if (tag == 101u) {
           set_has_tz();
-=======
-        if (tag == 101) {
-         parse_tz:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &tz_)));
@@ -3262,13 +2821,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // optional float derived_camera_world_tx = 13;
       case 13: {
-<<<<<<< HEAD
         if (tag == 109u) {
           set_has_derived_camera_world_tx();
-=======
-        if (tag == 109) {
-         parse_derived_camera_world_tx:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &derived_camera_world_tx_)));
@@ -3280,13 +2834,8 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // optional float derived_camera_world_ty = 14;
       case 14: {
-<<<<<<< HEAD
         if (tag == 117u) {
           set_has_derived_camera_world_ty();
-=======
-        if (tag == 117) {
-         parse_derived_camera_world_ty:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &derived_camera_world_ty_)));
@@ -3298,23 +2847,14 @@ bool SSL_GeometryCameraCalibration::MergePartialFromCodedStream(
 
       // optional float derived_camera_world_tz = 15;
       case 15: {
-<<<<<<< HEAD
         if (tag == 125u) {
           set_has_derived_camera_world_tz();
-=======
-        if (tag == 125) {
-         parse_derived_camera_world_tz:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &derived_camera_world_tz_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -3425,14 +2965,9 @@ void SSL_GeometryCameraCalibration::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_GeometryCameraCalibration)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_GeometryCameraCalibration::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_GeometryCameraCalibration::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_GeometryCameraCalibration)
   // required uint32 camera_id = 1;
   if (has_camera_id()) {
@@ -4160,7 +3695,6 @@ SSL_GeometryData::SSL_GeometryData()
   // @@protoc_insertion_point(constructor:SSL_GeometryData)
 }
 SSL_GeometryData::SSL_GeometryData(const SSL_GeometryData& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -4172,11 +3706,6 @@ SSL_GeometryData::SSL_GeometryData(const SSL_GeometryData& from)
   } else {
     field_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_GeometryData)
 }
 
@@ -4220,13 +3749,7 @@ SSL_GeometryData* SSL_GeometryData::New(::google::protobuf::Arena* arena) const 
 }
 
 void SSL_GeometryData::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_GeometryData)
-=======
-  if (has_field()) {
-    if (field_ != NULL) field_->::SSL_GeometryFieldSize::Clear();
-  }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   calib_.Clear();
   if (has_field()) {
     GOOGLE_DCHECK(field_ != NULL);
@@ -4238,29 +3761,17 @@ void SSL_GeometryData::Clear() {
 
 bool SSL_GeometryData::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_GeometryData)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_GeometryData)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .SSL_GeometryFieldSize field = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_field()));
         } else {
@@ -4271,25 +3782,14 @@ bool SSL_GeometryData::MergePartialFromCodedStream(
 
       // repeated .SSL_GeometryCameraCalibration calib = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 18) {
-         parse_calib:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_calib()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(18)) goto parse_calib;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -4337,14 +3837,9 @@ void SSL_GeometryData::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_GeometryData)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_GeometryData::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_GeometryData::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_GeometryData)
   // required .SSL_GeometryFieldSize field = 1;
   if (has_field()) {
@@ -4444,14 +3939,8 @@ bool SSL_GeometryData::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   if (!::google::protobuf::internal::AllAreInitialized(this->calib())) return false;
   if (has_field()) {
-<<<<<<< HEAD
     if (!this->field_->IsInitialized()) return false;
   }
-=======
-    if (!this->field().IsInitialized()) return false;
-  }
-  if (!::google::protobuf::internal::AllAreInitialized(this->calib())) return false;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   return true;
 }
 

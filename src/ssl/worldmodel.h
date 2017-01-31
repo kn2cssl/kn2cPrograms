@@ -1,7 +1,7 @@
 #ifndef WORLDMODEL_H
 #define WORLDMODEL_H
 
-#define NUMBEROFFREEKICKS 14
+#define NUMBEROFFREEKICKS 15
 #include <QList>
 #include <QDebug>
 #include "constants.h"
@@ -42,13 +42,9 @@ enum kickType
     FreeKick10,
     FreeKick11,
     FreeKick12,
-<<<<<<< HEAD
-    FreeKick47,
-    FreekickTest2
-=======
+    FreekickTest2,
     FreeKickTest1,
     FreeKick47
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 };
 
 class WorldModel

@@ -56,13 +56,6 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     plays.append(new PlayTest2(wm));
     plays.append(new PlayLearning(wm));
     plays.append(new PlayFormations(wm));
-<<<<<<< HEAD
-    //ali hejazi
-    plays.append(new PlayHW2_1(wm));
-    plays.append(new mantomanDefense(wm));
-=======
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 void AI::Start()

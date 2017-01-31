@@ -1,3 +1,4 @@
+
 #include "mapsearchnode.h"
 #include "worldmodel.h"
 
@@ -211,11 +212,8 @@ float MapSearchNode::GetCost(MapSearchNode &successor)
 QList<Circle2D> MapSearchNode::getObsCircle()
 {
     QList<Circle2D> result;
-
     double b_rad = ROBOT_RADIUS + 2*BALL_RADIUS+50;
     double r_rad = ROBOT_RADIUS * 2+50;
-
-
     if(isBallObs && wm->ball.isValid)
     {
         Circle2D c(wm->ball.pos.loc, b_rad);

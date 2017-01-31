@@ -132,7 +132,6 @@ position_message::position_message()
   // @@protoc_insertion_point(constructor:position_message)
 }
 position_message::position_message(const position_message& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -141,11 +140,6 @@ position_message::position_message(const position_message& from)
   ::memcpy(&x_, &from.x_,
     reinterpret_cast<char*>(&dir_) -
     reinterpret_cast<char*>(&x_) + sizeof(dir_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:position_message)
 }
 
@@ -187,7 +181,6 @@ position_message* position_message::New(::google::protobuf::Arena* arena) const 
 }
 
 void position_message::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:position_message)
   if (_has_bits_[0 / 32] & 7u) {
     ::memset(&x_, 0, reinterpret_cast<char*>(&dir_) -
@@ -195,53 +188,22 @@ void position_message::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<position_message*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(x_, dir_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool position_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:position_message)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:position_message)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required float x = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 13u) {
           set_has_x();
-=======
-        if (tag == 13) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &x_)));
@@ -253,13 +215,8 @@ bool position_message::MergePartialFromCodedStream(
 
       // required float y = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 21u) {
           set_has_y();
-=======
-        if (tag == 21) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &y_)));
@@ -271,23 +228,14 @@ bool position_message::MergePartialFromCodedStream(
 
       // required float dir = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_dir();
-=======
-        if (tag == 29) {
-         parse_dir:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &dir_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -338,14 +286,9 @@ void position_message::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:position_message)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* position_message::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* position_message::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:position_message)
   // required float x = 1;
   if (has_x()) {

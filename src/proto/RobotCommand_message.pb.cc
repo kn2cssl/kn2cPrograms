@@ -158,7 +158,6 @@ RobotCommand_message::RobotCommand_message()
   // @@protoc_insertion_point(constructor:RobotCommand_message)
 }
 RobotCommand_message::RobotCommand_message(const RobotCommand_message& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -177,11 +176,6 @@ RobotCommand_message::RobotCommand_message(const RobotCommand_message& from)
   ::memcpy(&maxspeed_, &from.maxspeed_,
     reinterpret_cast<char*>(&iskickobs_) -
     reinterpret_cast<char*>(&maxspeed_) + sizeof(iskickobs_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:RobotCommand_message)
 }
 
@@ -229,23 +223,8 @@ RobotCommand_message* RobotCommand_message::New(::google::protobuf::Arena* arena
 }
 
 void RobotCommand_message::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:RobotCommand_message)
   if (_has_bits_[0 / 32] & 3u) {
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<RobotCommand_message*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(maxspeed_, iskickobs_);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_fin_pos()) {
       GOOGLE_DCHECK(fin_pos_ != NULL);
       fin_pos_->::position_message::Clear();
@@ -255,48 +234,27 @@ void RobotCommand_message::Clear() {
       fin_vel_->::position_message::Clear();
     }
   }
-<<<<<<< HEAD
   if (_has_bits_[0 / 32] & 252u) {
     ::memset(&maxspeed_, 0, reinterpret_cast<char*>(&iskickobs_) -
       reinterpret_cast<char*>(&maxspeed_) + sizeof(iskickobs_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool RobotCommand_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:RobotCommand_message)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:RobotCommand_message)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .position_message fin_pos = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_pos()));
         } else {
@@ -307,12 +265,7 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required .position_message fin_vel = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_fin_vel:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_vel()));
         } else {
@@ -323,13 +276,8 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float maxSpeed = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_maxspeed();
-=======
-        if (tag == 29) {
-         parse_maxSpeed:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &maxspeed_)));
@@ -341,13 +289,8 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float kickspeedx = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_kickspeedx();
-=======
-        if (tag == 37) {
-         parse_kickspeedx:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedx_)));
@@ -359,13 +302,8 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required float kickspeedz = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_kickspeedz();
-=======
-        if (tag == 45) {
-         parse_kickspeedz:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedz_)));
@@ -377,13 +315,8 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool useNav = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 48u) {
           set_has_usenav();
-=======
-        if (tag == 48) {
-         parse_useNav:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &usenav_)));
@@ -395,13 +328,8 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool isBallObs = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 56u) {
           set_has_isballobs();
-=======
-        if (tag == 56) {
-         parse_isBallObs:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isballobs_)));
@@ -413,23 +341,14 @@ bool RobotCommand_message::MergePartialFromCodedStream(
 
       // required bool isKickObs = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 64u) {
           set_has_iskickobs();
-=======
-        if (tag == 64) {
-         parse_isKickObs:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &iskickobs_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -507,14 +426,9 @@ void RobotCommand_message::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:RobotCommand_message)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* RobotCommand_message::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* RobotCommand_message::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:RobotCommand_message)
   // required .position_message fin_pos = 1;
   if (has_fin_pos()) {

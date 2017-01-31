@@ -184,7 +184,6 @@ grSim_Robot_Command::grSim_Robot_Command()
   // @@protoc_insertion_point(constructor:grSim_Robot_Command)
 }
 grSim_Robot_Command::grSim_Robot_Command(const grSim_Robot_Command& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -193,11 +192,6 @@ grSim_Robot_Command::grSim_Robot_Command(const grSim_Robot_Command& from)
   ::memcpy(&id_, &from.id_,
     reinterpret_cast<char*>(&wheel4_) -
     reinterpret_cast<char*>(&id_) + sizeof(wheel4_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_Robot_Command)
 }
 
@@ -239,7 +233,6 @@ grSim_Robot_Command* grSim_Robot_Command::New(::google::protobuf::Arena* arena) 
 }
 
 void grSim_Robot_Command::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_Robot_Command)
   if (_has_bits_[0 / 32] & 255u) {
     ::memset(&id_, 0, reinterpret_cast<char*>(&wheelsspeed_) -
@@ -251,56 +244,22 @@ void grSim_Robot_Command::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<grSim_Robot_Command*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(id_, wheelsspeed_);
-  }
-  ZR_(wheel1_, wheel4_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool grSim_Robot_Command::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_Robot_Command)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_Robot_Command)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint32 id = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_id();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &id_)));
@@ -312,13 +271,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required float kickspeedx = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 21u) {
           set_has_kickspeedx();
-=======
-        if (tag == 21) {
-         parse_kickspeedx:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedx_)));
@@ -330,13 +284,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required float kickspeedz = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 29u) {
           set_has_kickspeedz();
-=======
-        if (tag == 29) {
-         parse_kickspeedz:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedz_)));
@@ -348,13 +297,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required float veltangent = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 37u) {
           set_has_veltangent();
-=======
-        if (tag == 37) {
-         parse_veltangent:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &veltangent_)));
@@ -366,13 +310,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required float velnormal = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 45u) {
           set_has_velnormal();
-=======
-        if (tag == 45) {
-         parse_velnormal:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &velnormal_)));
@@ -384,13 +323,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required float velangular = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 53u) {
           set_has_velangular();
-=======
-        if (tag == 53) {
-         parse_velangular:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &velangular_)));
@@ -402,13 +336,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required bool spinner = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 56u) {
           set_has_spinner();
-=======
-        if (tag == 56) {
-         parse_spinner:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &spinner_)));
@@ -420,13 +349,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // required bool wheelsspeed = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 64u) {
           set_has_wheelsspeed();
-=======
-        if (tag == 64) {
-         parse_wheelsspeed:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &wheelsspeed_)));
@@ -438,13 +362,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // optional float wheel1 = 9;
       case 9: {
-<<<<<<< HEAD
         if (tag == 77u) {
           set_has_wheel1();
-=======
-        if (tag == 77) {
-         parse_wheel1:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &wheel1_)));
@@ -456,13 +375,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // optional float wheel2 = 10;
       case 10: {
-<<<<<<< HEAD
         if (tag == 85u) {
           set_has_wheel2();
-=======
-        if (tag == 85) {
-         parse_wheel2:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &wheel2_)));
@@ -474,13 +388,8 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // optional float wheel3 = 11;
       case 11: {
-<<<<<<< HEAD
         if (tag == 93u) {
           set_has_wheel3();
-=======
-        if (tag == 93) {
-         parse_wheel3:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &wheel3_)));
@@ -492,23 +401,14 @@ bool grSim_Robot_Command::MergePartialFromCodedStream(
 
       // optional float wheel4 = 12;
       case 12: {
-<<<<<<< HEAD
         if (tag == 101u) {
           set_has_wheel4();
-=======
-        if (tag == 101) {
-         parse_wheel4:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &wheel4_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -604,14 +504,9 @@ void grSim_Robot_Command::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_Robot_Command)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_Robot_Command::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_Robot_Command::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_Robot_Command)
   // required uint32 id = 1;
   if (has_id()) {
@@ -1214,7 +1109,6 @@ grSim_Commands::grSim_Commands()
   // @@protoc_insertion_point(constructor:grSim_Commands)
 }
 grSim_Commands::grSim_Commands(const grSim_Commands& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1224,11 +1118,6 @@ grSim_Commands::grSim_Commands(const grSim_Commands& from)
   ::memcpy(&timestamp_, &from.timestamp_,
     reinterpret_cast<char*>(&isteamyellow_) -
     reinterpret_cast<char*>(&timestamp_) + sizeof(isteamyellow_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_Commands)
 }
 
@@ -1270,14 +1159,7 @@ grSim_Commands* grSim_Commands::New(::google::protobuf::Arena* arena) const {
 }
 
 void grSim_Commands::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_Commands)
-=======
-  if (_has_bits_[0 / 32] & 3) {
-    timestamp_ = 0;
-    isteamyellow_ = false;
-  }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   robot_commands_.Clear();
   if (_has_bits_[0 / 32] & 3u) {
     ::memset(&timestamp_, 0, reinterpret_cast<char*>(&isteamyellow_) -
@@ -1289,30 +1171,18 @@ void grSim_Commands::Clear() {
 
 bool grSim_Commands::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_Commands)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_Commands)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double timestamp = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 9u) {
           set_has_timestamp();
-=======
-        if (tag == 9) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &timestamp_)));
@@ -1324,13 +1194,8 @@ bool grSim_Commands::MergePartialFromCodedStream(
 
       // required bool isteamyellow = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_isteamyellow();
-=======
-        if (tag == 16) {
-         parse_isteamyellow:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isteamyellow_)));
@@ -1342,25 +1207,14 @@ bool grSim_Commands::MergePartialFromCodedStream(
 
       // repeated .grSim_Robot_Command robot_commands = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 26u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 26) {
-         parse_robot_commands:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_robot_commands()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(26)) goto parse_robot_commands;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1412,14 +1266,9 @@ void grSim_Commands::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_Commands)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_Commands::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_Commands::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_Commands)
   // required double timestamp = 1;
   if (has_timestamp()) {
@@ -1545,10 +1394,6 @@ void grSim_Commands::CopyFrom(const grSim_Commands& from) {
 
 bool grSim_Commands::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
-<<<<<<< HEAD
-=======
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   if (!::google::protobuf::internal::AllAreInitialized(this->robot_commands())) return false;
   return true;
 }

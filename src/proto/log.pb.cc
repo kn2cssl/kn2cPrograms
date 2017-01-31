@@ -146,7 +146,6 @@ logRecord::logRecord()
   // @@protoc_insertion_point(constructor:logRecord)
 }
 logRecord::logRecord(const logRecord& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -167,11 +166,6 @@ logRecord::logRecord(const logRecord& from)
   } else {
     referee_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:logRecord)
 }
 
@@ -222,12 +216,8 @@ logRecord* logRecord::New(::google::protobuf::Arena* arena) const {
 }
 
 void logRecord::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:logRecord)
   if (_has_bits_[0 / 32] & 7u) {
-=======
-  if (_has_bits_[0 / 32] & 7) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_ai()) {
       GOOGLE_DCHECK(ai_ != NULL);
       ai_->::SSL_log::Clear();
@@ -247,29 +237,17 @@ void logRecord::Clear() {
 
 bool logRecord::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:logRecord)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:logRecord)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .SSL_log ai = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ai()));
         } else {
@@ -280,12 +258,7 @@ bool logRecord::MergePartialFromCodedStream(
 
       // optional .Vision_log vision = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_vision:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_vision()));
         } else {
@@ -296,21 +269,12 @@ bool logRecord::MergePartialFromCodedStream(
 
       // optional .Ref_log referee = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 26u) {
-=======
-        if (tag == 26) {
-         parse_referee:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_referee()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -364,14 +328,9 @@ void logRecord::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:logRecord)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* logRecord::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* logRecord::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:logRecord)
   // optional .SSL_log ai = 1;
   if (has_ai()) {

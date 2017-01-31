@@ -180,7 +180,6 @@ grSim_RobotReplacement::grSim_RobotReplacement()
   // @@protoc_insertion_point(constructor:grSim_RobotReplacement)
 }
 grSim_RobotReplacement::grSim_RobotReplacement(const grSim_RobotReplacement& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -189,11 +188,6 @@ grSim_RobotReplacement::grSim_RobotReplacement(const grSim_RobotReplacement& fro
   ::memcpy(&x_, &from.x_,
     reinterpret_cast<char*>(&yellowteam_) -
     reinterpret_cast<char*>(&x_) + sizeof(yellowteam_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_RobotReplacement)
 }
 
@@ -235,7 +229,6 @@ grSim_RobotReplacement* grSim_RobotReplacement::New(::google::protobuf::Arena* a
 }
 
 void grSim_RobotReplacement::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_RobotReplacement)
   if (_has_bits_[0 / 32] & 31u) {
     ::memset(&x_, 0, reinterpret_cast<char*>(&yellowteam_) -
@@ -243,55 +236,22 @@ void grSim_RobotReplacement::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<grSim_RobotReplacement*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 31) {
-    ZR_(x_, yellowteam_);
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool grSim_RobotReplacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_RobotReplacement)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_RobotReplacement)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 9u) {
           set_has_x();
-=======
-        if (tag == 9) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
@@ -303,13 +263,8 @@ bool grSim_RobotReplacement::MergePartialFromCodedStream(
 
       // required double y = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 17u) {
           set_has_y();
-=======
-        if (tag == 17) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
@@ -321,13 +276,8 @@ bool grSim_RobotReplacement::MergePartialFromCodedStream(
 
       // required double dir = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 25u) {
           set_has_dir();
-=======
-        if (tag == 25) {
-         parse_dir:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &dir_)));
@@ -339,13 +289,8 @@ bool grSim_RobotReplacement::MergePartialFromCodedStream(
 
       // required uint32 id = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 32u) {
           set_has_id();
-=======
-        if (tag == 32) {
-         parse_id:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &id_)));
@@ -357,23 +302,14 @@ bool grSim_RobotReplacement::MergePartialFromCodedStream(
 
       // required bool yellowteam = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 40u) {
           set_has_yellowteam();
-=======
-        if (tag == 40) {
-         parse_yellowteam:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &yellowteam_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -434,14 +370,9 @@ void grSim_RobotReplacement::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_RobotReplacement)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_RobotReplacement::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_RobotReplacement::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_RobotReplacement)
   // required double x = 1;
   if (has_x()) {
@@ -766,7 +697,6 @@ grSim_BallReplacement::grSim_BallReplacement()
   // @@protoc_insertion_point(constructor:grSim_BallReplacement)
 }
 grSim_BallReplacement::grSim_BallReplacement(const grSim_BallReplacement& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -775,11 +705,6 @@ grSim_BallReplacement::grSim_BallReplacement(const grSim_BallReplacement& from)
   ::memcpy(&x_, &from.x_,
     reinterpret_cast<char*>(&vy_) -
     reinterpret_cast<char*>(&x_) + sizeof(vy_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_BallReplacement)
 }
 
@@ -821,7 +746,6 @@ grSim_BallReplacement* grSim_BallReplacement::New(::google::protobuf::Arena* are
 }
 
 void grSim_BallReplacement::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_BallReplacement)
   if (_has_bits_[0 / 32] & 15u) {
     ::memset(&x_, 0, reinterpret_cast<char*>(&vy_) -
@@ -829,53 +753,22 @@ void grSim_BallReplacement::Clear() {
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<grSim_BallReplacement*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  ZR_(x_, vy_);
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool grSim_BallReplacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_BallReplacement)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_BallReplacement)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 9u) {
           set_has_x();
-=======
-        if (tag == 9) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
@@ -887,13 +780,8 @@ bool grSim_BallReplacement::MergePartialFromCodedStream(
 
       // required double y = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 17u) {
           set_has_y();
-=======
-        if (tag == 17) {
-         parse_y:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
@@ -905,13 +793,8 @@ bool grSim_BallReplacement::MergePartialFromCodedStream(
 
       // required double vx = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 25u) {
           set_has_vx();
-=======
-        if (tag == 25) {
-         parse_vx:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &vx_)));
@@ -923,23 +806,14 @@ bool grSim_BallReplacement::MergePartialFromCodedStream(
 
       // required double vy = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 33u) {
           set_has_vy();
-=======
-        if (tag == 33) {
-         parse_vy:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &vy_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -995,14 +869,9 @@ void grSim_BallReplacement::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_BallReplacement)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_BallReplacement::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_BallReplacement::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_BallReplacement)
   // required double x = 1;
   if (has_x()) {
@@ -1280,7 +1149,6 @@ grSim_Replacement::grSim_Replacement()
   // @@protoc_insertion_point(constructor:grSim_Replacement)
 }
 grSim_Replacement::grSim_Replacement(const grSim_Replacement& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1292,11 +1160,6 @@ grSim_Replacement::grSim_Replacement(const grSim_Replacement& from)
   } else {
     ball_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:grSim_Replacement)
 }
 
@@ -1340,13 +1203,7 @@ grSim_Replacement* grSim_Replacement::New(::google::protobuf::Arena* arena) cons
 }
 
 void grSim_Replacement::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:grSim_Replacement)
-=======
-  if (has_ball()) {
-    if (ball_ != NULL) ball_->::grSim_BallReplacement::Clear();
-  }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   robots_.Clear();
   if (has_ball()) {
     GOOGLE_DCHECK(ball_ != NULL);
@@ -1358,29 +1215,17 @@ void grSim_Replacement::Clear() {
 
 bool grSim_Replacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:grSim_Replacement)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:grSim_Replacement)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .grSim_BallReplacement ball = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ball()));
         } else {
@@ -1391,25 +1236,14 @@ bool grSim_Replacement::MergePartialFromCodedStream(
 
       // repeated .grSim_RobotReplacement robots = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 18) {
-         parse_robots:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_robots()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(18)) goto parse_robots;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1457,14 +1291,9 @@ void grSim_Replacement::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:grSim_Replacement)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* grSim_Replacement::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* grSim_Replacement::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:grSim_Replacement)
   // optional .grSim_BallReplacement ball = 1;
   if (has_ball()) {
@@ -1564,14 +1393,8 @@ void grSim_Replacement::CopyFrom(const grSim_Replacement& from) {
 bool grSim_Replacement::IsInitialized() const {
   if (!::google::protobuf::internal::AllAreInitialized(this->robots())) return false;
   if (has_ball()) {
-<<<<<<< HEAD
     if (!this->ball_->IsInitialized()) return false;
   }
-=======
-    if (!this->ball().IsInitialized()) return false;
-  }
-  if (!::google::protobuf::internal::AllAreInitialized(this->robots())) return false;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   return true;
 }
 

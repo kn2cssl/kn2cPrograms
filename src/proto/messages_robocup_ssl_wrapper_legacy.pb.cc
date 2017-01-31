@@ -145,7 +145,6 @@ SSL_WrapperPacket::SSL_WrapperPacket()
   // @@protoc_insertion_point(constructor:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
 }
 SSL_WrapperPacket::SSL_WrapperPacket(const SSL_WrapperPacket& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -161,11 +160,6 @@ SSL_WrapperPacket::SSL_WrapperPacket(const SSL_WrapperPacket& from)
   } else {
     geometry_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
 }
 
@@ -213,12 +207,8 @@ SSL_WrapperPacket* SSL_WrapperPacket::New(::google::protobuf::Arena* arena) cons
 }
 
 void SSL_WrapperPacket::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
   if (_has_bits_[0 / 32] & 3u) {
-=======
-  if (_has_bits_[0 / 32] & 3) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_detection()) {
       GOOGLE_DCHECK(detection_ != NULL);
       detection_->::SSL_DetectionFrame::Clear();
@@ -234,29 +224,17 @@ void SSL_WrapperPacket::Clear() {
 
 bool SSL_WrapperPacket::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .SSL_DetectionFrame detection = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_detection()));
         } else {
@@ -267,21 +245,12 @@ bool SSL_WrapperPacket::MergePartialFromCodedStream(
 
       // optional .RoboCup2014Legacy.Geometry.SSL_GeometryData geometry = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_geometry:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_geometry()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -329,14 +298,9 @@ void SSL_WrapperPacket::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_WrapperPacket::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_WrapperPacket::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:RoboCup2014Legacy.Wrapper.SSL_WrapperPacket)
   // optional .SSL_DetectionFrame detection = 1;
   if (has_detection()) {

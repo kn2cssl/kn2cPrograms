@@ -300,7 +300,6 @@ SSL_Referee_TeamInfo::SSL_Referee_TeamInfo()
   // @@protoc_insertion_point(constructor:SSL_Referee.TeamInfo)
 }
 SSL_Referee_TeamInfo::SSL_Referee_TeamInfo(const SSL_Referee_TeamInfo& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -314,31 +313,14 @@ SSL_Referee_TeamInfo::SSL_Referee_TeamInfo(const SSL_Referee_TeamInfo& from)
   ::memcpy(&score_, &from.score_,
     reinterpret_cast<char*>(&goalie_) -
     reinterpret_cast<char*>(&score_) + sizeof(goalie_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_Referee.TeamInfo)
 }
 
 void SSL_Referee_TeamInfo::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-<<<<<<< HEAD
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(&score_, 0, reinterpret_cast<char*>(&goalie_) -
     reinterpret_cast<char*>(&score_) + sizeof(goalie_));
-=======
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  score_ = 0u;
-  red_cards_ = 0u;
-  yellow_cards_ = 0u;
-  timeouts_ = 0u;
-  timeout_time_ = 0u;
-  goalie_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 SSL_Referee_TeamInfo::~SSL_Referee_TeamInfo() {
@@ -347,15 +329,7 @@ SSL_Referee_TeamInfo::~SSL_Referee_TeamInfo() {
 }
 
 void SSL_Referee_TeamInfo::SharedDtor() {
-<<<<<<< HEAD
   name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-=======
-  if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete name_;
-  }
-  if (this != default_instance_) {
-  }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 void SSL_Referee_TeamInfo::SetCachedSize(int size) const {
@@ -382,33 +356,7 @@ SSL_Referee_TeamInfo* SSL_Referee_TeamInfo::New(::google::protobuf::Arena* arena
 }
 
 void SSL_Referee_TeamInfo::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_Referee.TeamInfo)
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_Referee_TeamInfo*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 247) {
-    ZR_(score_, red_cards_);
-    ZR_(yellow_cards_, goalie_);
-    if (has_name()) {
-      if (name_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        name_->clear();
-      }
-    }
-  }
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   yellow_card_times_.Clear();
   if (has_name()) {
     GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
@@ -424,39 +372,23 @@ void SSL_Referee_TeamInfo::Clear() {
 
 bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_Referee.TeamInfo)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_Referee.TeamInfo)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string name = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-<<<<<<< HEAD
             "SSL_Referee.TeamInfo.name");
-=======
-            "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         } else {
           goto handle_unusual;
         }
@@ -465,13 +397,8 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 score = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
           set_has_score();
-=======
-        if (tag == 16) {
-         parse_score:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &score_)));
@@ -483,13 +410,8 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 red_cards = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 24u) {
           set_has_red_cards();
-=======
-        if (tag == 24) {
-         parse_red_cards:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &red_cards_)));
@@ -501,20 +423,11 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // repeated uint32 yellow_card_times = 4 [packed = true];
       case 4: {
-<<<<<<< HEAD
         if (tag == 34u) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_yellow_card_times())));
         } else if (tag == 32u) {
-=======
-        if (tag == 34) {
-         parse_yellow_card_times:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, this->mutable_yellow_card_times())));
-        } else if (tag == 32) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  1, 34u, input, this->mutable_yellow_card_times())));
@@ -526,13 +439,8 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 yellow_cards = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 40u) {
           set_has_yellow_cards();
-=======
-        if (tag == 40) {
-         parse_yellow_cards:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &yellow_cards_)));
@@ -544,13 +452,8 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 timeouts = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 48u) {
           set_has_timeouts();
-=======
-        if (tag == 48) {
-         parse_timeouts:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &timeouts_)));
@@ -562,13 +465,8 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 timeout_time = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 56u) {
           set_has_timeout_time();
-=======
-        if (tag == 56) {
-         parse_timeout_time:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &timeout_time_)));
@@ -580,23 +478,14 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
 
       // required uint32 goalie = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 64u) {
           set_has_goalie();
-=======
-        if (tag == 64) {
-         parse_goalie:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &goalie_)));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -630,11 +519,7 @@ void SSL_Referee_TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_Referee.TeamInfo.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
@@ -686,25 +571,16 @@ void SSL_Referee_TeamInfo::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_Referee.TeamInfo)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_Referee_TeamInfo::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_Referee_TeamInfo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_Referee.TeamInfo)
   // required string name = 1;
   if (has_name()) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "SSL_Referee.TeamInfo.name");
-=======
-      "name");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -1242,7 +1118,6 @@ SSL_Referee::SSL_Referee()
   // @@protoc_insertion_point(constructor:SSL_Referee)
 }
 SSL_Referee::SSL_Referee(const SSL_Referee& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -1261,11 +1136,6 @@ SSL_Referee::SSL_Referee(const SSL_Referee& from)
   ::memcpy(&packet_timestamp_, &from.packet_timestamp_,
     reinterpret_cast<char*>(&command_timestamp_) -
     reinterpret_cast<char*>(&packet_timestamp_) + sizeof(command_timestamp_));
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:SSL_Referee)
 }
 
@@ -1313,23 +1183,8 @@ SSL_Referee* SSL_Referee::New(::google::protobuf::Arena* arena) const {
 }
 
 void SSL_Referee::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:SSL_Referee)
   if (_has_bits_[0 / 32] & 3u) {
-=======
-#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
-  &reinterpret_cast<SSL_Referee*>(16)->f) - \
-   reinterpret_cast<char*>(16))
-
-#define ZR_(first, last) do {                              \
-    size_t f = OFFSET_OF_FIELD_(first);                    \
-    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
-    ::memset(&first, 0, n);                                \
-  } while (0)
-
-  if (_has_bits_[0 / 32] & 255) {
-    ZR_(packet_timestamp_, command_timestamp_);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_yellow()) {
       GOOGLE_DCHECK(yellow_ != NULL);
       yellow_->::SSL_Referee_TeamInfo::Clear();
@@ -1339,49 +1194,28 @@ void SSL_Referee::Clear() {
       blue_->::SSL_Referee_TeamInfo::Clear();
     }
   }
-<<<<<<< HEAD
   if (_has_bits_[0 / 32] & 252u) {
     ::memset(&packet_timestamp_, 0, reinterpret_cast<char*>(&command_timestamp_) -
       reinterpret_cast<char*>(&packet_timestamp_) + sizeof(command_timestamp_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear();
-=======
-
-#undef OFFSET_OF_FIELD_
-#undef ZR_
-
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool SSL_Referee::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:SSL_Referee)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:SSL_Referee)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint64 packet_timestamp = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 8u) {
           set_has_packet_timestamp();
-=======
-        if (tag == 8) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &packet_timestamp_)));
@@ -1393,12 +1227,7 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required .SSL_Referee.Stage stage = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 16u) {
-=======
-        if (tag == 16) {
-         parse_stage:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -1416,13 +1245,8 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // optional sint32 stage_time_left = 3;
       case 3: {
-<<<<<<< HEAD
         if (tag == 24u) {
           set_has_stage_time_left();
-=======
-        if (tag == 24) {
-         parse_stage_time_left:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_SINT32>(
                  input, &stage_time_left_)));
@@ -1434,12 +1258,7 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required .SSL_Referee.Command command = 4;
       case 4: {
-<<<<<<< HEAD
         if (tag == 32u) {
-=======
-        if (tag == 32) {
-         parse_command:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -1457,13 +1276,8 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required uint32 command_counter = 5;
       case 5: {
-<<<<<<< HEAD
         if (tag == 40u) {
           set_has_command_counter();
-=======
-        if (tag == 40) {
-         parse_command_counter:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &command_counter_)));
@@ -1475,13 +1289,8 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required uint64 command_timestamp = 6;
       case 6: {
-<<<<<<< HEAD
         if (tag == 48u) {
           set_has_command_timestamp();
-=======
-        if (tag == 48) {
-         parse_command_timestamp:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &command_timestamp_)));
@@ -1493,12 +1302,7 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required .SSL_Referee.TeamInfo yellow = 7;
       case 7: {
-<<<<<<< HEAD
         if (tag == 58u) {
-=======
-        if (tag == 58) {
-         parse_yellow:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_yellow()));
         } else {
@@ -1509,21 +1313,12 @@ bool SSL_Referee::MergePartialFromCodedStream(
 
       // required .SSL_Referee.TeamInfo blue = 8;
       case 8: {
-<<<<<<< HEAD
         if (tag == 66u) {
-=======
-        if (tag == 66) {
-         parse_blue:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_blue()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
-=======
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -1603,14 +1398,9 @@ void SSL_Referee::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:SSL_Referee)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* SSL_Referee::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* SSL_Referee::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:SSL_Referee)
   // required uint64 packet_timestamp = 1;
   if (has_packet_timestamp()) {

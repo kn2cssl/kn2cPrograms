@@ -149,7 +149,6 @@ Log_Frame::Log_Frame()
   // @@protoc_insertion_point(constructor:Log_Frame)
 }
 Log_Frame::Log_Frame(const Log_Frame& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
@@ -164,24 +163,13 @@ Log_Frame::Log_Frame(const Log_Frame& from)
   } else {
     frame_ = NULL;
   }
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:Log_Frame)
 }
 
 void Log_Frame::SharedCtor() {
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   refbox_cmd_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   frame_ = NULL;
-<<<<<<< HEAD
-=======
-  refbox_cmd_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 Log_Frame::~Log_Frame() {
@@ -190,15 +178,8 @@ Log_Frame::~Log_Frame() {
 }
 
 void Log_Frame::SharedDtor() {
-<<<<<<< HEAD
   refbox_cmd_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   if (this != internal_default_instance()) {
-=======
-  if (refbox_cmd_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-    delete refbox_cmd_;
-  }
-  if (this != default_instance_) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     delete frame_;
   }
 }
@@ -227,7 +208,6 @@ Log_Frame* Log_Frame::New(::google::protobuf::Arena* arena) const {
 }
 
 void Log_Frame::Clear() {
-<<<<<<< HEAD
 // @@protoc_insertion_point(message_clear_start:Log_Frame)
   if (_has_bits_[0 / 32] & 3u) {
     if (has_refbox_cmd()) {
@@ -237,16 +217,6 @@ void Log_Frame::Clear() {
     if (has_frame()) {
       GOOGLE_DCHECK(frame_ != NULL);
       frame_->::SSL_DetectionFrame::Clear();
-=======
-  if (_has_bits_[0 / 32] & 3) {
-    if (has_frame()) {
-      if (frame_ != NULL) frame_->::SSL_DetectionFrame::Clear();
-    }
-    if (has_refbox_cmd()) {
-      if (refbox_cmd_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
-        refbox_cmd_->clear();
-      }
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     }
   }
   _has_bits_.Clear();
@@ -255,29 +225,17 @@ void Log_Frame::Clear() {
 
 bool Log_Frame::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Log_Frame)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Log_Frame)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .SSL_DetectionFrame frame = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
-=======
-        if (tag == 10) {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_frame()));
         } else {
@@ -288,29 +246,16 @@ bool Log_Frame::MergePartialFromCodedStream(
 
       // required string refbox_cmd = 2;
       case 2: {
-<<<<<<< HEAD
         if (tag == 18u) {
-=======
-        if (tag == 18) {
-         parse_refbox_cmd:
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_refbox_cmd()));
           ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->refbox_cmd().data(), this->refbox_cmd().length(),
             ::google::protobuf::internal::WireFormat::PARSE,
-<<<<<<< HEAD
             "Log_Frame.refbox_cmd");
         } else {
           goto handle_unusual;
         }
-=======
-            "refbox_cmd");
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -350,11 +295,7 @@ void Log_Frame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->refbox_cmd().data(), this->refbox_cmd().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "Log_Frame.refbox_cmd");
-=======
-      "refbox_cmd");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->refbox_cmd(), output);
   }
@@ -366,14 +307,9 @@ void Log_Frame::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:Log_Frame)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* Log_Frame::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* Log_Frame::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:Log_Frame)
   // required .SSL_DetectionFrame frame = 1;
   if (has_frame()) {
@@ -387,11 +323,7 @@ void Log_Frame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->refbox_cmd().data(), this->refbox_cmd().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE,
-<<<<<<< HEAD
       "Log_Frame.refbox_cmd");
-=======
-      "refbox_cmd");
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         2, this->refbox_cmd(), target);
@@ -651,18 +583,12 @@ Refbox_Log::Refbox_Log()
   // @@protoc_insertion_point(constructor:Refbox_Log)
 }
 Refbox_Log::Refbox_Log(const Refbox_Log& from)
-<<<<<<< HEAD
   : ::google::protobuf::Message(),
       _internal_metadata_(NULL),
       _has_bits_(from._has_bits_),
       _cached_size_(0),
       log_(from.log_) {
   _internal_metadata_.MergeFrom(from._internal_metadata_);
-=======
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(copy_constructor:Refbox_Log)
 }
 
@@ -710,43 +636,24 @@ void Refbox_Log::Clear() {
 
 bool Refbox_Log::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-<<<<<<< HEAD
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
   // @@protoc_insertion_point(parse_start:Refbox_Log)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
-=======
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:Refbox_Log)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .Log_Frame log = 1;
       case 1: {
-<<<<<<< HEAD
         if (tag == 10u) {
           DO_(input->IncrementRecursionDepth());
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-=======
-        if (tag == 10) {
-         parse_log:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_log()));
         } else {
           goto handle_unusual;
         }
-<<<<<<< HEAD
         input->UnsafeDecrementRecursionDepth();
-=======
-        if (input->ExpectTag(10)) goto parse_log;
-        if (input->ExpectAtEnd()) goto success;
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
@@ -788,14 +695,9 @@ void Refbox_Log::SerializeWithCachedSizes(
   // @@protoc_insertion_point(serialize_end:Refbox_Log)
 }
 
-<<<<<<< HEAD
 ::google::protobuf::uint8* Refbox_Log::InternalSerializeWithCachedSizesToArray(
     bool deterministic, ::google::protobuf::uint8* target) const {
   (void)deterministic; // Unused
-=======
-::google::protobuf::uint8* Refbox_Log::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   // @@protoc_insertion_point(serialize_to_array_start:Refbox_Log)
   // repeated .Log_Frame log = 1;
   for (unsigned int i = 0, n = this->log_size(); i < n; i++) {
@@ -876,10 +778,6 @@ void Refbox_Log::CopyFrom(const Refbox_Log& from) {
 }
 
 bool Refbox_Log::IsInitialized() const {
-<<<<<<< HEAD
-=======
-
->>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   if (!::google::protobuf::internal::AllAreInitialized(this->log())) return false;
   return true;
 }

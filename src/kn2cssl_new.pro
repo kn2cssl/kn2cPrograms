@@ -211,6 +211,7 @@ SOURCES +=	main.cpp \
     ai/skill/skillonetouch.cpp \
     ai/tactic/tacticformation.cpp \
     ai/play/playformations.cpp \
+<<<<<<< HEAD
     ai/tactic/tacticteststandingforwardenemy.cpp \
     ai/play/playhw2_1.cpp \
     ai/play/mantomandefense.cpp \
@@ -218,6 +219,8 @@ SOURCES +=	main.cpp \
     ai/skill/shootball.cpp \
     ai/play/playstop_hejazi.cpp \
     ai/play/freeKicks/freekicktest2.cpp
+=======
+>>>>>>> 4bde963eede2897a0748e0221474ee6c1450efde
 
 HEADERS  += \
     etc/settings.h \
@@ -364,6 +367,7 @@ HEADERS  += \
     ai/skill/skillonetouch.h \
     ai/tactic/tacticformation.h \
     ai/play/playformations.h \
+<<<<<<< HEAD
     ai/tactic/tacticteststandingforwardenemy.h \
     ai/play/playhw2_1.h \
     ai/play/mantomandefense.h \
@@ -371,6 +375,8 @@ HEADERS  += \
     ai/skill/shootball.h \
     ai/play/playstop_hejazi.h \
     ai/play/freeKicks/freekicktest2.h
+=======
+>>>>>>> 4bde963eede2897a0748e0221474ee6c1450efde
 
 FORMS    +=	ui/mainwindow.ui
 
