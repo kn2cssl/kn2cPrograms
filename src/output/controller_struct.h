@@ -17,7 +17,6 @@ struct ControllerInput
     int id;
     Position cur_pos;
     Position cur_vel;
-    Position last_vel;
 
     Position mid_pos;
     Position mid_vel;

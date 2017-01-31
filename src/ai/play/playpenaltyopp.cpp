@@ -51,12 +51,27 @@ void PlayPenaltyOpp::setTactics(int index)
 void PlayPenaltyOpp::setPositions()
 {
     Position goaliePos,leftDefPos,rightDefPos,MidDefPos,rightAttackerPos,leftAttackerPos,midAttackerPos;
-    if(wm->ball.vel.loc.length()<0.8){
+    if(wm->ball.vel.loc.length()<0.2){
             int kickerId;
             if(wm->kn->findNearestOppositeTo(wm->ball.pos.loc).length()!=0){
                 kickerId=wm->kn->findNearestOppositeTo(wm->ball.pos.loc).at(0);
                 Line2D shot(wm->ball.pos.loc,wm->oppRobot[kickerId].pos.loc);
-                Segment2D gLine(Field::ourGoalPost_L,Field::ourGoalPost_R);
+                Vector2D GL,GR;
+                GL=Field::ourGoalPost_L;
+                GR=Field::ourGoalPost_R;
+                if(Field::ourGoalPost_L.y>0){
+                    GL.y+=200;
+                }
+                else{
+                    GL.y-=200;
+                }
+                if(Field::ourGoalPost_R.y>0){
+                    GR.y+=200;
+                }
+                else{
+                    GR.y-=200;
+                }
+                Segment2D gLine(GL,GR);
                 goaliePos.loc=gLine.intersection(shot);
                 if(gLine.contains(goaliePos.loc)==false){
                     goaliePos.loc=Field::ourGoalCenter;
@@ -84,7 +99,18 @@ void PlayPenaltyOpp::setPositions()
             }
             goaliePos.dir=(wm->ball.pos.loc-goaliePos.loc).dir().radian();
     }
+    if(wm->ball.pos.loc.dist(Field::ourGoalCenter)>450){
+        if(wm->ourRobot[tGoalie->getID()].pos.loc.dist(goaliePos.loc)>100){
+                if(goaliePos.loc.y>Field::ourGoalCenter.y){
+                    goaliePos.loc.y+=20;
+                }
+                if(goaliePos.loc.y<Field::ourGoalCenter.y){
+                    goaliePos.loc.y-=20;
+                }
+        }
+    }
     tGoalie->setIdlePosition(goaliePos);
+    wm->debug_pos.append(goaliePos.loc);
     //wm->debug_pos.append(goaliePos.loc);   arminTest
 
     MidDefPos.loc.x=(4*Field::ourGoalCenter.x+Field::oppGoalCenter.x)/5;
@@ -118,40 +144,44 @@ void PlayPenaltyOpp::setPositions()
 
 void PlayPenaltyOpp::initRole()
 {
+    QList <int> activeAgents=wm->kn->ActiveAgents();
 
-    switch (wm->kn->ActiveAgents().length()) {
+    if(wm->ourRobot[wm->ref_goalie_our].isValid){
+        activeAgents.removeOne(wm->ref_goalie_our);
+        wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
+    }
+
+    switch (activeAgents.length()) {
+
     case 1:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        //wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        wm->ourRobot[activeAgents.at(0)].Role=DefenderMid;
         break;
     case 2:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
-        wm->ourRobot[wm->kn->ActiveAgents().at(1)].Role=DefenderMid;
+        //wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        wm->ourRobot[activeAgents.at(0)].Role=DefenderRight;
+        wm->ourRobot[activeAgents.at(1)].Role=DefenderLeft;
         break;
     case 3:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
-        wm->ourRobot[wm->kn->ActiveAgents().at(1)].Role=DefenderRight;
-        wm->ourRobot[wm->kn->ActiveAgents().at(2)].Role=DefenderLeft;
+        //wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        wm->ourRobot[activeAgents.at(0)].Role=DefenderMid;
+        wm->ourRobot[activeAgents.at(1)].Role=DefenderRight;
+        wm->ourRobot[activeAgents.at(2)].Role=DefenderLeft;
         break;
     case 4:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
-        wm->ourRobot[wm->kn->ActiveAgents().at(1)].Role=DefenderMid;
-        wm->ourRobot[wm->kn->ActiveAgents().at(2)].Role=DefenderRight;
-        wm->ourRobot[wm->kn->ActiveAgents().at(3)].Role=DefenderLeft;
+        //wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        wm->ourRobot[activeAgents.at(0)].Role=DefenderMid;
+        wm->ourRobot[activeAgents.at(1)].Role=DefenderRight;
+        wm->ourRobot[activeAgents.at(2)].Role=DefenderLeft;
+        wm->ourRobot[activeAgents.at(3)].Role=AttackerMid;
         break;
     case 5:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
-        wm->ourRobot[wm->kn->ActiveAgents().at(1)].Role=DefenderMid;
-        wm->ourRobot[wm->kn->ActiveAgents().at(2)].Role=DefenderRight;
-        wm->ourRobot[wm->kn->ActiveAgents().at(3)].Role=DefenderLeft;
-        wm->ourRobot[wm->kn->ActiveAgents().at(4)].Role=AttackerMid;
-        break;
-    case 6:
-        wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
-        wm->ourRobot[wm->kn->ActiveAgents().at(1)].Role=DefenderMid;
-        wm->ourRobot[wm->kn->ActiveAgents().at(2)].Role=DefenderRight;
-        wm->ourRobot[wm->kn->ActiveAgents().at(3)].Role=DefenderLeft;
-        wm->ourRobot[wm->kn->ActiveAgents().at(4)].Role=AttackerRight;
-        wm->ourRobot[wm->kn->ActiveAgents().at(5)].Role=AttackerLeft;
+        //wm->ourRobot[wm->kn->ActiveAgents().at(0)].Role=Golie;
+        wm->ourRobot[activeAgents.at(0)].Role=DefenderMid;
+        wm->ourRobot[activeAgents.at(1)].Role=DefenderRight;
+        wm->ourRobot[activeAgents.at(2)].Role=DefenderLeft;
+        wm->ourRobot[activeAgents.at(3)].Role=AttackerRight;
+        wm->ourRobot[activeAgents.at(4)].Role=AttackerLeft;
         break;
     default:
         break;

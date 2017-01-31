@@ -254,7 +254,8 @@ void RenderArea::paintEvent(QPaintEvent *)
                 QPoint point(_sc->wm->debug_pos.at(i).x/WORLD_SCALE, -_sc->wm->debug_pos.at(i).y/WORLD_SCALE);
                 painter.setPen(QColor::fromRgb(255,0,0));
                 painter.setBrush(*brush_debug);
-                painter.drawEllipse(point,BALL_R,BALL_R);
+                //painter.drawEllipse(point,BALL_R,BALL_R);
+                painter.drawEllipse(point,1,1);
             }
         }
         else if(_sc->wm->debug_type == 2)

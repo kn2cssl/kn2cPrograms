@@ -8,6 +8,8 @@ RobotCommand TacticTest2::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid) return rc;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
     if(id==5){ //3
         Circle2D ballArea(wm->ball.pos.loc,300);
         Circle2D ballShoutArea(wm->ball.pos.loc,ROBOT_RADIUS-40);
@@ -163,5 +165,16 @@ RobotCommand TacticTest2::getCommand()
     //wm->debug_pos.append(Field::ourGoalCenter);
     //wm->debug_pos.append(Field::ourGoalPost_L);
     //wm->debug_pos.append(Field::ourGoalPost_R);
+=======
+=======
+>>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
+    rc.fin_pos.loc = Vector2D(1300,100);
+    rc.maxSpeed = 2;
+    rc.useNav = true;
+
+<<<<<<< HEAD
+>>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
+=======
+>>>>>>> 5aee4ed9254def077fb748ede91039b2d492a21c
     return rc;
 }

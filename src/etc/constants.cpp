@@ -88,6 +88,7 @@ void setup_consts(QString field_size)
         goalCircleDEF_R = goalCircle_R + centerCircle_R/2 + 200;
 
         // Ours.
+        //armin sadreddin
         ourGoalCenter = Vector2D(MinX, 0);
         ourGoalPost_L = Vector2D(MinX, 500);
         ourGoalPost_R = Vector2D(MinX, -500);
