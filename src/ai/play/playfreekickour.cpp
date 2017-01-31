@@ -81,6 +81,15 @@ void PlayFreeKickOur::execute()
         if( wm->select_fk[11] )
             fk.append(new freeKick11(wm));
 
+<<<<<<< HEAD
+        if(wm->select_fk[12])
+            fk.append(new freeKickTest2(wm));
+=======
+        wm->select_fk[12]=true;
+        if( wm->select_fk[12] )
+            fk.append(new freekicktest1(wm));
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+
         if( wm->select_fk[NUMBEROFFREEKICKS-1] )
             fk.append(new freeKick47(wm));
 

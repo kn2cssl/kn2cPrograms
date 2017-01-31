@@ -140,7 +140,7 @@ void PlayKickoffOur::execute()
 
     setPositions();
 
-    if( wm->cmgs.canKickBall() )
+    if( wm->cmgs.gameOn())
         wm->ourRobot[tAttackerMid->getID()].Status =  AgentStatus::Kicking;
 
 }

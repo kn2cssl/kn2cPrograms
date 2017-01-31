@@ -1,3 +1,4 @@
+syntax="proto2";
 message position_message
 {
 	required float x = 1;

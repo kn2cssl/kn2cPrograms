@@ -1,3 +1,4 @@
+syntax="proto2";
 import "position_message.proto"; 
 import "RobotCommand_message.proto";
 

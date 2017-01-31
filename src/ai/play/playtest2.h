@@ -3,6 +3,7 @@
 
 #include "play.h"
 #include "QDebug"
+#include "tactic/tactichalt.h"
 
 class PlayTest2 : public Play
 {
@@ -12,14 +13,15 @@ public:
     virtual void execute();
     //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
+    Vector2D generatePos (int radius,double alpha);
 
 private:
-    TacticGoalie* tGolie;
-    TacticTestFriction* tTF;
-    TacticHalt* thalt;
-    TacticTest* tTest;
-
+<<<<<<< HEAD
+=======
+    TacticTest2* tTest;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     virtual void initRole();
+    TacticTest2* tTest;
 };
 
 #endif // PLAYTEST2_H

@@ -102,13 +102,13 @@ void PlayGameOn::pressing(int ballOwner)
     wm->marking = m2m;
 }
 
-int PlayGameOn::findBallOwner()
+int PlayGameOn::findBallOwner()  // I was here
 {
     int ownerIndex = -1;
     QList<int> candidates , ours = wm->kn->ActiveAgents();
     QList<double> distance2Prediction;
 
-    if( wm->ball.isValid && !wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
+    if( wm->ball.isValid && !wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )  //  agar toop valid bud va dakhele mohavate nabud
     {
         if( wm->defenceMode )
             candidates = wm->kn->findAttackers();
@@ -281,7 +281,6 @@ QList<AgentRegion> PlayGameOn::freeRegions()
 void PlayGameOn::initRole()
 {
     wm->marking.clear();
-
     QList<int> activeAgents=wm->kn->ActiveAgents();
     QList<int> attackers;
     numberOfPlayers = activeAgents.size();
@@ -303,6 +302,7 @@ void PlayGameOn::initRole()
             activeAgents.removeAt(i);
         }
     }
+    
     int counter = 0;
     while( counter < activeAgents.size() )
     {

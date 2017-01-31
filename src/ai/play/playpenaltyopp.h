@@ -19,6 +19,7 @@ private:
 private:
     TacticDefender* tDefenderLeft;
     TacticDefender* tDefenderRight;
+    TacticDefender* tDefenderMid;
     TacticGoalie* tGoalie;
     TacticAttacker* tAttackerMid;
     TacticAttacker* tAttackerRight;

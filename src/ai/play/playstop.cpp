@@ -18,13 +18,13 @@ PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
 
 int PlayStop::enterCondition()
 {
-    if(wm->gs == STATE_Stop)
+    /*if(wm->gs == STATE_Stop)
         return 100;
     else if(wm->cmgs.canMove() && wm->cmgs.gameOn()==false && wm->cmgs.allowedNearBall()==false)
         return 10;
     else
-        return 0;
-    //        return 20000;
+        return 0;*/
+            return 0;
 }
 
 bool PlayStop::collisionwithDefenders(Vector2D center, Vector2D left, Vector2D right)

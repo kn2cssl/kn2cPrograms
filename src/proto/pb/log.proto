@@ -1,3 +1,4 @@
+syntax="proto2";
 import "vision_log.proto";
 import "ssl_log.proto";
 import "ref_log.proto";

@@ -1,0 +1,10 @@
+import "position_message.proto"; 
+
+message Ball_message
+{
+	required bool isValid = 1;	
+	
+	required position_message position = 2;
+	required position_message velocity = 3;
+}
+

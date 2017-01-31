@@ -1,3 +1,4 @@
+syntax="proto2";
 import "Robot_message.proto";
 import "Ball_message.proto";
 

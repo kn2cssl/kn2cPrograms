@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,83 +16,112 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class logRecordDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<logRecord> {};
+logRecordDefaultTypeInternal _logRecord_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* logRecord_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  logRecord_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_log_2eproto() {
-  protobuf_AddDesc_log_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "log.proto");
-  GOOGLE_CHECK(file != NULL);
-  logRecord_descriptor_ = file->message_type(0);
-  static const int logRecord_offsets_[3] = {
+const ::google::protobuf::uint32* protobuf_Offsets_log_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_log_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, ai_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, vision_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, referee_),
+    0,
+    1,
+    2,
   };
-  logRecord_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      logRecord_descriptor_,
-      logRecord::default_instance_,
-      logRecord_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(logRecord, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(logRecord));
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 7, sizeof(logRecord)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_logRecord_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_log_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_log_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "log.proto", schemas, file_default_instances, protobuf_Offsets_log_2eproto(), factory,
+      file_level_metadata, NULL, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    logRecord_descriptor_, &logRecord::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_log_2eproto() {
-  delete logRecord::default_instance_;
-  delete logRecord_reflection_;
+  _logRecord_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
 }
 
-void protobuf_AddDesc_log_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_log_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::protobuf_InitDefaults_vision_5flog_2eproto();
+  ::protobuf_InitDefaults_ssl_5flog_2eproto();
+  ::protobuf_InitDefaults_ref_5flog_2eproto();
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _logRecord_default_instance_.DefaultConstruct();
+  _logRecord_default_instance_.get_mutable()->ai_ = const_cast< ::SSL_log*>(
+      ::SSL_log::internal_default_instance());
+  _logRecord_default_instance_.get_mutable()->vision_ = const_cast< ::Vision_log*>(
+      ::Vision_log::internal_default_instance());
+  _logRecord_default_instance_.get_mutable()->referee_ = const_cast< ::Ref_log*>(
+      ::Ref_log::internal_default_instance());
+}
+
+void protobuf_InitDefaults_log_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_log_2eproto_impl);
+}
+void protobuf_AddDesc_log_2eproto_impl() {
+  protobuf_InitDefaults_log_2eproto();
+  static const char descriptor[] = {
+      "\n\tlog.proto\032\020vision_log.proto\032\rssl_log.p"
+      "roto\032\rref_log.proto\"Y\n\tlogRecord\022\024\n\002ai\030\001"
+      " \001(\0132\010.SSL_log\022\033\n\006vision\030\002 \001(\0132\013.Vision_"
+      "log\022\031\n\007referee\030\003 \001(\0132\010.Ref_log"
+  };
+  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
+      descriptor, 150);
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
+    "log.proto", &protobuf_RegisterTypes);
   ::protobuf_AddDesc_vision_5flog_2eproto();
   ::protobuf_AddDesc_ssl_5flog_2eproto();
   ::protobuf_AddDesc_ref_5flog_2eproto();
-  ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\tlog.proto\032\020vision_log.proto\032\rssl_log.p"
-    "roto\032\rref_log.proto\"Y\n\tlogRecord\022\024\n\002ai\030\001"
-    " \001(\0132\010.SSL_log\022\033\n\006vision\030\002 \001(\0132\013.Vision_"
-    "log\022\031\n\007referee\030\003 \001(\0132\010.Ref_log", 150);
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
-    "log.proto", &protobuf_RegisterTypes);
-  logRecord::default_instance_ = new logRecord();
-  logRecord::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_log_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_log_2eproto_once_);
+void protobuf_AddDesc_log_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_log_2eproto_once_,
+                 &protobuf_AddDesc_log_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_log_2eproto {
   StaticDescriptorInitializer_log_2eproto() {
@@ -101,45 +131,69 @@ struct StaticDescriptorInitializer_log_2eproto {
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int logRecord::kAiFieldNumber;
 const int logRecord::kVisionFieldNumber;
 const int logRecord::kRefereeFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 logRecord::logRecord()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_log_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:logRecord)
 }
-
-void logRecord::InitAsDefaultInstance() {
-  ai_ = const_cast< ::SSL_log*>(&::SSL_log::default_instance());
-  vision_ = const_cast< ::Vision_log*>(&::Vision_log::default_instance());
-  referee_ = const_cast< ::Ref_log*>(&::Ref_log::default_instance());
-}
-
 logRecord::logRecord(const logRecord& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_ai()) {
+    ai_ = new ::SSL_log(*from.ai_);
+  } else {
+    ai_ = NULL;
+  }
+  if (from.has_vision()) {
+    vision_ = new ::Vision_log(*from.vision_);
+  } else {
+    vision_ = NULL;
+  }
+  if (from.has_referee()) {
+    referee_ = new ::Ref_log(*from.referee_);
+  } else {
+    referee_ = NULL;
+  }
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:logRecord)
 }
 
 void logRecord::SharedCtor() {
   _cached_size_ = 0;
-  ai_ = NULL;
-  vision_ = NULL;
-  referee_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&ai_, 0, reinterpret_cast<char*>(&referee_) -
+    reinterpret_cast<char*>(&ai_) + sizeof(referee_));
 }
 
 logRecord::~logRecord() {
+  // @@protoc_insertion_point(destructor:logRecord)
   SharedDtor();
 }
 
 void logRecord::SharedDtor() {
-  if (this != default_instance_) {
+  if (this != internal_default_instance()) {
     delete ai_;
+  }
+  if (this != internal_default_instance()) {
     delete vision_;
+  }
+  if (this != internal_default_instance()) {
     delete referee_;
   }
 }
@@ -151,88 +205,121 @@ void logRecord::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* logRecord::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return logRecord_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const logRecord& logRecord::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_log_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_log_2eproto();
+  return *internal_default_instance();
 }
 
-logRecord* logRecord::default_instance_ = NULL;
-
-logRecord* logRecord::New() const {
-  return new logRecord;
+logRecord* logRecord::New(::google::protobuf::Arena* arena) const {
+  logRecord* n = new logRecord;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void logRecord::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:logRecord)
+  if (_has_bits_[0 / 32] & 7u) {
+=======
+  if (_has_bits_[0 / 32] & 7) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_ai()) {
-      if (ai_ != NULL) ai_->::SSL_log::Clear();
+      GOOGLE_DCHECK(ai_ != NULL);
+      ai_->::SSL_log::Clear();
     }
     if (has_vision()) {
-      if (vision_ != NULL) vision_->::Vision_log::Clear();
+      GOOGLE_DCHECK(vision_ != NULL);
+      vision_->::Vision_log::Clear();
     }
     if (has_referee()) {
-      if (referee_ != NULL) referee_->::Ref_log::Clear();
+      GOOGLE_DCHECK(referee_ != NULL);
+      referee_->::Ref_log::Clear();
     }
   }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
 }
 
 bool logRecord::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:logRecord)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:logRecord)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .SSL_log ai = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 10u) {
+=======
+        if (tag == 10) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ai()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_vision;
         break;
       }
 
       // optional .Vision_log vision = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 18u) {
+=======
+        if (tag == 18) {
          parse_vision:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_vision()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_referee;
         break;
       }
 
       // optional .Ref_log referee = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 26u) {
+=======
+        if (tag == 26) {
          parse_referee:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_referee()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+<<<<<<< HEAD
+=======
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -240,118 +327,140 @@ bool logRecord::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:logRecord)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:logRecord)
+  return false;
 #undef DO_
 }
 
 void logRecord::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:logRecord)
   // optional .SSL_log ai = 1;
   if (has_ai()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->ai(), output);
+      1, *this->ai_, output);
   }
 
   // optional .Vision_log vision = 2;
   if (has_vision()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->vision(), output);
+      2, *this->vision_, output);
   }
 
   // optional .Ref_log referee = 3;
   if (has_referee()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->referee(), output);
+      3, *this->referee_, output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:logRecord)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* logRecord::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* logRecord::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:logRecord)
   // optional .SSL_log ai = 1;
   if (has_ai()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->ai(), target);
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->ai_, false, target);
   }
 
   // optional .Vision_log vision = 2;
   if (has_vision()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->vision(), target);
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->vision_, false, target);
   }
 
   // optional .Ref_log referee = 3;
   if (has_referee()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->referee(), target);
+      InternalWriteMessageNoVirtualToArray(
+        3, *this->referee_, false, target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:logRecord)
   return target;
 }
 
-int logRecord::ByteSize() const {
-  int total_size = 0;
+size_t logRecord::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:logRecord)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  if (_has_bits_[0 / 32] & 7u) {
     // optional .SSL_log ai = 1;
     if (has_ai()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->ai());
+          *this->ai_);
     }
 
     // optional .Vision_log vision = 2;
     if (has_vision()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->vision());
+          *this->vision_);
     }
 
     // optional .Ref_log referee = 3;
     if (has_referee()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->referee());
+          *this->referee_);
     }
 
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void logRecord::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:logRecord)
+  GOOGLE_DCHECK_NE(&from, this);
   const logRecord* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const logRecord*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const logRecord>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:logRecord)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:logRecord)
     MergeFrom(*source);
   }
 }
 
 void logRecord::MergeFrom(const logRecord& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:logRecord)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 7u) {
     if (from.has_ai()) {
       mutable_ai()->::SSL_log::MergeFrom(from.ai());
     }
@@ -362,54 +471,192 @@ void logRecord::MergeFrom(const logRecord& from) {
       mutable_referee()->::Ref_log::MergeFrom(from.referee());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void logRecord::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:logRecord)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void logRecord::CopyFrom(const logRecord& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:logRecord)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 bool logRecord::IsInitialized() const {
-
   if (has_ai()) {
-    if (!this->ai().IsInitialized()) return false;
+    if (!this->ai_->IsInitialized()) return false;
   }
   if (has_vision()) {
-    if (!this->vision().IsInitialized()) return false;
+    if (!this->vision_->IsInitialized()) return false;
   }
   if (has_referee()) {
-    if (!this->referee().IsInitialized()) return false;
+    if (!this->referee_->IsInitialized()) return false;
   }
   return true;
 }
 
 void logRecord::Swap(logRecord* other) {
-  if (other != this) {
-    std::swap(ai_, other->ai_);
-    std::swap(vision_, other->vision_);
-    std::swap(referee_, other->referee_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void logRecord::InternalSwap(logRecord* other) {
+  std::swap(ai_, other->ai_);
+  std::swap(vision_, other->vision_);
+  std::swap(referee_, other->referee_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata logRecord::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = logRecord_descriptor_;
-  metadata.reflection = logRecord_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// logRecord
+
+// optional .SSL_log ai = 1;
+bool logRecord::has_ai() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void logRecord::set_has_ai() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void logRecord::clear_has_ai() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void logRecord::clear_ai() {
+  if (ai_ != NULL) ai_->::SSL_log::Clear();
+  clear_has_ai();
+}
+const ::SSL_log& logRecord::ai() const {
+  // @@protoc_insertion_point(field_get:logRecord.ai)
+  return ai_ != NULL ? *ai_
+                         : *::SSL_log::internal_default_instance();
+}
+::SSL_log* logRecord::mutable_ai() {
+  set_has_ai();
+  if (ai_ == NULL) {
+    ai_ = new ::SSL_log;
+  }
+  // @@protoc_insertion_point(field_mutable:logRecord.ai)
+  return ai_;
+}
+::SSL_log* logRecord::release_ai() {
+  // @@protoc_insertion_point(field_release:logRecord.ai)
+  clear_has_ai();
+  ::SSL_log* temp = ai_;
+  ai_ = NULL;
+  return temp;
+}
+void logRecord::set_allocated_ai(::SSL_log* ai) {
+  delete ai_;
+  ai_ = ai;
+  if (ai) {
+    set_has_ai();
+  } else {
+    clear_has_ai();
+  }
+  // @@protoc_insertion_point(field_set_allocated:logRecord.ai)
+}
+
+// optional .Vision_log vision = 2;
+bool logRecord::has_vision() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void logRecord::set_has_vision() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void logRecord::clear_has_vision() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void logRecord::clear_vision() {
+  if (vision_ != NULL) vision_->::Vision_log::Clear();
+  clear_has_vision();
+}
+const ::Vision_log& logRecord::vision() const {
+  // @@protoc_insertion_point(field_get:logRecord.vision)
+  return vision_ != NULL ? *vision_
+                         : *::Vision_log::internal_default_instance();
+}
+::Vision_log* logRecord::mutable_vision() {
+  set_has_vision();
+  if (vision_ == NULL) {
+    vision_ = new ::Vision_log;
+  }
+  // @@protoc_insertion_point(field_mutable:logRecord.vision)
+  return vision_;
+}
+::Vision_log* logRecord::release_vision() {
+  // @@protoc_insertion_point(field_release:logRecord.vision)
+  clear_has_vision();
+  ::Vision_log* temp = vision_;
+  vision_ = NULL;
+  return temp;
+}
+void logRecord::set_allocated_vision(::Vision_log* vision) {
+  delete vision_;
+  vision_ = vision;
+  if (vision) {
+    set_has_vision();
+  } else {
+    clear_has_vision();
+  }
+  // @@protoc_insertion_point(field_set_allocated:logRecord.vision)
+}
+
+// optional .Ref_log referee = 3;
+bool logRecord::has_referee() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void logRecord::set_has_referee() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void logRecord::clear_has_referee() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void logRecord::clear_referee() {
+  if (referee_ != NULL) referee_->::Ref_log::Clear();
+  clear_has_referee();
+}
+const ::Ref_log& logRecord::referee() const {
+  // @@protoc_insertion_point(field_get:logRecord.referee)
+  return referee_ != NULL ? *referee_
+                         : *::Ref_log::internal_default_instance();
+}
+::Ref_log* logRecord::mutable_referee() {
+  set_has_referee();
+  if (referee_ == NULL) {
+    referee_ = new ::Ref_log;
+  }
+  // @@protoc_insertion_point(field_mutable:logRecord.referee)
+  return referee_;
+}
+::Ref_log* logRecord::release_referee() {
+  // @@protoc_insertion_point(field_release:logRecord.referee)
+  clear_has_referee();
+  ::Ref_log* temp = referee_;
+  referee_ = NULL;
+  return temp;
+}
+void logRecord::set_allocated_referee(::Ref_log* referee) {
+  delete referee_;
+  referee_ = referee;
+  if (referee) {
+    set_has_referee();
+  } else {
+    clear_has_referee();
+  }
+  // @@protoc_insertion_point(field_set_allocated:logRecord.referee)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

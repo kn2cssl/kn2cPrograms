@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,24 +16,23 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class RobotCommand_messageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<RobotCommand_message> {};
+RobotCommand_messageDefaultTypeInternal _RobotCommand_message_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* RobotCommand_message_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  RobotCommand_message_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_RobotCommand_5fmessage_2eproto() {
-  protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "RobotCommand_message.proto");
-  GOOGLE_CHECK(file != NULL);
-  RobotCommand_message_descriptor_ = file->message_type(0);
-  static const int RobotCommand_message_offsets_[8] = {
+const ::google::protobuf::uint32* protobuf_Offsets_RobotCommand_5fmessage_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_RobotCommand_5fmessage_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, fin_pos_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, fin_vel_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, maxspeed_),
@@ -41,63 +41,94 @@ void protobuf_AssignDesc_RobotCommand_5fmessage_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, usenav_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, isballobs_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, iskickobs_),
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
   };
-  RobotCommand_message_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      RobotCommand_message_descriptor_,
-      RobotCommand_message::default_instance_,
-      RobotCommand_message_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(RobotCommand_message, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(RobotCommand_message));
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 12, sizeof(RobotCommand_message)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_RobotCommand_message_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_RobotCommand_5fmessage_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "RobotCommand_message.proto", schemas, file_default_instances, protobuf_Offsets_RobotCommand_5fmessage_2eproto(), factory,
+      file_level_metadata, NULL, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    RobotCommand_message_descriptor_, &RobotCommand_message::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_RobotCommand_5fmessage_2eproto() {
-  delete RobotCommand_message::default_instance_;
-  delete RobotCommand_message_reflection_;
+  _RobotCommand_message_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
 }
 
-void protobuf_AddDesc_RobotCommand_5fmessage_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_RobotCommand_5fmessage_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::protobuf_AddDesc_position_5fmessage_2eproto();
+  ::protobuf_InitDefaults_position_5fmessage_2eproto();
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _RobotCommand_message_default_instance_.DefaultConstruct();
+  _RobotCommand_message_default_instance_.get_mutable()->fin_pos_ = const_cast< ::position_message*>(
+      ::position_message::internal_default_instance());
+  _RobotCommand_message_default_instance_.get_mutable()->fin_vel_ = const_cast< ::position_message*>(
+      ::position_message::internal_default_instance());
+}
+
+void protobuf_InitDefaults_RobotCommand_5fmessage_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_RobotCommand_5fmessage_2eproto_impl);
+}
+void protobuf_AddDesc_RobotCommand_5fmessage_2eproto_impl() {
+  protobuf_InitDefaults_RobotCommand_5fmessage_2eproto();
+  static const char descriptor[] = {
+      "\n\032RobotCommand_message.proto\032\026position_m"
+      "essage.proto\"\316\001\n\024RobotCommand_message\022\"\n"
+      "\007fin_pos\030\001 \002(\0132\021.position_message\022\"\n\007fin"
+      "_vel\030\002 \002(\0132\021.position_message\022\020\n\010maxSpee"
+      "d\030\003 \002(\002\022\022\n\nkickspeedx\030\004 \002(\002\022\022\n\nkickspeed"
+      "z\030\005 \002(\002\022\016\n\006useNav\030\006 \002(\010\022\021\n\tisBallObs\030\007 \002"
+      "(\010\022\021\n\tisKickObs\030\010 \002(\010"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\032RobotCommand_message.proto\032\026position_m"
-    "essage.proto\"\316\001\n\024RobotCommand_message\022\"\n"
-    "\007fin_pos\030\001 \002(\0132\021.position_message\022\"\n\007fin"
-    "_vel\030\002 \002(\0132\021.position_message\022\020\n\010maxSpee"
-    "d\030\003 \002(\002\022\022\n\nkickspeedx\030\004 \002(\002\022\022\n\nkickspeed"
-    "z\030\005 \002(\002\022\016\n\006useNav\030\006 \002(\010\022\021\n\tisBallObs\030\007 \002"
-    "(\010\022\021\n\tisKickObs\030\010 \002(\010", 261);
+      descriptor, 261);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "RobotCommand_message.proto", &protobuf_RegisterTypes);
-  RobotCommand_message::default_instance_ = new RobotCommand_message();
-  RobotCommand_message::default_instance_->InitAsDefaultInstance();
+  ::protobuf_AddDesc_position_5fmessage_2eproto();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_RobotCommand_5fmessage_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_RobotCommand_5fmessage_2eproto_once_);
+void protobuf_AddDesc_RobotCommand_5fmessage_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_RobotCommand_5fmessage_2eproto_once_,
+                 &protobuf_AddDesc_RobotCommand_5fmessage_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_RobotCommand_5fmessage_2eproto {
   StaticDescriptorInitializer_RobotCommand_5fmessage_2eproto() {
@@ -107,7 +138,7 @@ struct StaticDescriptorInitializer_RobotCommand_5fmessage_2eproto {
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int RobotCommand_message::kFinPosFieldNumber;
 const int RobotCommand_message::kFinVelFieldNumber;
 const int RobotCommand_message::kMaxSpeedFieldNumber;
@@ -116,44 +147,60 @@ const int RobotCommand_message::kKickspeedzFieldNumber;
 const int RobotCommand_message::kUseNavFieldNumber;
 const int RobotCommand_message::kIsBallObsFieldNumber;
 const int RobotCommand_message::kIsKickObsFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 RobotCommand_message::RobotCommand_message()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_RobotCommand_5fmessage_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:RobotCommand_message)
 }
-
-void RobotCommand_message::InitAsDefaultInstance() {
-  fin_pos_ = const_cast< ::position_message*>(&::position_message::default_instance());
-  fin_vel_ = const_cast< ::position_message*>(&::position_message::default_instance());
-}
-
 RobotCommand_message::RobotCommand_message(const RobotCommand_message& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_fin_pos()) {
+    fin_pos_ = new ::position_message(*from.fin_pos_);
+  } else {
+    fin_pos_ = NULL;
+  }
+  if (from.has_fin_vel()) {
+    fin_vel_ = new ::position_message(*from.fin_vel_);
+  } else {
+    fin_vel_ = NULL;
+  }
+  ::memcpy(&maxspeed_, &from.maxspeed_,
+    reinterpret_cast<char*>(&iskickobs_) -
+    reinterpret_cast<char*>(&maxspeed_) + sizeof(iskickobs_));
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:RobotCommand_message)
 }
 
 void RobotCommand_message::SharedCtor() {
   _cached_size_ = 0;
-  fin_pos_ = NULL;
-  fin_vel_ = NULL;
-  maxspeed_ = 0;
-  kickspeedx_ = 0;
-  kickspeedz_ = 0;
-  usenav_ = false;
-  isballobs_ = false;
-  iskickobs_ = false;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&fin_pos_, 0, reinterpret_cast<char*>(&iskickobs_) -
+    reinterpret_cast<char*>(&fin_pos_) + sizeof(iskickobs_));
 }
 
 RobotCommand_message::~RobotCommand_message() {
+  // @@protoc_insertion_point(destructor:RobotCommand_message)
   SharedDtor();
 }
 
 void RobotCommand_message::SharedDtor() {
-  if (this != default_instance_) {
+  if (this != internal_default_instance()) {
     delete fin_pos_;
+  }
+  if (this != internal_default_instance()) {
     delete fin_vel_;
   }
 }
@@ -165,173 +212,233 @@ void RobotCommand_message::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* RobotCommand_message::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return RobotCommand_message_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const RobotCommand_message& RobotCommand_message::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_RobotCommand_5fmessage_2eproto();
+  return *internal_default_instance();
 }
 
-RobotCommand_message* RobotCommand_message::default_instance_ = NULL;
-
-RobotCommand_message* RobotCommand_message::New() const {
-  return new RobotCommand_message;
+RobotCommand_message* RobotCommand_message::New(::google::protobuf::Arena* arena) const {
+  RobotCommand_message* n = new RobotCommand_message;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void RobotCommand_message::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:RobotCommand_message)
+  if (_has_bits_[0 / 32] & 3u) {
+=======
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<RobotCommand_message*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(maxspeed_, iskickobs_);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
     if (has_fin_pos()) {
-      if (fin_pos_ != NULL) fin_pos_->::position_message::Clear();
+      GOOGLE_DCHECK(fin_pos_ != NULL);
+      fin_pos_->::position_message::Clear();
     }
     if (has_fin_vel()) {
-      if (fin_vel_ != NULL) fin_vel_->::position_message::Clear();
+      GOOGLE_DCHECK(fin_vel_ != NULL);
+      fin_vel_->::position_message::Clear();
     }
-    maxspeed_ = 0;
-    kickspeedx_ = 0;
-    kickspeedz_ = 0;
-    usenav_ = false;
-    isballobs_ = false;
-    iskickobs_ = false;
   }
+<<<<<<< HEAD
+  if (_has_bits_[0 / 32] & 252u) {
+    ::memset(&maxspeed_, 0, reinterpret_cast<char*>(&iskickobs_) -
+      reinterpret_cast<char*>(&maxspeed_) + sizeof(iskickobs_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+=======
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool RobotCommand_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:RobotCommand_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:RobotCommand_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required .position_message fin_pos = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 10u) {
+=======
+        if (tag == 10) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_pos()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_fin_vel;
         break;
       }
 
       // required .position_message fin_vel = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 18u) {
+=======
+        if (tag == 18) {
          parse_fin_vel:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_fin_vel()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(29)) goto parse_maxSpeed;
         break;
       }
 
       // required float maxSpeed = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 29u) {
+          set_has_maxspeed();
+=======
+        if (tag == 29) {
          parse_maxSpeed:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &maxspeed_)));
-          set_has_maxspeed();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(37)) goto parse_kickspeedx;
         break;
       }
 
       // required float kickspeedx = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 37u) {
+          set_has_kickspeedx();
+=======
+        if (tag == 37) {
          parse_kickspeedx:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedx_)));
-          set_has_kickspeedx();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(45)) goto parse_kickspeedz;
         break;
       }
 
       // required float kickspeedz = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 45u) {
+          set_has_kickspeedz();
+=======
+        if (tag == 45) {
          parse_kickspeedz:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &kickspeedz_)));
-          set_has_kickspeedz();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_useNav;
         break;
       }
 
       // required bool useNav = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+<<<<<<< HEAD
+        if (tag == 48u) {
+          set_has_usenav();
+=======
+        if (tag == 48) {
          parse_useNav:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &usenav_)));
-          set_has_usenav();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_isBallObs;
         break;
       }
 
       // required bool isBallObs = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+<<<<<<< HEAD
+        if (tag == 56u) {
+          set_has_isballobs();
+=======
+        if (tag == 56) {
          parse_isBallObs:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isballobs_)));
-          set_has_isballobs();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_isKickObs;
         break;
       }
 
       // required bool isKickObs = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+<<<<<<< HEAD
+        if (tag == 64u) {
+          set_has_iskickobs();
+=======
+        if (tag == 64) {
          parse_isKickObs:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &iskickobs_)));
-          set_has_iskickobs();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+<<<<<<< HEAD
+=======
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -339,22 +446,28 @@ bool RobotCommand_message::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:RobotCommand_message)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:RobotCommand_message)
+  return false;
 #undef DO_
 }
 
 void RobotCommand_message::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:RobotCommand_message)
   // required .position_message fin_pos = 1;
   if (has_fin_pos()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->fin_pos(), output);
+      1, *this->fin_pos_, output);
   }
 
   // required .position_message fin_vel = 2;
   if (has_fin_vel()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->fin_vel(), output);
+      2, *this->fin_vel_, output);
   }
 
   // required float maxSpeed = 3;
@@ -387,26 +500,34 @@ void RobotCommand_message::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(8, this->iskickobs(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:RobotCommand_message)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* RobotCommand_message::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* RobotCommand_message::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:RobotCommand_message)
   // required .position_message fin_pos = 1;
   if (has_fin_pos()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->fin_pos(), target);
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->fin_pos_, false, target);
   }
 
   // required .position_message fin_vel = 2;
   if (has_fin_vel()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->fin_vel(), target);
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->fin_vel_, false, target);
   }
 
   // required float maxSpeed = 3;
@@ -439,88 +560,132 @@ void RobotCommand_message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(8, this->iskickobs(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:RobotCommand_message)
   return target;
 }
 
-int RobotCommand_message::ByteSize() const {
-  int total_size = 0;
+size_t RobotCommand_message::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:RobotCommand_message)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (has_fin_pos()) {
     // required .position_message fin_pos = 1;
-    if (has_fin_pos()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->fin_pos());
-    }
-
-    // required .position_message fin_vel = 2;
-    if (has_fin_vel()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->fin_vel());
-    }
-
-    // required float maxSpeed = 3;
-    if (has_maxspeed()) {
-      total_size += 1 + 4;
-    }
-
-    // required float kickspeedx = 4;
-    if (has_kickspeedx()) {
-      total_size += 1 + 4;
-    }
-
-    // required float kickspeedz = 5;
-    if (has_kickspeedz()) {
-      total_size += 1 + 4;
-    }
-
-    // required bool useNav = 6;
-    if (has_usenav()) {
-      total_size += 1 + 1;
-    }
-
-    // required bool isBallObs = 7;
-    if (has_isballobs()) {
-      total_size += 1 + 1;
-    }
-
-    // required bool isKickObs = 8;
-    if (has_iskickobs()) {
-      total_size += 1 + 1;
-    }
-
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->fin_pos_);
   }
-  if (!unknown_fields().empty()) {
+
+  if (has_fin_vel()) {
+    // required .position_message fin_vel = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->fin_vel_);
+  }
+
+  if (has_maxspeed()) {
+    // required float maxSpeed = 3;
+    total_size += 1 + 4;
+  }
+
+  if (has_kickspeedx()) {
+    // required float kickspeedx = 4;
+    total_size += 1 + 4;
+  }
+
+  if (has_kickspeedz()) {
+    // required float kickspeedz = 5;
+    total_size += 1 + 4;
+  }
+
+  if (has_usenav()) {
+    // required bool useNav = 6;
+    total_size += 1 + 1;
+  }
+
+  if (has_isballobs()) {
+    // required bool isBallObs = 7;
+    total_size += 1 + 1;
+  }
+
+  if (has_iskickobs()) {
+    // required bool isKickObs = 8;
+    total_size += 1 + 1;
+  }
+
+  return total_size;
+}
+size_t RobotCommand_message::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:RobotCommand_message)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  if (((_has_bits_[0] & 0x000000ff) ^ 0x000000ff) == 0) {  // All required fields are present.
+    // required .position_message fin_pos = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->fin_pos_);
+
+    // required .position_message fin_vel = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->fin_vel_);
+
+    // required float maxSpeed = 3;
+    total_size += 1 + 4;
+
+    // required float kickspeedx = 4;
+    total_size += 1 + 4;
+
+    // required float kickspeedz = 5;
+    total_size += 1 + 4;
+
+    // required bool useNav = 6;
+    total_size += 1 + 1;
+
+    // required bool isBallObs = 7;
+    total_size += 1 + 1;
+
+    // required bool isKickObs = 8;
+    total_size += 1 + 1;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void RobotCommand_message::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:RobotCommand_message)
+  GOOGLE_DCHECK_NE(&from, this);
   const RobotCommand_message* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const RobotCommand_message*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const RobotCommand_message>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:RobotCommand_message)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:RobotCommand_message)
     MergeFrom(*source);
   }
 }
 
 void RobotCommand_message::MergeFrom(const RobotCommand_message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:RobotCommand_message)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 255u) {
     if (from.has_fin_pos()) {
       mutable_fin_pos()->::position_message::MergeFrom(from.fin_pos());
     }
@@ -546,16 +711,17 @@ void RobotCommand_message::MergeFrom(const RobotCommand_message& from) {
       set_iskickobs(from.iskickobs());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void RobotCommand_message::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:RobotCommand_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void RobotCommand_message::CopyFrom(const RobotCommand_message& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:RobotCommand_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -563,40 +729,276 @@ void RobotCommand_message::CopyFrom(const RobotCommand_message& from) {
 
 bool RobotCommand_message::IsInitialized() const {
   if ((_has_bits_[0] & 0x000000ff) != 0x000000ff) return false;
-
   if (has_fin_pos()) {
-    if (!this->fin_pos().IsInitialized()) return false;
+    if (!this->fin_pos_->IsInitialized()) return false;
   }
   if (has_fin_vel()) {
-    if (!this->fin_vel().IsInitialized()) return false;
+    if (!this->fin_vel_->IsInitialized()) return false;
   }
   return true;
 }
 
 void RobotCommand_message::Swap(RobotCommand_message* other) {
-  if (other != this) {
-    std::swap(fin_pos_, other->fin_pos_);
-    std::swap(fin_vel_, other->fin_vel_);
-    std::swap(maxspeed_, other->maxspeed_);
-    std::swap(kickspeedx_, other->kickspeedx_);
-    std::swap(kickspeedz_, other->kickspeedz_);
-    std::swap(usenav_, other->usenav_);
-    std::swap(isballobs_, other->isballobs_);
-    std::swap(iskickobs_, other->iskickobs_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void RobotCommand_message::InternalSwap(RobotCommand_message* other) {
+  std::swap(fin_pos_, other->fin_pos_);
+  std::swap(fin_vel_, other->fin_vel_);
+  std::swap(maxspeed_, other->maxspeed_);
+  std::swap(kickspeedx_, other->kickspeedx_);
+  std::swap(kickspeedz_, other->kickspeedz_);
+  std::swap(usenav_, other->usenav_);
+  std::swap(isballobs_, other->isballobs_);
+  std::swap(iskickobs_, other->iskickobs_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata RobotCommand_message::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = RobotCommand_message_descriptor_;
-  metadata.reflection = RobotCommand_message_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// RobotCommand_message
+
+// required .position_message fin_pos = 1;
+bool RobotCommand_message::has_fin_pos() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void RobotCommand_message::set_has_fin_pos() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void RobotCommand_message::clear_has_fin_pos() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void RobotCommand_message::clear_fin_pos() {
+  if (fin_pos_ != NULL) fin_pos_->::position_message::Clear();
+  clear_has_fin_pos();
+}
+const ::position_message& RobotCommand_message::fin_pos() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.fin_pos)
+  return fin_pos_ != NULL ? *fin_pos_
+                         : *::position_message::internal_default_instance();
+}
+::position_message* RobotCommand_message::mutable_fin_pos() {
+  set_has_fin_pos();
+  if (fin_pos_ == NULL) {
+    fin_pos_ = new ::position_message;
+  }
+  // @@protoc_insertion_point(field_mutable:RobotCommand_message.fin_pos)
+  return fin_pos_;
+}
+::position_message* RobotCommand_message::release_fin_pos() {
+  // @@protoc_insertion_point(field_release:RobotCommand_message.fin_pos)
+  clear_has_fin_pos();
+  ::position_message* temp = fin_pos_;
+  fin_pos_ = NULL;
+  return temp;
+}
+void RobotCommand_message::set_allocated_fin_pos(::position_message* fin_pos) {
+  delete fin_pos_;
+  fin_pos_ = fin_pos;
+  if (fin_pos) {
+    set_has_fin_pos();
+  } else {
+    clear_has_fin_pos();
+  }
+  // @@protoc_insertion_point(field_set_allocated:RobotCommand_message.fin_pos)
+}
+
+// required .position_message fin_vel = 2;
+bool RobotCommand_message::has_fin_vel() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void RobotCommand_message::set_has_fin_vel() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void RobotCommand_message::clear_has_fin_vel() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void RobotCommand_message::clear_fin_vel() {
+  if (fin_vel_ != NULL) fin_vel_->::position_message::Clear();
+  clear_has_fin_vel();
+}
+const ::position_message& RobotCommand_message::fin_vel() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.fin_vel)
+  return fin_vel_ != NULL ? *fin_vel_
+                         : *::position_message::internal_default_instance();
+}
+::position_message* RobotCommand_message::mutable_fin_vel() {
+  set_has_fin_vel();
+  if (fin_vel_ == NULL) {
+    fin_vel_ = new ::position_message;
+  }
+  // @@protoc_insertion_point(field_mutable:RobotCommand_message.fin_vel)
+  return fin_vel_;
+}
+::position_message* RobotCommand_message::release_fin_vel() {
+  // @@protoc_insertion_point(field_release:RobotCommand_message.fin_vel)
+  clear_has_fin_vel();
+  ::position_message* temp = fin_vel_;
+  fin_vel_ = NULL;
+  return temp;
+}
+void RobotCommand_message::set_allocated_fin_vel(::position_message* fin_vel) {
+  delete fin_vel_;
+  fin_vel_ = fin_vel;
+  if (fin_vel) {
+    set_has_fin_vel();
+  } else {
+    clear_has_fin_vel();
+  }
+  // @@protoc_insertion_point(field_set_allocated:RobotCommand_message.fin_vel)
+}
+
+// required float maxSpeed = 3;
+bool RobotCommand_message::has_maxspeed() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void RobotCommand_message::set_has_maxspeed() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void RobotCommand_message::clear_has_maxspeed() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void RobotCommand_message::clear_maxspeed() {
+  maxspeed_ = 0;
+  clear_has_maxspeed();
+}
+float RobotCommand_message::maxspeed() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.maxSpeed)
+  return maxspeed_;
+}
+void RobotCommand_message::set_maxspeed(float value) {
+  set_has_maxspeed();
+  maxspeed_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.maxSpeed)
+}
+
+// required float kickspeedx = 4;
+bool RobotCommand_message::has_kickspeedx() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void RobotCommand_message::set_has_kickspeedx() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void RobotCommand_message::clear_has_kickspeedx() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void RobotCommand_message::clear_kickspeedx() {
+  kickspeedx_ = 0;
+  clear_has_kickspeedx();
+}
+float RobotCommand_message::kickspeedx() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.kickspeedx)
+  return kickspeedx_;
+}
+void RobotCommand_message::set_kickspeedx(float value) {
+  set_has_kickspeedx();
+  kickspeedx_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.kickspeedx)
+}
+
+// required float kickspeedz = 5;
+bool RobotCommand_message::has_kickspeedz() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void RobotCommand_message::set_has_kickspeedz() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void RobotCommand_message::clear_has_kickspeedz() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void RobotCommand_message::clear_kickspeedz() {
+  kickspeedz_ = 0;
+  clear_has_kickspeedz();
+}
+float RobotCommand_message::kickspeedz() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.kickspeedz)
+  return kickspeedz_;
+}
+void RobotCommand_message::set_kickspeedz(float value) {
+  set_has_kickspeedz();
+  kickspeedz_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.kickspeedz)
+}
+
+// required bool useNav = 6;
+bool RobotCommand_message::has_usenav() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void RobotCommand_message::set_has_usenav() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void RobotCommand_message::clear_has_usenav() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void RobotCommand_message::clear_usenav() {
+  usenav_ = false;
+  clear_has_usenav();
+}
+bool RobotCommand_message::usenav() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.useNav)
+  return usenav_;
+}
+void RobotCommand_message::set_usenav(bool value) {
+  set_has_usenav();
+  usenav_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.useNav)
+}
+
+// required bool isBallObs = 7;
+bool RobotCommand_message::has_isballobs() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void RobotCommand_message::set_has_isballobs() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void RobotCommand_message::clear_has_isballobs() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void RobotCommand_message::clear_isballobs() {
+  isballobs_ = false;
+  clear_has_isballobs();
+}
+bool RobotCommand_message::isballobs() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.isBallObs)
+  return isballobs_;
+}
+void RobotCommand_message::set_isballobs(bool value) {
+  set_has_isballobs();
+  isballobs_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.isBallObs)
+}
+
+// required bool isKickObs = 8;
+bool RobotCommand_message::has_iskickobs() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void RobotCommand_message::set_has_iskickobs() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void RobotCommand_message::clear_has_iskickobs() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void RobotCommand_message::clear_iskickobs() {
+  iskickobs_ = false;
+  clear_has_iskickobs();
+}
+bool RobotCommand_message::iskickobs() const {
+  // @@protoc_insertion_point(field_get:RobotCommand_message.isKickObs)
+  return iskickobs_;
+}
+void RobotCommand_message::set_iskickobs(bool value) {
+  set_has_iskickobs();
+  iskickobs_ = value;
+  // @@protoc_insertion_point(field_set:RobotCommand_message.isKickObs)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

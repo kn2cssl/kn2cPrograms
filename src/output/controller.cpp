@@ -61,24 +61,24 @@ RobotSpeed Controller::calcRobotSpeed_main(ControllerInput &ci)
 
 
 //    //! Test
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 1000 )
-//    //if(ci.cur_pos.loc.x > -1000)
-//    wu1=0;
-//    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400, 2000)).r()) < 1000 )
-//    //if(ci.cur_pos.loc.x < -3800)
-//    wu1=1;
+    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400,-2000)).r()) < 1000 )
+    //if(ci.cur_pos.loc.x > -1000)
+    wu1=0;
+    if(fabs(Vector2D(ci.cur_pos.loc-Vector2D( 2400, 2000)).r()) < 1000 )
+    //if(ci.cur_pos.loc.x < -3800)
+    wu1=1;
 
 
-//    ci.mid_pos.loc.x = 2400;
-//    ci.mid_pos.dir = M_PI;
+    ci.mid_pos.loc.x = 2400;
+    ci.mid_pos.dir = M_PI;
 
 
-//    if(wu1==0)
-//              ci.mid_pos.loc.y =  2860;
-//            //setpoint.VX =  -2;
-//        else
-//            //setpoint.VX =  2;
-//              ci.mid_pos.loc.y =  -2860;
+    if(wu1==0)
+              ci.mid_pos.loc.y =  2860;
+            //setpoint.VX =  -2;
+        else
+            //setpoint.VX =  2;
+              ci.mid_pos.loc.y =  -2860;
 //    //! test
 
 

@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,78 +16,98 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class position_messageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<position_message> {};
+position_messageDefaultTypeInternal _position_message_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* position_message_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  position_message_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_position_5fmessage_2eproto() {
-  protobuf_AddDesc_position_5fmessage_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "position_message.proto");
-  GOOGLE_CHECK(file != NULL);
-  position_message_descriptor_ = file->message_type(0);
-  static const int position_message_offsets_[3] = {
+const ::google::protobuf::uint32* protobuf_Offsets_position_5fmessage_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_position_5fmessage_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, dir_),
+    0,
+    1,
+    2,
   };
-  position_message_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      position_message_descriptor_,
-      position_message::default_instance_,
-      position_message_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(position_message, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(position_message));
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 7, sizeof(position_message)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_position_message_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_position_5fmessage_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_position_5fmessage_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "position_message.proto", schemas, file_default_instances, protobuf_Offsets_position_5fmessage_2eproto(), factory,
+      file_level_metadata, NULL, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    position_message_descriptor_, &position_message::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_position_5fmessage_2eproto() {
-  delete position_message::default_instance_;
-  delete position_message_reflection_;
+  _position_message_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
 }
 
-void protobuf_AddDesc_position_5fmessage_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_position_5fmessage_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _position_message_default_instance_.DefaultConstruct();
+}
+
+void protobuf_InitDefaults_position_5fmessage_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_position_5fmessage_2eproto_impl);
+}
+void protobuf_AddDesc_position_5fmessage_2eproto_impl() {
+  protobuf_InitDefaults_position_5fmessage_2eproto();
+  static const char descriptor[] = {
+      "\n\026position_message.proto\"5\n\020position_mes"
+      "sage\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\022\013\n\003dir\030\003 \002(\002"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\026position_message.proto\"5\n\020position_mes"
-    "sage\022\t\n\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\022\013\n\003dir\030\003 \002(\002", 79);
+      descriptor, 79);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "position_message.proto", &protobuf_RegisterTypes);
-  position_message::default_instance_ = new position_message();
-  position_message::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_position_5fmessage_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_position_5fmessage_2eproto_once_);
+void protobuf_AddDesc_position_5fmessage_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_position_5fmessage_2eproto_once_,
+                 &protobuf_AddDesc_position_5fmessage_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_position_5fmessage_2eproto {
   StaticDescriptorInitializer_position_5fmessage_2eproto() {
@@ -96,41 +117,50 @@ struct StaticDescriptorInitializer_position_5fmessage_2eproto {
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int position_message::kXFieldNumber;
 const int position_message::kYFieldNumber;
 const int position_message::kDirFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 position_message::position_message()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_position_5fmessage_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:position_message)
 }
-
-void position_message::InitAsDefaultInstance() {
-}
-
 position_message::position_message(const position_message& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    reinterpret_cast<char*>(&dir_) -
+    reinterpret_cast<char*>(&x_) + sizeof(dir_));
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:position_message)
 }
 
 void position_message::SharedCtor() {
   _cached_size_ = 0;
-  x_ = 0;
-  y_ = 0;
-  dir_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&x_, 0, reinterpret_cast<char*>(&dir_) -
+    reinterpret_cast<char*>(&x_) + sizeof(dir_));
 }
 
 position_message::~position_message() {
+  // @@protoc_insertion_point(destructor:position_message)
   SharedDtor();
 }
 
 void position_message::SharedDtor() {
-  if (this != default_instance_) {
-  }
 }
 
 void position_message::SetCachedSize(int size) const {
@@ -140,88 +170,133 @@ void position_message::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* position_message::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return position_message_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const position_message& position_message::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_position_5fmessage_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_position_5fmessage_2eproto();
+  return *internal_default_instance();
 }
 
-position_message* position_message::default_instance_ = NULL;
-
-position_message* position_message::New() const {
-  return new position_message;
+position_message* position_message::New(::google::protobuf::Arena* arena) const {
+  position_message* n = new position_message;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void position_message::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    x_ = 0;
-    y_ = 0;
-    dir_ = 0;
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:position_message)
+  if (_has_bits_[0 / 32] & 7u) {
+    ::memset(&x_, 0, reinterpret_cast<char*>(&dir_) -
+      reinterpret_cast<char*>(&x_) + sizeof(dir_));
   }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+=======
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<position_message*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(x_, dir_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool position_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:position_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:position_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required float x = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 13u) {
+          set_has_x();
+=======
+        if (tag == 13) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &x_)));
-          set_has_x();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(21)) goto parse_y;
         break;
       }
 
       // required float y = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 21u) {
+          set_has_y();
+=======
+        if (tag == 21) {
          parse_y:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &y_)));
-          set_has_y();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(29)) goto parse_dir;
         break;
       }
 
       // required float dir = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
+<<<<<<< HEAD
+        if (tag == 29u) {
+          set_has_dir();
+=======
+        if (tag == 29) {
          parse_dir:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
                  input, &dir_)));
-          set_has_dir();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+<<<<<<< HEAD
+=======
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -229,12 +304,18 @@ bool position_message::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:position_message)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:position_message)
+  return false;
 #undef DO_
 }
 
 void position_message::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:position_message)
   // required float x = 1;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteFloat(1, this->x(), output);
@@ -250,14 +331,22 @@ void position_message::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(3, this->dir(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:position_message)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* position_message::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* position_message::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:position_message)
   // required float x = 1;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(1, this->x(), target);
@@ -273,59 +362,84 @@ void position_message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(3, this->dir(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:position_message)
   return target;
 }
 
-int position_message::ByteSize() const {
-  int total_size = 0;
+size_t position_message::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:position_message)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (has_x()) {
     // required float x = 1;
-    if (has_x()) {
-      total_size += 1 + 4;
-    }
-
-    // required float y = 2;
-    if (has_y()) {
-      total_size += 1 + 4;
-    }
-
-    // required float dir = 3;
-    if (has_dir()) {
-      total_size += 1 + 4;
-    }
-
+    total_size += 1 + 4;
   }
-  if (!unknown_fields().empty()) {
+
+  if (has_y()) {
+    // required float y = 2;
+    total_size += 1 + 4;
+  }
+
+  if (has_dir()) {
+    // required float dir = 3;
+    total_size += 1 + 4;
+  }
+
+  return total_size;
+}
+size_t position_message::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:position_message)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+    // required float x = 1;
+    total_size += 1 + 4;
+
+    // required float y = 2;
+    total_size += 1 + 4;
+
+    // required float dir = 3;
+    total_size += 1 + 4;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void position_message::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:position_message)
+  GOOGLE_DCHECK_NE(&from, this);
   const position_message* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const position_message*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const position_message>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:position_message)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:position_message)
     MergeFrom(*source);
   }
 }
 
 void position_message::MergeFrom(const position_message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:position_message)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 7u) {
     if (from.has_x()) {
       set_x(from.x());
     }
@@ -336,16 +450,17 @@ void position_message::MergeFrom(const position_message& from) {
       set_dir(from.dir());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void position_message::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:position_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void position_message::CopyFrom(const position_message& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:position_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -353,29 +468,103 @@ void position_message::CopyFrom(const position_message& from) {
 
 bool position_message::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
-
   return true;
 }
 
 void position_message::Swap(position_message* other) {
-  if (other != this) {
-    std::swap(x_, other->x_);
-    std::swap(y_, other->y_);
-    std::swap(dir_, other->dir_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void position_message::InternalSwap(position_message* other) {
+  std::swap(x_, other->x_);
+  std::swap(y_, other->y_);
+  std::swap(dir_, other->dir_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata position_message::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = position_message_descriptor_;
-  metadata.reflection = position_message_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// position_message
+
+// required float x = 1;
+bool position_message::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void position_message::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void position_message::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void position_message::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+float position_message::x() const {
+  // @@protoc_insertion_point(field_get:position_message.x)
+  return x_;
+}
+void position_message::set_x(float value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:position_message.x)
+}
+
+// required float y = 2;
+bool position_message::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void position_message::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void position_message::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void position_message::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+float position_message::y() const {
+  // @@protoc_insertion_point(field_get:position_message.y)
+  return y_;
+}
+void position_message::set_y(float value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:position_message.y)
+}
+
+// required float dir = 3;
+bool position_message::has_dir() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void position_message::set_has_dir() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void position_message::clear_has_dir() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void position_message::clear_dir() {
+  dir_ = 0;
+  clear_has_dir();
+}
+float position_message::dir() const {
+  // @@protoc_insertion_point(field_get:position_message.dir)
+  return dir_;
+}
+void position_message::set_dir(float value) {
+  set_has_dir();
+  dir_ = value;
+  // @@protoc_insertion_point(field_set:position_message.dir)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

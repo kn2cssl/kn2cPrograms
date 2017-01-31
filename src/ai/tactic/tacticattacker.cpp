@@ -19,10 +19,12 @@ RobotCommand TacticAttacker::getCommand()
     if(!wm->ourRobot[id].isValid) return rc;
 
     rc.maxSpeed = 4;
+    AngleDeg degree=30+AngleDeg::PI;
+   // qDebug()<<degree.degree();
+   // qDebug()<<rc.fin_pos.dir;
     if(wm->ourRobot[id].Status == AgentStatus::FollowingBall)
     {
 //        tANDp target = findTarget();
-
         Vector2D passSenderPos = wm->ourRobot[kickerID].pos.loc;
         Vector2D OneTouchKickerPos = wm->ourRobot[this->id].pos.loc;
         Vector2D passSender2OneTouchKicker = OneTouchKickerPos-passSenderPos;
@@ -68,7 +70,7 @@ RobotCommand TacticAttacker::getCommand()
             }
 
             rc.fin_pos = kickPos;
-            rc.useNav = true;
+            rc.useNav = UseNav;
         }
         else
         {
@@ -88,7 +90,7 @@ RobotCommand TacticAttacker::getCommand()
     else if(wm->ourRobot[id].Status == AgentStatus::RecievingPass)
     {
         rc.fin_pos = idlePosition;
-        rc.useNav = true;
+        rc.useNav = UseNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
@@ -141,7 +143,7 @@ RobotCommand TacticAttacker::getCommand()
             rc.fin_pos = final;
         }
 
-        rc.useNav = true;
+        rc.useNav = UseNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
     }
@@ -150,7 +152,7 @@ RobotCommand TacticAttacker::getCommand()
         this->holdKickPos = false;
 
         rc.fin_pos = idlePosition;
-        rc.useNav = true;
+        rc.useNav = UseNav;
         rc.isBallObs = true;
         rc.isKickObs = true;
 
@@ -540,4 +542,10 @@ bool TacticAttacker::isFree(int index)
         }
     }
     return true;
+}
+bool TacticAttacker::getUseNav(){
+    return UseNav;
+}
+void TacticAttacker::setUseNav(bool input){
+    UseNav=input;
 }

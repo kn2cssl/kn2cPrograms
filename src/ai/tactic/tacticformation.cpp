@@ -25,7 +25,7 @@ RobotCommand TacticFormation::getCommand()
         {
             qDebug()<<"append it";
             if( this->leaderID == 0 )
-                wm->debug_pos.append(wm->ourRobot[leaderID].pos.loc);
+                //wm->debug_pos.append(wm->ourRobot[leaderID].pos.loc);
             path.append(wm->ourRobot[leaderID].pos);
         }
 

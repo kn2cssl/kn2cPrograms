@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,138 +16,144 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class grSim_RobotReplacementDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<grSim_RobotReplacement> {};
+grSim_RobotReplacementDefaultTypeInternal _grSim_RobotReplacement_default_instance_;
+class grSim_BallReplacementDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<grSim_BallReplacement> {};
+grSim_BallReplacementDefaultTypeInternal _grSim_BallReplacement_default_instance_;
+class grSim_ReplacementDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<grSim_Replacement> {};
+grSim_ReplacementDefaultTypeInternal _grSim_Replacement_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* grSim_RobotReplacement_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  grSim_RobotReplacement_reflection_ = NULL;
-const ::google::protobuf::Descriptor* grSim_BallReplacement_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  grSim_BallReplacement_reflection_ = NULL;
-const ::google::protobuf::Descriptor* grSim_Replacement_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  grSim_Replacement_reflection_ = NULL;
+::google::protobuf::Metadata file_level_metadata[3];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_grSim_5fReplacement_2eproto() {
-  protobuf_AddDesc_grSim_5fReplacement_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "grSim_Replacement.proto");
-  GOOGLE_CHECK(file != NULL);
-  grSim_RobotReplacement_descriptor_ = file->message_type(0);
-  static const int grSim_RobotReplacement_offsets_[5] = {
+const ::google::protobuf::uint32* protobuf_Offsets_grSim_5fReplacement_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_grSim_5fReplacement_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, dir_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, yellowteam_),
-  };
-  grSim_RobotReplacement_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      grSim_RobotReplacement_descriptor_,
-      grSim_RobotReplacement::default_instance_,
-      grSim_RobotReplacement_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_RobotReplacement, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(grSim_RobotReplacement));
-  grSim_BallReplacement_descriptor_ = file->message_type(1);
-  static const int grSim_BallReplacement_offsets_[4] = {
+    0,
+    1,
+    2,
+    3,
+    4,
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, x_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, y_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, vx_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, vy_),
-  };
-  grSim_BallReplacement_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      grSim_BallReplacement_descriptor_,
-      grSim_BallReplacement::default_instance_,
-      grSim_BallReplacement_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_BallReplacement, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(grSim_BallReplacement));
-  grSim_Replacement_descriptor_ = file->message_type(2);
-  static const int grSim_Replacement_offsets_[2] = {
+    0,
+    1,
+    2,
+    3,
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, ball_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, robots_),
+    0,
+    1,
   };
-  grSim_Replacement_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      grSim_Replacement_descriptor_,
-      grSim_Replacement::default_instance_,
-      grSim_Replacement_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(grSim_Replacement, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(grSim_Replacement));
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 9, sizeof(grSim_RobotReplacement)},
+  { 14, 22, sizeof(grSim_BallReplacement)},
+  { 26, 32, sizeof(grSim_Replacement)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_grSim_RobotReplacement_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_grSim_BallReplacement_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_grSim_Replacement_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_grSim_5fReplacement_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_grSim_5fReplacement_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "grSim_Replacement.proto", schemas, file_default_instances, protobuf_Offsets_grSim_5fReplacement_2eproto(), factory,
+      file_level_metadata, NULL, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    grSim_RobotReplacement_descriptor_, &grSim_RobotReplacement::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    grSim_BallReplacement_descriptor_, &grSim_BallReplacement::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    grSim_Replacement_descriptor_, &grSim_Replacement::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 3);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_grSim_5fReplacement_2eproto() {
-  delete grSim_RobotReplacement::default_instance_;
-  delete grSim_RobotReplacement_reflection_;
-  delete grSim_BallReplacement::default_instance_;
-  delete grSim_BallReplacement_reflection_;
-  delete grSim_Replacement::default_instance_;
-  delete grSim_Replacement_reflection_;
+  _grSim_RobotReplacement_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
+  _grSim_BallReplacement_default_instance_.Shutdown();
+  delete file_level_metadata[1].reflection;
+  _grSim_Replacement_default_instance_.Shutdown();
+  delete file_level_metadata[2].reflection;
 }
 
-void protobuf_AddDesc_grSim_5fReplacement_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_grSim_5fReplacement_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _grSim_RobotReplacement_default_instance_.DefaultConstruct();
+  _grSim_BallReplacement_default_instance_.DefaultConstruct();
+  _grSim_Replacement_default_instance_.DefaultConstruct();
+  _grSim_Replacement_default_instance_.get_mutable()->ball_ = const_cast< ::grSim_BallReplacement*>(
+      ::grSim_BallReplacement::internal_default_instance());
+}
+
+void protobuf_InitDefaults_grSim_5fReplacement_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_grSim_5fReplacement_2eproto_impl);
+}
+void protobuf_AddDesc_grSim_5fReplacement_2eproto_impl() {
+  protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  static const char descriptor[] = {
+      "\n\027grSim_Replacement.proto\"[\n\026grSim_Robot"
+      "Replacement\022\t\n\001x\030\001 \002(\001\022\t\n\001y\030\002 \002(\001\022\013\n\003dir"
+      "\030\003 \002(\001\022\n\n\002id\030\004 \002(\r\022\022\n\nyellowteam\030\005 \002(\010\"E"
+      "\n\025grSim_BallReplacement\022\t\n\001x\030\001 \002(\001\022\t\n\001y\030"
+      "\002 \002(\001\022\n\n\002vx\030\003 \002(\001\022\n\n\002vy\030\004 \002(\001\"b\n\021grSim_R"
+      "eplacement\022$\n\004ball\030\001 \001(\0132\026.grSim_BallRep"
+      "lacement\022\'\n\006robots\030\002 \003(\0132\027.grSim_RobotRe"
+      "placement"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\027grSim_Replacement.proto\"[\n\026grSim_Robot"
-    "Replacement\022\t\n\001x\030\001 \002(\001\022\t\n\001y\030\002 \002(\001\022\013\n\003dir"
-    "\030\003 \002(\001\022\n\n\002id\030\004 \002(\r\022\022\n\nyellowteam\030\005 \002(\010\"E"
-    "\n\025grSim_BallReplacement\022\t\n\001x\030\001 \002(\001\022\t\n\001y\030"
-    "\002 \002(\001\022\n\n\002vx\030\003 \002(\001\022\n\n\002vy\030\004 \002(\001\"b\n\021grSim_R"
-    "eplacement\022$\n\004ball\030\001 \001(\0132\026.grSim_BallRep"
-    "lacement\022\'\n\006robots\030\002 \003(\0132\027.grSim_RobotRe"
-    "placement", 289);
+      descriptor, 289);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "grSim_Replacement.proto", &protobuf_RegisterTypes);
-  grSim_RobotReplacement::default_instance_ = new grSim_RobotReplacement();
-  grSim_BallReplacement::default_instance_ = new grSim_BallReplacement();
-  grSim_Replacement::default_instance_ = new grSim_Replacement();
-  grSim_RobotReplacement::default_instance_->InitAsDefaultInstance();
-  grSim_BallReplacement::default_instance_->InitAsDefaultInstance();
-  grSim_Replacement::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_grSim_5fReplacement_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_grSim_5fReplacement_2eproto_once_);
+void protobuf_AddDesc_grSim_5fReplacement_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_grSim_5fReplacement_2eproto_once_,
+                 &protobuf_AddDesc_grSim_5fReplacement_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_grSim_5fReplacement_2eproto {
   StaticDescriptorInitializer_grSim_5fReplacement_2eproto() {
@@ -156,45 +163,52 @@ struct StaticDescriptorInitializer_grSim_5fReplacement_2eproto {
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int grSim_RobotReplacement::kXFieldNumber;
 const int grSim_RobotReplacement::kYFieldNumber;
 const int grSim_RobotReplacement::kDirFieldNumber;
 const int grSim_RobotReplacement::kIdFieldNumber;
 const int grSim_RobotReplacement::kYellowteamFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 grSim_RobotReplacement::grSim_RobotReplacement()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:grSim_RobotReplacement)
 }
-
-void grSim_RobotReplacement::InitAsDefaultInstance() {
-}
-
 grSim_RobotReplacement::grSim_RobotReplacement(const grSim_RobotReplacement& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    reinterpret_cast<char*>(&yellowteam_) -
+    reinterpret_cast<char*>(&x_) + sizeof(yellowteam_));
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:grSim_RobotReplacement)
 }
 
 void grSim_RobotReplacement::SharedCtor() {
   _cached_size_ = 0;
-  x_ = 0;
-  y_ = 0;
-  dir_ = 0;
-  id_ = 0u;
-  yellowteam_ = false;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&x_, 0, reinterpret_cast<char*>(&yellowteam_) -
+    reinterpret_cast<char*>(&x_) + sizeof(yellowteam_));
 }
 
 grSim_RobotReplacement::~grSim_RobotReplacement() {
+  // @@protoc_insertion_point(destructor:grSim_RobotReplacement)
   SharedDtor();
 }
 
 void grSim_RobotReplacement::SharedDtor() {
-  if (this != default_instance_) {
-  }
 }
 
 void grSim_RobotReplacement::SetCachedSize(int size) const {
@@ -204,122 +218,171 @@ void grSim_RobotReplacement::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* grSim_RobotReplacement::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return grSim_RobotReplacement_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const grSim_RobotReplacement& grSim_RobotReplacement::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_grSim_5fReplacement_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  return *internal_default_instance();
 }
 
-grSim_RobotReplacement* grSim_RobotReplacement::default_instance_ = NULL;
-
-grSim_RobotReplacement* grSim_RobotReplacement::New() const {
-  return new grSim_RobotReplacement;
+grSim_RobotReplacement* grSim_RobotReplacement::New(::google::protobuf::Arena* arena) const {
+  grSim_RobotReplacement* n = new grSim_RobotReplacement;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void grSim_RobotReplacement::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    x_ = 0;
-    y_ = 0;
-    dir_ = 0;
-    id_ = 0u;
-    yellowteam_ = false;
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:grSim_RobotReplacement)
+  if (_has_bits_[0 / 32] & 31u) {
+    ::memset(&x_, 0, reinterpret_cast<char*>(&yellowteam_) -
+      reinterpret_cast<char*>(&x_) + sizeof(yellowteam_));
   }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+=======
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<grSim_RobotReplacement*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(x_, yellowteam_);
+  }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool grSim_RobotReplacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:grSim_RobotReplacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:grSim_RobotReplacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 9u) {
+          set_has_x();
+=======
+        if (tag == 9) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
-          set_has_x();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(17)) goto parse_y;
         break;
       }
 
       // required double y = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 17u) {
+          set_has_y();
+=======
+        if (tag == 17) {
          parse_y:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
-          set_has_y();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(25)) goto parse_dir;
         break;
       }
 
       // required double dir = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 25u) {
+          set_has_dir();
+=======
+        if (tag == 25) {
          parse_dir:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &dir_)));
-          set_has_dir();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_id;
         break;
       }
 
       // required uint32 id = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+<<<<<<< HEAD
+        if (tag == 32u) {
+          set_has_id();
+=======
+        if (tag == 32) {
          parse_id:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &id_)));
-          set_has_id();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_yellowteam;
         break;
       }
 
       // required bool yellowteam = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+<<<<<<< HEAD
+        if (tag == 40u) {
+          set_has_yellowteam();
+=======
+        if (tag == 40) {
          parse_yellowteam:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &yellowteam_)));
-          set_has_yellowteam();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+<<<<<<< HEAD
+=======
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -327,12 +390,18 @@ bool grSim_RobotReplacement::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:grSim_RobotReplacement)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:grSim_RobotReplacement)
+  return false;
 #undef DO_
 }
 
 void grSim_RobotReplacement::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:grSim_RobotReplacement)
   // required double x = 1;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
@@ -358,14 +427,22 @@ void grSim_RobotReplacement::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->yellowteam(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:grSim_RobotReplacement)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* grSim_RobotReplacement::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* grSim_RobotReplacement::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:grSim_RobotReplacement)
   // required double x = 1;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
@@ -391,71 +468,104 @@ void grSim_RobotReplacement::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(5, this->yellowteam(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:grSim_RobotReplacement)
   return target;
 }
 
-int grSim_RobotReplacement::ByteSize() const {
-  int total_size = 0;
+size_t grSim_RobotReplacement::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:grSim_RobotReplacement)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (has_x()) {
     // required double x = 1;
-    if (has_x()) {
-      total_size += 1 + 8;
-    }
-
-    // required double y = 2;
-    if (has_y()) {
-      total_size += 1 + 8;
-    }
-
-    // required double dir = 3;
-    if (has_dir()) {
-      total_size += 1 + 8;
-    }
-
-    // required uint32 id = 4;
-    if (has_id()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->id());
-    }
-
-    // required bool yellowteam = 5;
-    if (has_yellowteam()) {
-      total_size += 1 + 1;
-    }
-
+    total_size += 1 + 8;
   }
-  if (!unknown_fields().empty()) {
+
+  if (has_y()) {
+    // required double y = 2;
+    total_size += 1 + 8;
+  }
+
+  if (has_dir()) {
+    // required double dir = 3;
+    total_size += 1 + 8;
+  }
+
+  if (has_id()) {
+    // required uint32 id = 4;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->id());
+  }
+
+  if (has_yellowteam()) {
+    // required bool yellowteam = 5;
+    total_size += 1 + 1;
+  }
+
+  return total_size;
+}
+size_t grSim_RobotReplacement::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:grSim_RobotReplacement)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
+    // required double x = 1;
+    total_size += 1 + 8;
+
+    // required double y = 2;
+    total_size += 1 + 8;
+
+    // required double dir = 3;
+    total_size += 1 + 8;
+
+    // required uint32 id = 4;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->id());
+
+    // required bool yellowteam = 5;
+    total_size += 1 + 1;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void grSim_RobotReplacement::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:grSim_RobotReplacement)
+  GOOGLE_DCHECK_NE(&from, this);
   const grSim_RobotReplacement* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const grSim_RobotReplacement*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const grSim_RobotReplacement>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:grSim_RobotReplacement)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:grSim_RobotReplacement)
     MergeFrom(*source);
   }
 }
 
 void grSim_RobotReplacement::MergeFrom(const grSim_RobotReplacement& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:grSim_RobotReplacement)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 31u) {
     if (from.has_x()) {
       set_x(from.x());
     }
@@ -472,16 +582,17 @@ void grSim_RobotReplacement::MergeFrom(const grSim_RobotReplacement& from) {
       set_yellowteam(from.yellowteam());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void grSim_RobotReplacement::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:grSim_RobotReplacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void grSim_RobotReplacement::CopyFrom(const grSim_RobotReplacement& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:grSim_RobotReplacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -489,71 +600,201 @@ void grSim_RobotReplacement::CopyFrom(const grSim_RobotReplacement& from) {
 
 bool grSim_RobotReplacement::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-
   return true;
 }
 
 void grSim_RobotReplacement::Swap(grSim_RobotReplacement* other) {
-  if (other != this) {
-    std::swap(x_, other->x_);
-    std::swap(y_, other->y_);
-    std::swap(dir_, other->dir_);
-    std::swap(id_, other->id_);
-    std::swap(yellowteam_, other->yellowteam_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void grSim_RobotReplacement::InternalSwap(grSim_RobotReplacement* other) {
+  std::swap(x_, other->x_);
+  std::swap(y_, other->y_);
+  std::swap(dir_, other->dir_);
+  std::swap(id_, other->id_);
+  std::swap(yellowteam_, other->yellowteam_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata grSim_RobotReplacement::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = grSim_RobotReplacement_descriptor_;
-  metadata.reflection = grSim_RobotReplacement_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// grSim_RobotReplacement
+
+// required double x = 1;
+bool grSim_RobotReplacement::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void grSim_RobotReplacement::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void grSim_RobotReplacement::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void grSim_RobotReplacement::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+double grSim_RobotReplacement::x() const {
+  // @@protoc_insertion_point(field_get:grSim_RobotReplacement.x)
+  return x_;
+}
+void grSim_RobotReplacement::set_x(double value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:grSim_RobotReplacement.x)
+}
+
+// required double y = 2;
+bool grSim_RobotReplacement::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void grSim_RobotReplacement::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void grSim_RobotReplacement::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void grSim_RobotReplacement::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+double grSim_RobotReplacement::y() const {
+  // @@protoc_insertion_point(field_get:grSim_RobotReplacement.y)
+  return y_;
+}
+void grSim_RobotReplacement::set_y(double value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:grSim_RobotReplacement.y)
+}
+
+// required double dir = 3;
+bool grSim_RobotReplacement::has_dir() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void grSim_RobotReplacement::set_has_dir() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void grSim_RobotReplacement::clear_has_dir() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void grSim_RobotReplacement::clear_dir() {
+  dir_ = 0;
+  clear_has_dir();
+}
+double grSim_RobotReplacement::dir() const {
+  // @@protoc_insertion_point(field_get:grSim_RobotReplacement.dir)
+  return dir_;
+}
+void grSim_RobotReplacement::set_dir(double value) {
+  set_has_dir();
+  dir_ = value;
+  // @@protoc_insertion_point(field_set:grSim_RobotReplacement.dir)
+}
+
+// required uint32 id = 4;
+bool grSim_RobotReplacement::has_id() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void grSim_RobotReplacement::set_has_id() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void grSim_RobotReplacement::clear_has_id() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void grSim_RobotReplacement::clear_id() {
+  id_ = 0u;
+  clear_has_id();
+}
+::google::protobuf::uint32 grSim_RobotReplacement::id() const {
+  // @@protoc_insertion_point(field_get:grSim_RobotReplacement.id)
+  return id_;
+}
+void grSim_RobotReplacement::set_id(::google::protobuf::uint32 value) {
+  set_has_id();
+  id_ = value;
+  // @@protoc_insertion_point(field_set:grSim_RobotReplacement.id)
+}
+
+// required bool yellowteam = 5;
+bool grSim_RobotReplacement::has_yellowteam() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void grSim_RobotReplacement::set_has_yellowteam() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void grSim_RobotReplacement::clear_has_yellowteam() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void grSim_RobotReplacement::clear_yellowteam() {
+  yellowteam_ = false;
+  clear_has_yellowteam();
+}
+bool grSim_RobotReplacement::yellowteam() const {
+  // @@protoc_insertion_point(field_get:grSim_RobotReplacement.yellowteam)
+  return yellowteam_;
+}
+void grSim_RobotReplacement::set_yellowteam(bool value) {
+  set_has_yellowteam();
+  yellowteam_ = value;
+  // @@protoc_insertion_point(field_set:grSim_RobotReplacement.yellowteam)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int grSim_BallReplacement::kXFieldNumber;
 const int grSim_BallReplacement::kYFieldNumber;
 const int grSim_BallReplacement::kVxFieldNumber;
 const int grSim_BallReplacement::kVyFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 grSim_BallReplacement::grSim_BallReplacement()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:grSim_BallReplacement)
 }
-
-void grSim_BallReplacement::InitAsDefaultInstance() {
-}
-
 grSim_BallReplacement::grSim_BallReplacement(const grSim_BallReplacement& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    reinterpret_cast<char*>(&vy_) -
+    reinterpret_cast<char*>(&x_) + sizeof(vy_));
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:grSim_BallReplacement)
 }
 
 void grSim_BallReplacement::SharedCtor() {
   _cached_size_ = 0;
-  x_ = 0;
-  y_ = 0;
-  vx_ = 0;
-  vy_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&x_, 0, reinterpret_cast<char*>(&vy_) -
+    reinterpret_cast<char*>(&x_) + sizeof(vy_));
 }
 
 grSim_BallReplacement::~grSim_BallReplacement() {
+  // @@protoc_insertion_point(destructor:grSim_BallReplacement)
   SharedDtor();
 }
 
 void grSim_BallReplacement::SharedDtor() {
-  if (this != default_instance_) {
-  }
 }
 
 void grSim_BallReplacement::SetCachedSize(int size) const {
@@ -563,105 +804,151 @@ void grSim_BallReplacement::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* grSim_BallReplacement::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return grSim_BallReplacement_descriptor_;
+  return file_level_metadata[1].descriptor;
 }
 
 const grSim_BallReplacement& grSim_BallReplacement::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_grSim_5fReplacement_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  return *internal_default_instance();
 }
 
-grSim_BallReplacement* grSim_BallReplacement::default_instance_ = NULL;
-
-grSim_BallReplacement* grSim_BallReplacement::New() const {
-  return new grSim_BallReplacement;
+grSim_BallReplacement* grSim_BallReplacement::New(::google::protobuf::Arena* arena) const {
+  grSim_BallReplacement* n = new grSim_BallReplacement;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void grSim_BallReplacement::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    x_ = 0;
-    y_ = 0;
-    vx_ = 0;
-    vy_ = 0;
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:grSim_BallReplacement)
+  if (_has_bits_[0 / 32] & 15u) {
+    ::memset(&x_, 0, reinterpret_cast<char*>(&vy_) -
+      reinterpret_cast<char*>(&x_) + sizeof(vy_));
   }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
+=======
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<grSim_BallReplacement*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(x_, vy_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
 }
 
 bool grSim_BallReplacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:grSim_BallReplacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:grSim_BallReplacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required double x = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 9u) {
+          set_has_x();
+=======
+        if (tag == 9) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &x_)));
-          set_has_x();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(17)) goto parse_y;
         break;
       }
 
       // required double y = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 17u) {
+          set_has_y();
+=======
+        if (tag == 17) {
          parse_y:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &y_)));
-          set_has_y();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(25)) goto parse_vx;
         break;
       }
 
       // required double vx = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 25u) {
+          set_has_vx();
+=======
+        if (tag == 25) {
          parse_vx:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &vx_)));
-          set_has_vx();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(33)) goto parse_vy;
         break;
       }
 
       // required double vy = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+<<<<<<< HEAD
+        if (tag == 33u) {
+          set_has_vy();
+=======
+        if (tag == 33) {
          parse_vy:
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &vy_)));
-          set_has_vy();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+<<<<<<< HEAD
+=======
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -669,12 +956,18 @@ bool grSim_BallReplacement::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:grSim_BallReplacement)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:grSim_BallReplacement)
+  return false;
 #undef DO_
 }
 
 void grSim_BallReplacement::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:grSim_BallReplacement)
   // required double x = 1;
   if (has_x()) {
     ::google::protobuf::internal::WireFormatLite::WriteDouble(1, this->x(), output);
@@ -695,14 +988,22 @@ void grSim_BallReplacement::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteDouble(4, this->vy(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:grSim_BallReplacement)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* grSim_BallReplacement::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* grSim_BallReplacement::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:grSim_BallReplacement)
   // required double x = 1;
   if (has_x()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(1, this->x(), target);
@@ -723,64 +1024,92 @@ void grSim_BallReplacement::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteDoubleToArray(4, this->vy(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:grSim_BallReplacement)
   return target;
 }
 
-int grSim_BallReplacement::ByteSize() const {
-  int total_size = 0;
+size_t grSim_BallReplacement::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:grSim_BallReplacement)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (has_x()) {
     // required double x = 1;
-    if (has_x()) {
-      total_size += 1 + 8;
-    }
-
-    // required double y = 2;
-    if (has_y()) {
-      total_size += 1 + 8;
-    }
-
-    // required double vx = 3;
-    if (has_vx()) {
-      total_size += 1 + 8;
-    }
-
-    // required double vy = 4;
-    if (has_vy()) {
-      total_size += 1 + 8;
-    }
-
+    total_size += 1 + 8;
   }
-  if (!unknown_fields().empty()) {
+
+  if (has_y()) {
+    // required double y = 2;
+    total_size += 1 + 8;
+  }
+
+  if (has_vx()) {
+    // required double vx = 3;
+    total_size += 1 + 8;
+  }
+
+  if (has_vy()) {
+    // required double vy = 4;
+    total_size += 1 + 8;
+  }
+
+  return total_size;
+}
+size_t grSim_BallReplacement::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:grSim_BallReplacement)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
+    // required double x = 1;
+    total_size += 1 + 8;
+
+    // required double y = 2;
+    total_size += 1 + 8;
+
+    // required double vx = 3;
+    total_size += 1 + 8;
+
+    // required double vy = 4;
+    total_size += 1 + 8;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void grSim_BallReplacement::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:grSim_BallReplacement)
+  GOOGLE_DCHECK_NE(&from, this);
   const grSim_BallReplacement* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const grSim_BallReplacement*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const grSim_BallReplacement>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:grSim_BallReplacement)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:grSim_BallReplacement)
     MergeFrom(*source);
   }
 }
 
 void grSim_BallReplacement::MergeFrom(const grSim_BallReplacement& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:grSim_BallReplacement)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 15u) {
     if (from.has_x()) {
       set_x(from.x());
     }
@@ -794,16 +1123,17 @@ void grSim_BallReplacement::MergeFrom(const grSim_BallReplacement& from) {
       set_vy(from.vy());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void grSim_BallReplacement::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:grSim_BallReplacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void grSim_BallReplacement::CopyFrom(const grSim_BallReplacement& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:grSim_BallReplacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -811,65 +1141,177 @@ void grSim_BallReplacement::CopyFrom(const grSim_BallReplacement& from) {
 
 bool grSim_BallReplacement::IsInitialized() const {
   if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
-
   return true;
 }
 
 void grSim_BallReplacement::Swap(grSim_BallReplacement* other) {
-  if (other != this) {
-    std::swap(x_, other->x_);
-    std::swap(y_, other->y_);
-    std::swap(vx_, other->vx_);
-    std::swap(vy_, other->vy_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void grSim_BallReplacement::InternalSwap(grSim_BallReplacement* other) {
+  std::swap(x_, other->x_);
+  std::swap(y_, other->y_);
+  std::swap(vx_, other->vx_);
+  std::swap(vy_, other->vy_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata grSim_BallReplacement::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = grSim_BallReplacement_descriptor_;
-  metadata.reflection = grSim_BallReplacement_reflection_;
-  return metadata;
+  return file_level_metadata[1];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// grSim_BallReplacement
+
+// required double x = 1;
+bool grSim_BallReplacement::has_x() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void grSim_BallReplacement::set_has_x() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void grSim_BallReplacement::clear_has_x() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void grSim_BallReplacement::clear_x() {
+  x_ = 0;
+  clear_has_x();
+}
+double grSim_BallReplacement::x() const {
+  // @@protoc_insertion_point(field_get:grSim_BallReplacement.x)
+  return x_;
+}
+void grSim_BallReplacement::set_x(double value) {
+  set_has_x();
+  x_ = value;
+  // @@protoc_insertion_point(field_set:grSim_BallReplacement.x)
+}
+
+// required double y = 2;
+bool grSim_BallReplacement::has_y() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void grSim_BallReplacement::set_has_y() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void grSim_BallReplacement::clear_has_y() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void grSim_BallReplacement::clear_y() {
+  y_ = 0;
+  clear_has_y();
+}
+double grSim_BallReplacement::y() const {
+  // @@protoc_insertion_point(field_get:grSim_BallReplacement.y)
+  return y_;
+}
+void grSim_BallReplacement::set_y(double value) {
+  set_has_y();
+  y_ = value;
+  // @@protoc_insertion_point(field_set:grSim_BallReplacement.y)
+}
+
+// required double vx = 3;
+bool grSim_BallReplacement::has_vx() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void grSim_BallReplacement::set_has_vx() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void grSim_BallReplacement::clear_has_vx() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void grSim_BallReplacement::clear_vx() {
+  vx_ = 0;
+  clear_has_vx();
+}
+double grSim_BallReplacement::vx() const {
+  // @@protoc_insertion_point(field_get:grSim_BallReplacement.vx)
+  return vx_;
+}
+void grSim_BallReplacement::set_vx(double value) {
+  set_has_vx();
+  vx_ = value;
+  // @@protoc_insertion_point(field_set:grSim_BallReplacement.vx)
+}
+
+// required double vy = 4;
+bool grSim_BallReplacement::has_vy() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void grSim_BallReplacement::set_has_vy() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void grSim_BallReplacement::clear_has_vy() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void grSim_BallReplacement::clear_vy() {
+  vy_ = 0;
+  clear_has_vy();
+}
+double grSim_BallReplacement::vy() const {
+  // @@protoc_insertion_point(field_get:grSim_BallReplacement.vy)
+  return vy_;
+}
+void grSim_BallReplacement::set_vy(double value) {
+  set_has_vy();
+  vy_ = value;
+  // @@protoc_insertion_point(field_set:grSim_BallReplacement.vy)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int grSim_Replacement::kBallFieldNumber;
 const int grSim_Replacement::kRobotsFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 grSim_Replacement::grSim_Replacement()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:grSim_Replacement)
 }
-
-void grSim_Replacement::InitAsDefaultInstance() {
-  ball_ = const_cast< ::grSim_BallReplacement*>(&::grSim_BallReplacement::default_instance());
-}
-
 grSim_Replacement::grSim_Replacement(const grSim_Replacement& from)
+<<<<<<< HEAD
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0),
+      robots_(from.robots_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_ball()) {
+    ball_ = new ::grSim_BallReplacement(*from.ball_);
+  } else {
+    ball_ = NULL;
+  }
+=======
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(copy_constructor:grSim_Replacement)
 }
 
 void grSim_Replacement::SharedCtor() {
   _cached_size_ = 0;
   ball_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 grSim_Replacement::~grSim_Replacement() {
+  // @@protoc_insertion_point(destructor:grSim_Replacement)
   SharedDtor();
 }
 
 void grSim_Replacement::SharedDtor() {
-  if (this != default_instance_) {
+  if (this != internal_default_instance()) {
     delete ball_;
   }
 }
@@ -881,70 +1323,102 @@ void grSim_Replacement::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* grSim_Replacement::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return grSim_Replacement_descriptor_;
+  return file_level_metadata[2].descriptor;
 }
 
 const grSim_Replacement& grSim_Replacement::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_grSim_5fReplacement_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_grSim_5fReplacement_2eproto();
+  return *internal_default_instance();
 }
 
-grSim_Replacement* grSim_Replacement::default_instance_ = NULL;
-
-grSim_Replacement* grSim_Replacement::New() const {
-  return new grSim_Replacement;
+grSim_Replacement* grSim_Replacement::New(::google::protobuf::Arena* arena) const {
+  grSim_Replacement* n = new grSim_Replacement;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void grSim_Replacement::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_ball()) {
-      if (ball_ != NULL) ball_->::grSim_BallReplacement::Clear();
-    }
+<<<<<<< HEAD
+// @@protoc_insertion_point(message_clear_start:grSim_Replacement)
+=======
+  if (has_ball()) {
+    if (ball_ != NULL) ball_->::grSim_BallReplacement::Clear();
   }
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   robots_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (has_ball()) {
+    GOOGLE_DCHECK(ball_ != NULL);
+    ball_->::grSim_BallReplacement::Clear();
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
 }
 
 bool grSim_Replacement::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+<<<<<<< HEAD
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:grSim_Replacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+=======
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:grSim_Replacement)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // optional .grSim_BallReplacement ball = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 10u) {
+=======
+        if (tag == 10) {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_ball()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_robots;
         break;
       }
 
       // repeated .grSim_RobotReplacement robots = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+<<<<<<< HEAD
+        if (tag == 18u) {
+          DO_(input->IncrementRecursionDepth());
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+=======
+        if (tag == 18) {
          parse_robots:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
                 input, add_robots()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
+<<<<<<< HEAD
+        input->UnsafeDecrementRecursionDepth();
+=======
         if (input->ExpectTag(18)) goto parse_robots;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -952,148 +1426,251 @@ bool grSim_Replacement::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:grSim_Replacement)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:grSim_Replacement)
+  return false;
 #undef DO_
 }
 
 void grSim_Replacement::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:grSim_Replacement)
   // optional .grSim_BallReplacement ball = 1;
   if (has_ball()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->ball(), output);
+      1, *this->ball_, output);
   }
 
   // repeated .grSim_RobotReplacement robots = 2;
-  for (int i = 0; i < this->robots_size(); i++) {
+  for (unsigned int i = 0, n = this->robots_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       2, this->robots(i), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:grSim_Replacement)
 }
 
+<<<<<<< HEAD
+::google::protobuf::uint8* grSim_Replacement::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+=======
 ::google::protobuf::uint8* grSim_Replacement::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
+  // @@protoc_insertion_point(serialize_to_array_start:grSim_Replacement)
   // optional .grSim_BallReplacement ball = 1;
   if (has_ball()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->ball(), target);
+      InternalWriteMessageNoVirtualToArray(
+        1, *this->ball_, false, target);
   }
 
   // repeated .grSim_RobotReplacement robots = 2;
-  for (int i = 0; i < this->robots_size(); i++) {
+  for (unsigned int i = 0, n = this->robots_size(); i < n; i++) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->robots(i), target);
+      InternalWriteMessageNoVirtualToArray(
+        2, this->robots(i), false, target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:grSim_Replacement)
   return target;
 }
 
-int grSim_Replacement::ByteSize() const {
-  int total_size = 0;
+size_t grSim_Replacement::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:grSim_Replacement)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .grSim_BallReplacement ball = 1;
-    if (has_ball()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->ball());
-    }
-
-  }
-  // repeated .grSim_RobotReplacement robots = 2;
-  total_size += 1 * this->robots_size();
-  for (int i = 0; i < this->robots_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->robots(i));
-  }
-
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  // repeated .grSim_RobotReplacement robots = 2;
+  {
+    unsigned int count = this->robots_size();
+    total_size += 1UL * count;
+    for (unsigned int i = 0; i < count; i++) {
+      total_size +=
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->robots(i));
+    }
+  }
+
+  // optional .grSim_BallReplacement ball = 1;
+  if (has_ball()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->ball_);
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void grSim_Replacement::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:grSim_Replacement)
+  GOOGLE_DCHECK_NE(&from, this);
   const grSim_Replacement* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const grSim_Replacement*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const grSim_Replacement>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:grSim_Replacement)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:grSim_Replacement)
     MergeFrom(*source);
   }
 }
 
 void grSim_Replacement::MergeFrom(const grSim_Replacement& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:grSim_Replacement)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   robots_.MergeFrom(from.robots_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_ball()) {
-      mutable_ball()->::grSim_BallReplacement::MergeFrom(from.ball());
-    }
+  if (from.has_ball()) {
+    mutable_ball()->::grSim_BallReplacement::MergeFrom(from.ball());
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void grSim_Replacement::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:grSim_Replacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void grSim_Replacement::CopyFrom(const grSim_Replacement& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:grSim_Replacement)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 bool grSim_Replacement::IsInitialized() const {
-
+  if (!::google::protobuf::internal::AllAreInitialized(this->robots())) return false;
   if (has_ball()) {
+<<<<<<< HEAD
+    if (!this->ball_->IsInitialized()) return false;
+  }
+=======
     if (!this->ball().IsInitialized()) return false;
   }
-  for (int i = 0; i < robots_size(); i++) {
-    if (!this->robots(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->robots())) return false;
+>>>>>>> d766c95da96dc8ee70e0992aefe4e0a62d783e28
   return true;
 }
 
 void grSim_Replacement::Swap(grSim_Replacement* other) {
-  if (other != this) {
-    std::swap(ball_, other->ball_);
-    robots_.Swap(&other->robots_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void grSim_Replacement::InternalSwap(grSim_Replacement* other) {
+  robots_.UnsafeArenaSwap(&other->robots_);
+  std::swap(ball_, other->ball_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata grSim_Replacement::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = grSim_Replacement_descriptor_;
-  metadata.reflection = grSim_Replacement_reflection_;
-  return metadata;
+  return file_level_metadata[2];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// grSim_Replacement
+
+// optional .grSim_BallReplacement ball = 1;
+bool grSim_Replacement::has_ball() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void grSim_Replacement::set_has_ball() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void grSim_Replacement::clear_has_ball() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void grSim_Replacement::clear_ball() {
+  if (ball_ != NULL) ball_->::grSim_BallReplacement::Clear();
+  clear_has_ball();
+}
+const ::grSim_BallReplacement& grSim_Replacement::ball() const {
+  // @@protoc_insertion_point(field_get:grSim_Replacement.ball)
+  return ball_ != NULL ? *ball_
+                         : *::grSim_BallReplacement::internal_default_instance();
+}
+::grSim_BallReplacement* grSim_Replacement::mutable_ball() {
+  set_has_ball();
+  if (ball_ == NULL) {
+    ball_ = new ::grSim_BallReplacement;
+  }
+  // @@protoc_insertion_point(field_mutable:grSim_Replacement.ball)
+  return ball_;
+}
+::grSim_BallReplacement* grSim_Replacement::release_ball() {
+  // @@protoc_insertion_point(field_release:grSim_Replacement.ball)
+  clear_has_ball();
+  ::grSim_BallReplacement* temp = ball_;
+  ball_ = NULL;
+  return temp;
+}
+void grSim_Replacement::set_allocated_ball(::grSim_BallReplacement* ball) {
+  delete ball_;
+  ball_ = ball;
+  if (ball) {
+    set_has_ball();
+  } else {
+    clear_has_ball();
+  }
+  // @@protoc_insertion_point(field_set_allocated:grSim_Replacement.ball)
+}
+
+// repeated .grSim_RobotReplacement robots = 2;
+int grSim_Replacement::robots_size() const {
+  return robots_.size();
+}
+void grSim_Replacement::clear_robots() {
+  robots_.Clear();
+}
+const ::grSim_RobotReplacement& grSim_Replacement::robots(int index) const {
+  // @@protoc_insertion_point(field_get:grSim_Replacement.robots)
+  return robots_.Get(index);
+}
+::grSim_RobotReplacement* grSim_Replacement::mutable_robots(int index) {
+  // @@protoc_insertion_point(field_mutable:grSim_Replacement.robots)
+  return robots_.Mutable(index);
+}
+::grSim_RobotReplacement* grSim_Replacement::add_robots() {
+  // @@protoc_insertion_point(field_add:grSim_Replacement.robots)
+  return robots_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::grSim_RobotReplacement >*
+grSim_Replacement::mutable_robots() {
+  // @@protoc_insertion_point(field_mutable_list:grSim_Replacement.robots)
+  return &robots_;
+}
+const ::google::protobuf::RepeatedPtrField< ::grSim_RobotReplacement >&
+grSim_Replacement::robots() const {
+  // @@protoc_insertion_point(field_list:grSim_Replacement.robots)
+  return robots_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

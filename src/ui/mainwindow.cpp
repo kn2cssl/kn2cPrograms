@@ -9,6 +9,7 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
 {
     ui->setupUi(this);
     //ui->txtLog->append(QSerialPort::);
+    //for rendering soccer area
     _render = new RenderArea(soccer);
     ui->gridRender->addWidget(_render);
     QStringList indexses;
@@ -24,6 +25,8 @@ MainWindow::MainWindow(Soccer *soccer, QWidget *parent) :
     this->on_btnLoadVars_clicked();
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
     timer.start(100);
+
+    ui->debug_output_type->setCurrentIndex(1);
 
     logTimer = new QTimer();
     connect(logTimer, SIGNAL(timeout()), this, SLOT(logTimer_timeout()));
@@ -420,7 +423,6 @@ void MainWindow::timer_timeout()
     sc->wm->select_fk[10] = ui->fk10_checkBox->isChecked();
     sc->wm->select_fk[11] = ui->fk11_checkBox->isChecked();
     sc->wm->select_fk[12] = ui->fk47_checkBox->isChecked();
-
     sc->wm->freeKickerID = ui->freeKickerID_lineedit->text().toInt();
 
     //---Debuging Tools----------------
@@ -716,3 +718,4 @@ void MainWindow::logTimer_timeout()
     ui->timeLabel->setText(convertTime2String(counter) + " / " + convertTime2String(logLength));
     ui->timeLine_slider->setValue(counter);
 }
+

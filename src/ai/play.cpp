@@ -36,10 +36,9 @@ Tactic* Play::getTactic(int id)
     if(id >= PLAYERS_MAX_NUM || id < 0) return NULL;
     return tactics[id];
 }
-
 bool Play::conditionChanged()
 {
-    bool out;
+    bool out = true;
     QList<int> activeAgents=wm->kn->ActiveAgents();
     if(activeAgents.size() != numberOfPlayers)
     {
