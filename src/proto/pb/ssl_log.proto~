@@ -1,0 +1,17 @@
+import "Robot_message.proto";
+import "Ball_message.proto";
+
+message log_chunk
+{
+	required int64 chunk_number = 1;	
+	required Ball_message ball = 2;
+	repeated Robot_message ours = 3;
+	repeated Robot_message opps = 4;
+}
+
+message SSL_log
+{
+	required int64 numberOfChunks = 1;
+	required int64 timerInterval = 2;	
+	repeated log_chunk chunks = 3;
+}

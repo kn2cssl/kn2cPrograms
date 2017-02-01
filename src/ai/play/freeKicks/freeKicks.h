@@ -14,7 +14,11 @@
 #include "freekick10.h"
 #include "freekick11.h"
 #include "freekick47.h"
-
+//armin sadreddin
+#include "freekicktest1.h"
+//armin sadreddin
 #include "freekickdirect.h"
-
+//kamran
+#include"freekicktest2.h"
+//kamran
 #endif // FREEKICKS_H

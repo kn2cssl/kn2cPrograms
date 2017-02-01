@@ -1,3 +1,4 @@
+syntax="proto2";
 import "messages_robocup_ssl_wrapper.proto";
 import "messages_robocup_ssl_wrapper_legacy.proto";
 

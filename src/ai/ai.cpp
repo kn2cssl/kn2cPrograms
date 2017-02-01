@@ -14,6 +14,9 @@
 #include "play/playtest2.h"
 #include "play/playlearning.h"
 #include "play/playformations.h"
+//ali hejazi
+#include "play/playhw2_1.h"
+#include "play/mantomandefense.h"
 
 AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, QObject *parent) :
     QObject(parent),
@@ -21,6 +24,7 @@ AI::AI(WorldModel *worldmodel, QString field_size, OutputBuffer *outputbuffer, Q
     outputbuffer(outputbuffer)
 {
     qDebug() << "AI Initialization...";
+    qDebug()<<"WTF WTF WTF";
     connect(&timer, SIGNAL(timeout()), this, SLOT(timer_timeout()));
 
     Field::setup_consts(field_size);

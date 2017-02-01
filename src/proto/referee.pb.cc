@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,51 +16,26 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class SSL_Referee_TeamInfoDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SSL_Referee_TeamInfo> {};
+SSL_Referee_TeamInfoDefaultTypeInternal _SSL_Referee_TeamInfo_default_instance_;
+class SSL_RefereeDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<SSL_Referee> {};
+SSL_RefereeDefaultTypeInternal _SSL_Referee_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* SSL_Referee_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  SSL_Referee_reflection_ = NULL;
-const ::google::protobuf::Descriptor* SSL_Referee_TeamInfo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  SSL_Referee_TeamInfo_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* SSL_Referee_Stage_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* SSL_Referee_Command_descriptor_ = NULL;
+::google::protobuf::Metadata file_level_metadata[2];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[2];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_referee_2eproto() {
-  protobuf_AddDesc_referee_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "referee.proto");
-  GOOGLE_CHECK(file != NULL);
-  SSL_Referee_descriptor_ = file->message_type(0);
-  static const int SSL_Referee_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, packet_timestamp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, stage_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, stage_time_left_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_counter_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_timestamp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, yellow_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, blue_),
-  };
-  SSL_Referee_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      SSL_Referee_descriptor_,
-      SSL_Referee::default_instance_,
-      SSL_Referee_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SSL_Referee));
-  SSL_Referee_TeamInfo_descriptor_ = SSL_Referee_descriptor_->nested_type(0);
-  static const int SSL_Referee_TeamInfo_offsets_[8] = {
+const ::google::protobuf::uint32* protobuf_Offsets_referee_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_referee_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, score_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, red_cards_),
@@ -68,107 +44,151 @@ void protobuf_AssignDesc_referee_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, timeouts_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, timeout_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, goalie_),
+    0,
+    1,
+    2,
+    7,
+    3,
+    4,
+    5,
+    6,
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, packet_timestamp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, stage_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, stage_time_left_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_counter_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, command_timestamp_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, yellow_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee, blue_),
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    0,
+    1,
   };
-  SSL_Referee_TeamInfo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      SSL_Referee_TeamInfo_descriptor_,
-      SSL_Referee_TeamInfo::default_instance_,
-      SSL_Referee_TeamInfo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(SSL_Referee_TeamInfo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(SSL_Referee_TeamInfo));
-  SSL_Referee_Stage_descriptor_ = SSL_Referee_descriptor_->enum_type(0);
-  SSL_Referee_Command_descriptor_ = SSL_Referee_descriptor_->enum_type(1);
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 12, sizeof(SSL_Referee_TeamInfo)},
+  { 20, 32, sizeof(SSL_Referee)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_SSL_Referee_TeamInfo_default_instance_), NULL},
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_SSL_Referee_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_referee_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_referee_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "referee.proto", schemas, file_default_instances, protobuf_Offsets_referee_2eproto(), factory,
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SSL_Referee_descriptor_, &SSL_Referee::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    SSL_Referee_TeamInfo_descriptor_, &SSL_Referee_TeamInfo::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 2);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_referee_2eproto() {
-  delete SSL_Referee::default_instance_;
-  delete SSL_Referee_reflection_;
-  delete SSL_Referee_TeamInfo::default_instance_;
-  delete SSL_Referee_TeamInfo_reflection_;
+  _SSL_Referee_TeamInfo_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
+  _SSL_Referee_default_instance_.Shutdown();
+  delete file_level_metadata[1].reflection;
 }
 
-void protobuf_AddDesc_referee_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_referee_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _SSL_Referee_TeamInfo_default_instance_.DefaultConstruct();
+  _SSL_Referee_default_instance_.DefaultConstruct();
+  _SSL_Referee_default_instance_.get_mutable()->yellow_ = const_cast< ::SSL_Referee_TeamInfo*>(
+      ::SSL_Referee_TeamInfo::internal_default_instance());
+  _SSL_Referee_default_instance_.get_mutable()->blue_ = const_cast< ::SSL_Referee_TeamInfo*>(
+      ::SSL_Referee_TeamInfo::internal_default_instance());
+}
+
+void protobuf_InitDefaults_referee_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_referee_2eproto_impl);
+}
+void protobuf_AddDesc_referee_2eproto_impl() {
+  protobuf_InitDefaults_referee_2eproto();
+  static const char descriptor[] = {
+      "\n\rreferee.proto\"\335\010\n\013SSL_Referee\022\030\n\020packe"
+      "t_timestamp\030\001 \002(\004\022!\n\005stage\030\002 \002(\0162\022.SSL_R"
+      "eferee.Stage\022\027\n\017stage_time_left\030\003 \001(\021\022%\n"
+      "\007command\030\004 \002(\0162\024.SSL_Referee.Command\022\027\n\017"
+      "command_counter\030\005 \002(\r\022\031\n\021command_timesta"
+      "mp\030\006 \002(\004\022%\n\006yellow\030\007 \002(\0132\025.SSL_Referee.T"
+      "eamInfo\022#\n\004blue\030\010 \002(\0132\025.SSL_Referee.Team"
+      "Info\032\247\001\n\010TeamInfo\022\014\n\004name\030\001 \002(\t\022\r\n\005score"
+      "\030\002 \002(\r\022\021\n\tred_cards\030\003 \002(\r\022\035\n\021yellow_card"
+      "_times\030\004 \003(\rB\002\020\001\022\024\n\014yellow_cards\030\005 \002(\r\022\020"
+      "\n\010timeouts\030\006 \002(\r\022\024\n\014timeout_time\030\007 \002(\r\022\016"
+      "\n\006goalie\030\010 \002(\r\"\321\002\n\005Stage\022\031\n\025NORMAL_FIRST"
+      "_HALF_PRE\020\000\022\025\n\021NORMAL_FIRST_HALF\020\001\022\024\n\020NO"
+      "RMAL_HALF_TIME\020\002\022\032\n\026NORMAL_SECOND_HALF_P"
+      "RE\020\003\022\026\n\022NORMAL_SECOND_HALF\020\004\022\024\n\020EXTRA_TI"
+      "ME_BREAK\020\005\022\030\n\024EXTRA_FIRST_HALF_PRE\020\006\022\024\n\020"
+      "EXTRA_FIRST_HALF\020\007\022\023\n\017EXTRA_HALF_TIME\020\010\022"
+      "\031\n\025EXTRA_SECOND_HALF_PRE\020\t\022\025\n\021EXTRA_SECO"
+      "ND_HALF\020\n\022\032\n\026PENALTY_SHOOTOUT_BREAK\020\013\022\024\n"
+      "\020PENALTY_SHOOTOUT\020\014\022\r\n\tPOST_GAME\020\r\"\322\002\n\007C"
+      "ommand\022\010\n\004HALT\020\000\022\010\n\004STOP\020\001\022\020\n\014NORMAL_STA"
+      "RT\020\002\022\017\n\013FORCE_START\020\003\022\032\n\026PREPARE_KICKOFF"
+      "_YELLOW\020\004\022\030\n\024PREPARE_KICKOFF_BLUE\020\005\022\032\n\026P"
+      "REPARE_PENALTY_YELLOW\020\006\022\030\n\024PREPARE_PENAL"
+      "TY_BLUE\020\007\022\026\n\022DIRECT_FREE_YELLOW\020\010\022\024\n\020DIR"
+      "ECT_FREE_BLUE\020\t\022\030\n\024INDIRECT_FREE_YELLOW\020"
+      "\n\022\026\n\022INDIRECT_FREE_BLUE\020\013\022\022\n\016TIMEOUT_YEL"
+      "LOW\020\014\022\020\n\014TIMEOUT_BLUE\020\r\022\017\n\013GOAL_YELLOW\020\016"
+      "\022\r\n\tGOAL_BLUE\020\017"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\rreferee.proto\"\335\010\n\013SSL_Referee\022\030\n\020packe"
-    "t_timestamp\030\001 \002(\004\022!\n\005stage\030\002 \002(\0162\022.SSL_R"
-    "eferee.Stage\022\027\n\017stage_time_left\030\003 \001(\021\022%\n"
-    "\007command\030\004 \002(\0162\024.SSL_Referee.Command\022\027\n\017"
-    "command_counter\030\005 \002(\r\022\031\n\021command_timesta"
-    "mp\030\006 \002(\004\022%\n\006yellow\030\007 \002(\0132\025.SSL_Referee.T"
-    "eamInfo\022#\n\004blue\030\010 \002(\0132\025.SSL_Referee.Team"
-    "Info\032\247\001\n\010TeamInfo\022\014\n\004name\030\001 \002(\t\022\r\n\005score"
-    "\030\002 \002(\r\022\021\n\tred_cards\030\003 \002(\r\022\035\n\021yellow_card"
-    "_times\030\004 \003(\rB\002\020\001\022\024\n\014yellow_cards\030\005 \002(\r\022\020"
-    "\n\010timeouts\030\006 \002(\r\022\024\n\014timeout_time\030\007 \002(\r\022\016"
-    "\n\006goalie\030\010 \002(\r\"\321\002\n\005Stage\022\031\n\025NORMAL_FIRST"
-    "_HALF_PRE\020\000\022\025\n\021NORMAL_FIRST_HALF\020\001\022\024\n\020NO"
-    "RMAL_HALF_TIME\020\002\022\032\n\026NORMAL_SECOND_HALF_P"
-    "RE\020\003\022\026\n\022NORMAL_SECOND_HALF\020\004\022\024\n\020EXTRA_TI"
-    "ME_BREAK\020\005\022\030\n\024EXTRA_FIRST_HALF_PRE\020\006\022\024\n\020"
-    "EXTRA_FIRST_HALF\020\007\022\023\n\017EXTRA_HALF_TIME\020\010\022"
-    "\031\n\025EXTRA_SECOND_HALF_PRE\020\t\022\025\n\021EXTRA_SECO"
-    "ND_HALF\020\n\022\032\n\026PENALTY_SHOOTOUT_BREAK\020\013\022\024\n"
-    "\020PENALTY_SHOOTOUT\020\014\022\r\n\tPOST_GAME\020\r\"\322\002\n\007C"
-    "ommand\022\010\n\004HALT\020\000\022\010\n\004STOP\020\001\022\020\n\014NORMAL_STA"
-    "RT\020\002\022\017\n\013FORCE_START\020\003\022\032\n\026PREPARE_KICKOFF"
-    "_YELLOW\020\004\022\030\n\024PREPARE_KICKOFF_BLUE\020\005\022\032\n\026P"
-    "REPARE_PENALTY_YELLOW\020\006\022\030\n\024PREPARE_PENAL"
-    "TY_BLUE\020\007\022\026\n\022DIRECT_FREE_YELLOW\020\010\022\024\n\020DIR"
-    "ECT_FREE_BLUE\020\t\022\030\n\024INDIRECT_FREE_YELLOW\020"
-    "\n\022\026\n\022INDIRECT_FREE_BLUE\020\013\022\022\n\016TIMEOUT_YEL"
-    "LOW\020\014\022\020\n\014TIMEOUT_BLUE\020\r\022\017\n\013GOAL_YELLOW\020\016"
-    "\022\r\n\tGOAL_BLUE\020\017", 1135);
+      descriptor, 1135);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "referee.proto", &protobuf_RegisterTypes);
-  SSL_Referee::default_instance_ = new SSL_Referee();
-  SSL_Referee_TeamInfo::default_instance_ = new SSL_Referee_TeamInfo();
-  SSL_Referee::default_instance_->InitAsDefaultInstance();
-  SSL_Referee_TeamInfo::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_referee_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_referee_2eproto_once_);
+void protobuf_AddDesc_referee_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_referee_2eproto_once_,
+                 &protobuf_AddDesc_referee_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_referee_2eproto {
   StaticDescriptorInitializer_referee_2eproto() {
     protobuf_AddDesc_referee_2eproto();
   }
 } static_descriptor_initializer_referee_2eproto_;
-
-// ===================================================================
-
 const ::google::protobuf::EnumDescriptor* SSL_Referee_Stage_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SSL_Referee_Stage_descriptor_;
+  return file_level_enum_descriptors[0];
 }
 bool SSL_Referee_Stage_IsValid(int value) {
-  switch(value) {
+  switch (value) {
     case 0:
     case 1:
     case 2:
@@ -189,7 +209,7 @@ bool SSL_Referee_Stage_IsValid(int value) {
   }
 }
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const SSL_Referee_Stage SSL_Referee::NORMAL_FIRST_HALF_PRE;
 const SSL_Referee_Stage SSL_Referee::NORMAL_FIRST_HALF;
 const SSL_Referee_Stage SSL_Referee::NORMAL_HALF_TIME;
@@ -207,13 +227,13 @@ const SSL_Referee_Stage SSL_Referee::POST_GAME;
 const SSL_Referee_Stage SSL_Referee::Stage_MIN;
 const SSL_Referee_Stage SSL_Referee::Stage_MAX;
 const int SSL_Referee::Stage_ARRAYSIZE;
-#endif  // _MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 const ::google::protobuf::EnumDescriptor* SSL_Referee_Command_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SSL_Referee_Command_descriptor_;
+  return file_level_enum_descriptors[1];
 }
 bool SSL_Referee_Command_IsValid(int value) {
-  switch(value) {
+  switch (value) {
     case 0:
     case 1:
     case 2:
@@ -236,7 +256,7 @@ bool SSL_Referee_Command_IsValid(int value) {
   }
 }
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const SSL_Referee_Command SSL_Referee::HALT;
 const SSL_Referee_Command SSL_Referee::STOP;
 const SSL_Referee_Command SSL_Referee::NORMAL_START;
@@ -256,8 +276,11 @@ const SSL_Referee_Command SSL_Referee::GOAL_BLUE;
 const SSL_Referee_Command SSL_Referee::Command_MIN;
 const SSL_Referee_Command SSL_Referee::Command_MAX;
 const int SSL_Referee::Command_ARRAYSIZE;
-#endif  // _MSC_VER
-#ifndef _MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int SSL_Referee_TeamInfo::kNameFieldNumber;
 const int SSL_Referee_TeamInfo::kScoreFieldNumber;
 const int SSL_Referee_TeamInfo::kRedCardsFieldNumber;
@@ -266,44 +289,47 @@ const int SSL_Referee_TeamInfo::kYellowCardsFieldNumber;
 const int SSL_Referee_TeamInfo::kTimeoutsFieldNumber;
 const int SSL_Referee_TeamInfo::kTimeoutTimeFieldNumber;
 const int SSL_Referee_TeamInfo::kGoalieFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 SSL_Referee_TeamInfo::SSL_Referee_TeamInfo()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_referee_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:SSL_Referee.TeamInfo)
 }
-
-void SSL_Referee_TeamInfo::InitAsDefaultInstance() {
-}
-
 SSL_Referee_TeamInfo::SSL_Referee_TeamInfo(const SSL_Referee_TeamInfo& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0),
+      yellow_card_times_(from.yellow_card_times_) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  if (from.has_name()) {
+    name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
+  }
+  ::memcpy(&score_, &from.score_,
+    reinterpret_cast<char*>(&goalie_) -
+    reinterpret_cast<char*>(&score_) + sizeof(goalie_));
+  // @@protoc_insertion_point(copy_constructor:SSL_Referee.TeamInfo)
 }
 
 void SSL_Referee_TeamInfo::SharedCtor() {
   _cached_size_ = 0;
-  name_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
-  score_ = 0u;
-  red_cards_ = 0u;
-  yellow_cards_ = 0u;
-  timeouts_ = 0u;
-  timeout_time_ = 0u;
-  goalie_ = 0u;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ::memset(&score_, 0, reinterpret_cast<char*>(&goalie_) -
+    reinterpret_cast<char*>(&score_) + sizeof(goalie_));
 }
 
 SSL_Referee_TeamInfo::~SSL_Referee_TeamInfo() {
+  // @@protoc_insertion_point(destructor:SSL_Referee.TeamInfo)
   SharedDtor();
 }
 
 void SSL_Referee_TeamInfo::SharedDtor() {
-  if (name_ != &::google::protobuf::internal::kEmptyString) {
-    delete name_;
-  }
-  if (this != default_instance_) {
-  }
+  name_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
 void SSL_Referee_TeamInfo::SetCachedSize(int size) const {
@@ -313,183 +339,162 @@ void SSL_Referee_TeamInfo::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* SSL_Referee_TeamInfo::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SSL_Referee_TeamInfo_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const SSL_Referee_TeamInfo& SSL_Referee_TeamInfo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_referee_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_referee_2eproto();
+  return *internal_default_instance();
 }
 
-SSL_Referee_TeamInfo* SSL_Referee_TeamInfo::default_instance_ = NULL;
-
-SSL_Referee_TeamInfo* SSL_Referee_TeamInfo::New() const {
-  return new SSL_Referee_TeamInfo;
+SSL_Referee_TeamInfo* SSL_Referee_TeamInfo::New(::google::protobuf::Arena* arena) const {
+  SSL_Referee_TeamInfo* n = new SSL_Referee_TeamInfo;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void SSL_Referee_TeamInfo::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_name()) {
-      if (name_ != &::google::protobuf::internal::kEmptyString) {
-        name_->clear();
-      }
-    }
-    score_ = 0u;
-    red_cards_ = 0u;
-    yellow_cards_ = 0u;
-    timeouts_ = 0u;
-    timeout_time_ = 0u;
-    goalie_ = 0u;
-  }
+// @@protoc_insertion_point(message_clear_start:SSL_Referee.TeamInfo)
   yellow_card_times_.Clear();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (has_name()) {
+    GOOGLE_DCHECK(!name_.IsDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited()));
+    (*name_.UnsafeRawStringPointer())->clear();
+  }
+  if (_has_bits_[0 / 32] & 126u) {
+    ::memset(&score_, 0, reinterpret_cast<char*>(&goalie_) -
+      reinterpret_cast<char*>(&score_) + sizeof(goalie_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
 }
 
 bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:SSL_Referee.TeamInfo)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string name = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_name()));
-          ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
             this->name().data(), this->name().length(),
-            ::google::protobuf::internal::WireFormat::PARSE);
+            ::google::protobuf::internal::WireFormat::PARSE,
+            "SSL_Referee.TeamInfo.name");
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_score;
         break;
       }
 
       // required uint32 score = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_score:
+        if (tag == 16u) {
+          set_has_score();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &score_)));
-          set_has_score();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_red_cards;
         break;
       }
 
       // required uint32 red_cards = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_red_cards:
+        if (tag == 24u) {
+          set_has_red_cards();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &red_cards_)));
-          set_has_red_cards();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_yellow_card_times;
         break;
       }
 
       // repeated uint32 yellow_card_times = 4 [packed = true];
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_yellow_card_times:
+        if (tag == 34u) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, this->mutable_yellow_card_times())));
-        } else if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag)
-                   == ::google::protobuf::internal::WireFormatLite::
-                      WIRETYPE_VARINT) {
+        } else if (tag == 32u) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 1, 34, input, this->mutable_yellow_card_times())));
+                 1, 34u, input, this->mutable_yellow_card_times())));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_yellow_cards;
         break;
       }
 
       // required uint32 yellow_cards = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_yellow_cards:
+        if (tag == 40u) {
+          set_has_yellow_cards();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &yellow_cards_)));
-          set_has_yellow_cards();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_timeouts;
         break;
       }
 
       // required uint32 timeouts = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_timeouts:
+        if (tag == 48u) {
+          set_has_timeouts();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &timeouts_)));
-          set_has_timeouts();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_timeout_time;
         break;
       }
 
       // required uint32 timeout_time = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_timeout_time:
+        if (tag == 56u) {
+          set_has_timeout_time();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &timeout_time_)));
-          set_has_timeout_time();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_goalie;
         break;
       }
 
       // required uint32 goalie = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_goalie:
+        if (tag == 64u) {
+          set_has_goalie();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &goalie_)));
-          set_has_goalie();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -497,18 +502,25 @@ bool SSL_Referee_TeamInfo::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:SSL_Referee.TeamInfo)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:SSL_Referee.TeamInfo)
+  return false;
 #undef DO_
 }
 
 void SSL_Referee_TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:SSL_Referee.TeamInfo)
   // required string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "SSL_Referee.TeamInfo.name");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->name(), output);
   }
 
@@ -552,19 +564,23 @@ void SSL_Referee_TeamInfo::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->goalie(), output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:SSL_Referee.TeamInfo)
 }
 
-::google::protobuf::uint8* SSL_Referee_TeamInfo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
+::google::protobuf::uint8* SSL_Referee_TeamInfo::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:SSL_Referee.TeamInfo)
   // required string name = 1;
   if (has_name()) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+    ::google::protobuf::internal::WireFormat::VerifyUTF8StringNamedField(
       this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
+      ::google::protobuf::internal::WireFormat::SERIALIZE,
+      "SSL_Referee.TeamInfo.name");
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
         1, this->name(), target);
@@ -614,71 +630,122 @@ void SSL_Referee_TeamInfo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(8, this->goalie(), target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:SSL_Referee.TeamInfo)
   return target;
 }
 
-int SSL_Referee_TeamInfo::ByteSize() const {
-  int total_size = 0;
+size_t SSL_Referee_TeamInfo::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:SSL_Referee.TeamInfo)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (has_name()) {
     // required string name = 1;
-    if (has_name()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
+  }
+
+  if (has_score()) {
+    // required uint32 score = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->score());
+  }
+
+  if (has_red_cards()) {
+    // required uint32 red_cards = 3;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->red_cards());
+  }
+
+  if (has_yellow_cards()) {
+    // required uint32 yellow_cards = 5;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->yellow_cards());
+  }
+
+  if (has_timeouts()) {
+    // required uint32 timeouts = 6;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timeouts());
+  }
+
+  if (has_timeout_time()) {
+    // required uint32 timeout_time = 7;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timeout_time());
+  }
+
+  if (has_goalie()) {
+    // required uint32 goalie = 8;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->goalie());
+  }
+
+  return total_size;
+}
+size_t SSL_Referee_TeamInfo::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:SSL_Referee.TeamInfo)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x0000007f) ^ 0x0000007f) == 0) {  // All required fields are present.
+    // required string name = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->name());
 
     // required uint32 score = 2;
-    if (has_score()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->score());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->score());
 
     // required uint32 red_cards = 3;
-    if (has_red_cards()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->red_cards());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->red_cards());
 
     // required uint32 yellow_cards = 5;
-    if (has_yellow_cards()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->yellow_cards());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->yellow_cards());
 
     // required uint32 timeouts = 6;
-    if (has_timeouts()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->timeouts());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timeouts());
 
     // required uint32 timeout_time = 7;
-    if (has_timeout_time()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->timeout_time());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timeout_time());
 
     // required uint32 goalie = 8;
-    if (has_goalie()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->goalie());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->goalie());
 
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
   }
   // repeated uint32 yellow_card_times = 4 [packed = true];
   {
-    int data_size = 0;
-    for (int i = 0; i < this->yellow_card_times_size(); i++) {
+    size_t data_size = 0;
+    unsigned int count = this->yellow_card_times_size();
+    for (unsigned int i = 0; i < count; i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
         UInt32Size(this->yellow_card_times(i));
     }
@@ -686,41 +753,44 @@ int SSL_Referee_TeamInfo::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
     }
+    int cached_size = ::google::protobuf::internal::ToCachedSize(data_size);
     GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _yellow_card_times_cached_byte_size_ = data_size;
+    _yellow_card_times_cached_byte_size_ = cached_size;
     GOOGLE_SAFE_CONCURRENT_WRITES_END();
     total_size += data_size;
   }
 
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void SSL_Referee_TeamInfo::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:SSL_Referee.TeamInfo)
+  GOOGLE_DCHECK_NE(&from, this);
   const SSL_Referee_TeamInfo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SSL_Referee_TeamInfo*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const SSL_Referee_TeamInfo>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:SSL_Referee.TeamInfo)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:SSL_Referee.TeamInfo)
     MergeFrom(*source);
   }
 }
 
 void SSL_Referee_TeamInfo::MergeFrom(const SSL_Referee_TeamInfo& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(class_specific_merge_from_start:SSL_Referee.TeamInfo)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
   yellow_card_times_.MergeFrom(from.yellow_card_times_);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (from._has_bits_[0 / 32] & 127u) {
     if (from.has_name()) {
-      set_name(from.name());
+      set_has_name();
+      name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
     }
     if (from.has_score()) {
       set_score(from.score());
@@ -741,55 +811,294 @@ void SSL_Referee_TeamInfo::MergeFrom(const SSL_Referee_TeamInfo& from) {
       set_goalie(from.goalie());
     }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SSL_Referee_TeamInfo::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:SSL_Referee.TeamInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void SSL_Referee_TeamInfo::CopyFrom(const SSL_Referee_TeamInfo& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:SSL_Referee.TeamInfo)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 bool SSL_Referee_TeamInfo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000000f7) != 0x000000f7) return false;
-
+  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
   return true;
 }
 
 void SSL_Referee_TeamInfo::Swap(SSL_Referee_TeamInfo* other) {
-  if (other != this) {
-    std::swap(name_, other->name_);
-    std::swap(score_, other->score_);
-    std::swap(red_cards_, other->red_cards_);
-    yellow_card_times_.Swap(&other->yellow_card_times_);
-    std::swap(yellow_cards_, other->yellow_cards_);
-    std::swap(timeouts_, other->timeouts_);
-    std::swap(timeout_time_, other->timeout_time_);
-    std::swap(goalie_, other->goalie_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SSL_Referee_TeamInfo::InternalSwap(SSL_Referee_TeamInfo* other) {
+  yellow_card_times_.UnsafeArenaSwap(&other->yellow_card_times_);
+  name_.Swap(&other->name_);
+  std::swap(score_, other->score_);
+  std::swap(red_cards_, other->red_cards_);
+  std::swap(yellow_cards_, other->yellow_cards_);
+  std::swap(timeouts_, other->timeouts_);
+  std::swap(timeout_time_, other->timeout_time_);
+  std::swap(goalie_, other->goalie_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SSL_Referee_TeamInfo::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SSL_Referee_TeamInfo_descriptor_;
-  metadata.reflection = SSL_Referee_TeamInfo_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// SSL_Referee_TeamInfo
 
-// -------------------------------------------------------------------
+// required string name = 1;
+bool SSL_Referee_TeamInfo::has_name() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_name() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void SSL_Referee_TeamInfo::clear_has_name() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void SSL_Referee_TeamInfo::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  clear_has_name();
+}
+const ::std::string& SSL_Referee_TeamInfo::name() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.name)
+  return name_.GetNoArena();
+}
+void SSL_Referee_TeamInfo::set_name(const ::std::string& value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.name)
+}
+#if LANG_CXX11
+void SSL_Referee_TeamInfo::set_name(::std::string&& value) {
+  set_has_name();
+  name_.SetNoArena(
+    &::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::move(value));
+  // @@protoc_insertion_point(field_set_rvalue:SSL_Referee.TeamInfo.name)
+}
+#endif
+void SSL_Referee_TeamInfo::set_name(const char* value) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:SSL_Referee.TeamInfo.name)
+}
+void SSL_Referee_TeamInfo::set_name(const char* value, size_t size) {
+  set_has_name();
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:SSL_Referee.TeamInfo.name)
+}
+::std::string* SSL_Referee_TeamInfo::mutable_name() {
+  set_has_name();
+  // @@protoc_insertion_point(field_mutable:SSL_Referee.TeamInfo.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+::std::string* SSL_Referee_TeamInfo::release_name() {
+  // @@protoc_insertion_point(field_release:SSL_Referee.TeamInfo.name)
+  clear_has_name();
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+void SSL_Referee_TeamInfo::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    set_has_name();
+  } else {
+    clear_has_name();
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:SSL_Referee.TeamInfo.name)
+}
 
-#ifndef _MSC_VER
+// required uint32 score = 2;
+bool SSL_Referee_TeamInfo::has_score() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_score() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void SSL_Referee_TeamInfo::clear_has_score() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void SSL_Referee_TeamInfo::clear_score() {
+  score_ = 0u;
+  clear_has_score();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::score() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.score)
+  return score_;
+}
+void SSL_Referee_TeamInfo::set_score(::google::protobuf::uint32 value) {
+  set_has_score();
+  score_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.score)
+}
+
+// required uint32 red_cards = 3;
+bool SSL_Referee_TeamInfo::has_red_cards() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_red_cards() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void SSL_Referee_TeamInfo::clear_has_red_cards() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void SSL_Referee_TeamInfo::clear_red_cards() {
+  red_cards_ = 0u;
+  clear_has_red_cards();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::red_cards() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.red_cards)
+  return red_cards_;
+}
+void SSL_Referee_TeamInfo::set_red_cards(::google::protobuf::uint32 value) {
+  set_has_red_cards();
+  red_cards_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.red_cards)
+}
+
+// repeated uint32 yellow_card_times = 4 [packed = true];
+int SSL_Referee_TeamInfo::yellow_card_times_size() const {
+  return yellow_card_times_.size();
+}
+void SSL_Referee_TeamInfo::clear_yellow_card_times() {
+  yellow_card_times_.Clear();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::yellow_card_times(int index) const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.yellow_card_times)
+  return yellow_card_times_.Get(index);
+}
+void SSL_Referee_TeamInfo::set_yellow_card_times(int index, ::google::protobuf::uint32 value) {
+  yellow_card_times_.Set(index, value);
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.yellow_card_times)
+}
+void SSL_Referee_TeamInfo::add_yellow_card_times(::google::protobuf::uint32 value) {
+  yellow_card_times_.Add(value);
+  // @@protoc_insertion_point(field_add:SSL_Referee.TeamInfo.yellow_card_times)
+}
+const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+SSL_Referee_TeamInfo::yellow_card_times() const {
+  // @@protoc_insertion_point(field_list:SSL_Referee.TeamInfo.yellow_card_times)
+  return yellow_card_times_;
+}
+::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+SSL_Referee_TeamInfo::mutable_yellow_card_times() {
+  // @@protoc_insertion_point(field_mutable_list:SSL_Referee.TeamInfo.yellow_card_times)
+  return &yellow_card_times_;
+}
+
+// required uint32 yellow_cards = 5;
+bool SSL_Referee_TeamInfo::has_yellow_cards() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_yellow_cards() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void SSL_Referee_TeamInfo::clear_has_yellow_cards() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void SSL_Referee_TeamInfo::clear_yellow_cards() {
+  yellow_cards_ = 0u;
+  clear_has_yellow_cards();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::yellow_cards() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.yellow_cards)
+  return yellow_cards_;
+}
+void SSL_Referee_TeamInfo::set_yellow_cards(::google::protobuf::uint32 value) {
+  set_has_yellow_cards();
+  yellow_cards_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.yellow_cards)
+}
+
+// required uint32 timeouts = 6;
+bool SSL_Referee_TeamInfo::has_timeouts() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_timeouts() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void SSL_Referee_TeamInfo::clear_has_timeouts() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void SSL_Referee_TeamInfo::clear_timeouts() {
+  timeouts_ = 0u;
+  clear_has_timeouts();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::timeouts() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.timeouts)
+  return timeouts_;
+}
+void SSL_Referee_TeamInfo::set_timeouts(::google::protobuf::uint32 value) {
+  set_has_timeouts();
+  timeouts_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.timeouts)
+}
+
+// required uint32 timeout_time = 7;
+bool SSL_Referee_TeamInfo::has_timeout_time() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_timeout_time() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void SSL_Referee_TeamInfo::clear_has_timeout_time() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void SSL_Referee_TeamInfo::clear_timeout_time() {
+  timeout_time_ = 0u;
+  clear_has_timeout_time();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::timeout_time() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.timeout_time)
+  return timeout_time_;
+}
+void SSL_Referee_TeamInfo::set_timeout_time(::google::protobuf::uint32 value) {
+  set_has_timeout_time();
+  timeout_time_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.timeout_time)
+}
+
+// required uint32 goalie = 8;
+bool SSL_Referee_TeamInfo::has_goalie() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void SSL_Referee_TeamInfo::set_has_goalie() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void SSL_Referee_TeamInfo::clear_has_goalie() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void SSL_Referee_TeamInfo::clear_goalie() {
+  goalie_ = 0u;
+  clear_has_goalie();
+}
+::google::protobuf::uint32 SSL_Referee_TeamInfo::goalie() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.TeamInfo.goalie)
+  return goalie_;
+}
+void SSL_Referee_TeamInfo::set_goalie(::google::protobuf::uint32 value) {
+  set_has_goalie();
+  goalie_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.TeamInfo.goalie)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int SSL_Referee::kPacketTimestampFieldNumber;
 const int SSL_Referee::kStageFieldNumber;
 const int SSL_Referee::kStageTimeLeftFieldNumber;
@@ -798,44 +1107,54 @@ const int SSL_Referee::kCommandCounterFieldNumber;
 const int SSL_Referee::kCommandTimestampFieldNumber;
 const int SSL_Referee::kYellowFieldNumber;
 const int SSL_Referee::kBlueFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 SSL_Referee::SSL_Referee()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_referee_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:SSL_Referee)
 }
-
-void SSL_Referee::InitAsDefaultInstance() {
-  yellow_ = const_cast< ::SSL_Referee_TeamInfo*>(&::SSL_Referee_TeamInfo::default_instance());
-  blue_ = const_cast< ::SSL_Referee_TeamInfo*>(&::SSL_Referee_TeamInfo::default_instance());
-}
-
 SSL_Referee::SSL_Referee(const SSL_Referee& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_yellow()) {
+    yellow_ = new ::SSL_Referee_TeamInfo(*from.yellow_);
+  } else {
+    yellow_ = NULL;
+  }
+  if (from.has_blue()) {
+    blue_ = new ::SSL_Referee_TeamInfo(*from.blue_);
+  } else {
+    blue_ = NULL;
+  }
+  ::memcpy(&packet_timestamp_, &from.packet_timestamp_,
+    reinterpret_cast<char*>(&command_timestamp_) -
+    reinterpret_cast<char*>(&packet_timestamp_) + sizeof(command_timestamp_));
+  // @@protoc_insertion_point(copy_constructor:SSL_Referee)
 }
 
 void SSL_Referee::SharedCtor() {
   _cached_size_ = 0;
-  packet_timestamp_ = GOOGLE_ULONGLONG(0);
-  stage_ = 0;
-  stage_time_left_ = 0;
-  command_ = 0;
-  command_counter_ = 0u;
-  command_timestamp_ = GOOGLE_ULONGLONG(0);
-  yellow_ = NULL;
-  blue_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  ::memset(&yellow_, 0, reinterpret_cast<char*>(&command_timestamp_) -
+    reinterpret_cast<char*>(&yellow_) + sizeof(command_timestamp_));
 }
 
 SSL_Referee::~SSL_Referee() {
+  // @@protoc_insertion_point(destructor:SSL_Referee)
   SharedDtor();
 }
 
 void SSL_Referee::SharedDtor() {
-  if (this != default_instance_) {
+  if (this != internal_default_instance()) {
     delete yellow_;
+  }
+  if (this != internal_default_instance()) {
     delete blue_;
   }
 }
@@ -847,65 +1166,68 @@ void SSL_Referee::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* SSL_Referee::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return SSL_Referee_descriptor_;
+  return file_level_metadata[1].descriptor;
 }
 
 const SSL_Referee& SSL_Referee::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_referee_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_referee_2eproto();
+  return *internal_default_instance();
 }
 
-SSL_Referee* SSL_Referee::default_instance_ = NULL;
-
-SSL_Referee* SSL_Referee::New() const {
-  return new SSL_Referee;
+SSL_Referee* SSL_Referee::New(::google::protobuf::Arena* arena) const {
+  SSL_Referee* n = new SSL_Referee;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void SSL_Referee::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    packet_timestamp_ = GOOGLE_ULONGLONG(0);
-    stage_ = 0;
-    stage_time_left_ = 0;
-    command_ = 0;
-    command_counter_ = 0u;
-    command_timestamp_ = GOOGLE_ULONGLONG(0);
+// @@protoc_insertion_point(message_clear_start:SSL_Referee)
+  if (_has_bits_[0 / 32] & 3u) {
     if (has_yellow()) {
-      if (yellow_ != NULL) yellow_->::SSL_Referee_TeamInfo::Clear();
+      GOOGLE_DCHECK(yellow_ != NULL);
+      yellow_->::SSL_Referee_TeamInfo::Clear();
     }
     if (has_blue()) {
-      if (blue_ != NULL) blue_->::SSL_Referee_TeamInfo::Clear();
+      GOOGLE_DCHECK(blue_ != NULL);
+      blue_->::SSL_Referee_TeamInfo::Clear();
     }
   }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_has_bits_[0 / 32] & 252u) {
+    ::memset(&packet_timestamp_, 0, reinterpret_cast<char*>(&command_timestamp_) -
+      reinterpret_cast<char*>(&packet_timestamp_) + sizeof(command_timestamp_));
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
 }
 
 bool SSL_Referee::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:SSL_Referee)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required uint64 packet_timestamp = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8u) {
+          set_has_packet_timestamp();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &packet_timestamp_)));
-          set_has_packet_timestamp();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_stage;
         break;
       }
 
       // required .SSL_Referee.Stage stage = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_stage:
+        if (tag == 16u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -916,33 +1238,27 @@ bool SSL_Referee::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(2, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_stage_time_left;
         break;
       }
 
       // optional sint32 stage_time_left = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_stage_time_left:
+        if (tag == 24u) {
+          set_has_stage_time_left();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_SINT32>(
                  input, &stage_time_left_)));
-          set_has_stage_time_left();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_command;
         break;
       }
 
       // required .SSL_Referee.Command command = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_command:
+        if (tag == 32u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -953,77 +1269,65 @@ bool SSL_Referee::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(4, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_command_counter;
         break;
       }
 
       // required uint32 command_counter = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_command_counter:
+        if (tag == 40u) {
+          set_has_command_counter();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &command_counter_)));
-          set_has_command_counter();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_command_timestamp;
         break;
       }
 
       // required uint64 command_timestamp = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_command_timestamp:
+        if (tag == 48u) {
+          set_has_command_timestamp();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
                  input, &command_timestamp_)));
-          set_has_command_timestamp();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_yellow;
         break;
       }
 
       // required .SSL_Referee.TeamInfo yellow = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_yellow:
+        if (tag == 58u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_yellow()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(66)) goto parse_blue;
         break;
       }
 
       // required .SSL_Referee.TeamInfo blue = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_blue:
+        if (tag == 66u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_blue()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -1031,12 +1335,18 @@ bool SSL_Referee::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:SSL_Referee)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:SSL_Referee)
+  return false;
 #undef DO_
 }
 
 void SSL_Referee::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:SSL_Referee)
   // required uint64 packet_timestamp = 1;
   if (has_packet_timestamp()) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(1, this->packet_timestamp(), output);
@@ -1072,23 +1382,26 @@ void SSL_Referee::SerializeWithCachedSizes(
   // required .SSL_Referee.TeamInfo yellow = 7;
   if (has_yellow()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->yellow(), output);
+      7, *this->yellow_, output);
   }
 
   // required .SSL_Referee.TeamInfo blue = 8;
   if (has_blue()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      8, this->blue(), output);
+      8, *this->blue_, output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:SSL_Referee)
 }
 
-::google::protobuf::uint8* SSL_Referee::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
+::google::protobuf::uint8* SSL_Referee::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:SSL_Referee)
   // required uint64 packet_timestamp = 1;
   if (has_packet_timestamp()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt64ToArray(1, this->packet_timestamp(), target);
@@ -1124,109 +1437,164 @@ void SSL_Referee::SerializeWithCachedSizes(
   // required .SSL_Referee.TeamInfo yellow = 7;
   if (has_yellow()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->yellow(), target);
+      InternalWriteMessageNoVirtualToArray(
+        7, *this->yellow_, false, target);
   }
 
   // required .SSL_Referee.TeamInfo blue = 8;
   if (has_blue()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        8, this->blue(), target);
+      InternalWriteMessageNoVirtualToArray(
+        8, *this->blue_, false, target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:SSL_Referee)
   return target;
 }
 
-int SSL_Referee::ByteSize() const {
-  int total_size = 0;
+size_t SSL_Referee::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:SSL_Referee)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint64 packet_timestamp = 1;
-    if (has_packet_timestamp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->packet_timestamp());
-    }
-
-    // required .SSL_Referee.Stage stage = 2;
-    if (has_stage()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->stage());
-    }
-
-    // optional sint32 stage_time_left = 3;
-    if (has_stage_time_left()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::SInt32Size(
-          this->stage_time_left());
-    }
-
-    // required .SSL_Referee.Command command = 4;
-    if (has_command()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->command());
-    }
-
-    // required uint32 command_counter = 5;
-    if (has_command_counter()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->command_counter());
-    }
-
-    // required uint64 command_timestamp = 6;
-    if (has_command_timestamp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt64Size(
-          this->command_timestamp());
-    }
-
+  if (has_yellow()) {
     // required .SSL_Referee.TeamInfo yellow = 7;
-    if (has_yellow()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->yellow());
-    }
-
-    // required .SSL_Referee.TeamInfo blue = 8;
-    if (has_blue()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->blue());
-    }
-
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->yellow_);
   }
-  if (!unknown_fields().empty()) {
+
+  if (has_blue()) {
+    // required .SSL_Referee.TeamInfo blue = 8;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->blue_);
+  }
+
+  if (has_packet_timestamp()) {
+    // required uint64 packet_timestamp = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->packet_timestamp());
+  }
+
+  if (has_stage()) {
+    // required .SSL_Referee.Stage stage = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->stage());
+  }
+
+  if (has_command()) {
+    // required .SSL_Referee.Command command = 4;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->command());
+  }
+
+  if (has_command_counter()) {
+    // required uint32 command_counter = 5;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->command_counter());
+  }
+
+  if (has_command_timestamp()) {
+    // required uint64 command_timestamp = 6;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->command_timestamp());
+  }
+
+  return total_size;
+}
+size_t SSL_Referee::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:SSL_Referee)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
     total_size +=
       ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
         unknown_fields());
   }
+  if (((_has_bits_[0] & 0x000000ef) ^ 0x000000ef) == 0) {  // All required fields are present.
+    // required .SSL_Referee.TeamInfo yellow = 7;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->yellow_);
+
+    // required .SSL_Referee.TeamInfo blue = 8;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->blue_);
+
+    // required uint64 packet_timestamp = 1;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->packet_timestamp());
+
+    // required .SSL_Referee.Stage stage = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->stage());
+
+    // required .SSL_Referee.Command command = 4;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->command());
+
+    // required uint32 command_counter = 5;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->command_counter());
+
+    // required uint64 command_timestamp = 6;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->command_timestamp());
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  // optional sint32 stage_time_left = 3;
+  if (has_stage_time_left()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::SInt32Size(
+        this->stage_time_left());
+  }
+
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void SSL_Referee::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:SSL_Referee)
+  GOOGLE_DCHECK_NE(&from, this);
   const SSL_Referee* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const SSL_Referee*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const SSL_Referee>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:SSL_Referee)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:SSL_Referee)
     MergeFrom(*source);
   }
 }
 
 void SSL_Referee::MergeFrom(const SSL_Referee& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+// @@protoc_insertion_point(class_specific_merge_from_start:SSL_Referee)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 255u) {
+    if (from.has_yellow()) {
+      mutable_yellow()->::SSL_Referee_TeamInfo::MergeFrom(from.yellow());
+    }
+    if (from.has_blue()) {
+      mutable_blue()->::SSL_Referee_TeamInfo::MergeFrom(from.blue());
+    }
     if (from.has_packet_timestamp()) {
       set_packet_timestamp(from.packet_timestamp());
     }
@@ -1245,64 +1613,297 @@ void SSL_Referee::MergeFrom(const SSL_Referee& from) {
     if (from.has_command_timestamp()) {
       set_command_timestamp(from.command_timestamp());
     }
-    if (from.has_yellow()) {
-      mutable_yellow()->::SSL_Referee_TeamInfo::MergeFrom(from.yellow());
-    }
-    if (from.has_blue()) {
-      mutable_blue()->::SSL_Referee_TeamInfo::MergeFrom(from.blue());
-    }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void SSL_Referee::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:SSL_Referee)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void SSL_Referee::CopyFrom(const SSL_Referee& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:SSL_Referee)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 bool SSL_Referee::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000000fb) != 0x000000fb) return false;
-
+  if ((_has_bits_[0] & 0x000000ef) != 0x000000ef) return false;
   if (has_yellow()) {
-    if (!this->yellow().IsInitialized()) return false;
+    if (!this->yellow_->IsInitialized()) return false;
   }
   if (has_blue()) {
-    if (!this->blue().IsInitialized()) return false;
+    if (!this->blue_->IsInitialized()) return false;
   }
   return true;
 }
 
 void SSL_Referee::Swap(SSL_Referee* other) {
-  if (other != this) {
-    std::swap(packet_timestamp_, other->packet_timestamp_);
-    std::swap(stage_, other->stage_);
-    std::swap(stage_time_left_, other->stage_time_left_);
-    std::swap(command_, other->command_);
-    std::swap(command_counter_, other->command_counter_);
-    std::swap(command_timestamp_, other->command_timestamp_);
-    std::swap(yellow_, other->yellow_);
-    std::swap(blue_, other->blue_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void SSL_Referee::InternalSwap(SSL_Referee* other) {
+  std::swap(yellow_, other->yellow_);
+  std::swap(blue_, other->blue_);
+  std::swap(packet_timestamp_, other->packet_timestamp_);
+  std::swap(stage_, other->stage_);
+  std::swap(stage_time_left_, other->stage_time_left_);
+  std::swap(command_, other->command_);
+  std::swap(command_counter_, other->command_counter_);
+  std::swap(command_timestamp_, other->command_timestamp_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata SSL_Referee::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = SSL_Referee_descriptor_;
-  metadata.reflection = SSL_Referee_reflection_;
-  return metadata;
+  return file_level_metadata[1];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// SSL_Referee
+
+// required uint64 packet_timestamp = 1;
+bool SSL_Referee::has_packet_timestamp() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void SSL_Referee::set_has_packet_timestamp() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void SSL_Referee::clear_has_packet_timestamp() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void SSL_Referee::clear_packet_timestamp() {
+  packet_timestamp_ = GOOGLE_ULONGLONG(0);
+  clear_has_packet_timestamp();
+}
+::google::protobuf::uint64 SSL_Referee::packet_timestamp() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.packet_timestamp)
+  return packet_timestamp_;
+}
+void SSL_Referee::set_packet_timestamp(::google::protobuf::uint64 value) {
+  set_has_packet_timestamp();
+  packet_timestamp_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.packet_timestamp)
+}
+
+// required .SSL_Referee.Stage stage = 2;
+bool SSL_Referee::has_stage() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void SSL_Referee::set_has_stage() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void SSL_Referee::clear_has_stage() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void SSL_Referee::clear_stage() {
+  stage_ = 0;
+  clear_has_stage();
+}
+::SSL_Referee_Stage SSL_Referee::stage() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.stage)
+  return static_cast< ::SSL_Referee_Stage >(stage_);
+}
+void SSL_Referee::set_stage(::SSL_Referee_Stage value) {
+  assert(::SSL_Referee_Stage_IsValid(value));
+  set_has_stage();
+  stage_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.stage)
+}
+
+// optional sint32 stage_time_left = 3;
+bool SSL_Referee::has_stage_time_left() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void SSL_Referee::set_has_stage_time_left() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void SSL_Referee::clear_has_stage_time_left() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void SSL_Referee::clear_stage_time_left() {
+  stage_time_left_ = 0;
+  clear_has_stage_time_left();
+}
+::google::protobuf::int32 SSL_Referee::stage_time_left() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.stage_time_left)
+  return stage_time_left_;
+}
+void SSL_Referee::set_stage_time_left(::google::protobuf::int32 value) {
+  set_has_stage_time_left();
+  stage_time_left_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.stage_time_left)
+}
+
+// required .SSL_Referee.Command command = 4;
+bool SSL_Referee::has_command() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void SSL_Referee::set_has_command() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void SSL_Referee::clear_has_command() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void SSL_Referee::clear_command() {
+  command_ = 0;
+  clear_has_command();
+}
+::SSL_Referee_Command SSL_Referee::command() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.command)
+  return static_cast< ::SSL_Referee_Command >(command_);
+}
+void SSL_Referee::set_command(::SSL_Referee_Command value) {
+  assert(::SSL_Referee_Command_IsValid(value));
+  set_has_command();
+  command_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.command)
+}
+
+// required uint32 command_counter = 5;
+bool SSL_Referee::has_command_counter() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void SSL_Referee::set_has_command_counter() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void SSL_Referee::clear_has_command_counter() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void SSL_Referee::clear_command_counter() {
+  command_counter_ = 0u;
+  clear_has_command_counter();
+}
+::google::protobuf::uint32 SSL_Referee::command_counter() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.command_counter)
+  return command_counter_;
+}
+void SSL_Referee::set_command_counter(::google::protobuf::uint32 value) {
+  set_has_command_counter();
+  command_counter_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.command_counter)
+}
+
+// required uint64 command_timestamp = 6;
+bool SSL_Referee::has_command_timestamp() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+void SSL_Referee::set_has_command_timestamp() {
+  _has_bits_[0] |= 0x00000080u;
+}
+void SSL_Referee::clear_has_command_timestamp() {
+  _has_bits_[0] &= ~0x00000080u;
+}
+void SSL_Referee::clear_command_timestamp() {
+  command_timestamp_ = GOOGLE_ULONGLONG(0);
+  clear_has_command_timestamp();
+}
+::google::protobuf::uint64 SSL_Referee::command_timestamp() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.command_timestamp)
+  return command_timestamp_;
+}
+void SSL_Referee::set_command_timestamp(::google::protobuf::uint64 value) {
+  set_has_command_timestamp();
+  command_timestamp_ = value;
+  // @@protoc_insertion_point(field_set:SSL_Referee.command_timestamp)
+}
+
+// required .SSL_Referee.TeamInfo yellow = 7;
+bool SSL_Referee::has_yellow() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void SSL_Referee::set_has_yellow() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void SSL_Referee::clear_has_yellow() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void SSL_Referee::clear_yellow() {
+  if (yellow_ != NULL) yellow_->::SSL_Referee_TeamInfo::Clear();
+  clear_has_yellow();
+}
+const ::SSL_Referee_TeamInfo& SSL_Referee::yellow() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.yellow)
+  return yellow_ != NULL ? *yellow_
+                         : *::SSL_Referee_TeamInfo::internal_default_instance();
+}
+::SSL_Referee_TeamInfo* SSL_Referee::mutable_yellow() {
+  set_has_yellow();
+  if (yellow_ == NULL) {
+    yellow_ = new ::SSL_Referee_TeamInfo;
+  }
+  // @@protoc_insertion_point(field_mutable:SSL_Referee.yellow)
+  return yellow_;
+}
+::SSL_Referee_TeamInfo* SSL_Referee::release_yellow() {
+  // @@protoc_insertion_point(field_release:SSL_Referee.yellow)
+  clear_has_yellow();
+  ::SSL_Referee_TeamInfo* temp = yellow_;
+  yellow_ = NULL;
+  return temp;
+}
+void SSL_Referee::set_allocated_yellow(::SSL_Referee_TeamInfo* yellow) {
+  delete yellow_;
+  yellow_ = yellow;
+  if (yellow) {
+    set_has_yellow();
+  } else {
+    clear_has_yellow();
+  }
+  // @@protoc_insertion_point(field_set_allocated:SSL_Referee.yellow)
+}
+
+// required .SSL_Referee.TeamInfo blue = 8;
+bool SSL_Referee::has_blue() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void SSL_Referee::set_has_blue() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void SSL_Referee::clear_has_blue() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void SSL_Referee::clear_blue() {
+  if (blue_ != NULL) blue_->::SSL_Referee_TeamInfo::Clear();
+  clear_has_blue();
+}
+const ::SSL_Referee_TeamInfo& SSL_Referee::blue() const {
+  // @@protoc_insertion_point(field_get:SSL_Referee.blue)
+  return blue_ != NULL ? *blue_
+                         : *::SSL_Referee_TeamInfo::internal_default_instance();
+}
+::SSL_Referee_TeamInfo* SSL_Referee::mutable_blue() {
+  set_has_blue();
+  if (blue_ == NULL) {
+    blue_ = new ::SSL_Referee_TeamInfo;
+  }
+  // @@protoc_insertion_point(field_mutable:SSL_Referee.blue)
+  return blue_;
+}
+::SSL_Referee_TeamInfo* SSL_Referee::release_blue() {
+  // @@protoc_insertion_point(field_release:SSL_Referee.blue)
+  clear_has_blue();
+  ::SSL_Referee_TeamInfo* temp = blue_;
+  blue_ = NULL;
+  return temp;
+}
+void SSL_Referee::set_allocated_blue(::SSL_Referee_TeamInfo* blue) {
+  delete blue_;
+  blue_ = blue;
+  if (blue) {
+    set_has_blue();
+  } else {
+    clear_has_blue();
+  }
+  // @@protoc_insertion_point(field_set_allocated:SSL_Referee.blue)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

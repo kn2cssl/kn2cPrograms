@@ -3,14 +3,14 @@
 PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
     Play("PlayStop", worldmodel, parent)
 {
-    tGolie=new TacticGoalie(wm);
-
-    tDefenderLeft=new TacticDefender(wm);
-    tDefenderRight=new TacticDefender(wm);
-
-    tStopMid=new TacticStop(wm);
-    tStopLeft=new TacticStop(wm);
-    tStopRight=new TacticStop(wm);
+    tGoalie = new TacticGoalie(wm);
+    tDefenderLeft = new TacticDefender(wm);
+    tDefenderRight = new TacticDefender(wm);
+    tStopMid = new TacticStop(wm);
+    tStopLeft = new TacticStop(wm);
+    tStopRight = new TacticStop(wm);
+    tAttackerLeft = new TacticAttacker(wm);
+    tAttackerRight = new TacticAttacker(wm);
 
     leftChecker = 0;
     rightChecker = 0;
@@ -18,72 +18,47 @@ PlayStop::PlayStop(WorldModel *worldmodel, QObject *parent) :
 
 int PlayStop::enterCondition()
 {
-    if(wm->gs == STATE_Stop)
+    /*if(wm->gs == STATE_Stop)
         return 100;
     else if(wm->cmgs.canMove() && wm->cmgs.gameOn()==false && wm->cmgs.allowedNearBall()==false)
         return 10;
     else
-        return 0;
-    //        return 20000;
-}
-
-bool PlayStop::collisionwithDefenders(Vector2D center, Vector2D left, Vector2D right)
-{
-    if(  ((center-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         ||
-         ((left-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         ||
-         ((right-wm->ourRobot[tDefenderLeft->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         ||
-         ((center-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         ||
-         ((left-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         ||
-         ((right-wm->ourRobot[tDefenderRight->getID()].pos.loc).length() < 2*ROBOT_RADIUS)
-         )
-        return true;
-
-    return false;
-}
-
-bool PlayStop::oneOfDefendersIsInPenalty(Vector2D leftPos, Vector2D midPos, Vector2D rightPos)
-{
-    if( wm->kn->IsInsideGolieArea(leftPos) || wm->kn->IsInsideGolieArea(midPos) || wm->kn->IsInsideGolieArea(rightPos))
-        return true;
-
-    return false;
+        return 0;*/
+            return 0;
 }
 
 void PlayStop::initRole()
 {
-    QList<int> activeAgents=wm->kn->ActiveAgents();
-    activeAgents.removeOne(wm->ref_goalie_our);
+    QList <int> actives = wm->kn->ActiveAgents();
+    actives.removeOne(wm->ref_goalie_our);
     wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
-    switch (activeAgents.length()) {
+    switch (actives.length()) {
     case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderLeft;
         break;
     case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderRight;
         break;
     case 3:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerMid;
         break;
     case 4:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerLeft;
         break;
     case 5:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::DefenderRight;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerMid;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerLeft;
+        wm->ourRobot[actives.takeFirst()].Role = AgentRole::AttackerRight;
+        break;
+    default:
         break;
     }
 }
@@ -94,7 +69,7 @@ void PlayStop::setTactics(int index)
 
     switch (wm->ourRobot[index].Role) {
     case AgentRole::Golie:
-        tactics[index] = tGolie;
+        tactics[index] = tGoalie;
         break;
     case AgentRole::DefenderLeft:
         tactics[index] = tDefenderLeft;
@@ -181,117 +156,113 @@ void PlayStop::setPositions()
             rightChecker = 0;
     }
 
-    tGolie->setIdlePosition(goaliePos);
+    tGoalie->setIdlePosition(goaliePos);
 
-    if(wm->kn->IsInsideGolieArea(wm->ball.pos.loc) )
+    if (wm->kn->IsInsideGolieArea(wm->ball.pos.loc))
     {
-        tStopLeft->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_L.y+200));
-        tStopRight->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalPost_R.y-200));
-        tStopMid->setStopPosition(Vector2D(Field::MinX/2.0,Field::ourGoalCenter.y));
+        tStopMid->setStopPosition({Field::ourGoalCenter.x + 2250, 0});
+        tStopLeft->setStopPosition({Field::ourGoalCenter.x + 2250, 1250});
+        tStopRight->setStopPosition({Field::ourGoalCenter.x + 2250, -1250});
     }
-    else if( wm->kn->IsInsideNearArea(wm->ball.pos.loc) )
+    else if (wm->ball.pos.loc.x < Field::ourGoalCenter.x + (Field::MaxX * 2) / 3)
     {
-        Vector2D candidateL_1, candidateL_2, mainL;
+        Segment2D seg(Field::ourGoalCenter, wm->ball.pos.loc);
+        Circle2D ballcir(wm->ball.pos.loc, ALLOW_NEAR_BALL_RANGE);
+        Vector2D fdot, sdot;
+        ballcir.intersection(seg, &fdot, &sdot);
 
-        Circle2D cir_l(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
-        Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(30));
-        cir_l.intersection(thirty_l,&candidateL_1,&candidateL_2);
-        if( wm->kn->IsInsideField(candidateL_1) && !wm->kn->IsInsideGolieArea(candidateL_1) )
-            mainL = candidateL_1;
-        else
-            mainL = candidateL_2;
-
-        tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-        tStopMid->setStopPosition(Vector2D(Field::MinX+300,-sign(wm->ball.pos.loc.y)*1400));
-        tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
-    }
-    else
-    {
-        Vector2D finalPos,notImportant,leftPos,rightPos;
-
-        Circle2D robotCircle(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
-        Segment2D line2Goal(wm->ball.pos.loc,Field::ourGoalCenter);
-        robotCircle.intersection(line2Goal,&finalPos,&notImportant);
-
-        Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
-        robotCircle.intersection(secondCircle,&leftPos,&rightPos);
-
-        if( !wm->kn->IsInsideField(leftPos) )
+        Circle2D goalieCir (Field::ourGoalCenter, 1300);
+        Line2D linetest (Field::ourGoalCenter, wm->ball.pos.loc);
+        if (wm->kn->IsInsideGolieArea(fdot))
         {
-            leftPos = finalPos;
-            finalPos = rightPos;
-
-            Vector2D leftPos2,rightPos2;
-            Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
-            robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
-
-            if( leftPos.dist(leftPos2) < leftPos.dist(rightPos2) )
-                rightPos = rightPos2;
-            else
-                rightPos = leftPos2;
-
-        }
-        else if( !wm->kn->IsInsideField(rightPos) )
-        {
-            rightPos = finalPos;
-            finalPos = leftPos;
-
-            Vector2D leftPos2,rightPos2;
-            Circle2D secondCircle(finalPos,(2.5)*ROBOT_RADIUS);
-            robotCircle.intersection(secondCircle,&leftPos2,&rightPos2);
-
-            if( rightPos.dist(leftPos2) < rightPos.dist(rightPos2) )
-                leftPos = rightPos2;
-            else
-                leftPos = leftPos2;
+            goalieCir.intersection(linetest, &fdot, &sdot);
+            if (fdot.x < sdot.x)
+                fdot = sdot;
         }
 
-        if( collisionwithDefenders(finalPos,leftPos,rightPos) || oneOfDefendersIsInPenalty(leftPos,finalPos,rightPos) )
+        tStopMid->setStopPosition(fdot);
+
+        tactics[tStopLeft->getID()] = tAttackerLeft;
+        tactics[tStopRight->getID()] = tAttackerRight;
+
+        Marking def;
+        def.setWorldModel(wm); //??
+        bool isMatched;
+        QList <int> opp = wm->kn->ActiveOppAgents();
+        QList <int> our;
+        our.append(tAttackerLeft->getID());
+        our.append(tAttackerRight->getID());
+        QList <Marking_Struct> m2m = def.findMarking(our , opp, isMatched);
+        if (isMatched)
         {
-            if( wm->kn->IsInsideRect(wm->ball.pos.loc,Vector2D(Field::MinX,Field::MaxY),Vector2D(0,0.25*Field::MaxY))
-                    ||
-                    wm->kn->IsInsideRect(wm->ball.pos.loc,Vector2D(Field::MinX,0.25*Field::MinY),Vector2D(0,Field::MinY)) )
+            for (int i = 0; i < m2m.size(); i++)
             {
-                Vector2D candidateL_1, candidateL_2, mainL;
+                wm->ourRobot[m2m.at(i).ourI].Status = AgentStatus::BlockingRobot;
 
-                Circle2D cir_l(Field::defenceLineLinear_L,Field::goalCircle_R+ROBOT_RADIUS);
-                Line2D thirty_l(Field::defenceLineLinear_L,AngleDeg(30));
-                cir_l.intersection(thirty_l,&candidateL_1,&candidateL_2);
-                if( wm->kn->IsInsideField(candidateL_1) && !wm->kn->IsInsideGolieArea(candidateL_1) )
-                    mainL = candidateL_1;
-                else
-                    mainL = candidateL_2;
-
-                tStopLeft->setStopPosition(Vector2D(mainL.x,sign(wm->ball.pos.loc.y)*mainL.y));
-                tStopMid->setStopPosition(Vector2D(Field::ourPenaltySpot.x+200,Field::ourPenaltySpot.y));
-                tStopRight->setStopPosition(Vector2D(mainL.x,-sign(wm->ball.pos.loc.y)*mainL.y));
-            }
-            else
-            {
-                //tStopLeft->setStopPosition(Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x
-                //                         , wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+5*ROBOT_RADIUS));
-                finalPos = Vector2D(wm->ourRobot[tDefenderLeft->getID()].pos.loc.x,
-                        0.5*(wm->ourRobot[tDefenderLeft->getID()].pos.loc.y+wm->ourRobot[tDefenderRight->getID()].pos.loc.y)
-                        );
-                tStopLeft->setStopPosition(Vector2D(finalPos.x,finalPos.y+4.5*ROBOT_RADIUS));
-                tStopMid->setStopPosition(Vector2D(finalPos.x,finalPos.y-6.5*ROBOT_RADIUS));
-                tStopRight->setStopPosition(Vector2D(finalPos.x,finalPos.y-4.5*ROBOT_RADIUS));
+                switch (wm->ourRobot[m2m.at(i).ourI].Role) {
+                case AgentRole::DefenderLeft:
+                    tDefenderLeft->setPlayerToKeep(m2m.at(i).oppI);
+                    break;
+                case AgentRole::DefenderRight:
+                    tDefenderRight->setPlayerToKeep(m2m.at(i).oppI);
+                    break;
+                case AgentRole::AttackerLeft:
+                    tAttackerLeft->setPlayerToKeep(m2m.at(i).oppI);
+                    break;
+                case AgentRole::AttackerRight:
+                    tAttackerRight->setPlayerToKeep(m2m.at(i).oppI);
+                    break;
+                default:
+                    break;
+                }
             }
         }
-        else
-        {
-            tStopLeft->setStopPosition(leftPos);
-            tStopMid->setStopPosition(finalPos);
-            tStopRight->setStopPosition(rightPos);
-        }
+    }
+    else if (wm->ball.pos.loc.x < Field::ourGoalCenter.x + (Field::MaxX * 2)* 2 / 3)
+    {
+        Vector2D fPosAttMid, fPosAttLeft, fPosAttRight, sec;
+        double slope, degree, deltaa;
+        slope = (wm->ball.pos.loc.y - Field::ourGoalCenter.y) / (wm->ball.pos.loc.x - Field::ourGoalCenter.x);
+        degree = atan(slope);
+        deltaa = 2 * asin( ROBOT_RADIUS / ALLOW_NEAR_BALL_RANGE );
+        AngleDeg deg(degree * 57.32), delta(deltaa * 57.32);
+        AngleDeg leftAttDeg, rightAttDeg;
+        leftAttDeg = operator -(deg, delta);
+        rightAttDeg = operator +(deg, delta);
+        Line2D leftAttLine(wm->ball.pos.loc, leftAttDeg.degree() - 1.5);
+        Line2D rightAttLine(wm->ball.pos.loc, rightAttDeg.degree() + 1.5);
+        Circle2D cir(wm->ball.pos.loc, ALLOW_NEAR_BALL_RANGE);
+        cir.intersection(leftAttLine, &fPosAttLeft, &sec);
+        if (sec.x < fPosAttLeft.x)
+            fPosAttLeft = sec;
+        cir.intersection(rightAttLine, &fPosAttRight, &sec);
+        if (sec.x < fPosAttRight.x)
+            fPosAttRight = sec;
+
+        tStopLeft->setStopPosition(fPosAttLeft);
+        tStopRight->setStopPosition(fPosAttRight);
+
+        Segment2D seg(Field::ourGoalCenter, wm->ball.pos.loc);
+        Circle2D ballcir(wm->ball.pos.loc, ALLOW_NEAR_BALL_RANGE);
+        Vector2D fdot, sdot;
+        ballcir.intersection(seg, &fdot, &sdot);
+        tStopMid->setStopPosition(fdot);
+    }
+    else if (Field::ourGoalCenter.x + (Field::MaxX * 2)* 2 / 3 < wm->ball.pos.loc.x)
+    {
+        Segment2D seg(Field::ourGoalCenter, wm->ball.pos.loc);
+        Circle2D ballcir(wm->ball.pos.loc, ALLOW_NEAR_BALL_RANGE);
+        Vector2D fdot, sdot;
+        ballcir.intersection(seg, &fdot, &sdot);
+        tStopMid->setStopPosition(fdot);
+
+        tStopLeft->setStopPosition({wm->ball.pos.loc.x - 2250, 1250});
+        tStopRight->setStopPosition({wm->ball.pos.loc.x - 2250, -1250});
     }
 }
 
 void PlayStop::execute()
 {
-    wm->passPoints.clear();
-    wm->debug_pos.clear();
-
     QList<int> activeAgents=wm->kn->ActiveAgents();
 
     for(int i=0;i<activeAgents.size();i++)

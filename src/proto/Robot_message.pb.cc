@@ -7,6 +7,7 @@
 #include <algorithm>
 
 #include <google/protobuf/stubs/common.h>
+#include <google/protobuf/stubs/port.h>
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
@@ -15,27 +16,24 @@
 #include <google/protobuf/reflection_ops.h>
 #include <google/protobuf/wire_format.h>
 // @@protoc_insertion_point(includes)
+class Robot_messageDefaultTypeInternal : public ::google::protobuf::internal::ExplicitlyConstructed<Robot_message> {};
+Robot_messageDefaultTypeInternal _Robot_message_default_instance_;
 
 namespace {
 
-const ::google::protobuf::Descriptor* Robot_message_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  Robot_message_reflection_ = NULL;
-const ::google::protobuf::EnumDescriptor* Robot_message_AgentStatus_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* Robot_message_AgentRegion_descriptor_ = NULL;
-const ::google::protobuf::EnumDescriptor* Robot_message_AgentRole_descriptor_ = NULL;
+::google::protobuf::Metadata file_level_metadata[1];
+const ::google::protobuf::EnumDescriptor* file_level_enum_descriptors[3];
 
 }  // namespace
 
 
-void protobuf_AssignDesc_Robot_5fmessage_2eproto() {
-  protobuf_AddDesc_Robot_5fmessage_2eproto();
-  const ::google::protobuf::FileDescriptor* file =
-    ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
-      "Robot_message.proto");
-  GOOGLE_CHECK(file != NULL);
-  Robot_message_descriptor_ = file->message_type(0);
-  static const int Robot_message_offsets_[7] = {
+const ::google::protobuf::uint32* protobuf_Offsets_Robot_5fmessage_2eproto() GOOGLE_ATTRIBUTE_COLD;
+const ::google::protobuf::uint32* protobuf_Offsets_Robot_5fmessage_2eproto() {
+  static const ::google::protobuf::uint32 offsets[] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, _has_bits_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, _internal_metadata_),
+    ~0u,  // no _extensions_
+    ~0u,  // no _oneof_case_
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, isvalid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, position_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, velocity_),
@@ -43,96 +41,123 @@ void protobuf_AssignDesc_Robot_5fmessage_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, role_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, region_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, rc_),
+    3,
+    0,
+    1,
+    5,
+    6,
+    4,
+    2,
   };
-  Robot_message_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      Robot_message_descriptor_,
-      Robot_message::default_instance_,
-      Robot_message_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Robot_message, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Robot_message));
-  Robot_message_AgentStatus_descriptor_ = Robot_message_descriptor_->enum_type(0);
-  Robot_message_AgentRegion_descriptor_ = Robot_message_descriptor_->enum_type(1);
-  Robot_message_AgentRole_descriptor_ = Robot_message_descriptor_->enum_type(2);
+  return offsets;
 }
+
+static const ::google::protobuf::internal::MigrationSchema schemas[] = {
+  { 0, 11, sizeof(Robot_message)},
+};
+
+static const ::google::protobuf::internal::DefaultInstanceData file_default_instances[] = {
+  {reinterpret_cast<const ::google::protobuf::Message*>(&_Robot_message_default_instance_), NULL},
+};
 
 namespace {
 
-GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AssignDescriptors_once_);
-inline void protobuf_AssignDescriptorsOnce() {
-  ::google::protobuf::GoogleOnceInit(&protobuf_AssignDescriptors_once_,
-                 &protobuf_AssignDesc_Robot_5fmessage_2eproto);
+void protobuf_AssignDescriptors() {
+  protobuf_AddDesc_Robot_5fmessage_2eproto();
+  ::google::protobuf::MessageFactory* factory = NULL;
+  AssignDescriptors(
+      "Robot_message.proto", schemas, file_default_instances, protobuf_Offsets_Robot_5fmessage_2eproto(), factory,
+      file_level_metadata, file_level_enum_descriptors, NULL);
 }
 
+void protobuf_AssignDescriptorsOnce() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_AssignDescriptors);
+}
+
+void protobuf_RegisterTypes(const ::std::string&) GOOGLE_ATTRIBUTE_COLD;
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Robot_message_descriptor_, &Robot_message::default_instance());
+  ::google::protobuf::internal::RegisterAllTypes(file_level_metadata, 1);
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_Robot_5fmessage_2eproto() {
-  delete Robot_message::default_instance_;
-  delete Robot_message_reflection_;
+  _Robot_message_default_instance_.Shutdown();
+  delete file_level_metadata[0].reflection;
 }
 
-void protobuf_AddDesc_Robot_5fmessage_2eproto() {
-  static bool already_here = false;
-  if (already_here) return;
-  already_here = true;
+void protobuf_InitDefaults_Robot_5fmessage_2eproto_impl() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  ::protobuf_AddDesc_position_5fmessage_2eproto();
-  ::protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
+  ::protobuf_InitDefaults_position_5fmessage_2eproto();
+  ::protobuf_InitDefaults_RobotCommand_5fmessage_2eproto();
+  ::google::protobuf::internal::InitProtobufDefaults();
+  _Robot_message_default_instance_.DefaultConstruct();
+  _Robot_message_default_instance_.get_mutable()->position_ = const_cast< ::position_message*>(
+      ::position_message::internal_default_instance());
+  _Robot_message_default_instance_.get_mutable()->velocity_ = const_cast< ::position_message*>(
+      ::position_message::internal_default_instance());
+  _Robot_message_default_instance_.get_mutable()->rc_ = const_cast< ::RobotCommand_message*>(
+      ::RobotCommand_message::internal_default_instance());
+}
+
+void protobuf_InitDefaults_Robot_5fmessage_2eproto() {
+  static GOOGLE_PROTOBUF_DECLARE_ONCE(once);
+  ::google::protobuf::GoogleOnceInit(&once, &protobuf_InitDefaults_Robot_5fmessage_2eproto_impl);
+}
+void protobuf_AddDesc_Robot_5fmessage_2eproto_impl() {
+  protobuf_InitDefaults_Robot_5fmessage_2eproto();
+  static const char descriptor[] = {
+      "\n\023Robot_message.proto\032\026position_message."
+      "proto\032\032RobotCommand_message.proto\"\341\005\n\rRo"
+      "bot_message\022\017\n\007isValid\030\001 \002(\010\022#\n\010position"
+      "\030\002 \002(\0132\021.position_message\022#\n\010velocity\030\003 "
+      "\002(\0132\021.position_message\022*\n\006status\030\004 \001(\0162\032"
+      ".Robot_message.AgentStatus\022&\n\004role\030\005 \001(\016"
+      "2\030.Robot_message.AgentRole\022*\n\006region\030\006 \001"
+      "(\0162\032.Robot_message.AgentRegion\022!\n\002rc\030\007 \001"
+      "(\0132\025.RobotCommand_message\"\211\001\n\013AgentStatu"
+      "s\022\010\n\004Idle\020\001\022\013\n\007Passing\020\002\022\013\n\007Kicking\020\003\022\013\n"
+      "\007Chiping\020\004\022\021\n\rFollowingBall\020\005\022\020\n\014Blockin"
+      "gBall\020\006\022\021\n\rBlockingRobot\020\007\022\021\n\rRecievingP"
+      "ass\020\010\"<\n\013AgentRegion\022\014\n\010NoRegion\020\025\022\010\n\004Le"
+      "ft\020\026\022\n\n\006Center\020\027\022\t\n\005Right\020\030\"\207\002\n\tAgentRol"
+      "e\022\n\n\006NoRole\020\037\022\n\n\006ArcMid\020 \022\013\n\007ArcLeft\020!\022\014"
+      "\n\010ArcRight\020\"\022\025\n\021FixedPositionLeft\020#\022\026\n\022F"
+      "ixedPositionRight\020$\022\024\n\020FixedPositionMid\020"
+      "%\022\020\n\014AttackerLeft\020&\022\021\n\rAttackerRight\020\'\022\017"
+      "\n\013AttackerMid\020(\022\013\n\007Blocker\020)\022\020\n\014Defender"
+      "Left\020*\022\021\n\rDefenderRight\020+\022\017\n\013DefenderMid"
+      "\020,\022\t\n\005Golie\020-"
+  };
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\023Robot_message.proto\032\026position_message."
-    "proto\032\032RobotCommand_message.proto\"\341\005\n\rRo"
-    "bot_message\022\017\n\007isValid\030\001 \002(\010\022#\n\010position"
-    "\030\002 \002(\0132\021.position_message\022#\n\010velocity\030\003 "
-    "\002(\0132\021.position_message\022*\n\006status\030\004 \001(\0162\032"
-    ".Robot_message.AgentStatus\022&\n\004role\030\005 \001(\016"
-    "2\030.Robot_message.AgentRole\022*\n\006region\030\006 \001"
-    "(\0162\032.Robot_message.AgentRegion\022!\n\002rc\030\007 \001"
-    "(\0132\025.RobotCommand_message\"\211\001\n\013AgentStatu"
-    "s\022\010\n\004Idle\020\001\022\013\n\007Passing\020\002\022\013\n\007Kicking\020\003\022\013\n"
-    "\007Chiping\020\004\022\021\n\rFollowingBall\020\005\022\020\n\014Blockin"
-    "gBall\020\006\022\021\n\rBlockingRobot\020\007\022\021\n\rRecievingP"
-    "ass\020\010\"<\n\013AgentRegion\022\014\n\010NoRegion\020\025\022\010\n\004Le"
-    "ft\020\026\022\n\n\006Center\020\027\022\t\n\005Right\020\030\"\207\002\n\tAgentRol"
-    "e\022\n\n\006NoRole\020\037\022\n\n\006ArcMid\020 \022\013\n\007ArcLeft\020!\022\014"
-    "\n\010ArcRight\020\"\022\025\n\021FixedPositionLeft\020#\022\026\n\022F"
-    "ixedPositionRight\020$\022\024\n\020FixedPositionMid\020"
-    "%\022\020\n\014AttackerLeft\020&\022\021\n\rAttackerRight\020\'\022\017"
-    "\n\013AttackerMid\020(\022\013\n\007Blocker\020)\022\020\n\014Defender"
-    "Left\020*\022\021\n\rDefenderRight\020+\022\017\n\013DefenderMid"
-    "\020,\022\t\n\005Golie\020-", 813);
+      descriptor, 813);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Robot_message.proto", &protobuf_RegisterTypes);
-  Robot_message::default_instance_ = new Robot_message();
-  Robot_message::default_instance_->InitAsDefaultInstance();
+  ::protobuf_AddDesc_position_5fmessage_2eproto();
+  ::protobuf_AddDesc_RobotCommand_5fmessage_2eproto();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Robot_5fmessage_2eproto);
 }
 
+GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_Robot_5fmessage_2eproto_once_);
+void protobuf_AddDesc_Robot_5fmessage_2eproto() {
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_Robot_5fmessage_2eproto_once_,
+                 &protobuf_AddDesc_Robot_5fmessage_2eproto_impl);
+}
 // Force AddDescriptors() to be called at static initialization time.
 struct StaticDescriptorInitializer_Robot_5fmessage_2eproto {
   StaticDescriptorInitializer_Robot_5fmessage_2eproto() {
     protobuf_AddDesc_Robot_5fmessage_2eproto();
   }
 } static_descriptor_initializer_Robot_5fmessage_2eproto_;
-
-// ===================================================================
-
 const ::google::protobuf::EnumDescriptor* Robot_message_AgentStatus_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Robot_message_AgentStatus_descriptor_;
+  return file_level_enum_descriptors[0];
 }
 bool Robot_message_AgentStatus_IsValid(int value) {
-  switch(value) {
+  switch (value) {
     case 1:
     case 2:
     case 3:
@@ -147,7 +172,7 @@ bool Robot_message_AgentStatus_IsValid(int value) {
   }
 }
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const Robot_message_AgentStatus Robot_message::Idle;
 const Robot_message_AgentStatus Robot_message::Passing;
 const Robot_message_AgentStatus Robot_message::Kicking;
@@ -159,13 +184,13 @@ const Robot_message_AgentStatus Robot_message::RecievingPass;
 const Robot_message_AgentStatus Robot_message::AgentStatus_MIN;
 const Robot_message_AgentStatus Robot_message::AgentStatus_MAX;
 const int Robot_message::AgentStatus_ARRAYSIZE;
-#endif  // _MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 const ::google::protobuf::EnumDescriptor* Robot_message_AgentRegion_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Robot_message_AgentRegion_descriptor_;
+  return file_level_enum_descriptors[1];
 }
 bool Robot_message_AgentRegion_IsValid(int value) {
-  switch(value) {
+  switch (value) {
     case 21:
     case 22:
     case 23:
@@ -176,7 +201,7 @@ bool Robot_message_AgentRegion_IsValid(int value) {
   }
 }
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const Robot_message_AgentRegion Robot_message::NoRegion;
 const Robot_message_AgentRegion Robot_message::Left;
 const Robot_message_AgentRegion Robot_message::Center;
@@ -184,13 +209,13 @@ const Robot_message_AgentRegion Robot_message::Right;
 const Robot_message_AgentRegion Robot_message::AgentRegion_MIN;
 const Robot_message_AgentRegion Robot_message::AgentRegion_MAX;
 const int Robot_message::AgentRegion_ARRAYSIZE;
-#endif  // _MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 const ::google::protobuf::EnumDescriptor* Robot_message_AgentRole_descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Robot_message_AgentRole_descriptor_;
+  return file_level_enum_descriptors[2];
 }
 bool Robot_message_AgentRole_IsValid(int value) {
-  switch(value) {
+  switch (value) {
     case 31:
     case 32:
     case 33:
@@ -212,7 +237,7 @@ bool Robot_message_AgentRole_IsValid(int value) {
   }
 }
 
-#ifndef _MSC_VER
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const Robot_message_AgentRole Robot_message::NoRole;
 const Robot_message_AgentRole Robot_message::ArcMid;
 const Robot_message_AgentRole Robot_message::ArcLeft;
@@ -231,8 +256,11 @@ const Robot_message_AgentRole Robot_message::Golie;
 const Robot_message_AgentRole Robot_message::AgentRole_MIN;
 const Robot_message_AgentRole Robot_message::AgentRole_MAX;
 const int Robot_message::AgentRole_ARRAYSIZE;
-#endif  // _MSC_VER
-#ifndef _MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int Robot_message::kIsValidFieldNumber;
 const int Robot_message::kPositionFieldNumber;
 const int Robot_message::kVelocityFieldNumber;
@@ -240,45 +268,65 @@ const int Robot_message::kStatusFieldNumber;
 const int Robot_message::kRoleFieldNumber;
 const int Robot_message::kRegionFieldNumber;
 const int Robot_message::kRcFieldNumber;
-#endif  // !_MSC_VER
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 Robot_message::Robot_message()
-  : ::google::protobuf::Message() {
+  : ::google::protobuf::Message(), _internal_metadata_(NULL) {
+  if (GOOGLE_PREDICT_TRUE(this != internal_default_instance())) {
+    protobuf_InitDefaults_Robot_5fmessage_2eproto();
+  }
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Robot_message)
 }
-
-void Robot_message::InitAsDefaultInstance() {
-  position_ = const_cast< ::position_message*>(&::position_message::default_instance());
-  velocity_ = const_cast< ::position_message*>(&::position_message::default_instance());
-  rc_ = const_cast< ::RobotCommand_message*>(&::RobotCommand_message::default_instance());
-}
-
 Robot_message::Robot_message(const Robot_message& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
+  : ::google::protobuf::Message(),
+      _internal_metadata_(NULL),
+      _has_bits_(from._has_bits_),
+      _cached_size_(0) {
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from.has_position()) {
+    position_ = new ::position_message(*from.position_);
+  } else {
+    position_ = NULL;
+  }
+  if (from.has_velocity()) {
+    velocity_ = new ::position_message(*from.velocity_);
+  } else {
+    velocity_ = NULL;
+  }
+  if (from.has_rc()) {
+    rc_ = new ::RobotCommand_message(*from.rc_);
+  } else {
+    rc_ = NULL;
+  }
+  ::memcpy(&isvalid_, &from.isvalid_,
+    reinterpret_cast<char*>(&role_) -
+    reinterpret_cast<char*>(&isvalid_) + sizeof(role_));
+  // @@protoc_insertion_point(copy_constructor:Robot_message)
 }
 
 void Robot_message::SharedCtor() {
   _cached_size_ = 0;
-  isvalid_ = false;
-  position_ = NULL;
-  velocity_ = NULL;
+  ::memset(&position_, 0, reinterpret_cast<char*>(&isvalid_) -
+    reinterpret_cast<char*>(&position_) + sizeof(isvalid_));
+  region_ = 21;
   status_ = 1;
   role_ = 31;
-  region_ = 21;
-  rc_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 Robot_message::~Robot_message() {
+  // @@protoc_insertion_point(destructor:Robot_message)
   SharedDtor();
 }
 
 void Robot_message::SharedDtor() {
-  if (this != default_instance_) {
+  if (this != internal_default_instance()) {
     delete position_;
+  }
+  if (this != internal_default_instance()) {
     delete velocity_;
+  }
+  if (this != internal_default_instance()) {
     delete rc_;
   }
 }
@@ -290,94 +338,96 @@ void Robot_message::SetCachedSize(int size) const {
 }
 const ::google::protobuf::Descriptor* Robot_message::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Robot_message_descriptor_;
+  return file_level_metadata[0].descriptor;
 }
 
 const Robot_message& Robot_message::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_Robot_5fmessage_2eproto();
-  return *default_instance_;
+  protobuf_InitDefaults_Robot_5fmessage_2eproto();
+  return *internal_default_instance();
 }
 
-Robot_message* Robot_message::default_instance_ = NULL;
-
-Robot_message* Robot_message::New() const {
-  return new Robot_message;
+Robot_message* Robot_message::New(::google::protobuf::Arena* arena) const {
+  Robot_message* n = new Robot_message;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
 }
 
 void Robot_message::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    isvalid_ = false;
+// @@protoc_insertion_point(message_clear_start:Robot_message)
+  if (_has_bits_[0 / 32] & 7u) {
     if (has_position()) {
-      if (position_ != NULL) position_->::position_message::Clear();
+      GOOGLE_DCHECK(position_ != NULL);
+      position_->::position_message::Clear();
     }
     if (has_velocity()) {
-      if (velocity_ != NULL) velocity_->::position_message::Clear();
+      GOOGLE_DCHECK(velocity_ != NULL);
+      velocity_->::position_message::Clear();
     }
-    status_ = 1;
-    role_ = 31;
-    region_ = 21;
     if (has_rc()) {
-      if (rc_ != NULL) rc_->::RobotCommand_message::Clear();
+      GOOGLE_DCHECK(rc_ != NULL);
+      rc_->::RobotCommand_message::Clear();
     }
   }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
+  if (_has_bits_[0 / 32] & 120u) {
+    isvalid_ = false;
+    region_ = 21;
+    status_ = 1;
+    role_ = 31;
+  }
+  _has_bits_.Clear();
+  _internal_metadata_.Clear();
 }
 
 bool Robot_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:Robot_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoffNoLastTag(127u);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required bool isValid = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8u) {
+          set_has_isvalid();
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isvalid_)));
-          set_has_isvalid();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_position;
         break;
       }
 
       // required .position_message position = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_position:
+        if (tag == 18u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_position()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_velocity;
         break;
       }
 
       // required .position_message velocity = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_velocity:
+        if (tag == 26u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_velocity()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_status;
         break;
       }
 
       // optional .Robot_message.AgentStatus status = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_status:
+        if (tag == 32u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -388,17 +438,14 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(4, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_role;
         break;
       }
 
       // optional .Robot_message.AgentRole role = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_role:
+        if (tag == 40u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -409,17 +456,14 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(5, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_region;
         break;
       }
 
       // optional .Robot_message.AgentRegion region = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_region:
+        if (tag == 48u) {
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
@@ -430,31 +474,28 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(6, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_rc;
         break;
       }
 
       // optional .RobotCommand_message rc = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_rc:
+        if (tag == 58u) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rc()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -462,12 +503,18 @@ bool Robot_message::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Robot_message)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Robot_message)
+  return false;
 #undef DO_
 }
 
 void Robot_message::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Robot_message)
   // required bool isValid = 1;
   if (has_isvalid()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->isvalid(), output);
@@ -476,13 +523,13 @@ void Robot_message::SerializeWithCachedSizes(
   // required .position_message position = 2;
   if (has_position()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      2, this->position(), output);
+      2, *this->position_, output);
   }
 
   // required .position_message velocity = 3;
   if (has_velocity()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->velocity(), output);
+      3, *this->velocity_, output);
   }
 
   // optional .Robot_message.AgentStatus status = 4;
@@ -506,17 +553,20 @@ void Robot_message::SerializeWithCachedSizes(
   // optional .RobotCommand_message rc = 7;
   if (has_rc()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->rc(), output);
+      7, *this->rc_, output);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:Robot_message)
 }
 
-::google::protobuf::uint8* Robot_message::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
+::google::protobuf::uint8* Robot_message::InternalSerializeWithCachedSizesToArray(
+    bool deterministic, ::google::protobuf::uint8* target) const {
+  (void)deterministic; // Unused
+  // @@protoc_insertion_point(serialize_to_array_start:Robot_message)
   // required bool isValid = 1;
   if (has_isvalid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->isvalid(), target);
@@ -525,15 +575,15 @@ void Robot_message::SerializeWithCachedSizes(
   // required .position_message position = 2;
   if (has_position()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->position(), target);
+      InternalWriteMessageNoVirtualToArray(
+        2, *this->position_, false, target);
   }
 
   // required .position_message velocity = 3;
   if (has_velocity()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->velocity(), target);
+      InternalWriteMessageNoVirtualToArray(
+        3, *this->velocity_, false, target);
   }
 
   // optional .Robot_message.AgentStatus status = 4;
@@ -557,38 +607,81 @@ void Robot_message::SerializeWithCachedSizes(
   // optional .RobotCommand_message rc = 7;
   if (has_rc()) {
     target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        7, this->rc(), target);
+      InternalWriteMessageNoVirtualToArray(
+        7, *this->rc_, false, target);
   }
 
-  if (!unknown_fields().empty()) {
+  if (_internal_metadata_.have_unknown_fields()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:Robot_message)
   return target;
 }
 
-int Robot_message::ByteSize() const {
-  int total_size = 0;
+size_t Robot_message::RequiredFieldsByteSizeFallback() const {
+// @@protoc_insertion_point(required_fields_byte_size_fallback_start:Robot_message)
+  size_t total_size = 0;
 
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required bool isValid = 1;
-    if (has_isvalid()) {
-      total_size += 1 + 1;
-    }
-
+  if (has_position()) {
     // required .position_message position = 2;
-    if (has_position()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->position());
-    }
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->position_);
+  }
+
+  if (has_velocity()) {
+    // required .position_message velocity = 3;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->velocity_);
+  }
+
+  if (has_isvalid()) {
+    // required bool isValid = 1;
+    total_size += 1 + 1;
+  }
+
+  return total_size;
+}
+size_t Robot_message::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Robot_message)
+  size_t total_size = 0;
+
+  if (_internal_metadata_.have_unknown_fields()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  if (((_has_bits_[0] & 0x0000000b) ^ 0x0000000b) == 0) {  // All required fields are present.
+    // required .position_message position = 2;
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->position_);
 
     // required .position_message velocity = 3;
-    if (has_velocity()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->velocity_);
+
+    // required bool isValid = 1;
+    total_size += 1 + 1;
+
+  } else {
+    total_size += RequiredFieldsByteSizeFallback();
+  }
+  // optional .RobotCommand_message rc = 7;
+  if (has_rc()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->rc_);
+  }
+
+  if (_has_bits_[0 / 32] & 112u) {
+    // optional .Robot_message.AgentRegion region = 6;
+    if (has_region()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->velocity());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->region());
     }
 
     // optional .Robot_message.AgentStatus status = 4;
@@ -603,54 +696,48 @@ int Robot_message::ByteSize() const {
         ::google::protobuf::internal::WireFormatLite::EnumSize(this->role());
     }
 
-    // optional .Robot_message.AgentRegion region = 6;
-    if (has_region()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->region());
-    }
-
-    // optional .RobotCommand_message rc = 7;
-    if (has_rc()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->rc());
-    }
-
   }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
+  int cached_size = ::google::protobuf::internal::ToCachedSize(total_size);
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
+  _cached_size_ = cached_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
   return total_size;
 }
 
 void Robot_message::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
+// @@protoc_insertion_point(generalized_merge_from_start:Robot_message)
+  GOOGLE_DCHECK_NE(&from, this);
   const Robot_message* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Robot_message*>(
-      &from);
+      ::google::protobuf::internal::DynamicCastToGenerated<const Robot_message>(
+          &from);
   if (source == NULL) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:Robot_message)
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
   } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:Robot_message)
     MergeFrom(*source);
   }
 }
 
 void Robot_message::MergeFrom(const Robot_message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_isvalid()) {
-      set_isvalid(from.isvalid());
-    }
+// @@protoc_insertion_point(class_specific_merge_from_start:Robot_message)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom(from._internal_metadata_);
+  if (from._has_bits_[0 / 32] & 127u) {
     if (from.has_position()) {
       mutable_position()->::position_message::MergeFrom(from.position());
     }
     if (from.has_velocity()) {
       mutable_velocity()->::position_message::MergeFrom(from.velocity());
+    }
+    if (from.has_rc()) {
+      mutable_rc()->::RobotCommand_message::MergeFrom(from.rc());
+    }
+    if (from.has_isvalid()) {
+      set_isvalid(from.isvalid());
+    }
+    if (from.has_region()) {
+      set_region(from.region());
     }
     if (from.has_status()) {
       set_status(from.status());
@@ -658,66 +745,297 @@ void Robot_message::MergeFrom(const Robot_message& from) {
     if (from.has_role()) {
       set_role(from.role());
     }
-    if (from.has_region()) {
-      set_region(from.region());
-    }
-    if (from.has_rc()) {
-      mutable_rc()->::RobotCommand_message::MergeFrom(from.rc());
-    }
   }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
 void Robot_message::CopyFrom(const ::google::protobuf::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:Robot_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 void Robot_message::CopyFrom(const Robot_message& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Robot_message)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
 bool Robot_message::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
-
+  if ((_has_bits_[0] & 0x0000000b) != 0x0000000b) return false;
   if (has_position()) {
-    if (!this->position().IsInitialized()) return false;
+    if (!this->position_->IsInitialized()) return false;
   }
   if (has_velocity()) {
-    if (!this->velocity().IsInitialized()) return false;
+    if (!this->velocity_->IsInitialized()) return false;
   }
   if (has_rc()) {
-    if (!this->rc().IsInitialized()) return false;
+    if (!this->rc_->IsInitialized()) return false;
   }
   return true;
 }
 
 void Robot_message::Swap(Robot_message* other) {
-  if (other != this) {
-    std::swap(isvalid_, other->isvalid_);
-    std::swap(position_, other->position_);
-    std::swap(velocity_, other->velocity_);
-    std::swap(status_, other->status_);
-    std::swap(role_, other->role_);
-    std::swap(region_, other->region_);
-    std::swap(rc_, other->rc_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
+  if (other == this) return;
+  InternalSwap(other);
+}
+void Robot_message::InternalSwap(Robot_message* other) {
+  std::swap(position_, other->position_);
+  std::swap(velocity_, other->velocity_);
+  std::swap(rc_, other->rc_);
+  std::swap(isvalid_, other->isvalid_);
+  std::swap(region_, other->region_);
+  std::swap(status_, other->status_);
+  std::swap(role_, other->role_);
+  std::swap(_has_bits_[0], other->_has_bits_[0]);
+  _internal_metadata_.Swap(&other->_internal_metadata_);
+  std::swap(_cached_size_, other->_cached_size_);
 }
 
 ::google::protobuf::Metadata Robot_message::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Robot_message_descriptor_;
-  metadata.reflection = Robot_message_reflection_;
-  return metadata;
+  return file_level_metadata[0];
 }
 
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// Robot_message
+
+// required bool isValid = 1;
+bool Robot_message::has_isvalid() const {
+  return (_has_bits_[0] & 0x00000008u) != 0;
+}
+void Robot_message::set_has_isvalid() {
+  _has_bits_[0] |= 0x00000008u;
+}
+void Robot_message::clear_has_isvalid() {
+  _has_bits_[0] &= ~0x00000008u;
+}
+void Robot_message::clear_isvalid() {
+  isvalid_ = false;
+  clear_has_isvalid();
+}
+bool Robot_message::isvalid() const {
+  // @@protoc_insertion_point(field_get:Robot_message.isValid)
+  return isvalid_;
+}
+void Robot_message::set_isvalid(bool value) {
+  set_has_isvalid();
+  isvalid_ = value;
+  // @@protoc_insertion_point(field_set:Robot_message.isValid)
+}
+
+// required .position_message position = 2;
+bool Robot_message::has_position() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+void Robot_message::set_has_position() {
+  _has_bits_[0] |= 0x00000001u;
+}
+void Robot_message::clear_has_position() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+void Robot_message::clear_position() {
+  if (position_ != NULL) position_->::position_message::Clear();
+  clear_has_position();
+}
+const ::position_message& Robot_message::position() const {
+  // @@protoc_insertion_point(field_get:Robot_message.position)
+  return position_ != NULL ? *position_
+                         : *::position_message::internal_default_instance();
+}
+::position_message* Robot_message::mutable_position() {
+  set_has_position();
+  if (position_ == NULL) {
+    position_ = new ::position_message;
+  }
+  // @@protoc_insertion_point(field_mutable:Robot_message.position)
+  return position_;
+}
+::position_message* Robot_message::release_position() {
+  // @@protoc_insertion_point(field_release:Robot_message.position)
+  clear_has_position();
+  ::position_message* temp = position_;
+  position_ = NULL;
+  return temp;
+}
+void Robot_message::set_allocated_position(::position_message* position) {
+  delete position_;
+  position_ = position;
+  if (position) {
+    set_has_position();
+  } else {
+    clear_has_position();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Robot_message.position)
+}
+
+// required .position_message velocity = 3;
+bool Robot_message::has_velocity() const {
+  return (_has_bits_[0] & 0x00000002u) != 0;
+}
+void Robot_message::set_has_velocity() {
+  _has_bits_[0] |= 0x00000002u;
+}
+void Robot_message::clear_has_velocity() {
+  _has_bits_[0] &= ~0x00000002u;
+}
+void Robot_message::clear_velocity() {
+  if (velocity_ != NULL) velocity_->::position_message::Clear();
+  clear_has_velocity();
+}
+const ::position_message& Robot_message::velocity() const {
+  // @@protoc_insertion_point(field_get:Robot_message.velocity)
+  return velocity_ != NULL ? *velocity_
+                         : *::position_message::internal_default_instance();
+}
+::position_message* Robot_message::mutable_velocity() {
+  set_has_velocity();
+  if (velocity_ == NULL) {
+    velocity_ = new ::position_message;
+  }
+  // @@protoc_insertion_point(field_mutable:Robot_message.velocity)
+  return velocity_;
+}
+::position_message* Robot_message::release_velocity() {
+  // @@protoc_insertion_point(field_release:Robot_message.velocity)
+  clear_has_velocity();
+  ::position_message* temp = velocity_;
+  velocity_ = NULL;
+  return temp;
+}
+void Robot_message::set_allocated_velocity(::position_message* velocity) {
+  delete velocity_;
+  velocity_ = velocity;
+  if (velocity) {
+    set_has_velocity();
+  } else {
+    clear_has_velocity();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Robot_message.velocity)
+}
+
+// optional .Robot_message.AgentStatus status = 4;
+bool Robot_message::has_status() const {
+  return (_has_bits_[0] & 0x00000020u) != 0;
+}
+void Robot_message::set_has_status() {
+  _has_bits_[0] |= 0x00000020u;
+}
+void Robot_message::clear_has_status() {
+  _has_bits_[0] &= ~0x00000020u;
+}
+void Robot_message::clear_status() {
+  status_ = 1;
+  clear_has_status();
+}
+::Robot_message_AgentStatus Robot_message::status() const {
+  // @@protoc_insertion_point(field_get:Robot_message.status)
+  return static_cast< ::Robot_message_AgentStatus >(status_);
+}
+void Robot_message::set_status(::Robot_message_AgentStatus value) {
+  assert(::Robot_message_AgentStatus_IsValid(value));
+  set_has_status();
+  status_ = value;
+  // @@protoc_insertion_point(field_set:Robot_message.status)
+}
+
+// optional .Robot_message.AgentRole role = 5;
+bool Robot_message::has_role() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+void Robot_message::set_has_role() {
+  _has_bits_[0] |= 0x00000040u;
+}
+void Robot_message::clear_has_role() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+void Robot_message::clear_role() {
+  role_ = 31;
+  clear_has_role();
+}
+::Robot_message_AgentRole Robot_message::role() const {
+  // @@protoc_insertion_point(field_get:Robot_message.role)
+  return static_cast< ::Robot_message_AgentRole >(role_);
+}
+void Robot_message::set_role(::Robot_message_AgentRole value) {
+  assert(::Robot_message_AgentRole_IsValid(value));
+  set_has_role();
+  role_ = value;
+  // @@protoc_insertion_point(field_set:Robot_message.role)
+}
+
+// optional .Robot_message.AgentRegion region = 6;
+bool Robot_message::has_region() const {
+  return (_has_bits_[0] & 0x00000010u) != 0;
+}
+void Robot_message::set_has_region() {
+  _has_bits_[0] |= 0x00000010u;
+}
+void Robot_message::clear_has_region() {
+  _has_bits_[0] &= ~0x00000010u;
+}
+void Robot_message::clear_region() {
+  region_ = 21;
+  clear_has_region();
+}
+::Robot_message_AgentRegion Robot_message::region() const {
+  // @@protoc_insertion_point(field_get:Robot_message.region)
+  return static_cast< ::Robot_message_AgentRegion >(region_);
+}
+void Robot_message::set_region(::Robot_message_AgentRegion value) {
+  assert(::Robot_message_AgentRegion_IsValid(value));
+  set_has_region();
+  region_ = value;
+  // @@protoc_insertion_point(field_set:Robot_message.region)
+}
+
+// optional .RobotCommand_message rc = 7;
+bool Robot_message::has_rc() const {
+  return (_has_bits_[0] & 0x00000004u) != 0;
+}
+void Robot_message::set_has_rc() {
+  _has_bits_[0] |= 0x00000004u;
+}
+void Robot_message::clear_has_rc() {
+  _has_bits_[0] &= ~0x00000004u;
+}
+void Robot_message::clear_rc() {
+  if (rc_ != NULL) rc_->::RobotCommand_message::Clear();
+  clear_has_rc();
+}
+const ::RobotCommand_message& Robot_message::rc() const {
+  // @@protoc_insertion_point(field_get:Robot_message.rc)
+  return rc_ != NULL ? *rc_
+                         : *::RobotCommand_message::internal_default_instance();
+}
+::RobotCommand_message* Robot_message::mutable_rc() {
+  set_has_rc();
+  if (rc_ == NULL) {
+    rc_ = new ::RobotCommand_message;
+  }
+  // @@protoc_insertion_point(field_mutable:Robot_message.rc)
+  return rc_;
+}
+::RobotCommand_message* Robot_message::release_rc() {
+  // @@protoc_insertion_point(field_release:Robot_message.rc)
+  clear_has_rc();
+  ::RobotCommand_message* temp = rc_;
+  rc_ = NULL;
+  return temp;
+}
+void Robot_message::set_allocated_rc(::RobotCommand_message* rc) {
+  delete rc_;
+  rc_ = rc;
+  if (rc) {
+    set_has_rc();
+  } else {
+    clear_has_rc();
+  }
+  // @@protoc_insertion_point(field_set_allocated:Robot_message.rc)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // @@protoc_insertion_point(namespace_scope)
 

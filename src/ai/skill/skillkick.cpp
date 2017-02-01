@@ -8,116 +8,118 @@ SkillKick::SkillKick(WorldModel* wm, QObject *parent) :
 
 bool SkillKick::execute(RobotCommand &rc)
 {
-    //locating behind the ball...
+/*cod khodam*/
 
-    Vector2D goal;
+//    //locating behind the ball...
 
-    Vector2D ball2target;
+//    Vector2D goal;
 
-    ball2target=this->_Target - wm->ball.pos.loc;
+//    Vector2D ball2target;
 
-    ball2target.setLength(ROBOT_RADIUS+8);
+//    ball2target=this->_Target - wm->ball.pos.loc;
 
-    goal=wm->ball.pos.loc - ball2target;
+//    ball2target.setLength(ROBOT_RADIUS+8);
 
-    //    Vector2D checkingPoint;
+//    goal=wm->ball.pos.loc - ball2target;
 
-    //    ball2target.setLength(2*ROBOT_RADIUS+20);
+//    //    Vector2D checkingPoint;
 
-    //    checkingPoint=wm->ball.pos.loc - ball2target;
+//    //    ball2target.setLength(2*ROBOT_RADIUS+20);
 
-    //    Segment2D *kicker2chekingPoint=new Segment2D(wm->ourRobot[index].pos.loc,checkingPoint);
+//    //    checkingPoint=wm->ball.pos.loc - ball2target;
 
-    //    Circle2D checkingCircle(wm->ball.pos.loc,ROBOT_RADIUS*2);
+//    //    Segment2D *kicker2chekingPoint=new Segment2D(wm->ourRobot[index].pos.loc,checkingPoint);
 
-
-    Circle2D checkingCircle(wm->ball.pos.loc,ROBOT_RADIUS);
-    Segment2D *kicker2goal=new Segment2D(wm->ourRobot[index].pos.loc,goal);
-
-    if( checkingCircle.HasIntersection( *kicker2goal ) )
-    {
-        ball2target.setLength(200+200);
-        Vector2D temp1=goal+(-ball2target).rotatedVector(60);
-        Vector2D temp2=goal+(-ball2target).rotatedVector(-60);
-        if((wm->ourRobot[index].pos.loc-temp1).length2()<(wm->ourRobot[index].pos.loc-temp2).length2())
-        {
-            goal=temp1;
-        }
-        else
-        {
-            goal=temp2;
-        }
-    }
-
-    rc.fin_pos.loc=goal;
-
-    rc.fin_pos.dir=ball2target.dir().radian();
+//    //    Circle2D checkingCircle(wm->ball.pos.loc,ROBOT_RADIUS*2);
 
 
+//    Circle2D checkingCircle(wm->ball.pos.loc,ROBOT_RADIUS);
+//    Segment2D *kicker2goal=new Segment2D(wm->ourRobot[index].pos.loc,goal);
+
+//    if( checkingCircle.HasIntersection( *kicker2goal ) )
+//    {
+//        ball2target.setLength(200+200);
+//        Vector2D temp1=goal+(-ball2target).rotatedVector(60);
+//        Vector2D temp2=goal+(-ball2target).rotatedVector(-60);
+//        if((wm->ourRobot[index].pos.loc-temp1).length2()<(wm->ourRobot[index].pos.loc-temp2).length2())
+//        {
+//            goal=temp1;
+//        }
+//        else
+//        {
+//            goal=temp2;
+//        }
+//    }
+
+//    rc.fin_pos.loc=goal;
+
+//    rc.fin_pos.dir=ball2target.dir().radian();
 
 
-    //kicking...
 
-    if( wm->isSim )
-    {
-        //simulatuion
-        Vector2D centerofrarecircle;
-        ball2target.setLength(ROBOT_RADIUS+10);
-        centerofrarecircle=wm->ball.pos.loc-ball2target;
-        Circle2D rearCircle(centerofrarecircle,20);
-        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+50);
-        if( wm->ball.isValid&&
-                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
-                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
-                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
-                )
-        {
-            if( !isShoot )
-                rc.kickspeedx = 3.5;
-            else
-                rc.kickspeedx = 8;
-        }
-    }
-    else
-    {
-        // real:
 
-        if( !wm->useShootSensor )
-        {
-            //without kicking sensor
-            Vector2D centerofrarecircle;
-            ball2target.setLength(ROBOT_RADIUS+10);
-            centerofrarecircle=wm->ball.pos.loc-ball2target;
-            Circle2D rearCircle(centerofrarecircle,20);
-            Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
-            if( wm->ball.isValid&&
-                    ballCircle.contains(wm->ourRobot[index].pos.loc)&&
-                    rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
-                    //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
-                    )
-            {
-                if( !isShoot )
-                    rc.kickspeedx = 30;
-                else
-                    rc.kickspeedx = 100;
-            }
-        }
-        else
-        {
-            //with kicking sensor
-            if(  ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<90  || fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))>270)  )
-            {
-                if( !isShoot )
-                    rc.kickspeedx = 140;
-                else
-                    rc.kickspeedx = 200;
-                //            if(passFlag)
-                //            {
-                //                rc.kickspeedx=sqrt(2*10*lossFactor*(this->_Target-wm->ourRobot[index].pos.loc).length());
-                //            }
-            }
-        }
-    }
+//    //kicking...
+
+//    if( wm->isSim )
+//    {
+//        //simulatuion
+//        Vector2D centerofrarecircle;
+//        ball2target.setLength(ROBOT_RADIUS+10);
+//        centerofrarecircle=wm->ball.pos.loc-ball2target;
+//        Circle2D rearCircle(centerofrarecircle,20);
+//        Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+50);
+//        if( wm->ball.isValid&&
+//                ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+//                rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+//                //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+//                )
+//        {
+//            if( !isShoot )
+//                rc.kickspeedx = 3.5;
+//            else
+//                rc.kickspeedx = 8;
+//        }
+//    }
+//    else
+//    {
+//        // real:
+
+//        if( !wm->useShootSensor )
+//        {
+//            //without kicking sensor
+//            Vector2D centerofrarecircle;
+//            ball2target.setLength(ROBOT_RADIUS+10);
+//            centerofrarecircle=wm->ball.pos.loc-ball2target;
+//            Circle2D rearCircle(centerofrarecircle,20);
+//            Circle2D ballCircle(wm->ball.pos.loc,ROBOT_RADIUS+20);
+//            if( wm->ball.isValid&&
+//                    ballCircle.contains(wm->ourRobot[index].pos.loc)&&
+//                    rearCircle.contains(wm->ourRobot[index].pos.loc)//&&
+//                    //              fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<3
+//                    )
+//            {
+//                if( !isShoot )
+//                    rc.kickspeedx = 30;
+//                else
+//                    rc.kickspeedx = 100;
+//            }
+//        }
+//        else
+//        {
+//            //with kicking sensor
+//            if(  ((wm->ball.pos.loc-wm->ourRobot[index].pos.loc).length()<500)  &&  (fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))<90  || fabs((ball2target.dir().degree())-((wm->ourRobot[index].pos.dir)*180/M_PI))>270)  )
+//            {
+//                if( !isShoot )
+//                    rc.kickspeedx = 140;
+//                else
+//                    rc.kickspeedx = 200;
+//                //            if(passFlag)
+//                //            {
+//                //                rc.kickspeedx=sqrt(2*10*lossFactor*(this->_Target-wm->ourRobot[index].pos.loc).length());
+//                //            }
+//            }
+//        }
+//    }
 
 }
 

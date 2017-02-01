@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 KN2C-Program
 ========
 
@@ -38,3 +39,8 @@ Faraz Fallahi (fffaraz@gmail.com) <br />
 Milad AbaieRad (milad.abaeirad@gmail.com ) <br />
 Mohsen Raoufi (mohsen.raoufi.2007@gmail.com) <br />
 
+
+
+=======
+# MergeTest
+>>>>>>> 28ea424bd019bb77bc1ab02977d2f91922110bed

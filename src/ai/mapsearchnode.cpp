@@ -1,3 +1,4 @@
+
 #include "mapsearchnode.h"
 #include "worldmodel.h"
 
@@ -82,36 +83,101 @@ bool MapSearchNode::GetSuccessors(AStarSearch<MapSearchNode> *astarsearch, MapSe
     wm->navigation_pos.clear();
     //kamin
 
-    for(int i=0; i<obs.size(); i++)
+    for(int i=0; i<obs.size(); i++)//obs.size()//-2// test
     {
         Circle2D obs_circle=obs.at(i);
         int    p_count = 6;
         double p_dist  = obs_circle.radius();//2*ROBOT_RADIUS+BALL_RADIUS; //
 
-        for(int j=0; j<p_count; j++)
-        {
-            Vector2D v(p_dist, p_dist);
-            v.rotate(360/p_count * j);
-            MapSearchNode node = obs[i].center() + v;
-            //kamin
-           bool checkNodeInterference = true;
 
-           for(int g=0;g<obs.size();g++)
+        if(i<obs.size()-2){
+            for(int j=0; j<p_count; j++)
             {
-                if(obs[g].contains(node.vec))
+                Vector2D v(p_dist, p_dist);
+                v.rotate(360/p_count * j);
+                MapSearchNode node = obs[i].center() + v;
+                //kamin
+                bool checkNodeInterference = true;
+
+                for(int g=0;g<obs.size();g++)
                 {
-                    checkNodeInterference = false;
+                    if(obs[g].contains(node.vec))
+                    {
+                        checkNodeInterference = false;
+                    }
+                }
+
+                if(checkNodeInterference == true)
+                {
+                    wm->navigation_pos.append(node.vec);
+                //kamout
+                    if(node.vec != parent) astarsearch->AddSuccessor(node);
                 }
             }
-
-            if(checkNodeInterference == true)
+        }
+        else{
+            int goal_p_count=8;
+            for(int j=0; j<goal_p_count; j++)
             {
-                wm->navigation_pos.append(node.vec);
-            //kamout
-                if(node.vec != parent) astarsearch->AddSuccessor(node);
+                Vector2D v(p_dist, p_dist);
+                v.rotate(360/goal_p_count * j);
+                MapSearchNode node = obs[i].center() + v;
+                //kamin
+                bool checkNodeInterference = true;
+
+                for(int g=0;g<obs.size();g++)
+                {
+                    if(obs[g].contains(node.vec))
+                    {
+                        checkNodeInterference = false;
+                    }
+                }
+
+                if(checkNodeInterference == true)
+                {
+                    wm->navigation_pos.append(node.vec);
+                //kamout
+                    if(node.vec != parent) astarsearch->AddSuccessor(node);
+                }
             }
         }
     }
+
+
+    //test
+//    for(int i=obs.size()-2; i<obs.size(); i++)
+//    {
+//        Circle2D obs_circle=obs.at(i);
+//        int    p_count = 8;
+//        double p_dist  = obs_circle.radius();//2*ROBOT_RADIUS+BALL_RADIUS; //
+
+//        for(int j=0; j<p_count; j++)
+//        {
+//            Vector2D v(p_dist, p_dist);
+//            v.rotate(360/p_count * j);
+//            MapSearchNode node = obs[i].center() + v;
+//            //kamin
+//           bool checkNodeInterference = true;
+
+//           for(int g=0;g<obs.size();g++)
+//            {
+//                if(obs[g].contains(node.vec))
+//                {
+//                    checkNodeInterference = false;
+//                }
+//            }
+
+//            if(checkNodeInterference == true)
+//            {
+//                wm->navigation_pos.append(node.vec);
+//            //kamout
+//                if(node.vec != parent) astarsearch->AddSuccessor(node);
+//            }
+//        }
+//    }
+
+
+    //test
 
     MapSearchNode goal;
     goal.vec = astarsearch->GetSolutionEnd()->vec;
@@ -146,11 +212,8 @@ float MapSearchNode::GetCost(MapSearchNode &successor)
 QList<Circle2D> MapSearchNode::getObsCircle()
 {
     QList<Circle2D> result;
-
-    double b_rad = ROBOT_RADIUS + 2*BALL_RADIUS;
-    double r_rad = ROBOT_RADIUS * 2;
-
-
+    double b_rad = ROBOT_RADIUS + 2*BALL_RADIUS+50;
+    double r_rad = ROBOT_RADIUS * 2+50;
     if(isBallObs && wm->ball.isValid)
     {
         Circle2D c(wm->ball.pos.loc, b_rad);
@@ -164,7 +227,7 @@ QList<Circle2D> MapSearchNode::getObsCircle()
         Vector2D bloc = wm->ball.pos.loc;
 
         double bang = (bloc - rpos.loc).dir().radian() - rpos.dir;
-        if (bang >  M_PI) bang -= 2 * M_PI;
+        if (bang >  M_PI) bang -= 2 * M_PI;//
         if (bang < -M_PI) bang += 2 * M_PI;
 
         if(fabs(bang) > M_PI_4 * 3 / 4)
@@ -191,6 +254,15 @@ QList<Circle2D> MapSearchNode::getObsCircle()
         Circle2D c(wm->oppRobot[i].pos.loc+ wm->oppRobot[i].vel.loc * AI_TIMER, r_rad);
         result.append(c);
     }
+
+
+
+    Circle2D oppGoal(Field::oppGoalCenter,1000);
+    Circle2D ourGoal(Field::ourGoalCenter,1000);
+
+    result.append(oppGoal);
+    result.append(ourGoal);
+
 
 //    for(int i=0; i<wm->predict_pos.size(); i++)
 //    {

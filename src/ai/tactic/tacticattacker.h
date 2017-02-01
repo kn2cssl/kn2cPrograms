@@ -38,7 +38,8 @@ public:
     void setKickerID(int id);
 
     bool everyOneInTheirPos;
-
+    void setUseNav(bool input);
+    bool getUseNav();
 private:
     bool isFree(int index);
 
@@ -55,7 +56,7 @@ private:
     bool holdKickPos;
     Position kickPos;
     int kickerID;
-
+    bool UseNav=true;
 protected:
     bool canKick;
 };

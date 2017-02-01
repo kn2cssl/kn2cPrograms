@@ -1,248 +1,303 @@
 #include "playkickoffopp.h"
-
+#include<QList>
+#include<tactic/tacticattacker.h>
+#include<math.h>
 PlayKickoffOpp::PlayKickoffOpp(WorldModel *worldmodel, QObject *parent) :
     Play("PlayKickoffOpp", worldmodel, parent)
 {
     tGolie=new TacticGoalie(wm);
-
+    tAttackerLeft=new TacticAttacker(wm);
+    tAttackerMid=new TacticAttacker(wm);
+    tAttackerRight=new TacticAttacker(wm);
     tDefenderLeft=new TacticDefender(wm);
     tDefenderRight=new TacticDefender(wm);
 
-    tAttackerLeft = new TacticAttacker(wm);
-    tAttackerMid = new TacticAttacker(wm);
-    tAttackerRight = new TacticAttacker(wm);
 }
 
 int PlayKickoffOpp::enterCondition()
 {
-    if(wm->cmgs.theirKickoff())
+    /*if(wm->cmgs.theirKickoff())
         return 100;
     else
-        return 0;
+        return 0;*/
+    return 9999;
 }
 
 void PlayKickoffOpp::initRole()
 {
-    QList<int> activeAgents=wm->kn->ActiveAgents();
-    numberOfPlayers = activeAgents.size();
-    activeAgents.removeOne(wm->ref_goalie_our);
-    wm->ourRobot[wm->ref_goalie_our].Role = AgentRole::Golie;
-    switch (activeAgents.length()) {
-    case 1:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        break;
-    case 2:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        break;
-    case 3:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        break;
-    case 4:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        break;
-    case 5:
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::DefenderLeft;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerMid;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerRight;
-        wm->ourRobot[activeAgents.takeFirst()].Role = AgentRole::AttackerLeft;
-        break;
+    QList<int> ourCurrentPlayers=wm->kn->ActiveAgents();
+    ourCurrentPlayers.removeOne(wm->ref_goalie_our);
+    wm->ourRobot[wm->ref_goalie_our].Role=AgentRole::Golie;
+    switch(ourCurrentPlayers.length()){
+        case 1:
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderLeft;
+            break;
+        case 2:
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderLeft;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderRight;
+            break;
+        case 3:
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderLeft;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderRight;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerMid;
+            break;
+        case 4:
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderLeft;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderRight;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerMid;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerLeft;
+            break;
+        case 5:
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderLeft;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::DefenderRight;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerMid;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerLeft;
+            wm->ourRobot[ourCurrentPlayers.takeFirst()].Role=AgentRole::AttackerRight;
+            break;
+
     }
 }
-
 void PlayKickoffOpp::setTactics(int index)
 {
-    switch (wm->ourRobot[index].Role) {
-    case AgentRole::Golie:
-        tactics[index] = tGolie;
-        break;
-    case AgentRole::DefenderLeft:
-        tactics[index] = tDefenderLeft;
-        break;
-    case AgentRole::DefenderRight:
-        tactics[index] = tDefenderRight;
-        break;
-    case AgentRole::AttackerMid:
-        tactics[index] = tAttackerMid;
-        break;
-    case AgentRole::AttackerRight:
-        tactics[index] = tAttackerRight;
-        break;
-    case AgentRole::AttackerLeft:
-        tactics[index] = tAttackerLeft;
-        break;
-    default:
-        break;
+    switch(wm->ourRobot[index].Role){
+        case AgentRole::Golie:
+            tactics[index]=tGolie;
+            break;
+        case AgentRole::AttackerLeft:
+            tactics[index]=tAttackerLeft;
+            break;
+        case AgentRole::AttackerMid:
+            tactics[index]=tAttackerMid;
+            break;
+        case AgentRole::AttackerRight:
+            tactics[index]=tAttackerRight;
+            break;
+        case AgentRole::DefenderLeft:
+            tactics[index]=tDefenderLeft;
+            break;
+        case AgentRole::DefenderRight:
+            tactics[index]=tDefenderRight;
+            break;
+    }
+}
+int PlayKickoffOpp::maximumGoalChanceID(QList<int> oppPlayer){
+    QList<int> ourPlayer=wm->kn->ActiveAgents();
+    QList<int> RobotTriangle;
+    ourPlayer.removeOne(wm->ref_goalie_our);
+    ourPlayer.removeOne(tAttackerMid->getID());
+    ourPlayer.removeOne(tAttackerRight->getID());
+    oppPlayer.removeOne(wm->ref_goalie_opp);
+    oppPlayer.removeOne(kickerId);
+    double maxAngle=0;
+    int count=0;
+    int maxCount=0;
+    int maxId;
+    for(int i=0;i<oppPlayer.length();i++){
+        Segment2D segment1(wm->oppRobot[oppPlayer.at(i)].pos.loc,Field::ourGoalPost_L);
+        Segment2D segment2(wm->oppRobot[oppPlayer.at(i)].pos.loc,Field::ourGoalPost_R);
+        for(int j=0;j<ourPlayer.length();j++){
+            if(isInsideTriangle(wm->ourRobot[ourPlayer.at(j)].pos.loc,wm->oppRobot[oppPlayer.at(i)].pos.loc)){
+                RobotTriangle.append(ourPlayer.at(j));
+            }
+        }
+        for(int y=Field::ourGoalPost_R.y;y<Field::ourGoalPost_L.y;y+=10){
+            Vector2D loc(Field::MinX,y);
+            Segment2D seg(wm->oppRobot[oppPlayer.at(i)].pos.loc,loc);
+            bool value=true;
+            for(int j=0;j<RobotTriangle.length();j++){
+                Circle2D circle(wm->ourRobot[RobotTriangle.at(j)].pos.loc,ROBOT_RADIUS);
+                Vector2D inter1,inter2;
+                circle.intersection(seg,&inter1,&inter2);
+                if((inter1.x!=0 && inter1.y!=0) || (inter2.x!=0 && inter2.y!=0))
+                    value=false;
+            }
+            if(value)
+                count++;
+        }
+        if(/*maxAngle<abs(segment1.direction().radian()-segment2.direction().radian())&&*/maxCount<count){
+            maxId=oppPlayer.at(i);
+            maxAngle=abs(segment1.direction().radian()-segment2.direction().radian());
+            maxCount=count;
+        }
+       /* if(i==0){
+            qDebug()<<"Count:"<<count<<"MaxCount:"<<maxCount<<"maxId"<<maxId;
+            qDebug()<<"Angle:"<<segment1.direction().radian()-segment2.direction().radian()<<"MaxAngle:"<<maxAngle;
+        }
+        if(oppPlayer.at(i)==5){
+            qDebug()<<"Count4:"<<count<<"MaxCount:"<<maxCount<<"MaxID"<<maxId;
+            qDebug()<<"Angle4:"<<segment1.direction().radian()-segment2.direction().radian()<<"MaxAngle:"<<maxAngle;
+        }*/
+        count=0;
+        RobotTriangle.clear();
+    }
+    return maxId;
+}
+bool PlayKickoffOpp::isInsideTriangle(Vector2D pos, Vector2D vertex1){
+    bool firstCon=false;
+    bool secondCon=false;
+    if((vertex1.x-Field::ourGoalPost_L.x)!=0 && pos.y<(vertex1.y-Field::ourGoalPost_L.y)/(vertex1.x-Field::ourGoalPost_L.x)*(pos.x-vertex1.x)+vertex1.y)
+        firstCon=true;
+    if((vertex1.x-Field::ourGoalPost_R.x)!=0 && pos.y>(vertex1.y-Field::ourGoalPost_R.y)/(vertex1.x-Field::ourGoalPost_R.x)*(pos.x-vertex1.x)+vertex1.y)
+        secondCon=true;
+    return firstCon && secondCon;
+}
+Position PlayKickoffOpp::KickerPositioning(Vector2D oppKicker){
+    Line2D line(wm->ball.pos.loc,oppKicker);
+    Circle2D circle(wm->ball.pos.loc,oppKicker.dist(wm->ball.pos.loc));
+    Vector2D firstIntersect,secondIntersect;
+    Position pos;
+    circle.intersection(line,&firstIntersect,&secondIntersect);
+    if(firstIntersect!=oppKicker)
+      pos.loc=firstIntersect;
+    else if(secondIntersect!=oppKicker)
+        pos.loc=secondIntersect;
+    pos.dir=oppKicker.dir().radian()*-1;
+    return pos;
+}
+void PlayKickoffOpp::findOppKickerId(){
+    QList<int> oppPlayer=wm->kn->ActiveOppAgents();
+    double minDist=wm->oppRobot[oppPlayer.at(0)].pos.loc.dist(wm->ball.pos.loc);
+    for(int i=0;i<oppPlayer.length();i++){
+        if(minDist>wm->oppRobot[oppPlayer.at(i)].pos.loc.dist(wm->ball.pos.loc)){
+            minDist=wm->oppRobot[oppPlayer.at(i)].pos.loc.dist(wm->ball.pos.loc);
+            kickerId=oppPlayer.at(i);
+        }
     }
 }
 
-void PlayKickoffOpp::setPositions()
-{
-    Position leftDefPos,rightDefPos,goaliePos;
-    int leftID = -1, rightID = -1 , midID = -1;
-    bool leftNav, rightNav;
-
-    if( wm->ourRobot[tDefenderLeft->getID()].Role == AgentRole::DefenderLeft )
-        leftID = tDefenderLeft->getID();
-
-    if( wm->ourRobot[tDefenderRight->getID()].Role == AgentRole::DefenderRight )
-        rightID = tDefenderRight->getID();
-
-    if( leftChecker > 100 || leftID == -1 )
-        midID = rightID;
-
-    if( rightChecker > 100  || rightID == -1)
-        midID = leftID;
-
-    zonePositions(leftID,rightID,midID,goaliePos,leftDefPos,leftNav,rightDefPos,rightNav);
-
-    tGolie->setIdlePosition(goaliePos);
-    tDefenderLeft->setIdlePosition(leftDefPos);
-    tDefenderLeft->setUseNav(leftNav);
-    tDefenderRight->setIdlePosition(rightDefPos);
-    tDefenderRight->setUseNav(rightNav);
-
-    if( leftID != -1)
-    {
-        if( (wm->ourRobot[leftID].pos.loc - leftDefPos.loc).length() > 250 )
-            leftChecker++;
-        else
-            leftChecker = 0;
-    }
-
-    if( rightID != -1)
-    {
-        if( (wm->ourRobot[rightID].pos.loc - rightDefPos.loc).length() > 250 )
-            rightChecker++;
-        else
-            rightChecker = 0;
-    }
-
-    QList<int> opps = wm->kn->ActiveOppAgents();
-    opps.removeOne(wm->ref_goalie_opp);
-    QList<int> nearest2Ball = wm->kn->findNearestOppositeTo(wm->ball.pos.loc);
-    if( nearest2Ball.size() != 0)
-        opps.removeOne(nearest2Ball.at(0));
-
-    QList<int> nearest;
-    int i = 0;
-    Line2D toCenter(Vector2D(0,0),ALLOW_NEAR_BALL_RANGE);
-    Circle2D cir;
-    Vector2D first,second,main;
-    Position leftPos,rightPos;
-    int numberOfIntersection;
-
-    toCenter.assign(wm->ball.pos.loc , Field::ourGoalCenter);
-    cir.assign(wm->ball.pos.loc,ALLOW_NEAR_BALL_RANGE);
-    numberOfIntersection = cir.intersection(toCenter,&first,&second);
-    if( numberOfIntersection == 2)
-    {
-        if( wm->kn->IsInsideOurField(first))
-            main = first;
-        else
-            main = second;
-    }
-    else if(numberOfIntersection == 1)
-        main = first;
-
-    tAttackerMid->setIdlePosition(main);
-
-    Circle2D secondCircle(main,(2.5)*ROBOT_RADIUS);
-    cir.intersection(secondCircle,&leftPos.loc,&rightPos.loc);
-
-    if( tAttackerLeft->getID() != -1)
-    {
-        nearest.clear();
-        i = 0;
-        nearest = wm->kn->findNearestOppositeTo(opps,Vector2D(0,Field::MinY/2));
-        while( i<nearest.size() )
-        {
-            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc-Vector2D(0,Field::MinY/2)).length()>1000*/)
-                nearest.removeAt(i);
-            else
-                i++;
+void PlayKickoffOpp::Positioning(int RobotID){
+    Vector2D CenterOfField;
+    CenterOfField.x=0;
+    CenterOfField.y=0;
+    Segment2D defenderRightLine(Field::ourGoalPost_R,CenterOfField);
+    Segment2D defenderLeftLine(Field::ourGoalPost_L,CenterOfField);
+    Segment2D midAttackerLine(Field::ourGoalCenter,CenterOfField);
+    Position firstIntersection,secondInterSection;
+    Circle2D circleOfCenter(CenterOfField,Field::centerCircle_R);
+    Circle2D circleOfDefense(Field::ourGoalCenter,abs(Field::ourDefPost_L.y-Field::ourDefPost_R.y));
+    if(wm->ourRobot[RobotID].Role==AgentRole::DefenderLeft){
+        Line2D positionLine(CenterOfField,Field::ourGoalPost_L);
+        circleOfDefense.intersection(positionLine,&firstIntersection.loc,&secondInterSection.loc);
+        if(firstIntersection.loc.x>secondInterSection.loc.x){
+            tDefenderLeft->setUseNav(false);
+            firstIntersection.dir=defenderLeftLine.direction().radian();
+            tDefenderLeft->setIdlePosition(firstIntersection);
         }
-        while( !nearest.isEmpty() )
-        {
-            int indexOfOpp = nearest.takeFirst();
-            Line2D tmp(wm->oppRobot[indexOfOpp].pos.loc,Field::ourGoalCenter);
-            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
-            Vector2D interSection = tmp.intersection(fixedLine);
-            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
-            {
-                Position pos;
-                pos.loc = interSection;
-                pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-                if( wm->ourRobot[tAttackerLeft->getID()].Role == AgentRole::AttackerLeft)
-                {
-                    if( !wm->kn->isOccupied(tAttackerLeft->getID(), pos.loc) )
-                    {
-                        rightPos = pos;
-                        opps.removeOne(indexOfOpp);
-                        break;
-                    }
-                }
-            }
+        else{
+            secondInterSection.dir=defenderLeftLine.direction().radian();
+            tDefenderLeft->setUseNav(false);
+            tDefenderLeft->setIdlePosition(secondInterSection);
         }
-        tAttackerLeft->setIdlePosition(rightPos);
-    }
 
-    if( tAttackerRight->getID() != -1)
-    {
-        nearest.clear();
-        nearest = wm->kn->findNearestOppositeTo(opps,Vector2D(0,Field::MaxY/2));
-        i = 0;
-        while( i<nearest.size() )
-        {
-            if( wm->kn->IsInsideSecureArea(wm->oppRobot[nearest.at(i)].pos.loc,wm->ball.pos.loc)
-                    /*||  (wm->oppRobot[nearest.at(i)].pos.loc -Vector2D(0,Field::MaxY/2)).length()>1000*/)
-                nearest.removeAt(i);
-            else
-                i++;
+    }
+    else if(wm->ourRobot[RobotID].Role==AgentRole::DefenderRight){
+        Line2D positionLine(CenterOfField,Field::ourGoalPost_R);
+        circleOfDefense.intersection(positionLine,&firstIntersection.loc,&secondInterSection.loc);
+        if(firstIntersection.loc.x>secondInterSection.loc.x){
+            firstIntersection.dir=defenderRightLine.direction().radian();
+            tDefenderRight->setUseNav(false);
+            tDefenderRight->setIdlePosition(firstIntersection);
         }
-        while( !nearest.isEmpty() )
-        {
-            int indexOfOpp = nearest.takeFirst();
-            Line2D tmp(wm->oppRobot[indexOfOpp].pos.loc,Field::ourGoalCenter);
-            Line2D fixedLine(Vector2D(-2*ROBOT_RADIUS,Field::MinY), Vector2D(-2*ROBOT_RADIUS,Field::MaxY));
-            Vector2D interSection = tmp.intersection(fixedLine);
-            if( !wm->kn->IsInsideSecureArea(interSection,wm->ball.pos.loc) )
-            {
-                Position pos;
-                pos.loc = interSection;
-                pos.dir = (wm->oppRobot[indexOfOpp].pos.loc-Field::ourGoalCenter).dir().degree()*AngleDeg::DEG2RAD;
-                if( wm->ourRobot[tAttackerRight->getID()].Role == AgentRole::AttackerRight)
-                {
-                    if( !wm->kn->isOccupied(tAttackerRight->getID(), pos.loc) )
-                    {
-                        leftPos = pos;
-                        opps.removeOne(indexOfOpp);
-                        break;
-                    }
-                }
-            }
+        else{
+            secondInterSection.dir=defenderRightLine.direction().radian();
+            tDefenderRight->setUseNav(false);
+            tDefenderRight->setIdlePosition(secondInterSection);
         }
-        tAttackerRight->setIdlePosition(leftPos);
+
+    }
+    else if(wm->ourRobot[RobotID].Role==AgentRole::AttackerLeft){
+        Position ourKickerPos=KickerPositioning(wm->oppRobot[kickerId].pos.loc);
+        tAttackerLeft->setUseNav(true);
+        tAttackerLeft->setIdlePosition(ourKickerPos);
+
+    }
+    else if(wm->ourRobot[RobotID].Role==AgentRole::AttackerRight || wm->ourRobot[RobotID].Role==AgentRole::AttackerMid){
+        QList<int> oppPlayer=wm->kn->ActiveOppAgents();
+        Position man2manSimulate1,man2manSimulate2;
+        int first=maximumGoalChanceID(oppPlayer);
+        man2manSimulate1.loc.y=wm->oppRobot[first].pos.loc.y;
+        man2manSimulate1.loc.x=-1*wm->oppRobot[first].pos.loc.x;
+        AngleDeg degree1;
+        degree1=wm->oppRobot[first].pos.loc.dir().radian()+(AngleDeg::PI)*2-1;
+        man2manSimulate1.dir=degree1.degree();
+        oppPlayer.removeOne(first);
+        int second=maximumGoalChanceID(oppPlayer);
+        man2manSimulate2.loc.y=wm->oppRobot[second].pos.loc.y;
+        man2manSimulate2.loc.x=-1*wm->oppRobot[second].pos.loc.x;
+        AngleDeg degree2;
+        degree2=wm->oppRobot[second].pos.loc.dir().radian()+(AngleDeg::PI)*2+1;
+        man2manSimulate2.dir=degree2.degree();
+        qDebug()<<"First"<<first;
+        qDebug()<<"Second"<<second;
+       // if(wm->ourRobot[tAttackerMid->getID()].pos.loc.y>wm->ourRobot[tAttackerRight->getID()].pos.loc.y){
+            tAttackerMid->setIdlePosition(man2manSimulate1);
+            tAttackerRight->setIdlePosition(man2manSimulate2);
+        /*}else{
+            tAttackerRight->setIdlePosition(man2manSimulate1);
+            tAttackerMid->setIdlePosition(man2manSimulate2);
+        }*/
+       // maximumGoalChanceID(oppPlayer);
+    }
+    else if(wm->ourRobot[RobotID].Role==AgentRole::Golie){
+        Vector2D goalie;
+        goalie.x=Field::ourGoalCenter.x+90;
+        goalie.y=Field::ourGoalCenter.y;
+        tGolie->setIdlePosition(goalie);
     }
 }
 
-void PlayKickoffOpp::execute()
-{
-    QList<int> activeAgents=wm->kn->ActiveAgents();
-
+void PlayKickoffOpp::execute(){
+    findOppKickerId();
+    Vector2D CenterOfField;
+    Position center;
+    center.loc=CenterOfField;
+    CenterOfField.x=0;
+    CenterOfField.y=0;
+    QList<int> ourCurrentPlayer=wm->kn->ActiveAgents();
+    for(int i=0;i<ourCurrentPlayer.length();i++){
+        wm->ourRobot[i].Status=AgentStatus::Idle;
+    }
     initRole();
-
-    for(int i=0;i<activeAgents.size();i++)
-    {
-        setTactics(activeAgents.at(i));
+    for(int i=0;i<ourCurrentPlayer.length();i++){
+        setTactics(ourCurrentPlayer.at(i));
     }
+    for(int i=0;i<ourCurrentPlayer.length();i++){
+        Positioning(ourCurrentPlayer.at(i));
+    }
+    if(wm->cmgs.canKickBall()){
+        int counter=0;
+        tAttackerLeft->setUseNav(true);
+        tAttackerMid->setUseNav(true);
+        tAttackerRight->setUseNav(true);
+        QList<int> oppPlayer=wm->kn->ActiveOppAgents();
+        for(int i=0;i<oppPlayer.length();i++){
+            center.dir=wm->oppRobot[oppPlayer.at(i)].pos.dir;
+            if(wm->kn->IsInsideCircle(wm->oppRobot[oppPlayer.at(i)].pos.loc,CenterOfField,Field::centerCircle_R+3000)
+                    &&!wm->kn->IsReadyForKick(wm->oppRobot[oppPlayer.at(i)].pos,center,wm->ball.pos.loc)){
+                counter++;
+                Vector2D defense;
+                if(counter==1){
+                   defense.x=wm->oppRobot[oppPlayer.at(i)].pos.loc.x-ROBOT_RADIUS-100;
+                   defense.y=wm->oppRobot[oppPlayer.at(i)].pos.loc.y;
+                   tAttackerLeft->setIdlePosition(defense);
+                }else if(counter==2){
+                    defense.x=wm->oppRobot[oppPlayer.at(i)].pos.loc.x-ROBOT_RADIUS-100;
+                    defense.y=wm->oppRobot[oppPlayer.at(i)].pos.loc.y;
+                    tAttackerRight->setIdlePosition(defense);
+                }
+            }
+        }
+        counter==0;
 
-    setPositions();
+   }
 }
+
+
+
+
+
+
+
+
+
+
