@@ -32,16 +32,16 @@ public:
 
 protected:
     vector<PositionTimeCamera> balls;
+    bool checkCameras[5];
     std::vector<PositionTimeCamera> ourRobots[PLAYERS_MAX_NUM];
     std::vector<PositionTimeCamera> oppRobots[PLAYERS_MAX_NUM];
     FPSCounter _fpscam[CAMERA_NUM];
-    QTime _time;
     TeamColorType _color;
     TeamSideType _side;
     CameraConfigType _camera;
     WorldModel *_wm;
     Vision_logPlayer *logplayer;
-
+    void addRobot(const SSL_DetectionRobot& robot,int id,bool isEnemy,double time,int camera);
     virtual void parse(SSL_DetectionFrame &pck);
     virtual void parseLog(SSL_DetectionFrame &pck);
 

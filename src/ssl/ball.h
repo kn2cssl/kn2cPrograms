@@ -9,9 +9,7 @@ class Ball : public MobileObject
 
 public:
     explicit Ball();
-    virtual void seenAt(vector<Position> p, double t, int c);
-
-
+    virtual void seenAt(vector<PositionTimeCamera> p);
 };
 
 #endif // BALL_H

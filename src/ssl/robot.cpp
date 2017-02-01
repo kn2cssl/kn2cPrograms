@@ -6,23 +6,24 @@ Robot::Robot() :
 {
 }
 
-void Robot::seenAt(vector<Position> p, double t, int c)
+void Robot::seenAt(vector<PositionTimeCamera> p)
 {
     if(p.size()<1) return;
  //    isValid = true;
      timer_seen.start(timer_seen_interval); //restart
 
      PositionTimeCamera ans;
-     ans.time = t;
-     ans.camera = c;
+     ans.time = p[0].time;
+     ans.camera = p[0].camera;
 
      Vector2D buff;
      int min_i = 0;
-     buff = p[min_i].loc - pos_predicted.loc ;
+     qDebug() << "posotion" << pos.loc.x;
+     buff = p[min_i].pos.loc - pos_predicted.loc ;
      double min_d = buff.length();
      for(size_t i=0; i < p.size(); i++)
      {
-         buff = p[i].loc - pos_predicted.loc ;
+         buff = p[i].pos.loc - pos_predicted.loc ;
          double d = buff.length();
          if(d < min_d)
          {
@@ -31,8 +32,8 @@ void Robot::seenAt(vector<Position> p, double t, int c)
          }
      }
 
-     ans.pos.loc = p[min_i].loc;
-     ans.pos.dir = p[min_i].dir;
+     ans.pos.loc = p[min_i].pos.loc;
+     ans.pos.dir = p[min_i].pos.dir;
 
      if (camera_mem == ans.camera  || camera_mem == NO_CAMERA )
      {

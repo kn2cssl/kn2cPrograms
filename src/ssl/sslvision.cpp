@@ -9,7 +9,6 @@ SSLVision::SSLVision(QString ip, int port, TeamColorType color, TeamSideType sid
 {
     qRegisterMetaType<SSL_WrapperPacket>("SSL_WrapperPacket");
 
-    _time.start();
     connect(this, SIGNAL(newReceivedPacket(QByteArray,QString,int)), this, SLOT(readPendingPacket(QByteArray,QString,int)),Qt::DirectConnection);
 
     logplayer = new Vision_logPlayer();
@@ -114,216 +113,87 @@ int SSLVision::getFPS(int c)
 void SSLVision::parse(SSL_DetectionFrame &pck)
 {
     // update camera fps
-    int cid = pck.camera_id() % CAMERA_NUM;
-    _fpscam[cid].Pulse();
+    int CamId = pck.camera_id() % CAMERA_NUM;
+    _fpscam[CamId].Pulse();
 
     // update vision frame
     //_vframe[cid].frame_number =  pck.frame_number();
 
-    vector<Position> pt;
-
     // Team side Coefficient
     float ourSide = (_side == SIDE_RIGHT)? -1.0f : 1.0f;
-    qDebug() << "capture" << pck.t_capture()*1000 - time;
     time = pck.t_capture()*1000;
 
     // insert balls
-    int max_balls=min(VOBJ_MAX_NUM, pck.balls_size());
-    for(int i=0; i<max_balls; ++i)
+    for(int i=0; i < pck.balls_size(); ++i)
     {
         auto b = pck.balls(i);
-        if(b.has_confidence() && b.has_x() && b.has_y())
-            if(b.confidence() > MIN_CONF && fabs(b.x()) < FIELD_DOUBLE_MAX_X && fabs(b.y()) < FIELD_DOUBLE_MAX_Y)
-//            if(b.confidence() > MIN_CONF && (fabs(b.x()) < FIELD_MAX_X && fabs(b.x()) > 600) && fabs(b.y()) < FIELD_MAX_Y)
-            {
-                Position tp;
-                tp.loc = Vector2D(b.x()*ourSide, b.y()*ourSide);
-                pt.push_back(tp);
-            }
+        PositionTimeCamera point;
+        point.pos.loc = Vector2D(b.x()*ourSide, b.y()*ourSide);
+        point.confidence = b.confidence();
+        point.camera =  CamId;
+        point.time = time;
+        balls.push_back(point);
     }
-    _wm->ball.seenAt(pt, time, cid);
 
     if(_color == COLOR_BLUE)
     {
-        for (int i=0; i<pck.robots_blue_size(); ++i)
+        for (int i = 0 ; i < pck.robots_blue_size() ; i++)
         {
-            pt.clear();
-            int rid = pck.robots_blue(i).robot_id();
-            if ((pck.robots_blue(i).has_orientation())&&(pck.robots_blue(i).has_confidence())&&(pck.robots_blue(i).confidence()>MIN_CONF)&&(fabs(pck.robots_blue(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_blue(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_blue(i).x()*ourSide, pck.robots_blue(i).y()*ourSide);
-                tp.dir = pck.robots_blue(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->ourRobot[rid].seenAt(pt, time, cid);
-            }
+            int robotId = pck.robots_blue(i).robot_id();
+            addRobot(pck.robots_blue(i),robotId,false,time,CamId);
         }
-        for (int i=0; i<pck.robots_yellow_size(); ++i)
+        for (int i = 0 ; i < pck.robots_yellow_size() ; i++)
         {
-            pt.clear();
-            int rid = pck.robots_yellow(i).robot_id();
-            if ((pck.robots_yellow(i).has_orientation())&&(pck.robots_yellow(i).has_confidence())&&(pck.robots_yellow(i).confidence()>MIN_CONF)&&(fabs(pck.robots_yellow(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_yellow(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_yellow(i).x()*ourSide, pck.robots_yellow(i).y()*ourSide);
-                tp.dir = pck.robots_yellow(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->oppRobot[rid].seenAt(pt, time, cid);
-            }
+            int robotId = pck.robots_blue(i).robot_id();
+            addRobot(pck.robots_yellow(i),robotId,true,time,CamId);
         }
     }
     else
     {
-        for (int i=0; i<pck.robots_yellow_size(); ++i)
+        for (int i = 0 ; i < pck.robots_yellow_size(); i++)
         {
-            pt.clear();
-            int rid = pck.robots_yellow(i).robot_id();
-            if ((pck.robots_yellow(i).has_orientation())&&(pck.robots_yellow(i).has_confidence())&&(pck.robots_yellow(i).confidence()>MIN_CONF)&&(fabs(pck.robots_yellow(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_yellow(i).x())>600*/)&&(fabs(pck.robots_yellow(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_yellow(i).x()*ourSide, pck.robots_yellow(i).y()*ourSide);
-                tp.dir = pck.robots_yellow(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->ourRobot[rid].seenAt(pt, time, cid);
-            }
+            int robotId = pck.robots_blue(i).robot_id();
+            addRobot(pck.robots_yellow(i),robotId,false,time,CamId);
         }
-        for (int i=0; i<pck.robots_blue_size(); ++i)
+        for (int i = 0 ; i < pck.robots_blue_size() ; i++)
         {
-            pt.clear();
-            int rid = pck.robots_blue(i).robot_id();
-            if ((pck.robots_blue(i).has_orientation())&&(pck.robots_blue(i).has_confidence())&&(pck.robots_blue(i).confidence()>MIN_CONF)&&(fabs(pck.robots_blue(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_blue(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_blue(i).x()*ourSide, pck.robots_blue(i).y()*ourSide);
-                tp.dir = pck.robots_blue(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->oppRobot[rid].seenAt(pt, time, cid);
-            }
+            int robotId = pck.robots_blue(i).robot_id();
+            addRobot(pck.robots_blue(i),robotId,true,time,CamId);
+        }
+    }
+
+    checkCameras[CamId] = true;
+    if((checkCameras[1] & checkCameras[2]) == true && time > 4){
+        for(int i = 0 ; i < 5 ; i++)
+            checkCameras[i] = false;
+        _wm->ball.seenAt(balls);
+        qDebug() << "i am here";
+        balls.clear();
+        for (int i = 0; i < PLAYERS_MAX_NUM; ++i) {
+            _wm->ourRobot[i].seenAt(ourRobots[i]);
+            _wm->oppRobot[i].seenAt(oppRobots[i]);
+            ourRobots[i].clear();
+            oppRobots[i].clear();
         }
     }
 }
 
 void SSLVision::parseLog(SSL_DetectionFrame &pck)
 {
-    // update camera fps
-    int cid = pck.camera_id();
+}
 
-    switch(_camera)
-    {
-    case CAMERA_ALL:
-        break;
-    case CAMERA_0:
-        if (cid==1 || cid==2 || cid==3) return;
-        break;
-    case CAMERA_1:
-        if (cid==0 || cid==2 || cid==3) return;
-        break;
-    case CAMERA_2:
-        if (cid==0 || cid==1 || cid==3) return;
-        break;
-    case CAMERA_3:
-        if (cid==0 || cid==1 || cid==2) return;
-        break;
-    case CAMERA_BOTH_L:
-        if (cid==2 || cid==3) return;
-        break;
-    case CAMERA_BOTH_R:
-        if (cid==0 || cid==1) return;
-        break;
-    case CAMERA_NONE:
-    default:
-        return;
-    }
-
-    // update vision frame
-    //_vframe[cid].frame_number =  pck.frame_number();
-
-    vector<Position> pt;
-
-    // Team side Coefficient
+void SSLVision::addRobot(const SSL_DetectionRobot& robot,int id,bool isEnemy,double time,int camera){
     float ourSide = (_side == SIDE_RIGHT)? -1.0f : 1.0f;
-    double time = _time.elapsed(); //pck.t_capture();
-
-    // insert balls
-    int max_balls=min(VOBJ_MAX_NUM, pck.balls_size());
-    for(int i=0; i<max_balls; ++i)
-    {
-        auto b = pck.balls(i);
-        if(b.has_confidence() && b.has_x() && b.has_y())
-            if(b.confidence() > MIN_CONF && fabs(b.x()) < FIELD_DOUBLE_MAX_X && fabs(b.y()) < FIELD_DOUBLE_MAX_Y)
-//            if(b.confidence() > MIN_CONF && (fabs(b.x()) < FIELD_MAX_X && fabs(b.x()) > 600) && fabs(b.y()) < FIELD_MAX_Y)
-            {
-                Position tp;
-                tp.loc = Vector2D(b.x()*ourSide, b.y()*ourSide);
-                pt.push_back(tp);
-            }
-    }
-    _wm->ball.seenAt(pt, time, cid);
-
-    if(_color == COLOR_BLUE)
-    {
-        for (int i=0; i<pck.robots_blue_size(); ++i)
-        {
-            pt.clear();
-            int rid = pck.robots_blue(i).robot_id();
-            if ((pck.robots_blue(i).has_orientation())&&(pck.robots_blue(i).has_confidence())&&(pck.robots_blue(i).confidence()>MIN_CONF)&&(fabs(pck.robots_blue(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_blue(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_blue(i).x()*ourSide, pck.robots_blue(i).y()*ourSide);
-                tp.dir = pck.robots_blue(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->ourRobot[rid].seenAt(pt, time, cid);
-            }
-        }
-        for (int i=0; i<pck.robots_yellow_size(); ++i)
-        {
-            pt.clear();
-            int rid = pck.robots_yellow(i).robot_id();
-            if ((pck.robots_yellow(i).has_orientation())&&(pck.robots_yellow(i).has_confidence())&&(pck.robots_yellow(i).confidence()>MIN_CONF)&&(fabs(pck.robots_yellow(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_yellow(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_yellow(i).x()*ourSide, pck.robots_yellow(i).y()*ourSide);
-                tp.dir = pck.robots_yellow(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->oppRobot[rid].seenAt(pt, time, cid);
-            }
-        }
-    }
+    PositionTimeCamera point;
+    point.pos.loc = Vector2D(robot.x()*ourSide, robot.y()*ourSide);
+    point.pos.dir = robot.orientation()+(1.0 - ourSide)*M_PI_2;
+    point.confidence = robot.confidence();
+    point.camera = camera;
+    point.time = time;
+    if(point.pos.dir > M_PI)
+        point.pos.dir -= M_2PI;
+    if(isEnemy)
+        oppRobots[id].push_back(point);
     else
-    {
-        for (int i=0; i<pck.robots_yellow_size(); ++i)
-        {
-            pt.clear();
-            int rid = pck.robots_yellow(i).robot_id();
-            if ((pck.robots_yellow(i).has_orientation())&&(pck.robots_yellow(i).has_confidence())&&(pck.robots_yellow(i).confidence()>MIN_CONF)&&(fabs(pck.robots_yellow(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_yellow(i).x())>600*/)&&(fabs(pck.robots_yellow(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_yellow(i).x()*ourSide, pck.robots_yellow(i).y()*ourSide);
-                tp.dir = pck.robots_yellow(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->ourRobot[rid].seenAt(pt, time, cid);
-            }
-        }
-        for (int i=0; i<pck.robots_blue_size(); ++i)
-        {
-            pt.clear();
-            int rid = pck.robots_blue(i).robot_id();
-            if ((pck.robots_blue(i).has_orientation())&&(pck.robots_blue(i).has_confidence())&&(pck.robots_blue(i).confidence()>MIN_CONF)&&(fabs(pck.robots_blue(i).x())<FIELD_DOUBLE_MAX_X /*&& fabs(pck.robots_##__COLOR__(i).x())>600*/)&&(fabs(pck.robots_blue(i).y())<FIELD_DOUBLE_MAX_Y))
-            {
-                Position tp;
-                tp.loc = Vector2D(pck.robots_blue(i).x()*ourSide, pck.robots_blue(i).y()*ourSide);
-                tp.dir = pck.robots_blue(i).orientation()+(1.0-ourSide)*M_PI_2;
-                if(tp.dir>M_PI) tp.dir -= M_2PI;
-                pt.push_back(tp);
-                _wm->oppRobot[rid].seenAt(pt, time, cid);
-            }
-        }
-    }
+        ourRobots[id].push_back(point);
 }

@@ -17,6 +17,7 @@ struct PositionTimeCamera
 
     double time;
     int camera;
+    double confidence;
     PositionTimeCamera()
     {
         time = 0;
@@ -30,7 +31,7 @@ class MobileObject : public QObject
 
 public:
     explicit MobileObject();
-    virtual void seenAt(vector<Position> p, double t, int c) = 0;
+    virtual void seenAt(vector<PositionTimeCamera>) = 0;
 
     bool isValid;
 
