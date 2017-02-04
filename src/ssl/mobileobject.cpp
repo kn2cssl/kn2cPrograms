@@ -50,15 +50,41 @@ void MobileObject::vel_calc()
 {
     PositionTimeCamera last = vel_postc;
 
-    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time - last.time)) - vel.loc)*1;
+    vel.loc = vel.loc + (((pos.loc - last.pos.loc) / (time)) - vel.loc)*1;
     float dir_dif = pos.dir - last.pos.dir ;
     if(fabs(dir_dif) > M_PI) dir_dif = dir_dif - dir_dif/fabs(dir_dif)*M_PI*2;
-    vel.dir = (dir_dif) / (time - last.time ) *1000 ;
+    vel.dir = (dir_dif) / (time) *1000 ;
 
-    pos_predicted.loc = pos.loc + vel.loc * (time - last.time);
-    pos_predicted.dir = pos.dir + vel.dir * (time - last.time);
+    pos_predicted.loc = pos.loc + vel.loc * (time);
+    pos_predicted.dir = pos.dir + vel.dir * (time);
 
 
     vel_postc.pos = pos;
     vel_postc.time = time;
+}
+
+void MobileObject::mergePoints(std::vector<PositionTimeCamera>& points){
+    for(int i = 0 ; i < points.size() ; i++){
+        if(points[i].confidence < MIN_CONFIDENCE){
+            qDebug() << "fuuuuuuck" << points[i].confidence;
+            points.erase(points.begin() + i);
+        }
+    }
+    //wiegted mean
+    for (int i = 0; i < points.size(); ++i) {
+        for (int j = i + 1; j < points.size(); ++j) {
+            if(points[i].pos.loc.dist(points[j].pos.loc) <= MERGE_DISTANCE){
+                points[i].pos.loc.x = ((points[i].pos.loc.x * points[i].confidence) + (points[j].pos.loc.x * points[j].confidence))
+                        /(points[i].confidence + points[j].confidence);
+                points[i].pos.loc.y = ((points[i].pos.loc.y * points[i].confidence) + (points[j].pos.loc.y * points[j].confidence))
+                        /(points[i].confidence + points[j].confidence);
+                points[i].confidence = std::max(points[i].confidence,points[j].confidence);
+                points.erase(points.begin() + j);
+            }
+        }
+    }
+    for(int i = 0 ; i < points.size() ; i++){
+        if(points[i].confidence < MIN_CONFIDENCE)
+            points.erase(points.begin() + i);
+    }
 }

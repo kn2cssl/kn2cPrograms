@@ -28,7 +28,7 @@ public:
     void loadPlaying(Vision_log logs);
     int logLength();
     void setLogFrame(int msec);
-    double time;
+    double lastTime[CAMERA_NUM];
 
 protected:
     vector<PositionTimeCamera> balls;

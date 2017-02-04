@@ -121,7 +121,8 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
 
     // Team side Coefficient
     float ourSide = (_side == SIDE_RIGHT)? -1.0f : 1.0f;
-    time = pck.t_capture()*1000;
+    double time = pck.t_capture()*1000 - lastTime[CamId];
+    lastTime[CamId] = pck.t_capture()*1000;
 
     // insert balls
     for(int i=0; i < pck.balls_size(); ++i)
@@ -166,6 +167,7 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
     if((checkCameras[1] & checkCameras[2]) == true && time > 4){
         for(int i = 0 ; i < 5 ; i++)
             checkCameras[i] = false;
+        _wm->ball.debugs = &_wm->debug_pos;
         _wm->ball.seenAt(balls);
         qDebug() << "i am here";
         balls.clear();

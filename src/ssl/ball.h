@@ -2,6 +2,7 @@
 #define BALL_H
 
 #include "mobileobject.h"
+#include <QList>
 
 class Ball : public MobileObject
 {
@@ -9,6 +10,7 @@ class Ball : public MobileObject
 
 public:
     explicit Ball();
+    QList<Vector2D> *debugs;
     virtual void seenAt(vector<PositionTimeCamera> p);
 };
 

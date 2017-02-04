@@ -18,14 +18,25 @@ RobotCommand TacticTest::getCommand()
     RobotCommand rc;
     if(!wm->ourRobot[id].isValid)
         return rc;
-    rc.fin_pos.loc.x = -3000;
-    rc.fin_pos.loc.y = 0;
-    rc.useNav = true;
-    rc.maxSpeed = 3;
-    if(min > wm->ourRobot[5].vel.dir)
-        min = wm->ourRobot[5].vel.dir;
-    if(max < wm->ourRobot[5].vel.dir)
-        max = wm->ourRobot[5].vel.dir;
-    qDebug() << "robot" << "max" << max << "min" <<min;
+
+        Vector2D v1(-1700,-2000);
+        Vector2D v2(-1700,2000);
+        if(flag==0){
+            rc.fin_pos.loc=v1;
+            rc.maxSpeed=4;
+            rc.useNav=true;
+            if(wm->ourRobot[id].pos.loc.dist(v1)<150){
+                flag=1;
+            }
+        }
+        else if(flag==1){
+            rc.fin_pos.loc=v2;
+            rc.maxSpeed=4;
+            rc.useNav=true;
+            if(wm->ourRobot[id].pos.loc.dist(v2)<150){
+                flag=0;
+                wm->debug_pos.clear();
+            }
+        }
     return rc;
 }

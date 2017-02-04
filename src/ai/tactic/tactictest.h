@@ -10,6 +10,7 @@ private:
 public:
     int max = -10;
     int min = 10;
+    int flag=0;
     static bool kicked;
     explicit TacticTest(WorldModel *worldmodel, QObject *parent = 0);
     virtual RobotCommand getCommand();

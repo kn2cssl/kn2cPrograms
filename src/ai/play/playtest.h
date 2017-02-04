@@ -11,6 +11,7 @@ public:
     virtual void execute();
     virtual void initRole();
     virtual int enterCondition();
+    int flag=0;
 private:
     TacticTest* tTest;
     TacticTest* tTest2;
