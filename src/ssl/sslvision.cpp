@@ -134,7 +134,7 @@ void SSLVision::parse(SSL_DetectionFrame &pck)
         point.time = time;
         balls.push_back(point);
     }
-
+    //insert robots
     if(_color == COLOR_BLUE)
     {
         for (int i = 0 ; i < pck.robots_blue_size() ; i++)

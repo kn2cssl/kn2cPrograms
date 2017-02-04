@@ -17,5 +17,5 @@ void PlayTest::initRole()
 
 void PlayTest::execute()
 {
-    tactics[5]= tTest;
+    tactics[3]= tTest;
 }
