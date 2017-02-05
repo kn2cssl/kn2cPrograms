@@ -17,7 +17,7 @@ void PlayTest::initRole()
 
 void PlayTest::execute()
 {
-    tactics[5]= tTest;
+    tactics[3]= tTest;
     wm->debug_type=2;
     wm->debug_pos.append(wm->ourRobot[5].pos.loc);
 }
