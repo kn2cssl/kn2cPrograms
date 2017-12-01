@@ -245,6 +245,7 @@ const int Robot_message::kRcFieldNumber;
 Robot_message::Robot_message()
   : ::google::protobuf::Message() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Robot_message)
 }
 
 void Robot_message::InitAsDefaultInstance() {
@@ -257,6 +258,7 @@ Robot_message::Robot_message(const Robot_message& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Robot_message)
 }
 
 void Robot_message::SharedCtor() {
@@ -272,6 +274,7 @@ void Robot_message::SharedCtor() {
 }
 
 Robot_message::~Robot_message() {
+  // @@protoc_insertion_point(destructor:Robot_message)
   SharedDtor();
 }
 
@@ -305,7 +308,7 @@ Robot_message* Robot_message::New() const {
 }
 
 void Robot_message::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 127) {
     isvalid_ = false;
     if (has_position()) {
       if (position_ != NULL) position_->::position_message::Clear();
@@ -326,20 +329,23 @@ void Robot_message::Clear() {
 
 bool Robot_message::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  // @@protoc_insertion_point(parse_start:Robot_message)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required bool isValid = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &isvalid_)));
           set_has_isvalid();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_position;
         break;
@@ -347,13 +353,12 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // required .position_message position = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_position:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_position()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(26)) goto parse_velocity;
         break;
@@ -361,13 +366,12 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // required .position_message velocity = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 26) {
          parse_velocity:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_velocity()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(32)) goto parse_status;
         break;
@@ -375,8 +379,7 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // optional .Robot_message.AgentStatus status = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 32) {
          parse_status:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -388,7 +391,7 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(4, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(40)) goto parse_role;
         break;
@@ -396,8 +399,7 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // optional .Robot_message.AgentRole role = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 40) {
          parse_role:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -409,7 +411,7 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(5, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(48)) goto parse_region;
         break;
@@ -417,8 +419,7 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // optional .Robot_message.AgentRegion region = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 48) {
          parse_region:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -430,7 +431,7 @@ bool Robot_message::MergePartialFromCodedStream(
             mutable_unknown_fields()->AddVarint(6, value);
           }
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(58)) goto parse_rc;
         break;
@@ -438,23 +439,23 @@ bool Robot_message::MergePartialFromCodedStream(
 
       // optional .RobotCommand_message rc = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 58) {
          parse_rc:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_rc()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
         DO_(::google::protobuf::internal::WireFormat::SkipField(
               input, tag, mutable_unknown_fields()));
@@ -462,12 +463,18 @@ bool Robot_message::MergePartialFromCodedStream(
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Robot_message)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Robot_message)
+  return false;
 #undef DO_
 }
 
 void Robot_message::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Robot_message)
   // required bool isValid = 1;
   if (has_isvalid()) {
     ::google::protobuf::internal::WireFormatLite::WriteBool(1, this->isvalid(), output);
@@ -513,10 +520,12 @@ void Robot_message::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
+  // @@protoc_insertion_point(serialize_end:Robot_message)
 }
 
 ::google::protobuf::uint8* Robot_message::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Robot_message)
   // required bool isValid = 1;
   if (has_isvalid()) {
     target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(1, this->isvalid(), target);
@@ -565,6 +574,7 @@ void Robot_message::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
   }
+  // @@protoc_insertion_point(serialize_to_array_end:Robot_message)
   return target;
 }
 
