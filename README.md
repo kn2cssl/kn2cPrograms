@@ -17,9 +17,8 @@ For build and run this program, we recommend you to use Qt Environment in Ubuntu
 
 You can use this command in terminal to install required libraries.
 ```bash
-sudo apt-get install libboost-all-dev libgmp3-dev libmpfr-dev libmpfr-doc libmpfr4 libmpfr4-dbg libigraph0* libprotobuf-dev protobuf-compiler
+sudo apt-get install libboost-all-dev libgmp3-dev libmpfr-dev libmpfr-doc libmpfr4 libmpfr4-dbg libigraph0* libprotobuf-dev protobuf-compiler libcgal-dev
 ```
-but For CGAL, You should visit their website, download the library and compile it manually.
 
 <br> <br>
 Manual
