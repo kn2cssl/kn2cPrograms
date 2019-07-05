@@ -3,6 +3,7 @@
 
 #include "play.h"
 #include "QDebug"
+#include "man2man.h"
 
 class PlayStop : public Play
 {
@@ -10,18 +11,21 @@ class PlayStop : public Play
 public:
     explicit PlayStop(WorldModel *worldmodel, QObject *parent = 0);
     virtual void execute();
-    //virtual Tactic* getTactic(int id);
     virtual int enterCondition();
-    bool collisionwithDefenders(Vector2D center,Vector2D left,Vector2D right);
-    bool oneOfDefendersIsInPenalty(Vector2D leftPos, Vector2D midPos, Vector2D rightPos);
+
+    //virtual Tactic* getTactic(int id);
+    //bool collisionwithDefenders(Vector2D center,Vector2D left,Vector2D right);
+    //bool oneOfDefendersIsInPenalty(Vector2D leftPos, Vector2D midPos, Vector2D rightPos);
 
 private:
-    TacticGoalie*   tGolie;
-    TacticDefender* tDefenderLeft;
-    TacticDefender* tDefenderRight;
-    TacticStop* tStopMid;
-    TacticStop* tStopLeft;
-    TacticStop* tStopRight;
+    TacticGoalie *tGoalie;
+    TacticDefender *tDefenderLeft;
+    TacticDefender *tDefenderRight;
+    TacticStop *tStopMid;
+    TacticStop *tStopLeft;
+    TacticStop *tStopRight;
+    TacticAttacker *tAttackerLeft;
+    TacticAttacker *tAttackerRight;
 
     virtual void initRole();
     void setTactics(int index);
