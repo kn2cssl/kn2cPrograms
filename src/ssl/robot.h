@@ -12,7 +12,7 @@ class Robot : public MobileObject
 
 public:
     Robot();
-    virtual void seenAt(vector<Position> p, double t, int c);
+    virtual void seenAt(vector<PositionTimeCamera> p);
 };
 
 #endif // ROBOT_H

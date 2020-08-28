@@ -8,9 +8,9 @@ PlayHalt::PlayHalt(WorldModel *worldmodel, QObject *parent) :
 
 int PlayHalt::enterCondition()
 {
-    if(wm->cmgs.canMove() == false || wm->cmgs.timeout())
-        return 1000000;
-    else
+//    if(wm->cmgs.canMove() == false || wm->cmgs.timeout())
+//        return 1000000;
+//    else
         return 0;
 }
 

@@ -21,5 +21,7 @@
 #include "tactic/tacticcontrol.h"
 #include "tactic/tactickicklearning.h"
 #include "tactic/tacticformation.h"
+//seyed ali hejazi
+#include "tactic/tacticteststandingforwardenemy.h"
 
 #endif // TACTICS_H

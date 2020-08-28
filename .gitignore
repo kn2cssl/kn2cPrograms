@@ -14,7 +14,7 @@
 *.dll
 *.exe
 
-*.pro.user
+*.pro.user*
 build-KN2CSSL-*
 tmp/*
 build-*

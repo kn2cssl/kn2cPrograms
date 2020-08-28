@@ -41,6 +41,8 @@
 #define MIN_CONF        0.1
 #define VISION_TIMEDOUT 1000.0
 #define MAX_RADIOUS     2000
+#define MERGE_DISTANCE 90
+#define MIN_CONFIDENCE 0.1
 
 
 // Timer speeds

@@ -19,7 +19,7 @@ class SSLVision : public SSLReceiver
 
 public:
     explicit SSLVision(QString ip, int port, TeamColorType color, TeamSideType side, CameraConfigType camera, WorldModel *wm, QObject *parent = 0);
-    virtual int getFPS(int c) = 0;
+    int getFPS(int c);
     void startRecording();
     Vision_log stopRecording();
     void startPlaying();
@@ -28,17 +28,22 @@ public:
     void loadPlaying(Vision_log logs);
     int logLength();
     void setLogFrame(int msec);
+    double lastTime[CAMERA_NUM];
 
 protected:
-    QTime _time;
+    vector<PositionTimeCamera> balls;
+    bool checkCameras[5];
+    std::vector<PositionTimeCamera> ourRobots[PLAYERS_MAX_NUM];
+    std::vector<PositionTimeCamera> oppRobots[PLAYERS_MAX_NUM];
+    FPSCounter _fpscam[CAMERA_NUM];
     TeamColorType _color;
     TeamSideType _side;
     CameraConfigType _camera;
     WorldModel *_wm;
     Vision_logPlayer *logplayer;
-
-    virtual void parse(SSL_DetectionFrame &pck) = 0;
-    virtual void parseLog(SSL_DetectionFrame &pck) = 0;
+    void addRobot(const SSL_DetectionRobot& robot,int id,bool isEnemy,double time,int camera);
+    virtual void parse(SSL_DetectionFrame &pck);
+    virtual void parseLog(SSL_DetectionFrame &pck);
 
 private slots:
     void readPendingPacket(QByteArray data, QString ip, int port);

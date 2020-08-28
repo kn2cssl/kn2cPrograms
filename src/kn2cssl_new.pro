@@ -174,8 +174,6 @@ SOURCES +=	main.cpp \
     ai/play/freeKicks/freekick11.cpp \
     ai/play/freeKicks/freekick47.cpp \
     etc/constants.cpp \
-    ssl/sslvision_single.cpp \
-    ssl/sslvision_double.cpp \
     ai/skill.cpp \
     ai/skill/skillkick.cpp \
     ai/skill/skilltest.cpp \
@@ -209,7 +207,13 @@ SOURCES +=	main.cpp \
     ai/skill/skillpassreceive.cpp \
     ai/skill/skillonetouch.cpp \
     ai/tactic/tacticformation.cpp \
-    ai/play/playformations.cpp
+    ai/play/playformations.cpp \
+    ai/tactic/tacticteststandingforwardenemy.cpp \
+    ai/play/playhw2_1.cpp \
+    ai/play/mantomandefense.cpp \
+    ai/tactic/taticgoliealihejazi.cpp \
+    ai/skill/shootball.cpp \
+    ai/play/playstop_hejazi.cpp
 
 HEADERS  += \
     etc/settings.h \
@@ -318,8 +322,6 @@ HEADERS  += \
     ai/play/freeKicks/freekick10.h \
     ai/play/freeKicks/freekick11.h \
     ai/play/freeKicks/freekick47.h \
-    ssl/sslvision_single.h \
-    ssl/sslvision_double.h \
     ai/skill.h \
     ai/skill/skillkick.h \
     ai/Skills.h \
@@ -354,7 +356,13 @@ HEADERS  += \
     ai/skill/skillpassreceive.h \
     ai/skill/skillonetouch.h \
     ai/tactic/tacticformation.h \
-    ai/play/playformations.h
+    ai/play/playformations.h \
+    ai/tactic/tacticteststandingforwardenemy.h \
+    ai/play/playhw2_1.h \
+    ai/play/mantomandefense.h \
+    ai/tactic/taticgoliealihejazi.h \
+    ai/skill/shootball.h \
+    ai/play/playstop_hejazi.h
 
 FORMS    +=	ui/mainwindow.ui
 

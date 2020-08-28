@@ -40,7 +40,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabHome">
        <attribute name="title">
@@ -802,6 +802,9 @@
          <property name="text">
           <string>A* Nodes</string>
          </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
         </widget>
         <widget class="QCheckBox" name="showDebugs">
          <property name="geometry">
@@ -817,8 +820,14 @@
            <pointsize>11</pointsize>
           </font>
          </property>
+         <property name="toolTip">
+          <string>debug points for ai</string>
+         </property>
          <property name="text">
           <string>Debug Points</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </widget>

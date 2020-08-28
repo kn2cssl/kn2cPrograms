@@ -64,9 +64,7 @@ Soccer::Soccer(QObject *parent) :
     wm->ourColor = tcolor;
     MapSearchNode::wm = wm;
     if( field == "Double" )
-        sslvision = new SSLVision_Double(vip, vport, tcolor, tside, tcam, wm);
-    else
-        sslvision = new SSLVision_Single(vip, vport, tcolor, tside, tcam, wm);
+        sslvision = new SSLVision(vip, vport, tcolor, tside, tcam, wm);
 
     sslvision->Start();
 
